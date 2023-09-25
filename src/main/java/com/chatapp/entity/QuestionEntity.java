@@ -16,7 +16,7 @@ public class QuestionEntity extends BaseEntity {
     @Column(name = "type", nullable = false)
     private String type;
     
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "post_id", nullable = false)
     private PostEntity post;
 

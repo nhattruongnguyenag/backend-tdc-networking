@@ -21,7 +21,7 @@ public class BusinessesInfoEntity extends BaseEntity {
     @Column(name = "active_time", nullable = false)
     private String active_time;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 }

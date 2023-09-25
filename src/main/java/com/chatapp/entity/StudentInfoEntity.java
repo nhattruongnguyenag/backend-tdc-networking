@@ -18,7 +18,7 @@ public class StudentInfoEntity extends BaseEntity {
     @Column(name = "faculty_name", nullable = false)
     private String faculty_name;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 }

@@ -32,7 +32,7 @@ public class RecruitmentPostEntity extends BaseEntity {
     @Column(name = "employment_type", nullable = false)
     private String employmentType;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "post_id", nullable = false)
     private PostEntity post;
 }
