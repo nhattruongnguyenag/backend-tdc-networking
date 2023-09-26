@@ -8,15 +8,16 @@ import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.UserDTO;
 import com.chatapp.dto.request.StudentRegisterRequestDTO;
 import com.chatapp.dto.request.UserLoginRequestDTO;
-import com.chatapp.dto.response.StudentInfoResponeDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
-import com.chatapp.entity.StudentInfoEntity;
+import com.chatapp.entity.RoleEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.exception.DuplicateUsernameException;
-import com.chatapp.repository.StudentInfoRepository;
+import com.chatapp.repository.RoleRepository;
 import com.chatapp.repository.UserRepository;
 import com.chatapp.service.UserService;
 import com.chatapp.util.TokenProvider;
+
+import org.apache.tomcat.util.bcel.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,10 +26,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
+    private Long STUDENT_CODE = Long.valueOf(2); 
+
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
@@ -38,11 +42,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private StudentInfoRepository studentInfoRepository;
+    private RoleRepository roleRepository;
     @Autowired
     private UserInfoResponseConverter userInfoResponseConverter;
-    @Autowired
-    private StudentInfoResponeConverter studentInfoResponeConverter;
     @Autowired
     private UserRequestConverter userConverter;
     @Autowired
@@ -129,6 +131,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public AuthTokenDTO studentRegister(StudentRegisterRequestDTO studentRegisterDTO) {
         UserEntity userEntity;
+        RoleEntity roleEntity = roleRepository.findOneById(STUDENT_CODE);
+        List<RoleEntity> roles = new ArrayList<RoleEntity>();
+        roles.add(roleEntity);
 
         if (userRepository.findOneByEmail(studentRegisterDTO.getEmail()) != null) {
             throw new DuplicateUsernameException("user_already_exists");
@@ -137,15 +142,16 @@ public class UserServiceImpl implements UserService {
         studentRegisterDTO.setStatus((byte) 0);
 
         userEntity = studentInfoRequestConverter.toEntity(studentRegisterDTO);
+        userEntity.setRoles(roles);
         userRepository.save(userEntity);
 
-        final Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        studentRegisterDTO.getEmail(),
-                        studentRegisterDTO.getPassword()));
+        // final Authentication authentication = authenticationManager.authenticate(
+        //         new UsernamePasswordAuthenticationToken(
+        //                 studentRegisterDTO.getEmail(),
+        //                 studentRegisterDTO.getPassword()));
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        final String token = tokenProvider.generateToken(authentication.getName());
+        // SecurityContextHolder.getContext().setAuthentication(authentication);
+        final String token = tokenProvider.generateToken(studentRegisterDTO.getEmail());
         return new AuthTokenDTO(token);
     }
 }

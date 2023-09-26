@@ -5,7 +5,6 @@ import com.chatapp.dto.request.StudentRegisterRequestDTO;
 import com.chatapp.entity.StudentInfoEntity;
 import com.chatapp.entity.UserEntity;
 
-
 import org.springframework.stereotype.Component;
 
 @Component
