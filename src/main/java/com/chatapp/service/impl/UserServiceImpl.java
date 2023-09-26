@@ -1,13 +1,19 @@
 package com.chatapp.service.impl;
 
+import com.chatapp.converter.request.StudentInfoRequestConverter;
 import com.chatapp.converter.request.UserRequestConverter;
+import com.chatapp.converter.response.StudentInfoResponeConverter;
 import com.chatapp.converter.response.UserInfoResponseConverter;
 import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.UserDTO;
+import com.chatapp.dto.request.StudentRegisterRequestDTO;
 import com.chatapp.dto.request.UserLoginRequestDTO;
+import com.chatapp.dto.response.StudentInfoResponeDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
+import com.chatapp.entity.StudentInfoEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.exception.DuplicateUsernameException;
+import com.chatapp.repository.StudentInfoRepository;
 import com.chatapp.repository.UserRepository;
 import com.chatapp.service.UserService;
 import com.chatapp.util.TokenProvider;
@@ -32,9 +38,15 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
+    private StudentInfoRepository studentInfoRepository;
+    @Autowired
     private UserInfoResponseConverter userInfoResponseConverter;
     @Autowired
+    private StudentInfoResponeConverter studentInfoResponeConverter;
+    @Autowired
     private UserRequestConverter userConverter;
+    @Autowired
+    private StudentInfoRequestConverter studentInfoRequestConverter;
 
     @Override
     public List<UserInfoResponseDTO> findAll() {
@@ -42,7 +54,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserInfoResponseDTO findByEmailAndPassword (String email, String password) {
+    public UserInfoResponseDTO findByEmailAndPassword(String email, String password) {
         return userInfoResponseConverter.toDTO(userRepository.findOneByEmailAndPassword(email, password));
     }
 
@@ -95,9 +107,7 @@ public class UserServiceImpl implements UserService {
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         userLoginRequest.getEmail(),
-                        userLoginRequest.getPassword()
-                )
-        );
+                        userLoginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         final String token = tokenProvider.generateToken(authentication.getName());
@@ -114,5 +124,28 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserInfoResponseDTO getUserByEmail(String email) {
         return userInfoResponseConverter.toDTO(userRepository.findOneByEmail(email));
+    }
+
+    @Override
+    public AuthTokenDTO studentRegister(StudentRegisterRequestDTO studentRegisterDTO) {
+        UserEntity userEntity;
+
+        if (userRepository.findOneByEmail(studentRegisterDTO.getEmail()) != null) {
+            throw new DuplicateUsernameException("user_already_exists");
+        }
+        studentRegisterDTO.setPassword(passwordEncoder.encode(studentRegisterDTO.getPassword()));
+        studentRegisterDTO.setStatus((byte) 0);
+
+        userEntity = studentInfoRequestConverter.toEntity(studentRegisterDTO);
+        userRepository.save(userEntity);
+
+        final Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        studentRegisterDTO.getEmail(),
+                        studentRegisterDTO.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        final String token = tokenProvider.generateToken(authentication.getName());
+        return new AuthTokenDTO(token);
     }
 }

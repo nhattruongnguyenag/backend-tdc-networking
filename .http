@@ -1,0 +1,12 @@
+POST http://127.0.0.1:8080/api/studentRegister HTTP/1.1
+Content-Type: application/json
+
+{
+    "email":"sonthu333@gmail.com",
+    "password":"abc123",
+    "fullname":"son",
+    "status":"",
+    "facultyName":"Cntt",
+    "major":"Cntt",
+    "studentCode":"21211TT2356"
+}

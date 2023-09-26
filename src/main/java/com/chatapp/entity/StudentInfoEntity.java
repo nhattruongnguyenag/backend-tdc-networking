@@ -16,7 +16,7 @@ public class StudentInfoEntity extends BaseEntity {
     private String major;
 
     @Column(name = "faculty_name", nullable = false)
-    private String faculty_name;
+    private String facultyName;
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)

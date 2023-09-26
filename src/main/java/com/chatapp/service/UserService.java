@@ -2,6 +2,7 @@ package com.chatapp.service;
 
 import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.UserDTO;
+import com.chatapp.dto.request.StudentRegisterRequestDTO;
 import com.chatapp.dto.request.UserLoginRequestDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
 
@@ -14,6 +15,7 @@ public interface UserService {
     UserInfoResponseDTO delete(Long userId);
     UserInfoResponseDTO changeStatus(Long userId, Byte status);
     AuthTokenDTO login(UserLoginRequestDTO userDTORequest);
+    AuthTokenDTO studentRegister(StudentRegisterRequestDTO studentRegisterDTO);
     UserInfoResponseDTO getUserFromToken(String token);
     UserInfoResponseDTO getUserByEmail(String email);
 }
