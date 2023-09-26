@@ -21,8 +21,8 @@ public class CustomizedUserDetailsService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity userEntity = userRepository.findOneByUsername(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        UserEntity userEntity = userRepository.findOneByEmail(email);
         if (userEntity == null) {
             throw new UsernameNotFoundException("User not found");
         }
@@ -32,7 +32,7 @@ public class CustomizedUserDetailsService implements UserDetailsService {
     private User createCustomizedUser(UserEntity userEntity) {
         List<GrantedAuthority> authorities = getGrantedAuthorities(userEntity);
         User myUserDetail
-                = new CustomizedUserModel.Builder(userEntity.getUsername(), userEntity.getPassword(), authorities)
+                = new CustomizedUserModel.Builder(userEntity.getEmail(), userEntity.getPassword(), authorities)
                 .setFullName(userEntity.getFullName())
                 .setEnabled(true)
                 .setAccountNonExpired(true)

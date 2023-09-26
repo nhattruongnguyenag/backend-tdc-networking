@@ -42,8 +42,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserInfoResponseDTO findByUsernameAndPassword(String username, String password) {
-        return userInfoResponseConverter.toDTO(userRepository.findOneByUsernameAndPassword(username, password));
+    public UserInfoResponseDTO findByEmailAndPassword (String email, String password) {
+        return userInfoResponseConverter.toDTO(userRepository.findOneByEmailAndPassword(email, password));
     }
 
     @Override
@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
                 throw new RuntimeException("user_does_not_exists");
             }
         } else {
-            if (userRepository.findOneByUsername(userDTO.getUsername()) != null) {
+            if (userRepository.findOneByEmail(userDTO.getEmail()) != null) {
                 throw new DuplicateUsernameException("user_already_exists");
             }
 
@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
     public AuthTokenDTO login(UserLoginRequestDTO userLoginRequest) {
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        userLoginRequest.getUsername(),
+                        userLoginRequest.getEmail(),
                         userLoginRequest.getPassword()
                 )
         );
@@ -106,13 +106,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserInfoResponseDTO getUserFromToken(String token) {
-        String username = tokenProvider.extractUsernameFromToken(token);
-        UserEntity userEntity = userRepository.findOneByUsername(username);
+        String email = tokenProvider.extractEmailFromToken(token);
+        UserEntity userEntity = userRepository.findOneByEmail(email);
         return userInfoResponseConverter.toDTO(userEntity);
     }
 
     @Override
-    public UserInfoResponseDTO getUserByUsername(String username) {
-        return userInfoResponseConverter.toDTO(userRepository.findOneByUsername(username));
+    public UserInfoResponseDTO getUserByEmail(String email) {
+        return userInfoResponseConverter.toDTO(userRepository.findOneByEmail(email));
     }
 }

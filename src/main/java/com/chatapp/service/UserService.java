@@ -9,11 +9,11 @@ import java.util.List;
 
 public interface UserService {
     List<UserInfoResponseDTO> findAll();
-    UserInfoResponseDTO findByUsernameAndPassword(String username, String password);
+    UserInfoResponseDTO findByEmailAndPassword(String email, String password);
     UserInfoResponseDTO saveOrUpdate(UserDTO userDTO);
     UserInfoResponseDTO delete(Long userId);
     UserInfoResponseDTO changeStatus(Long userId, Byte status);
     AuthTokenDTO login(UserLoginRequestDTO userDTORequest);
     UserInfoResponseDTO getUserFromToken(String token);
-    UserInfoResponseDTO getUserByUsername(String username);
+    UserInfoResponseDTO getUserByEmail(String email);
 }

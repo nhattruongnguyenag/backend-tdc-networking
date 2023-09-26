@@ -33,9 +33,9 @@ public class UserAPI {
         return userService.getUserFromToken(token);
     }
 
-    @GetMapping({"users/{username}", "users/{username}/"})
-    public UserInfoResponseDTO getUserByUsername(@PathVariable("username") String username) {
-        return userService.getUserByUsername(username);
+    @GetMapping({"users/{email}", "users/{email}/"})
+    public UserInfoResponseDTO getUserByEmail(@PathVariable("email") String email) {
+        return userService.getUserByEmail(email);
     }
 
     @PostMapping({"login", "login/"})

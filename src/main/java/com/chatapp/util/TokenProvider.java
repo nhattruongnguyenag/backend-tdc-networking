@@ -3,12 +3,10 @@ package com.chatapp.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.function.Function;
 
 @Component
 public class TokenProvider implements Serializable {
@@ -24,7 +22,7 @@ public class TokenProvider implements Serializable {
                 .compact();
     }
 
-    public String extractUsernameFromToken(String token) {
+    public String extractEmailFromToken(String token) {
         final Claims claims = getClaims(token);
         return claims.getSubject();
     }
