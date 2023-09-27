@@ -1,17 +1,17 @@
 package com.chatapp.converter.request;
 
 import com.chatapp.converter.abstracts.BaseConverter;
-import com.chatapp.dto.request.StudentRegisterRequestDTO;
+import com.chatapp.dto.request.StudentInfoRegisterRequestDTO;
 import com.chatapp.entity.StudentInfoEntity;
 import com.chatapp.entity.UserEntity;
 
 import org.springframework.stereotype.Component;
 
 @Component
-public class StudentInfoRequestConverter extends BaseConverter<UserEntity, StudentRegisterRequestDTO>{
+public class StudentInfoRegisterRequestConverter extends BaseConverter<UserEntity, StudentInfoRegisterRequestDTO>{
 
     @Override
-    public UserEntity toEntity(StudentRegisterRequestDTO dto) {
+    public UserEntity toEntity(StudentInfoRegisterRequestDTO dto) {
         UserEntity userEntity = super.toEntity(dto);
         StudentInfoEntity studentInfoEntity = new StudentInfoEntity();
         studentInfoEntity.setFacultyName(dto.getFacultyName());

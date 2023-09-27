@@ -11,5 +11,4 @@ import lombok.*;
 public class RoleResponeDTO extends BaseDTO{
     private String name;
     private String code;
-    private List<UserInfoResponseDTO> users;
 }

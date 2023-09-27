@@ -3,7 +3,7 @@ package com.chatapp.controller.api;
 import com.chatapp.converter.request.UserRequestConverter;
 import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.UserDTO;
-import com.chatapp.dto.request.StudentRegisterRequestDTO;
+import com.chatapp.dto.request.StudentInfoRegisterRequestDTO;
 import com.chatapp.dto.request.UserLoginRequestDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.service.UserService;
@@ -47,7 +47,7 @@ public class UserAPI {
     @PostMapping({ "users", "users/" })
     public AuthTokenDTO save(@RequestBody UserDTO userDTO) {
         UserInfoResponseDTO tempUserDTO = userService.saveOrUpdate(userDTO);
-        String token = tokenProvider.generateToken(tempUserDTO.getUsername());
+        String token = tokenProvider.generateToken(tempUserDTO.getEmail());
         return new AuthTokenDTO(token);
     }
 
@@ -58,7 +58,7 @@ public class UserAPI {
     }
 
     @PostMapping({ "studentRegister", "studentRegister/" })
-    ResponseEntity<AuthTokenDTO> studentRegister(@RequestBody StudentRegisterRequestDTO studentRegisterRequestDTO) {
+    ResponseEntity<AuthTokenDTO> studentRegister(@RequestBody StudentInfoRegisterRequestDTO studentRegisterRequestDTO) {
         return ResponseEntity.ok(userService.studentRegister(studentRegisterRequestDTO));
     }
 }

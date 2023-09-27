@@ -3,7 +3,7 @@ package com.chatapp.dto.request;
 import lombok.Data;
 
 @Data
-public class StudentRegisterRequestDTO {
+public class StudentInfoRegisterRequestDTO {
     private String email;
     private String password;
     private String fullname;
