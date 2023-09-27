@@ -3,7 +3,7 @@ package com.chatapp.dto.response;
 import lombok.*;
 
 @Data
-public class FalcutyInfoResponeDTO {
+public class FacultyInfoResponeDTO {
     UserInfoResponseDTO user;
     String facultyName;
 }

@@ -7,7 +7,7 @@ import lombok.Data;
 @Entity
 @Table(name = "falcuty_infos")
 @Data
-public class FalcutyInfoEntity extends BaseEntity {
+public class FacultyInfoEntity extends BaseEntity {
 
     @Column(name = "faculty_name", nullable = false)
     private String facultyName;

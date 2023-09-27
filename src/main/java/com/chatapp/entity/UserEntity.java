@@ -23,6 +23,9 @@ public class UserEntity extends BaseEntity {
     @Column(name = "status", nullable = false)
     private Byte status;
 
+    @Column(name = "image", nullable = false)
+    private String image;
+
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<MessageEntity> receivedMessages = new HashSet<>();
 
@@ -71,5 +74,5 @@ public class UserEntity extends BaseEntity {
     private StudentInfoEntity studentInfo;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private FalcutyInfoEntity falcutyInfo;
+    private FacultyInfoEntity falcutyInfo;
 }

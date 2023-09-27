@@ -1,25 +1,27 @@
 package com.chatapp.service.impl;
 
+import com.chatapp.converter.request.FacultyInfoUpdateOrSaveRequestConverter;
 import com.chatapp.converter.request.StudentInfoRegisterRequestConverter;
 import com.chatapp.converter.request.StudentInfoUpdateOrSaveRequestConverter;
 import com.chatapp.converter.request.UserRequestConverter;
-import com.chatapp.converter.response.FalcutyInfoResponeConverter;
+import com.chatapp.converter.response.FacultyInfoResponeConverter;
 import com.chatapp.converter.response.StudentInfoResponeConverter;
 import com.chatapp.converter.response.UserInfoResponseConverter;
 import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.UserDTO;
+import com.chatapp.dto.request.FacultyInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.StudentInfoRegisterRequestDTO;
 import com.chatapp.dto.request.StudentInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.UserLoginRequestDTO;
-import com.chatapp.dto.response.FalcutyInfoResponeDTO;
+import com.chatapp.dto.response.FacultyInfoResponeDTO;
 import com.chatapp.dto.response.StudentInfoResponeDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
-import com.chatapp.entity.FalcutyInfoEntity;
+import com.chatapp.entity.FacultyInfoEntity;
 import com.chatapp.entity.RoleEntity;
 import com.chatapp.entity.StudentInfoEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.exception.DuplicateUsernameException;
-import com.chatapp.repository.FalcutyInfoRepository;
+import com.chatapp.repository.FacultyInfoRepository;
 import com.chatapp.repository.RoleRepository;
 import com.chatapp.repository.StudentInfoRepository;
 import com.chatapp.repository.UserRepository;
@@ -41,6 +43,7 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
     private Long STUDENT_CODE = Long.valueOf(2);
+    private Long ADMIN_CODE = Long.valueOf(1);
     private String DEFAULT_PASSWORD = "123456";
 
     @Autowired
@@ -57,14 +60,14 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private StudentInfoRepository studentInfoRepository;
     @Autowired
-    private FalcutyInfoRepository falcutyInfoRepository;
+    private FacultyInfoRepository facultyInfoRepository;
 
     @Autowired
     private UserInfoResponseConverter userInfoResponseConverter;
     @Autowired
     private StudentInfoResponeConverter studentInfoResponeConverter;
     @Autowired
-    private FalcutyInfoResponeConverter falcutyInfoResponeConverter;
+    private FacultyInfoResponeConverter facultyInfoResponeConverter;
 
     @Autowired
     private UserRequestConverter userConverter;
@@ -72,6 +75,8 @@ public class UserServiceImpl implements UserService {
     private StudentInfoRegisterRequestConverter studentInfoRegisterRequestConverter;
     @Autowired
     private StudentInfoUpdateOrSaveRequestConverter studentInfoUpdateOrSaveRequestConverter;
+    @Autowired
+    private FacultyInfoUpdateOrSaveRequestConverter facultyInfoUpdateOrSaveRequestConverter;
 
     @Override
     public List<UserInfoResponseDTO> findAll() {
@@ -202,8 +207,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserInfoResponseDTO studentUpdateOrSave(
-            StudentInfoUpdateOrSaveRequestDTO studentInfoUpdateOrSaveRequestDTO) {
+    public UserInfoResponseDTO studentUpdateOrSave(StudentInfoUpdateOrSaveRequestDTO studentInfoUpdateOrSaveRequestDTO) {
         UserEntity userEntity;
         if (userRepository.findOneByEmail(studentInfoUpdateOrSaveRequestDTO.getEmail()) != null) {
             throw new DuplicateUsernameException("user_already_exists");
@@ -217,9 +221,43 @@ public class UserServiceImpl implements UserService {
     }
 
     
-    // falcutyInfo service
+    // facultyInfo service
     @Override
-    public List<FalcutyInfoResponeDTO> findAllFalcutyInfo() {
-        return falcutyInfoResponeConverter.toDTOGroup(falcutyInfoRepository.findAll());
+    public List<FacultyInfoResponeDTO> findAllFacultyInfo() {
+        return facultyInfoResponeConverter.toDTOGroup(facultyInfoRepository.findAll());
     }
+
+    private UserEntity facultyUpdate(FacultyInfoUpdateOrSaveRequestDTO facultyInfoUpdateOrSaveRequestDTO) {
+        UserEntity userEntity;
+        userEntity = facultyInfoUpdateOrSaveRequestConverter.toUpdatEntity(facultyInfoUpdateOrSaveRequestDTO);
+        return userEntity;
+    }
+
+    private UserEntity facultySave(FacultyInfoUpdateOrSaveRequestDTO facultyInfoUpdateOrSaveRequestDTO) {
+        UserEntity userEntity = facultyInfoUpdateOrSaveRequestConverter.toEntity(facultyInfoUpdateOrSaveRequestDTO);
+        RoleEntity roleEntity = roleRepository.findOneById(ADMIN_CODE);
+        List<RoleEntity> roles = new ArrayList<RoleEntity>();
+        roles.add(roleEntity);
+        userEntity.setPassword(passwordEncoder.encode(this.DEFAULT_PASSWORD));
+        userEntity.setStatus((byte) 0);
+        userEntity.setRoles(roles);
+        return userEntity;
+    }
+
+    @Override
+    public UserInfoResponseDTO facultyUpdateOrSave(FacultyInfoUpdateOrSaveRequestDTO facultyInfoUpdateOrSaveRequestDTO) {
+        UserEntity userEntity;
+        if (userRepository.findOneByEmail(facultyInfoUpdateOrSaveRequestDTO.getEmail()) != null) {
+            throw new DuplicateUsernameException("user_already_exists");
+        }
+        if (facultyInfoUpdateOrSaveRequestDTO.getId() != null) {
+            userEntity = this.facultyUpdate(facultyInfoUpdateOrSaveRequestDTO);
+        } else {
+            userEntity = this.facultySave(facultyInfoUpdateOrSaveRequestDTO);
+        }
+        return userInfoResponseConverter.toDTO(userRepository.save(userEntity));
+    }
+
+    //business service
+    
 }

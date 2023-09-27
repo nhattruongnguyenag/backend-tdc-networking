@@ -7,5 +7,6 @@ public class UserDTO extends BaseDTO {
     private String fullName;
     private String email;
     private String password;
+    private String image;
     private Byte status;
 }
