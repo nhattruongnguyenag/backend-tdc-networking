@@ -7,7 +7,7 @@ import lombok.*;
 
 @Data
 public class PostInfoResponeDTO extends BaseDTO{
-    private String content;
     private Byte status;
+    private Byte active;
     private UserInfoResponseDTO user;
 }

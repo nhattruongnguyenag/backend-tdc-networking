@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.chatapp.commond.ResponseData;
+import com.chatapp.dto.AuthTokenDTO;
+import com.chatapp.dto.request.StudentInfoRegisterRequestDTO;
 import com.chatapp.dto.request.StudentInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.response.StudentInfoResponeDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
@@ -28,6 +30,12 @@ public class StudentInfoAPI {
     @PostMapping({ "studentInfos", "studentInfos/" })
     ResponseEntity<ResponseData<UserInfoResponseDTO>> updateOrSave(@RequestBody StudentInfoUpdateOrSaveRequestDTO studentInfoUpdateOrSaveRequestDTO) {
         ResponseData<UserInfoResponseDTO> responseData = new ResponseData<>(HttpStatus.ACCEPTED,"add or update faculty success",userService.studentUpdateOrSave(studentInfoUpdateOrSaveRequestDTO));
+        return ResponseEntity.ok(responseData);
+    }
+
+    @PostMapping({ "studentInfos/register", "studentInfos/register/" })
+    ResponseEntity<ResponseData<AuthTokenDTO>> studentRegister(@RequestBody StudentInfoRegisterRequestDTO studentRegisterRequestDTO) {
+        ResponseData<AuthTokenDTO> responseData = new ResponseData<>(HttpStatus.ACCEPTED,"register success",userService.studentRegister(studentRegisterRequestDTO));
         return ResponseEntity.ok(responseData);
     }
 }

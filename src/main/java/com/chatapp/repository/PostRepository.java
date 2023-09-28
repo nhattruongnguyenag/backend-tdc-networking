@@ -7,5 +7,5 @@ import com.chatapp.entity.PostEntity;
 
 @Repository
 public interface PostRepository extends JpaRepository<PostEntity, Long> {
-
+    PostEntity findOneById(Long id);
 }

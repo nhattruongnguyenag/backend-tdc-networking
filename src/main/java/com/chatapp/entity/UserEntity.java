@@ -23,7 +23,7 @@ public class UserEntity extends BaseEntity {
     @Column(name = "status", nullable = false)
     private Byte status;
 
-    @Column(name = "image", nullable = false)
+    @Column(name = "image", nullable = true)
     private String image;
 
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)

@@ -2,10 +2,13 @@ package com.chatapp.service;
 
 import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.UserDTO;
+import com.chatapp.dto.request.BusinessInfoRegisterRequestDTO;
+import com.chatapp.dto.request.BusinessInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.FacultyInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.StudentInfoRegisterRequestDTO;
 import com.chatapp.dto.request.StudentInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.UserLoginRequestDTO;
+import com.chatapp.dto.response.BusinessInfoResponseDTO;
 import com.chatapp.dto.response.FacultyInfoResponeDTO;
 import com.chatapp.dto.response.StudentInfoResponeDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
@@ -32,5 +35,7 @@ public interface UserService {
     UserInfoResponseDTO facultyUpdateOrSave(FacultyInfoUpdateOrSaveRequestDTO facultyInfoUpdateOrSaveRequestDTO);
 
     //bussiness service
-    
+    List<BusinessInfoResponseDTO> findAllBusinessInfo();
+    AuthTokenDTO businessRegister(BusinessInfoRegisterRequestDTO businessInfoRegisterRequestDTO);
+    UserInfoResponseDTO businessUpdateOrSave(BusinessInfoUpdateOrSaveRequestDTO businessInfoUpdateOrSaveRequestDTO);
 }

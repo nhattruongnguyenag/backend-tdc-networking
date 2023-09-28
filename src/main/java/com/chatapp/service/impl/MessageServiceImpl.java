@@ -9,7 +9,6 @@ import com.chatapp.repository.CustomizedMessageRepository;
 import com.chatapp.repository.MessageRepository;
 import com.chatapp.repository.UserRepository;
 import com.chatapp.service.MessageService;
-import com.chatapp.util.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +28,6 @@ public class MessageServiceImpl implements MessageService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private TokenProvider tokenProvider;
 
     @Override
     public List<MessageResponseDTO> findBySenderOrReceiver(Long senderId, Long receiverId) {

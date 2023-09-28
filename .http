@@ -23,7 +23,71 @@ Content-Type: application/json
 
 {
     "id": 11,
-    "email":"khoatienghanag@gmail.com",
+    "email":"khoatienghanquoc@gmail.com",
     "fullname":"tieng han",
+    "image":"tienhan.png",
     "facultyName":"TH"
+}
+
+###
+GET http://127.0.0.1:8080/api/businessInfos HTTP/1.1
+
+###
+POST http://127.0.0.1:8080/api/studentInfos/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "email":"son@gmail.com",
+    "fullname":"son",
+    "password":"abc123",
+    "image":"son.png",
+    "facultyName":"cntt",
+    "major":"cntt e",
+    "studentCode":"2356"
+}
+
+###
+POST http://127.0.0.1:8080/api/businessInfos/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "email":"ctyamthuc@gmail.com",
+    "fullname":"son",
+    "password":"abc123",
+    "image":"business.png",
+    "representor":"gg",
+    "taxCode":"546657",
+    "address":"hai ba trung",
+    "activeTime":"8h"
+}
+
+###
+POST http://127.0.0.1:8080/api/businessInfos HTTP/1.1
+Content-Type: application/json
+
+{
+    "id": 19,
+    "email":"ctysonghuong@gmail.com",
+    "fullname":"song huong",
+    "image":"tienhan.png",
+    "representor":"abc",
+    "taxCode":"546657",
+    "address":"thu duc",
+    "activeTime":"21h"
+}
+
+###
+GET http://127.0.0.1:8080/api/posts HTTP/1.1
+
+###
+GET http://127.0.0.1:8080/api/posts/normalPosts HTTP/1.1
+
+###
+POST http://127.0.0.1:8080/api/posts/normalPosts HTTP/1.1
+Content-Type: application/json
+
+{
+    "userId": 1,
+    "type":"normal",
+    "content":"jbdb"
 }

@@ -9,8 +9,6 @@ import lombok.*;
 @Entity
 @Table(name = "posts")
 public class PostEntity extends BaseEntity {
-    @Column(name = "content", nullable = false)
-    private String content;
 
     @Column(name = "status", nullable = false)
     private Byte status;

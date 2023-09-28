@@ -3,7 +3,6 @@ package com.chatapp.controller.api;
 import com.chatapp.converter.request.UserRequestConverter;
 import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.UserDTO;
-import com.chatapp.dto.request.StudentInfoRegisterRequestDTO;
 import com.chatapp.dto.request.UserLoginRequestDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.service.UserService;
@@ -17,8 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class UserAPI {
-    @Autowired
-    private UserRequestConverter userConverter;
+   
     @Autowired
     private UserService userService;
     @Autowired
@@ -55,10 +53,5 @@ public class UserAPI {
     public ResponseEntity delete(@PathVariable("id") Long id) {
         userService.delete(id);
         return ResponseEntity.ok().build();
-    }
-
-    @PostMapping({ "studentRegister", "studentRegister/" })
-    ResponseEntity<AuthTokenDTO> studentRegister(@RequestBody StudentInfoRegisterRequestDTO studentRegisterRequestDTO) {
-        return ResponseEntity.ok(userService.studentRegister(studentRegisterRequestDTO));
     }
 }

@@ -1,7 +1,6 @@
 package com.chatapp.converter.request;
 
 import com.chatapp.converter.abstracts.BaseConverter;
-import com.chatapp.dto.request.StudentInfoRegisterRequestDTO;
 import com.chatapp.dto.request.StudentInfoUpdateOrSaveRequestDTO;
 import com.chatapp.entity.StudentInfoEntity;
 import com.chatapp.entity.UserEntity;
@@ -19,11 +18,14 @@ public class StudentInfoUpdateOrSaveRequestConverter extends BaseConverter<UserE
     @Autowired
     private StudentInfoRepository studentInfoRepository;
 
-    public UserEntity toUpdatEntity(StudentInfoUpdateOrSaveRequestDTO dto){
+    public UserEntity toUpdateEntity(StudentInfoUpdateOrSaveRequestDTO dto){
         UserEntity userEntity = userRepository.findOneById(dto.getId());
         userEntity.setId(dto.getId());
         userEntity.setEmail(dto.getEmail());
         userEntity.setFullName(dto.getFullname());
+        if (dto.getImage() != null) {
+            userEntity.setImage(dto.getImage());
+        }
         StudentInfoEntity studentInfoEntity = studentInfoRepository.findOneByUser_Id(dto.getId());
         studentInfoEntity.setFacultyName(dto.getFacultyName());
         studentInfoEntity.setMajor(dto.getMajor());

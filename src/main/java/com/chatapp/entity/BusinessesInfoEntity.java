@@ -13,13 +13,13 @@ public class BusinessesInfoEntity extends BaseEntity {
     private String representor;
 
     @Column(name = "tax_code", nullable = false)
-    private String tax_code;
+    private String taxCode;
 
     @Column(name = "address", nullable = false)
     private String address;
 
     @Column(name = "active_time", nullable = false)
-    private String active_time;
+    private String activeTime;
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
