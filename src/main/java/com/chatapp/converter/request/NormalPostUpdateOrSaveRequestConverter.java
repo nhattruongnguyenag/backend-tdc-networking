@@ -5,11 +5,9 @@ import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.StudentInfoUpdateOrSaveRequestDTO;
 import com.chatapp.entity.NormalPostEntity;
 import com.chatapp.entity.PostEntity;
-import com.chatapp.entity.StudentInfoEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.repository.NormalPostRepository;
 import com.chatapp.repository.PostRepository;
-import com.chatapp.repository.StudentInfoRepository;
 import com.chatapp.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;

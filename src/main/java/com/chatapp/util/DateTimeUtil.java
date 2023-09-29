@@ -1,8 +1,6 @@
 package com.chatapp.util;
 
-import com.mysql.cj.log.Log;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 

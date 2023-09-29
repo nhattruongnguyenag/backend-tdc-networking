@@ -27,7 +27,6 @@ public class MessageServiceImpl implements MessageService {
     private CustomizedMessageRepository customizedMessageRepository;
     @Autowired
     private UserRepository userRepository;
-    @Autowired
 
     @Override
     public List<MessageResponseDTO> findBySenderOrReceiver(Long senderId, Long receiverId) {

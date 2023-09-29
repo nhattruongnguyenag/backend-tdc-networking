@@ -29,13 +29,13 @@ public class StudentInfoAPI {
 
     @PostMapping({ "studentInfos", "studentInfos/" })
     ResponseEntity<ResponseData<UserInfoResponseDTO>> updateOrSave(@RequestBody StudentInfoUpdateOrSaveRequestDTO studentInfoUpdateOrSaveRequestDTO) {
-        ResponseData<UserInfoResponseDTO> responseData = new ResponseData<>(HttpStatus.ACCEPTED,"add or update faculty success",userService.studentUpdateOrSave(studentInfoUpdateOrSaveRequestDTO));
+        ResponseData<UserInfoResponseDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"add or update student success",userService.studentUpdateOrSave(studentInfoUpdateOrSaveRequestDTO));
         return ResponseEntity.ok(responseData);
     }
 
     @PostMapping({ "studentInfos/register", "studentInfos/register/" })
     ResponseEntity<ResponseData<AuthTokenDTO>> studentRegister(@RequestBody StudentInfoRegisterRequestDTO studentRegisterRequestDTO) {
-        ResponseData<AuthTokenDTO> responseData = new ResponseData<>(HttpStatus.ACCEPTED,"register success",userService.studentRegister(studentRegisterRequestDTO));
+        ResponseData<AuthTokenDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"register success",userService.studentRegister(studentRegisterRequestDTO));
         return ResponseEntity.ok(responseData);
     }
 }

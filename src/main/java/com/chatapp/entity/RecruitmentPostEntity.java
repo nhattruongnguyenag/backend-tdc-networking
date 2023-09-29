@@ -1,5 +1,9 @@
 package com.chatapp.entity;
 
+
+import java.sql.Timestamp;
+import java.util.Date;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,7 +31,7 @@ public class RecruitmentPostEntity extends BaseEntity {
     private Long salary;
 
     @Column(name = "expiration", nullable = false)
-    private String expiration;
+    private Date expiration;
 
     @Column(name = "employment_type", nullable = false)
     private String employmentType;

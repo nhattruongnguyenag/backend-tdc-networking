@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.*;
 
 import com.chatapp.commond.ResponseData;
 import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
+import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
 import com.chatapp.dto.response.NormalPostResponeDTO;
 import com.chatapp.dto.response.PostInfoResponeDTO;
+import com.chatapp.dto.response.RecruitmentPostResponeDTO;
 import com.chatapp.service.PostService;
 
 @RestController
@@ -24,6 +26,7 @@ public class PostAPI {
         return postService.findAll();
     }
 
+    //normalPost api
     @GetMapping({ "posts/normalPosts", "posts/normalPosts/" })
     public ResponseEntity<ResponseData<List<NormalPostResponeDTO>>> findAllNormalPosts() {
         ResponseData<List<NormalPostResponeDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success", postService.findAllNormalPost());
@@ -32,7 +35,20 @@ public class PostAPI {
 
     @PostMapping({ "posts/normalPosts", "posts/normalPosts/" })
     ResponseEntity<ResponseData<PostInfoResponeDTO>> updateOrSave(@RequestBody NormalPostUpdateOrSaveRequestDTO normalPostUpdateOrSaveRequestDTO) {
-        ResponseData<PostInfoResponeDTO> responseData = new ResponseData<>(HttpStatus.ACCEPTED,"add or update faculty success",postService.normalPostUpdateOrSave(normalPostUpdateOrSaveRequestDTO));
+        ResponseData<PostInfoResponeDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"add or update normal post success",postService.normalPostUpdateOrSave(normalPostUpdateOrSaveRequestDTO));
+        return ResponseEntity.ok(responseData);
+    }
+
+    //recruitmentPost api
+    @GetMapping({ "posts/recruitmentPosts", "posts/recruitmentPosts/" })
+    public ResponseEntity<ResponseData<List<RecruitmentPostResponeDTO>>> findRecruitmentPosts() {
+        ResponseData<List<RecruitmentPostResponeDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success", postService.findAllRecruitmentPost());
+        return ResponseEntity.ok(responseData);
+    }
+
+    @PostMapping({ "posts/recruitmentPosts", "posts/recruitmentPosts/" })
+    ResponseEntity<ResponseData<PostInfoResponeDTO>> updateOrSave(@RequestBody RecruitmentPostUpdateOrSageRequestDTO recruitmentPostUpdateOrSageRequestDTO) {
+        ResponseData<PostInfoResponeDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"add or update recruitment post success",postService.recruitmentPostUpdateOrSave(recruitmentPostUpdateOrSageRequestDTO));
         return ResponseEntity.ok(responseData);
     }
 }
