@@ -21,19 +21,19 @@ public class StudentInfoAPI {
     @Autowired
     private UserService userService;
     
-    @GetMapping({ "studentInfos", "studentInfos/" })
+    @GetMapping({ "student", "student/" })
     public ResponseData<List<StudentInfoResponeDTO>> findAll() {
         ResponseData<List<StudentInfoResponeDTO>> responseData = new ResponseData<List<StudentInfoResponeDTO>>(HttpStatus.OK, "success", userService.findAllStudentInfo());
         return responseData;
     }
 
-    @PostMapping({ "studentInfos", "studentInfos/" })
+    @PostMapping({ "student", "student/" })
     ResponseEntity<ResponseData<UserInfoResponseDTO>> updateOrSave(@RequestBody StudentInfoUpdateOrSaveRequestDTO studentInfoUpdateOrSaveRequestDTO) {
         ResponseData<UserInfoResponseDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"add or update student success",userService.studentUpdateOrSave(studentInfoUpdateOrSaveRequestDTO));
         return ResponseEntity.ok(responseData);
     }
 
-    @PostMapping({ "studentInfos/register", "studentInfos/register/" })
+    @PostMapping({ "student/register", "student/register/" })
     ResponseEntity<ResponseData<AuthTokenDTO>> studentRegister(@RequestBody StudentInfoRegisterRequestDTO studentRegisterRequestDTO) {
         ResponseData<AuthTokenDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"register success",userService.studentRegister(studentRegisterRequestDTO));
         return ResponseEntity.ok(responseData);

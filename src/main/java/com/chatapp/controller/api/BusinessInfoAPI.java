@@ -21,14 +21,14 @@ public class BusinessInfoAPI {
     @Autowired
     private UserService userService;
 
-    @GetMapping({ "businessInfos", "businessInfos/" })
+    @GetMapping({ "business", "business/" })
     public ResponseData<List<BusinessInfoResponseDTO>> findAll() {
         ResponseData<List<BusinessInfoResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
                 userService.findAllBusinessInfo());
         return responseData;
     }
 
-    @PostMapping({ "businessInfos", "businessInfos/" })
+    @PostMapping({ "business", "business/" })
     ResponseEntity<ResponseData<UserInfoResponseDTO>> updateOrSave(
             @RequestBody BusinessInfoUpdateOrSaveRequestDTO businessInfoUpdateOrSaveRequestDTO) {
         ResponseData<UserInfoResponseDTO> responseData = new ResponseData<>(HttpStatus.CREATED, "add or update success",
@@ -36,8 +36,8 @@ public class BusinessInfoAPI {
         return new ResponseEntity<ResponseData<UserInfoResponseDTO>>(responseData, HttpStatus.CREATED);
     }
 
-    @PostMapping({ "businessInfos/register", "businessInfos/register/" })
-    ResponseEntity<ResponseData<AuthTokenDTO>> studentRegister(
+    @PostMapping({ "business/register", "business/register/" })
+    ResponseEntity<ResponseData<AuthTokenDTO>> businessRegister(
             @RequestBody BusinessInfoRegisterRequestDTO businessInfoRegisterRequestDTO) {
         ResponseData<AuthTokenDTO> responseData = new ResponseData<>(HttpStatus.CREATED, "register success",
                 userService.businessRegister(businessInfoRegisterRequestDTO));

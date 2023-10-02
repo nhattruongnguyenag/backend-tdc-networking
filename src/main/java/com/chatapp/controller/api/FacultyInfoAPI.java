@@ -8,6 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.chatapp.commond.ResponseData;
+import com.chatapp.dto.AuthTokenDTO;
+import com.chatapp.dto.request.BusinessInfoRegisterRequestDTO;
+import com.chatapp.dto.request.FacultyInfoRegisterRequestDTO;
 import com.chatapp.dto.request.FacultyInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.response.FacultyInfoResponeDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
@@ -19,15 +22,23 @@ public class FacultyInfoAPI {
     @Autowired
     private UserService userService;
     
-    @GetMapping({ "facultyInfos", "facultyInfos/" })
+    @GetMapping({ "faculty", "faculty/" })
     public ResponseData<List<FacultyInfoResponeDTO>> findAll() {
         ResponseData<List<FacultyInfoResponeDTO>> responseData = new ResponseData<>(HttpStatus.OK,"success",userService.findAllFacultyInfo());
         return responseData;
     }
 
-    @PostMapping({ "facultyInfos", "facultyInfos/" })
+    @PostMapping({ "faculty", "faculty/" })
     ResponseEntity<ResponseData<UserInfoResponseDTO>> updateOrSave(@RequestBody FacultyInfoUpdateOrSaveRequestDTO facultyInfoUpdateOrSaveRequestDTO) {
         ResponseData<UserInfoResponseDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"add or update success",userService.facultyUpdateOrSave(facultyInfoUpdateOrSaveRequestDTO));
         return new ResponseEntity<ResponseData<UserInfoResponseDTO>>(responseData, HttpStatus.CREATED);
+    }
+
+    @PostMapping({ "faculty/register", "faculty/register/" })
+    ResponseEntity<ResponseData<AuthTokenDTO>> facultyRegister(
+            @RequestBody FacultyInfoRegisterRequestDTO facultyInfoRegisterRequestDTO) {
+        ResponseData<AuthTokenDTO> responseData = new ResponseData<>(HttpStatus.CREATED, "register success",
+                userService.facultyRegister(facultyInfoRegisterRequestDTO));
+        return ResponseEntity.ok(responseData);
     }
 }

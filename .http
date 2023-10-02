@@ -1,44 +1,45 @@
-POST http://127.0.0.1:8080/api/studentInfos HTTP/1.1
+POST http://127.0.0.1:8080/api/student HTTP/1.1
 Content-Type: application/json
 
 {
     "email":"truonghocgioiaghg@gmail.com",
-    "fullname":"son",
+    "name":"son",
     "facultyName":"Cntt",
     "major":"Cntt",
     "studentCode":"21211TT2358"
 }
+
 ###
 GET http://127.0.0.1:8080/api/users HTTP/1.1
 
 ###
-GET http://127.0.0.1:8080/api/studentInfos HTTP/1.1
+GET http://127.0.0.1:8080/api/student HTTP/1.1
 
 ###
-GET http://127.0.0.1:8080/api/facultyInfos HTTP/1.1
+GET http://127.0.0.1:8080/api/faculty HTTP/1.1
 
 ###
-POST http://127.0.0.1:8080/api/facultyInfos HTTP/1.1
+POST http://127.0.0.1:8080/api/faculty HTTP/1.1
 Content-Type: application/json
 
 {
     "id": 11,
     "email":"khoatienghanquoc@gmail.com",
-    "fullname":"tieng han",
+    "name":"tieng han",
     "image":"tienhan.png",
     "facultyName":"TH"
 }
 
 ###
-GET http://127.0.0.1:8080/api/businessInfos HTTP/1.1
+GET http://127.0.0.1:8080/api/business HTTP/1.1
 
 ###
-POST http://127.0.0.1:8080/api/studentInfos/register HTTP/1.1
+POST http://127.0.0.1:8080/api/student/register HTTP/1.1
 Content-Type: application/json
 
 {
     "email":"son4363@gmail.com",
-    "fullname":"son",
+    "name":"son",
     "password":"abc123",
     "image":"son.png",
     "facultyName":"cntt",
@@ -47,12 +48,24 @@ Content-Type: application/json
 }
 
 ###
-POST http://127.0.0.1:8080/api/businessInfos/register HTTP/1.1
+POST http://127.0.0.1:8080/api/faculty/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "email":"cntt4363@gmail.com",
+    "name":"son",
+    "password":"abc123",
+    "image":"son.png",
+    "facultyName":"cntt"
+}
+
+###
+POST http://127.0.0.1:8080/api/business/register HTTP/1.1
 Content-Type: application/json
 
 {
     "email":"ctyamthuc@gmail.com",
-    "fullname":"son",
+    "name":"son",
     "password":"abc123",
     "image":"business.png",
     "representor":"gg",
@@ -62,13 +75,13 @@ Content-Type: application/json
 }
 
 ###
-POST http://127.0.0.1:8080/api/businessInfos HTTP/1.1
+POST http://127.0.0.1:8080/api/business HTTP/1.1
 Content-Type: application/json
 
 {
     "id": 19,
     "email":"ctysonghuong@gmail.com",
-    "fullname":"song huong",
+    "name":"song huong",
     "image":"tienhan.png",
     "representor":"abc",
     "taxCode":"546657",

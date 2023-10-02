@@ -2,6 +2,7 @@ package com.chatapp.service.impl;
 
 import com.chatapp.converter.request.BusinessInfoRegisterRequestConverter;
 import com.chatapp.converter.request.BusinessInfoUpdateOrSaveRequestConverter;
+import com.chatapp.converter.request.FacultyInfoRegisterRequestConverter;
 import com.chatapp.converter.request.FacultyInfoUpdateOrSaveRequestConverter;
 import com.chatapp.converter.request.StudentInfoRegisterRequestConverter;
 import com.chatapp.converter.request.StudentInfoUpdateOrSaveRequestConverter;
@@ -14,6 +15,7 @@ import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.UserDTO;
 import com.chatapp.dto.request.BusinessInfoRegisterRequestDTO;
 import com.chatapp.dto.request.BusinessInfoUpdateOrSaveRequestDTO;
+import com.chatapp.dto.request.FacultyInfoRegisterRequestDTO;
 import com.chatapp.dto.request.FacultyInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.StudentInfoRegisterRequestDTO;
 import com.chatapp.dto.request.StudentInfoUpdateOrSaveRequestDTO;
@@ -88,6 +90,8 @@ public class UserServiceImpl implements UserService {
     private FacultyInfoUpdateOrSaveRequestConverter facultyInfoUpdateOrSaveRequestConverter;
     @Autowired
     private BusinessInfoUpdateOrSaveRequestConverter businessInfoUpdateOrSaveRequestConverter;
+    @Autowired
+    private FacultyInfoRegisterRequestConverter facultyInfoRegisterRequestConverter;
     @Autowired
     private BusinessInfoRegisterRequestConverter businessInfoRegisterRequestConverter;
 
@@ -236,6 +240,28 @@ public class UserServiceImpl implements UserService {
 
     // facultyInfo service
     @Override
+    public AuthTokenDTO facultyRegister(FacultyInfoRegisterRequestDTO facultyInfoRegisterRequestDTO) {
+        UserEntity userEntity;
+        RoleEntity roleEntity = roleRepository.findOneById(ADMIN_CODE);
+        List<RoleEntity> roles = new ArrayList<RoleEntity>();
+        roles.add(roleEntity);
+
+        if (userRepository.findOneByEmail(facultyInfoRegisterRequestDTO.getEmail()) != null) {
+            throw new DuplicateUsernameException("user_already_exists");
+        }
+        facultyInfoRegisterRequestDTO
+                .setPassword(passwordEncoder.encode(facultyInfoRegisterRequestDTO.getPassword()));
+
+        userEntity = facultyInfoRegisterRequestConverter.toEntity(facultyInfoRegisterRequestDTO);
+        userEntity.setRoles(roles);
+        userEntity.setStatus((byte) 0);
+        userRepository.save(userEntity);
+
+        final String token = tokenProvider.generateToken(facultyInfoRegisterRequestDTO.getEmail());
+        return new AuthTokenDTO(token);
+    }
+
+    @Override
     public List<FacultyInfoResponeDTO> findAllFacultyInfo() {
         return facultyInfoResponeConverter.toDTOGroup(facultyInfoRepository.findAll());
     }
@@ -275,7 +301,7 @@ public class UserServiceImpl implements UserService {
     // business service
     @Override
     public List<BusinessInfoResponseDTO> findAllBusinessInfo() {
-       return businessInfoResponeConverter.toDTOGroup(businessInfoRepository.findAll());
+        return businessInfoResponeConverter.toDTOGroup(businessInfoRepository.findAll());
     }
 
     @Override
@@ -288,7 +314,8 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findOneByEmail(businessInfoRegisterRequestDTO.getEmail()) != null) {
             throw new DuplicateUsernameException("user_already_exists");
         }
-        businessInfoRegisterRequestDTO.setPassword(passwordEncoder.encode(businessInfoRegisterRequestDTO.getPassword()));
+        businessInfoRegisterRequestDTO
+                .setPassword(passwordEncoder.encode(businessInfoRegisterRequestDTO.getPassword()));
 
         userEntity = businessInfoRegisterRequestConverter.toEntity(businessInfoRegisterRequestDTO);
         userEntity.setRoles(roles);
@@ -330,4 +357,5 @@ public class UserServiceImpl implements UserService {
         }
         return userInfoResponseConverter.toDTO(userRepository.save(userEntity));
     }
+
 }

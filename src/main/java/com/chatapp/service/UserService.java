@@ -4,6 +4,7 @@ import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.UserDTO;
 import com.chatapp.dto.request.BusinessInfoRegisterRequestDTO;
 import com.chatapp.dto.request.BusinessInfoUpdateOrSaveRequestDTO;
+import com.chatapp.dto.request.FacultyInfoRegisterRequestDTO;
 import com.chatapp.dto.request.FacultyInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.StudentInfoRegisterRequestDTO;
 import com.chatapp.dto.request.StudentInfoUpdateOrSaveRequestDTO;
@@ -32,6 +33,7 @@ public interface UserService {
 
     //faculty service
     List<FacultyInfoResponeDTO> findAllFacultyInfo();
+    AuthTokenDTO facultyRegister(FacultyInfoRegisterRequestDTO facultyInfoRegisterRequestDTO);
     UserInfoResponseDTO facultyUpdateOrSave(FacultyInfoUpdateOrSaveRequestDTO facultyInfoUpdateOrSaveRequestDTO);
 
     //bussiness service
