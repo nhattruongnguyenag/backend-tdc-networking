@@ -17,7 +17,7 @@ public class VoteAnswerEntity extends BaseEntity {
     @Column(name = "vote_user_ids", nullable = false)
     private String voteUserIds;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "question_id", nullable = false)
     private QuestionEntity question;
 

@@ -33,7 +33,7 @@ public class CustomizedUserDetailsService implements UserDetailsService {
         List<GrantedAuthority> authorities = getGrantedAuthorities(userEntity);
         User myUserDetail
                 = new CustomizedUserModel.Builder(userEntity.getEmail(), userEntity.getPassword(), authorities)
-                .setFullName(userEntity.getFullName())
+                .setFullName(userEntity.getName())
                 .setEnabled(true)
                 .setAccountNonExpired(true)
                 .setAccountNonLocked(true)

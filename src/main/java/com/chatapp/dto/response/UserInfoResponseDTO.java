@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class UserInfoResponseDTO extends BaseDTO {
     private String email;
-    private String fullName;
+    private String name;
     private String image;
     private Byte status;
     List<RoleResponeDTO> roleCodes;

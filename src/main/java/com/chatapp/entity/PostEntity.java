@@ -41,6 +41,9 @@ public class PostEntity extends BaseEntity {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<PostImageEntity> images;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<JobProfileEntity> jobProfiles;
+
     @ManyToMany(mappedBy = "postSave", fetch = FetchType.LAZY)
     private List<UserEntity> users;
 }

@@ -14,11 +14,14 @@ public class UserEntity extends BaseEntity {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "fullname", nullable = false)
-    private String fullName;
+    @Column(name = "refresh_token", nullable = true)
+    private String refreshToken;
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @Column(name = "status", nullable = false)
     private Byte status;
@@ -37,7 +40,7 @@ public class UserEntity extends BaseEntity {
     private List<RoleEntity> roles;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_post", joinColumns = @JoinColumn(name = "user_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "post_id", nullable = false))
+    @JoinTable(name = "user_save_posts", joinColumns = @JoinColumn(name = "user_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "post_id", nullable = false))
     private List<PostEntity> postSave;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -75,4 +78,7 @@ public class UserEntity extends BaseEntity {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private FacultyInfoEntity falcutyInfo;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<JobProfileEntity> jobProfiles;
 }

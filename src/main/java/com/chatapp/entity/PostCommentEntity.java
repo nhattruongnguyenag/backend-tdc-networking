@@ -1,5 +1,7 @@
 package com.chatapp.entity;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,4 +20,11 @@ public class PostCommentEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
+
+    @OneToMany(mappedBy = "postComment", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<PostCommentEntity> postComments;
+
+    @ManyToOne
+    @JoinColumn(name = "parent_comment_id", nullable = true)
+    private PostCommentEntity postComment;
 }

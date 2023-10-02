@@ -6,7 +6,7 @@ import lombok.Data;
 public class BusinessInfoUpdateOrSaveRequestDTO {
     private Long id;
     private String email;
-    private String fullname;
+    private String name;
     private String image;
     private String representor;
     private String taxCode;

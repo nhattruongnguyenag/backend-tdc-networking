@@ -11,7 +11,7 @@ public class ShortAnswerEntity extends BaseEntity {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "question_id", nullable = false)
     private QuestionEntity question;
 

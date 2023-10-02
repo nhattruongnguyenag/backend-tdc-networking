@@ -37,7 +37,7 @@ POST http://127.0.0.1:8080/api/studentInfos/register HTTP/1.1
 Content-Type: application/json
 
 {
-    "email":"son@gmail.com",
+    "email":"son4363@gmail.com",
     "fullname":"son",
     "password":"abc123",
     "image":"son.png",
@@ -100,7 +100,6 @@ POST http://127.0.0.1:8080/api/posts/recruitmentPosts HTTP/1.1
 Content-Type: application/json
 
 {
-    "id": 8,
     "userId": 1,
     "type":"recruitment",
     "title":"hello",

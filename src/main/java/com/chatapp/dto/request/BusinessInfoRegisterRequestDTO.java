@@ -6,7 +6,7 @@ import lombok.Data;
 public class BusinessInfoRegisterRequestDTO {
     private String email;
     private String password;
-    private String fullname;
+    private String name;
     private String image;
     private String representor;
     private String taxCode;

@@ -12,6 +12,9 @@ public class NotificationEntity extends BaseEntity {
     @Column(name = "content", nullable = false)
     private String content;
 
+    @Column(name = "status", nullable = false)
+    private Byte status;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;

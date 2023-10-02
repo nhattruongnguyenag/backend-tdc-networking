@@ -15,6 +15,9 @@ public class MessageEntity extends BaseEntity {
     @Column(nullable = false, updatable = false)
     private String type;
 
+    @Column(name = "status", nullable = false)
+    private Byte status;
+
     @ManyToOne
     @JoinColumn(name = "sender_id", nullable = false)
     private UserEntity sender;
