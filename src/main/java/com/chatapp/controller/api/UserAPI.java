@@ -43,8 +43,8 @@ public class UserAPI {
     }
 
     @PostMapping({ "login", "login/" })
-    ResponseEntity<ResponseData<AuthTokenDTO>> login(@RequestBody UserLoginRequestDTO userDTORequest) {
-        ResponseData<AuthTokenDTO> responseData = new ResponseData<>(HttpStatus.OK, "login_sucesss",userService.login(userDTORequest));
+    ResponseEntity<?> login(@RequestBody UserLoginRequestDTO userDTORequest) {
+        ResponseData<AuthTokenDTO> responseData = new ResponseData<>(HttpStatus.OK, "success", userService.login(userDTORequest));
         return ResponseEntity.ok(responseData);
     }
 
