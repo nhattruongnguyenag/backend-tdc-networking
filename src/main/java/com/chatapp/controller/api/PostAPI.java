@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import com.chatapp.commond.ResponseData;
 import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
+import com.chatapp.dto.request.ShortAnswerSaveRequestDTO;
 import com.chatapp.dto.response.NormalPostResponeDTO;
 import com.chatapp.dto.response.PostInfoResponeDTO;
 import com.chatapp.dto.response.RecruitmentPostResponeDTO;
@@ -27,28 +28,34 @@ public class PostAPI {
     }
 
     //normalPost api
-    @GetMapping({ "posts/normalPosts", "posts/normalPosts/" })
+    @GetMapping({ "posts/normal", "posts/normal/" })
     public ResponseEntity<ResponseData<List<NormalPostResponeDTO>>> findAllNormalPosts() {
         ResponseData<List<NormalPostResponeDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success", postService.findAllNormalPost());
         return ResponseEntity.ok(responseData);
     }
 
-    @PostMapping({ "posts/normalPosts", "posts/normalPosts/" })
+    @PostMapping({ "posts/normal", "posts/normal/" })
     ResponseEntity<ResponseData<PostInfoResponeDTO>> updateOrSave(@RequestBody NormalPostUpdateOrSaveRequestDTO normalPostUpdateOrSaveRequestDTO) {
         ResponseData<PostInfoResponeDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"add or update normal post success",postService.normalPostUpdateOrSave(normalPostUpdateOrSaveRequestDTO));
         return ResponseEntity.created(null).body(responseData);
     }
 
     //recruitmentPost api
-    @GetMapping({ "posts/recruitmentPosts", "posts/recruitmentPosts/" })
+    @GetMapping({ "posts/recruitment", "posts/recruitment/" })
     public ResponseEntity<ResponseData<List<RecruitmentPostResponeDTO>>> findRecruitmentPosts() {
         ResponseData<List<RecruitmentPostResponeDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success", postService.findAllRecruitmentPost());
         return ResponseEntity.ok(responseData);
     }
 
-    @PostMapping({ "posts/recruitmentPosts", "posts/recruitmentPosts/" })
+    @PostMapping({ "posts/recruitment", "posts/recruitment/" })
     ResponseEntity<ResponseData<PostInfoResponeDTO>> updateOrSave(@RequestBody RecruitmentPostUpdateOrSageRequestDTO recruitmentPostUpdateOrSageRequestDTO) {
         ResponseData<PostInfoResponeDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"add or update recruitment post success",postService.recruitmentPostUpdateOrSave(recruitmentPostUpdateOrSageRequestDTO));
+        return ResponseEntity.created(null).body(responseData);
+    }
+
+    @PostMapping({ "posts/survey", "posts/survey/" })
+    ResponseEntity<ResponseData<PostInfoResponeDTO>> updateOrSave(@RequestBody ShortAnswerSaveRequestDTO shortAnswerSaveRequestDTO) {
+        ResponseData<PostInfoResponeDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"success",postService.shortQuestionSave(shortAnswerSaveRequestDTO));
         return ResponseEntity.created(null).body(responseData);
     }
 }

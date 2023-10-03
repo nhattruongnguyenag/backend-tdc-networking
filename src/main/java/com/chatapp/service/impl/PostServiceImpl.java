@@ -7,13 +7,16 @@ import org.springframework.stereotype.Service;
 
 import com.chatapp.converter.request.NormalPostUpdateOrSaveRequestConverter;
 import com.chatapp.converter.request.RecruitmentPosyUpdateOrSaveRequestConverter;
+import com.chatapp.converter.request.ShortAnswerSaveRequestConverter;
 import com.chatapp.converter.response.NormalPostResponeConverter;
 import com.chatapp.converter.response.PostInfoResponeConverter;
 import com.chatapp.converter.response.RecruitmentPostResponeConverter;
 import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
+import com.chatapp.dto.request.ShortAnswerSaveRequestDTO;
 import com.chatapp.dto.response.NormalPostResponeDTO;
 import com.chatapp.dto.response.PostInfoResponeDTO;
+import com.chatapp.dto.response.QuestionResponeDTO;
 import com.chatapp.dto.response.RecruitmentPostResponeDTO;
 import com.chatapp.entity.PostEntity;
 import com.chatapp.repository.NormalPostRepository;
@@ -32,7 +35,7 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private NormalPostRepository normalPostRepository;
     @Autowired
-    private RecruitmentPostRepository recruitmentPostRepository ;
+    private RecruitmentPostRepository recruitmentPostRepository;
 
     @Autowired
     private PostInfoResponeConverter postInfoResponeConverter;
@@ -45,6 +48,8 @@ public class PostServiceImpl implements PostService {
     private NormalPostUpdateOrSaveRequestConverter normalPostUpdateOrSaveRequestConverter;
     @Autowired
     private RecruitmentPosyUpdateOrSaveRequestConverter recruitmentPosyUpdateOrSaveRequestConverter;
+    @Autowired
+    private ShortAnswerSaveRequestConverter shortAnswerSaveRequestConverter;
 
     @Override
     public List<PostInfoResponeDTO> findAll() {
@@ -88,14 +93,17 @@ public class PostServiceImpl implements PostService {
         return recruitmentPostResponeConverter.toDTOGroup(recruitmentPostRepository.findAll());
     }
 
-    private PostEntity recruitmentPostUpdate(RecruitmentPostUpdateOrSageRequestDTO recruitmentPostUpdateOrSageRequestDTO) {
+    private PostEntity recruitmentPostUpdate(
+            RecruitmentPostUpdateOrSageRequestDTO recruitmentPostUpdateOrSageRequestDTO) {
         PostEntity postEntity;
         postEntity = recruitmentPosyUpdateOrSaveRequestConverter.toUpdatEntity(recruitmentPostUpdateOrSageRequestDTO);
         return postEntity;
     }
 
-    private PostEntity recruitmentPostSave(RecruitmentPostUpdateOrSageRequestDTO recruitmentPostUpdateOrSageRequestDTO) {
-        PostEntity postEntity = recruitmentPosyUpdateOrSaveRequestConverter.toEntity(recruitmentPostUpdateOrSageRequestDTO);
+    private PostEntity recruitmentPostSave(
+            RecruitmentPostUpdateOrSageRequestDTO recruitmentPostUpdateOrSageRequestDTO) {
+        PostEntity postEntity = recruitmentPosyUpdateOrSaveRequestConverter
+                .toEntity(recruitmentPostUpdateOrSageRequestDTO);
         postEntity.setActive((byte) 1);
         postEntity.setStatus((byte) 0);
         return postEntity;
@@ -113,4 +121,13 @@ public class PostServiceImpl implements PostService {
         return postInfoResponeConverter.toDTO(postRepository.save(postEntity));
     }
 
+    // short question
+    @Override
+    public PostInfoResponeDTO shortQuestionSave(ShortAnswerSaveRequestDTO shortAnswerSaveRequestDTO) {
+        PostEntity postEntity = shortAnswerSaveRequestConverter
+                .toEntity(shortAnswerSaveRequestDTO);
+        postEntity.setActive((byte) 1);
+        postEntity.setStatus((byte) 0);
+        return postInfoResponeConverter.toDTO(postRepository.save(postEntity));
+    }
 }

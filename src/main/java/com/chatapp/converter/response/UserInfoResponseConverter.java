@@ -2,7 +2,6 @@ package com.chatapp.converter.response;
 
 import com.chatapp.converter.abstracts.BaseConverter;
 import com.chatapp.dto.response.UserInfoResponseDTO;
-import com.chatapp.entity.RoleEntity;
 import com.chatapp.entity.UserEntity;
 
 import org.springframework.stereotype.Component;
@@ -14,18 +13,11 @@ public class UserInfoResponseConverter extends BaseConverter<UserEntity, UserInf
     public UserInfoResponseDTO toDTO(UserEntity entity) {
         UserInfoResponseDTO userInfoResponseDTO = super.toDTO(entity);
         String roleCodes = "";
-        if (entity.getRoles().size() > 1) {
-            Integer temp = 0;
-            for (RoleEntity role : entity.getRoles()) {
-                if(temp == entity.getRoles().size() - 1){
-                    roleCodes += role.getCode();
-                    break;
-                }
-                roleCodes += role.getCode() + ",";
-                temp++;
+        for (int i = 0; i < entity.getRoles().size(); i++) {
+            if (i != 0) {
+                roleCodes += ",";
             }
-        }else{
-            roleCodes += entity.getRoles().get(0).getCode();
+            roleCodes += entity.getRoles().get(i).getCode();
         }
         userInfoResponseDTO.setRoleCodes(roleCodes);
         return userInfoResponseDTO;

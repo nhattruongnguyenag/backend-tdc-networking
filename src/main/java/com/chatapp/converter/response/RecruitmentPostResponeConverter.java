@@ -16,18 +16,11 @@ public class RecruitmentPostResponeConverter extends BaseConverter<RecruitmentPo
     public RecruitmentPostResponeDTO toDTO(RecruitmentPostEntity entity) {
         RecruitmentPostResponeDTO recruitmentPostResponeDTO = super.toDTO(entity);
         String roleCodes = "";
-        if (entity.getPost().getUser().getRoles().size() > 1) {
-            Integer temp = 0;
-            for (RoleEntity role : entity.getPost().getUser().getRoles()) {
-                if(temp == entity.getPost().getUser().getRoles().size() - 1){
-                    roleCodes += role.getCode();
-                    break;
-                }
-                roleCodes += role.getCode() + ",";
-                temp++;
+        for (int i = 0; i < entity.getPost().getUser().getRoles().size(); i++) {
+            if (i != 0) {
+                roleCodes += ",";
             }
-        }else{
-            roleCodes += entity.getPost().getUser().getRoles().get(0).getCode();
+            roleCodes += entity.getPost().getUser().getRoles().get(i).getCode();
         }
         recruitmentPostResponeDTO.getPost().getUser().setRoleCodes(roleCodes);
         return recruitmentPostResponeDTO;
