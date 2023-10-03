@@ -1,18 +1,12 @@
 package com.chatapp.converter.request;
 
 import com.chatapp.converter.abstracts.BaseConverter;
-import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.ShortAnswerSaveRequestDTO;
-import com.chatapp.entity.NormalPostEntity;
 import com.chatapp.entity.PostEntity;
 import com.chatapp.entity.QuestionEntity;
-import com.chatapp.entity.ShortAnswerEntity;
 import com.chatapp.entity.UserEntity;
-import com.chatapp.repository.NormalPostRepository;
-import com.chatapp.repository.PostRepository;
 import com.chatapp.repository.UserRepository;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,16 +26,16 @@ public class ShortAnswerSaveRequestConverter
         PostEntity postEntity = super.toEntity(dto);
         UserEntity userEntity = userRepository.findOneById(dto.getUserId());
         postEntity.setUser(userEntity);
-        List<QuestionEntity> questions = new ArrayList<>();
-        QuestionEntity questionEntity = new QuestionEntity();
-        questionEntity.setTitle(dto.getTitle());
-        questionEntity.setType("short");
-        questionEntity.setPost(postEntity);
+        // List<QuestionEntity> questions = new ArrayList<>();
+        // QuestionEntity questionEntity = new QuestionEntity();
+        // questionEntity.setTitle(dto.getTitle());
+        // questionEntity.setType("short");
+        // questionEntity.setPost(postEntity);
         // ShortAnswerEntity shortAnswerEntity = new ShortAnswerEntity();
         // shortAnswerEntity.setContent(dto.getContent());
         // shortAnswerEntity.setQuestion(questionEntity);
-        questions.add(questionEntity);
-        postEntity.setQuestions(questions);
+        // questions.add(questionEntity);
+        // postEntity.setQuestions(questions);
         return postEntity;
     }
 }

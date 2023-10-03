@@ -41,7 +41,7 @@ POST http://127.0.0.1:8080/api/student/register HTTP/1.1
 Content-Type: application/json
 
 {
-    "email":"sonthu3336@gmail.com",
+    "email":"sonthu3335@gmail.com",
     "name":"son",
     "password":"abc123",
     "image":"son.png",
@@ -55,7 +55,7 @@ POST http://127.0.0.1:8080/api/faculty/register HTTP/1.1
 Content-Type: application/json
 
 {
-    "email":"cnttabcd@gmail.com",
+    "email":"cnttabd@gmail.com",
     "name":"son",
     "password":"abc123",
     "image":"son.png",
@@ -67,7 +67,7 @@ POST http://127.0.0.1:8080/api/business/register HTTP/1.1
 Content-Type: application/json
 
 {
-    "email":"ctyamthuc@gmail.com",
+    "email":"ctyamthc@gmail.com",
     "name":"son",
     "password":"abc123",
     "image":"business.png",
@@ -134,7 +134,7 @@ Content-Type: application/json
 
 {
     "userId": 1,
-    "type":"recruitment",
+    "type":"survey",
     "title":"hello",
     "questionType":"short",
     "content":"ban ten gi"
