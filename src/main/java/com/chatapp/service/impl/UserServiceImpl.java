@@ -27,6 +27,7 @@ import com.chatapp.dto.response.StudentInfoResponeDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.entity.RoleEntity;
 import com.chatapp.entity.UserEntity;
+import com.chatapp.enums.Role;
 import com.chatapp.exception.DuplicateUsernameException;
 import com.chatapp.repository.BusinessInfoRepository;
 import com.chatapp.repository.FacultyInfoRepository;
@@ -192,7 +193,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public AuthTokenDTO studentRegister(StudentInfoRegisterRequestDTO studentRegisterDTO) {
         UserEntity userEntity;
-        RoleEntity roleEntity = roleRepository.findOneById(STUDENT_CODE);
+        RoleEntity roleEntity = roleRepository.findOneByCode(Role.STUDENT.getName());
         List<RoleEntity> roles = new ArrayList<RoleEntity>();
         roles.add(roleEntity);
 
@@ -229,7 +230,7 @@ public class UserServiceImpl implements UserService {
 
     private UserEntity studentSave(StudentInfoUpdateOrSaveRequestDTO studentInfoUpdateOrSaveRequestDTO) {
         UserEntity userEntity = studentInfoUpdateOrSaveRequestConverter.toEntity(studentInfoUpdateOrSaveRequestDTO);
-        RoleEntity roleEntity = roleRepository.findOneById(STUDENT_CODE);
+        RoleEntity roleEntity = roleRepository.findOneByCode(Role.STUDENT.getName());
         List<RoleEntity> roles = new ArrayList<RoleEntity>();
         roles.add(roleEntity);
         userEntity.setPassword(passwordEncoder.encode(this.DEFAULT_PASSWORD));
@@ -257,7 +258,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public AuthTokenDTO facultyRegister(FacultyInfoRegisterRequestDTO facultyInfoRegisterRequestDTO) {
         UserEntity userEntity;
-        RoleEntity roleEntity = roleRepository.findOneById(ADMIN_CODE);
+        RoleEntity roleEntity = roleRepository.findOneByCode(Role.FACULTY.getName());
         List<RoleEntity> roles = new ArrayList<RoleEntity>();
         roles.add(roleEntity);
 
@@ -289,7 +290,7 @@ public class UserServiceImpl implements UserService {
 
     private UserEntity facultySave(FacultyInfoUpdateOrSaveRequestDTO facultyInfoUpdateOrSaveRequestDTO) {
         UserEntity userEntity = facultyInfoUpdateOrSaveRequestConverter.toEntity(facultyInfoUpdateOrSaveRequestDTO);
-        RoleEntity roleEntity = roleRepository.findOneById(ADMIN_CODE);
+        RoleEntity roleEntity = roleRepository.findOneByCode(Role.FACULTY.getName());
         List<RoleEntity> roles = new ArrayList<RoleEntity>();
         roles.add(roleEntity);
         userEntity.setPassword(passwordEncoder.encode(this.DEFAULT_PASSWORD));
@@ -322,7 +323,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public AuthTokenDTO businessRegister(BusinessInfoRegisterRequestDTO businessInfoRegisterRequestDTO) {
         UserEntity userEntity;
-        RoleEntity roleEntity = roleRepository.findOneById(BUSINESS_CODE);
+        RoleEntity roleEntity = roleRepository.findOneByCode(Role.BUSINESS.getName());
         List<RoleEntity> roles = new ArrayList<RoleEntity>();
         roles.add(roleEntity);
 
@@ -349,7 +350,7 @@ public class UserServiceImpl implements UserService {
 
     private UserEntity businessSave(BusinessInfoUpdateOrSaveRequestDTO businessInfoUpdateOrSaveRequestDTO) {
         UserEntity userEntity = businessInfoUpdateOrSaveRequestConverter.toEntity(businessInfoUpdateOrSaveRequestDTO);
-        RoleEntity roleEntity = roleRepository.findOneById(ADMIN_CODE);
+        RoleEntity roleEntity = roleRepository.findOneByCode(Role.BUSINESS.getName());
         List<RoleEntity> roles = new ArrayList<RoleEntity>();
         roles.add(roleEntity);
         userEntity.setPassword(passwordEncoder.encode(this.DEFAULT_PASSWORD));

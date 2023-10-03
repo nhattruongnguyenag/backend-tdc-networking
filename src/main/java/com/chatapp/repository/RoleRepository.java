@@ -9,4 +9,5 @@ import com.chatapp.entity.RoleEntity;
 @Repository
 public interface RoleRepository extends JpaRepository<RoleEntity, Long> {
     RoleEntity findOneById(Long id);
+    RoleEntity findOneByCode(String code);
 }
