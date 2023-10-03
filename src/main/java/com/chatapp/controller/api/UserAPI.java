@@ -2,6 +2,7 @@ package com.chatapp.controller.api;
 
 import com.chatapp.converter.request.UserRequestConverter;
 import com.chatapp.dto.AuthTokenDTO;
+import com.chatapp.dto.BaseDTO;
 import com.chatapp.dto.UserDTO;
 import com.chatapp.dto.request.UserLoginRequestDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
@@ -28,7 +29,7 @@ public class UserAPI {
     }
 
     @GetMapping({ "users/token/{token}", "users/token/{token}/" })
-    public UserInfoResponseDTO getUserFromToken(@PathVariable("token") String token) {
+    public BaseDTO getUserFromToken(@PathVariable("token") String token) {
         return userService.getUserFromToken(token);
     }
 

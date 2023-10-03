@@ -22,10 +22,10 @@ public class BusinessInfoAPI {
     private UserService userService;
 
     @GetMapping({ "business", "business/" })
-    public ResponseData<List<BusinessInfoResponseDTO>> findAll() {
+    public ResponseEntity<ResponseData<List<BusinessInfoResponseDTO>>> findAll() {
         ResponseData<List<BusinessInfoResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
                 userService.findAllBusinessInfo());
-        return responseData;
+        return ResponseEntity.ok(responseData);
     }
 
     @PostMapping({ "business", "business/" })

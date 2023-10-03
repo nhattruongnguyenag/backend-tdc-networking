@@ -10,7 +10,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://127.0.0.1:8080/api/users/token/eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb24xMjNAZ21haWwuY29tIiwiaWF0IjoxNjk2MjE5NDE5LCJleHAiOjE2OTYyMjMwMTl9.jrfCW0QGRfxPjwgQe0XwCyUA7G3aq-tyP1_gfw3bDeE HTTP/1.1
+GET http://127.0.0.1:8080/api/users/token/eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbnR0YWJjZEBnbWFpbC5jb20iLCJpYXQiOjE2OTYzMDQ2NDcsImV4cCI6MTY5NjMwODI0N30.eX8SlRgJxOeBjTxDNNpgoBvE23XzmBNqvBPymPt1Gak HTTP/1.1
 
 ###
 GET http://127.0.0.1:8080/api/users/recruitmentPosts HTTP/1.1
@@ -41,7 +41,7 @@ POST http://127.0.0.1:8080/api/student/register HTTP/1.1
 Content-Type: application/json
 
 {
-    "email":"son123@gmail.com",
+    "email":"sonthu3333@gmail.com",
     "name":"son",
     "password":"abc123",
     "image":"son.png",
@@ -55,7 +55,7 @@ POST http://127.0.0.1:8080/api/faculty/register HTTP/1.1
 Content-Type: application/json
 
 {
-    "email":"cntt4363@gmail.com",
+    "email":"cnttabcd@gmail.com",
     "name":"son",
     "password":"abc123",
     "image":"son.png",
