@@ -4,8 +4,10 @@ import lombok.Data;
 
 import java.util.Date;
 
+import com.chatapp.dto.BaseDTO;
+
 @Data
-public class MessageResponseDTO {
+public class MessageResponseDTO extends BaseDTO{
     private String content;
     private String type;
     private UserMessageResponseDTO sender;

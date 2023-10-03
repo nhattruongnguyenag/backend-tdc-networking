@@ -8,7 +8,6 @@ import com.chatapp.entity.UserEntity;
 import com.chatapp.repository.PostRepository;
 import com.chatapp.repository.RecruitmentPostRepository;
 import com.chatapp.repository.UserRepository;
-import com.chatapp.util.DateTimeUtil;
 
 import java.sql.Timestamp;
 

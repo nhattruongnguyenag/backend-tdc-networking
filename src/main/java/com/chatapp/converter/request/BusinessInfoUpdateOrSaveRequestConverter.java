@@ -2,12 +2,9 @@ package com.chatapp.converter.request;
 
 import com.chatapp.converter.abstracts.BaseConverter;
 import com.chatapp.dto.request.BusinessInfoUpdateOrSaveRequestDTO;
-import com.chatapp.dto.request.FacultyInfoUpdateOrSaveRequestDTO;
 import com.chatapp.entity.BusinessesInfoEntity;
-import com.chatapp.entity.FacultyInfoEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.repository.BusinessInfoRepository;
-import com.chatapp.repository.FacultyInfoRepository;
 import com.chatapp.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;

@@ -12,6 +12,7 @@ import com.chatapp.converter.response.FacultyInfoResponeConverter;
 import com.chatapp.converter.response.StudentInfoResponeConverter;
 import com.chatapp.converter.response.UserInfoResponseConverter;
 import com.chatapp.dto.AuthTokenDTO;
+import com.chatapp.dto.BaseDTO;
 import com.chatapp.dto.UserDTO;
 import com.chatapp.dto.request.BusinessInfoRegisterRequestDTO;
 import com.chatapp.dto.request.BusinessInfoUpdateOrSaveRequestDTO;
@@ -162,10 +163,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserInfoResponseDTO getUserFromToken(String token) {
+    public BaseDTO getUserFromToken(String token) {
+        BaseDTO dto = null;
         String email = tokenProvider.extractEmailFromToken(token);
         UserEntity userEntity = userRepository.findOneByEmail(email);
-        return userInfoResponseConverter.toDTO(userEntity);
+        if (studentInfoRepository.findOneByUser_Id(userEntity.getId()) != null) {
+            StudentInfoResponeDTO studentInfoResponeDTO = studentInfoResponeConverter
+                    .toDTO(studentInfoRepository.findOneByUser_Id(userEntity.getId()));
+            dto = studentInfoResponeDTO;
+        } else if (facultyInfoRepository.findOneByUser_Id(userEntity.getId()) != null) {
+            FacultyInfoResponeDTO facultyInfoResponeDTO = facultyInfoResponeConverter
+                    .toDTO(facultyInfoRepository.findOneByUser_Id(userEntity.getId()));
+            dto = facultyInfoResponeDTO;
+        } else if (businessInfoRepository.findOneByUser_Id(userEntity.getId()) != null) {
+            BusinessInfoResponseDTO businessInfoResponseDTO = businessInfoResponeConverter
+                    .toDTO(businessInfoRepository.findOneByUser_Id(userEntity.getId()));
+            dto = businessInfoResponseDTO;
+        }
+        return dto;
     }
 
     @Override

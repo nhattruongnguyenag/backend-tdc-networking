@@ -22,10 +22,10 @@ public class BusinessInfoAPI {
     private UserService userService;
 
     @GetMapping({ "business", "business/" })
-    public ResponseData<List<BusinessInfoResponseDTO>> findAll() {
+    public ResponseEntity<ResponseData<List<BusinessInfoResponseDTO>>> findAll() {
         ResponseData<List<BusinessInfoResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
                 userService.findAllBusinessInfo());
-        return responseData;
+        return ResponseEntity.ok(responseData);
     }
 
     @PostMapping({ "business", "business/" })
@@ -33,7 +33,7 @@ public class BusinessInfoAPI {
             @RequestBody BusinessInfoUpdateOrSaveRequestDTO businessInfoUpdateOrSaveRequestDTO) {
         ResponseData<UserInfoResponseDTO> responseData = new ResponseData<>(HttpStatus.CREATED, "add or update success",
                 userService.businessUpdateOrSave(businessInfoUpdateOrSaveRequestDTO));
-        return new ResponseEntity<ResponseData<UserInfoResponseDTO>>(responseData, HttpStatus.CREATED);
+        return ResponseEntity.created(null).body(responseData);
     }
 
     @PostMapping({ "business/register", "business/register/" })
@@ -41,6 +41,6 @@ public class BusinessInfoAPI {
             @RequestBody BusinessInfoRegisterRequestDTO businessInfoRegisterRequestDTO) {
         ResponseData<AuthTokenDTO> responseData = new ResponseData<>(HttpStatus.CREATED, "register success",
                 userService.businessRegister(businessInfoRegisterRequestDTO));
-        return ResponseEntity.ok(responseData);
+        return ResponseEntity.created(null).body(responseData);
     }
 }

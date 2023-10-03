@@ -3,6 +3,7 @@ package com.chatapp.controller.api;
 import com.chatapp.commond.ResponseData;
 import com.chatapp.converter.request.UserRequestConverter;
 import com.chatapp.dto.AuthTokenDTO;
+import com.chatapp.dto.BaseDTO;
 import com.chatapp.dto.UserDTO;
 import com.chatapp.dto.request.UserLoginRequestDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
@@ -25,13 +26,15 @@ public class UserAPI {
     private TokenProvider tokenProvider;
 
     @GetMapping({ "users", "users/" })
-    public List<UserInfoResponseDTO> findAll() {
-        return userService.findAll();
+    public ResponseEntity<ResponseData<List<UserInfoResponseDTO>>> findAll() {
+        ResponseData<List<UserInfoResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",userService.findAll());
+        return ResponseEntity.ok(responseData);
     }
 
     @GetMapping({ "users/token/{token}", "users/token/{token}/" })
-    public UserInfoResponseDTO getUserFromToken(@PathVariable("token") String token) {
-        return userService.getUserFromToken(token);
+    public ResponseEntity<ResponseData<BaseDTO>> getUserFromToken(@PathVariable("token") String token) {
+        ResponseData<BaseDTO> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",userService.getUserFromToken(token));
+        return ResponseEntity.ok(responseData);
     }
 
     @GetMapping({ "users/{email}", "users/{email}/" })

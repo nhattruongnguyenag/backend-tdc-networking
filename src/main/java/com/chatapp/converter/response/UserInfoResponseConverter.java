@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserInfoResponseConverter extends BaseConverter<UserEntity, UserInfoResponseDTO> {
-
+    
     @Override
     public UserInfoResponseDTO toDTO(UserEntity entity) {
         UserInfoResponseDTO userInfoResponseDTO = super.toDTO(entity);

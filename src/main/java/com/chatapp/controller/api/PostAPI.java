@@ -36,7 +36,7 @@ public class PostAPI {
     @PostMapping({ "posts/normalPosts", "posts/normalPosts/" })
     ResponseEntity<ResponseData<PostInfoResponeDTO>> updateOrSave(@RequestBody NormalPostUpdateOrSaveRequestDTO normalPostUpdateOrSaveRequestDTO) {
         ResponseData<PostInfoResponeDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"add or update normal post success",postService.normalPostUpdateOrSave(normalPostUpdateOrSaveRequestDTO));
-        return ResponseEntity.ok(responseData);
+        return ResponseEntity.created(null).body(responseData);
     }
 
     //recruitmentPost api
@@ -49,6 +49,6 @@ public class PostAPI {
     @PostMapping({ "posts/recruitmentPosts", "posts/recruitmentPosts/" })
     ResponseEntity<ResponseData<PostInfoResponeDTO>> updateOrSave(@RequestBody RecruitmentPostUpdateOrSageRequestDTO recruitmentPostUpdateOrSageRequestDTO) {
         ResponseData<PostInfoResponeDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"add or update recruitment post success",postService.recruitmentPostUpdateOrSave(recruitmentPostUpdateOrSageRequestDTO));
-        return ResponseEntity.ok(responseData);
+        return ResponseEntity.created(null).body(responseData);
     }
 }
