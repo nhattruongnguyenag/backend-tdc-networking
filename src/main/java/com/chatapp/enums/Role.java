@@ -1,9 +1,9 @@
 package com.chatapp.enums;
 
 public enum Role {
-    ADMIN("doanh-nghiep"),
-    SHIPPER("khoa"),
-    CUSTOMER("sinh-vien");
+    BUSINESS("doanh-nghiep"),
+    FACULTY("khoa"),
+    STUDENT("sinh-vien");
 
     private String role;
 
