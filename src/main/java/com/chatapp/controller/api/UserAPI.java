@@ -1,5 +1,6 @@
 package com.chatapp.controller.api;
 
+import com.chatapp.commond.ResponseData;
 import com.chatapp.converter.request.UserRequestConverter;
 import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.UserDTO;
@@ -8,6 +9,7 @@ import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.service.UserService;
 import com.chatapp.util.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,8 +40,9 @@ public class UserAPI {
     }
 
     @PostMapping({ "login", "login/" })
-    ResponseEntity<AuthTokenDTO> login(@RequestBody UserLoginRequestDTO userDTORequest) {
-        return ResponseEntity.ok(userService.login(userDTORequest));
+    ResponseEntity<?> login(@RequestBody UserLoginRequestDTO userDTORequest) {
+        ResponseData<AuthTokenDTO> responseData = new ResponseData<>(HttpStatus.OK, "success", userService.login(userDTORequest));
+        return ResponseEntity.ok(responseData);
     }
 
     @PostMapping({ "users", "users/" })
