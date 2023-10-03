@@ -4,10 +4,8 @@ import java.util.List;
 
 import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
-import com.chatapp.dto.request.ShortAnswerSaveRequestDTO;
 import com.chatapp.dto.response.NormalPostResponeDTO;
 import com.chatapp.dto.response.PostInfoResponeDTO;
-import com.chatapp.dto.response.QuestionResponeDTO;
 import com.chatapp.dto.response.RecruitmentPostResponeDTO;
 
 public interface PostService {
@@ -22,5 +20,4 @@ public interface PostService {
     PostInfoResponeDTO recruitmentPostUpdateOrSave(RecruitmentPostUpdateOrSageRequestDTO recruitmentPostUpdateOrSageRequestDTO);
 
     //short question
-    PostInfoResponeDTO shortQuestionSave(ShortAnswerSaveRequestDTO shortAnswerSaveRequestDTO);
 }

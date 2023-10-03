@@ -52,10 +52,4 @@ public class PostAPI {
         ResponseData<PostInfoResponeDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"add or update recruitment post success",postService.recruitmentPostUpdateOrSave(recruitmentPostUpdateOrSageRequestDTO));
         return ResponseEntity.created(null).body(responseData);
     }
-
-    @PostMapping({ "posts/survey", "posts/survey/" })
-    ResponseEntity<ResponseData<PostInfoResponeDTO>> updateOrSave(@RequestBody ShortAnswerSaveRequestDTO shortAnswerSaveRequestDTO) {
-        ResponseData<PostInfoResponeDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"success",postService.shortQuestionSave(shortAnswerSaveRequestDTO));
-        return ResponseEntity.created(null).body(responseData);
-    }
 }

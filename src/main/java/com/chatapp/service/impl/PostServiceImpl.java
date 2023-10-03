@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.chatapp.converter.request.NormalPostUpdateOrSaveRequestConverter;
 import com.chatapp.converter.request.RecruitmentPosyUpdateOrSaveRequestConverter;
-import com.chatapp.converter.request.ShortAnswerSaveRequestConverter;
 import com.chatapp.converter.response.NormalPostResponeConverter;
 import com.chatapp.converter.response.PostInfoResponeConverter;
 import com.chatapp.converter.response.RecruitmentPostResponeConverter;
@@ -48,8 +47,6 @@ public class PostServiceImpl implements PostService {
     private NormalPostUpdateOrSaveRequestConverter normalPostUpdateOrSaveRequestConverter;
     @Autowired
     private RecruitmentPosyUpdateOrSaveRequestConverter recruitmentPosyUpdateOrSaveRequestConverter;
-    @Autowired
-    private ShortAnswerSaveRequestConverter shortAnswerSaveRequestConverter;
 
     @Override
     public List<PostInfoResponeDTO> findAll() {
@@ -122,12 +119,5 @@ public class PostServiceImpl implements PostService {
     }
 
     // short question
-    @Override
-    public PostInfoResponeDTO shortQuestionSave(ShortAnswerSaveRequestDTO shortAnswerSaveRequestDTO) {
-        PostEntity postEntity = shortAnswerSaveRequestConverter
-                .toEntity(shortAnswerSaveRequestDTO);
-        postEntity.setActive((byte) 1);
-        postEntity.setStatus((byte) 0);
-        return postInfoResponeConverter.toDTO(postRepository.save(postEntity));
-    }
+
 }
