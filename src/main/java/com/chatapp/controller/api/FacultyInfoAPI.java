@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.chatapp.commond.ResponseData;
 import com.chatapp.dto.AuthTokenDTO;
-import com.chatapp.dto.request.BusinessInfoRegisterRequestDTO;
 import com.chatapp.dto.request.FacultyInfoRegisterRequestDTO;
 import com.chatapp.dto.request.FacultyInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.response.FacultyInfoResponeDTO;
@@ -23,15 +22,15 @@ public class FacultyInfoAPI {
     private UserService userService;
     
     @GetMapping({ "faculty", "faculty/" })
-    public ResponseData<List<FacultyInfoResponeDTO>> findAll() {
+    public ResponseEntity<ResponseData<List<FacultyInfoResponeDTO>>> findAll() {
         ResponseData<List<FacultyInfoResponeDTO>> responseData = new ResponseData<>(HttpStatus.OK,"success",userService.findAllFacultyInfo());
-        return responseData;
+        return ResponseEntity.ok(responseData);
     }
 
     @PostMapping({ "faculty", "faculty/" })
     ResponseEntity<ResponseData<UserInfoResponseDTO>> updateOrSave(@RequestBody FacultyInfoUpdateOrSaveRequestDTO facultyInfoUpdateOrSaveRequestDTO) {
         ResponseData<UserInfoResponseDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"add or update success",userService.facultyUpdateOrSave(facultyInfoUpdateOrSaveRequestDTO));
-        return new ResponseEntity<ResponseData<UserInfoResponseDTO>>(responseData, HttpStatus.CREATED);
+        return ResponseEntity.created(null).body(responseData);
     }
 
     @PostMapping({ "faculty/register", "faculty/register/" })
@@ -39,6 +38,6 @@ public class FacultyInfoAPI {
             @RequestBody FacultyInfoRegisterRequestDTO facultyInfoRegisterRequestDTO) {
         ResponseData<AuthTokenDTO> responseData = new ResponseData<>(HttpStatus.CREATED, "register success",
                 userService.facultyRegister(facultyInfoRegisterRequestDTO));
-        return ResponseEntity.ok(responseData);
+        return ResponseEntity.created(null).body(responseData);
     }
 }

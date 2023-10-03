@@ -33,7 +33,7 @@ public class BusinessInfoAPI {
             @RequestBody BusinessInfoUpdateOrSaveRequestDTO businessInfoUpdateOrSaveRequestDTO) {
         ResponseData<UserInfoResponseDTO> responseData = new ResponseData<>(HttpStatus.CREATED, "add or update success",
                 userService.businessUpdateOrSave(businessInfoUpdateOrSaveRequestDTO));
-        return new ResponseEntity<ResponseData<UserInfoResponseDTO>>(responseData, HttpStatus.CREATED);
+        return ResponseEntity.created(null).body(responseData);
     }
 
     @PostMapping({ "business/register", "business/register/" })
@@ -41,6 +41,6 @@ public class BusinessInfoAPI {
             @RequestBody BusinessInfoRegisterRequestDTO businessInfoRegisterRequestDTO) {
         ResponseData<AuthTokenDTO> responseData = new ResponseData<>(HttpStatus.CREATED, "register success",
                 userService.businessRegister(businessInfoRegisterRequestDTO));
-        return ResponseEntity.ok(responseData);
+        return ResponseEntity.created(null).body(responseData);
     }
 }

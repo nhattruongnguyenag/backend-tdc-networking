@@ -1,5 +1,6 @@
 package com.chatapp.controller.api;
 
+import com.chatapp.commond.ResponseData;
 import com.chatapp.converter.request.UserRequestConverter;
 import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.BaseDTO;
@@ -9,6 +10,7 @@ import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.service.UserService;
 import com.chatapp.util.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,13 +26,15 @@ public class UserAPI {
     private TokenProvider tokenProvider;
 
     @GetMapping({ "users", "users/" })
-    public List<UserInfoResponseDTO> findAll() {
-        return userService.findAll();
+    public ResponseEntity<ResponseData<List<UserInfoResponseDTO>>> findAll() {
+        ResponseData<List<UserInfoResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",userService.findAll());
+        return ResponseEntity.ok(responseData);
     }
 
     @GetMapping({ "users/token/{token}", "users/token/{token}/" })
-    public BaseDTO getUserFromToken(@PathVariable("token") String token) {
-        return userService.getUserFromToken(token);
+    public ResponseEntity<ResponseData<BaseDTO>> getUserFromToken(@PathVariable("token") String token) {
+        ResponseData<BaseDTO> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",userService.getUserFromToken(token));
+        return ResponseEntity.ok(responseData);
     }
 
     @GetMapping({ "users/{email}", "users/{email}/" })
@@ -39,8 +43,9 @@ public class UserAPI {
     }
 
     @PostMapping({ "login", "login/" })
-    ResponseEntity<AuthTokenDTO> login(@RequestBody UserLoginRequestDTO userDTORequest) {
-        return ResponseEntity.ok(userService.login(userDTORequest));
+    ResponseEntity<ResponseData<AuthTokenDTO>> login(@RequestBody UserLoginRequestDTO userDTORequest) {
+        ResponseData<AuthTokenDTO> responseData = new ResponseData<>(HttpStatus.OK, "login_sucesss",userService.login(userDTORequest));
+        return ResponseEntity.ok(responseData);
     }
 
     @PostMapping({ "users", "users/" })
