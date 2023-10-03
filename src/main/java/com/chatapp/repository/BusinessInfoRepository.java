@@ -8,4 +8,5 @@ import com.chatapp.entity.BusinessesInfoEntity;
 @Repository
 public interface BusinessInfoRepository extends JpaRepository<BusinessesInfoEntity, Long> {
     BusinessesInfoEntity findOneByUser_Id(Long id);
+    BusinessesInfoEntity findOneByEmail(Long id);
 }

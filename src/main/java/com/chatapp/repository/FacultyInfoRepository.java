@@ -9,4 +9,5 @@ import com.chatapp.entity.FacultyInfoEntity;
 @Repository
 public interface FacultyInfoRepository extends JpaRepository<FacultyInfoEntity, Long> {
     FacultyInfoEntity findOneByUser_Id(Long id);
+    FacultyInfoEntity findOneByEmail(Long id);
 }

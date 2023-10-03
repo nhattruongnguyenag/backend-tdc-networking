@@ -2,7 +2,6 @@ package com.chatapp.converter.request;
 
 import com.chatapp.converter.abstracts.BaseConverter;
 import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
-import com.chatapp.dto.request.StudentInfoUpdateOrSaveRequestDTO;
 import com.chatapp.entity.NormalPostEntity;
 import com.chatapp.entity.PostEntity;
 import com.chatapp.entity.UserEntity;
