@@ -10,5 +10,6 @@ public class MessageResponseDTO {
     private String type;
     private UserMessageResponseDTO sender;
     private UserMessageResponseDTO receiver;
+    private Long status;
     private Date createdAt;
 }

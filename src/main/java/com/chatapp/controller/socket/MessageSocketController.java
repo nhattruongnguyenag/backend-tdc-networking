@@ -25,12 +25,12 @@ public class MessageSocketController {
         messageDTO.setContent(content);
         messageDTO.setType("plain/text");
         messageService.save(messageDTO);
-        return messageService.findBySenderOrReceiver(messageDTO.getSenderId(), messageDTO.getReceiverId());
+        return messageService.findBySenderAndReceiver(messageDTO.getSenderId(), messageDTO.getReceiverId());
     }
 
     @MessageMapping({"/messages/{senderId}/{receiverId}/listen", "/messages/{receiverId}/{senderId}/listen"})
     @SendTo({"/topic/messages/{senderId}/{receiverId}", "/topic/messages/{receiverId}/{senderId}"})
     public List<MessageResponseDTO> getMessages(@DestinationVariable("senderId") Long senderId, @DestinationVariable("receiverId") Long receiverId) {
-        return messageService.findBySenderOrReceiver(senderId, receiverId);
+        return messageService.findBySenderAndReceiver(senderId, receiverId);
     }
 }

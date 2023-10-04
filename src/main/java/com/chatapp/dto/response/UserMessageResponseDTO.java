@@ -5,5 +5,6 @@ import lombok.Data;
 @Data
 public class UserMessageResponseDTO {
     private Long id;
-    private String fullName;
+    private String image;
+    private String name;
 }
