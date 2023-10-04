@@ -200,6 +200,9 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findOneByEmail(studentRegisterDTO.getEmail()) != null) {
             throw new DuplicateUsernameException("user_already_exists");
         }
+        if (userRepository.findOneByCode(studentRegisterDTO.getCode()) != null) {
+            throw new DuplicateUsernameException("user_code_already_exists");
+        }
         studentRegisterDTO.setPassword(passwordEncoder.encode(studentRegisterDTO.getPassword()));
 
         userEntity = studentInfoRegisterRequestConverter.toEntity(studentRegisterDTO);
@@ -246,6 +249,9 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findOneByEmail(studentInfoUpdateOrSaveRequestDTO.getEmail()) != null) {
             throw new DuplicateUsernameException("user_already_exists");
         }
+        if (userRepository.findOneByCode(studentInfoUpdateOrSaveRequestDTO.getCode()) != null) {
+            throw new DuplicateUsernameException("user_code_already_exists");
+        }
         if (studentInfoUpdateOrSaveRequestDTO.getId() != null) {
             userEntity = this.studentUpdate(studentInfoUpdateOrSaveRequestDTO);
         } else {
@@ -264,6 +270,9 @@ public class UserServiceImpl implements UserService {
 
         if (userRepository.findOneByEmail(facultyInfoRegisterRequestDTO.getEmail()) != null) {
             throw new DuplicateUsernameException("user_already_exists");
+        }
+        if (userRepository.findOneByCode(facultyInfoRegisterRequestDTO.getCode()) != null) {
+            throw new DuplicateUsernameException("user_code_already_exists");
         }
         facultyInfoRegisterRequestDTO
                 .setPassword(passwordEncoder.encode(facultyInfoRegisterRequestDTO.getPassword()));
@@ -306,6 +315,9 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findOneByEmail(facultyInfoUpdateOrSaveRequestDTO.getEmail()) != null) {
             throw new DuplicateUsernameException("user_already_exists");
         }
+        if (userRepository.findOneByCode(facultyInfoUpdateOrSaveRequestDTO.getCode()) != null) {
+            throw new DuplicateUsernameException("user_code_already_exists");
+        }
         if (facultyInfoUpdateOrSaveRequestDTO.getId() != null) {
             userEntity = this.facultyUpdate(facultyInfoUpdateOrSaveRequestDTO);
         } else {
@@ -329,6 +341,9 @@ public class UserServiceImpl implements UserService {
 
         if (userRepository.findOneByEmail(businessInfoRegisterRequestDTO.getEmail()) != null) {
             throw new DuplicateUsernameException("user_already_exists");
+        }
+        if (userRepository.findOneByCode(businessInfoRegisterRequestDTO.getCode()) != null) {
+            throw new DuplicateUsernameException("user_code_already_exists");
         }
         businessInfoRegisterRequestDTO
                 .setPassword(passwordEncoder.encode(businessInfoRegisterRequestDTO.getPassword()));
@@ -365,6 +380,9 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity;
         if (userRepository.findOneByEmail(businessInfoUpdateOrSaveRequestDTO.getEmail()) != null) {
             throw new DuplicateUsernameException("user_already_exists");
+        }
+        if (userRepository.findOneByCode(businessInfoUpdateOrSaveRequestDTO.getCode()) != null) {
+            throw new DuplicateUsernameException("user_code_already_exists");
         }
         if (businessInfoUpdateOrSaveRequestDTO.getId() != null) {
             userEntity = this.businessUpdate(businessInfoUpdateOrSaveRequestDTO);
