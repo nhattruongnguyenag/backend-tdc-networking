@@ -29,6 +29,9 @@ public class UserEntity extends BaseEntity {
     @Column(name = "image", nullable = true)
     private String image;
 
+    @Column(name = "code", nullable = false, unique = true)
+    private String code;
+
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<MessageEntity> receivedMessages = new HashSet<>();
 

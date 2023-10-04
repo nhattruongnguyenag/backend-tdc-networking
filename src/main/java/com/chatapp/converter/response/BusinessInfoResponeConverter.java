@@ -24,6 +24,7 @@ public class BusinessInfoResponeConverter extends BaseConverter<BusinessesInfoEn
         businessInfoResponseDTO.setImage(userEntity.getImage());
         businessInfoResponseDTO.setName(userEntity.getName());
         businessInfoResponseDTO.setStatus(userEntity.getStatus());
+        businessInfoResponseDTO.setCode(userEntity.getCode());
         String roleCodes = "";
         for (int i = 0; i < entity.getUser().getRoles().size(); i++) {
             if (i != 0) {

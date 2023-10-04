@@ -8,6 +8,7 @@ public class BusinessInfoRegisterRequestDTO {
     private String password;
     private String name;
     private String image;
+    private String code;
     private String representor;
     private String taxCode;
     private String address;

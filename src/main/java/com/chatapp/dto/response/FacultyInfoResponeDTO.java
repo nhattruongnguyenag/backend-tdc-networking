@@ -5,5 +5,4 @@ import lombok.*;
 
 @Data
 public class FacultyInfoResponeDTO extends UserInfoResponseDTO{
-    String facultyName;
 }

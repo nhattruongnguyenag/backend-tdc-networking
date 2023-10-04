@@ -24,11 +24,11 @@ public class FacultyInfoUpdateOrSaveRequestConverter
         userEntity.setId(dto.getId());
         userEntity.setEmail(dto.getEmail());
         userEntity.setName(dto.getName());
+        userEntity.setCode(dto.getCode());
         if (dto.getImage() != null) {
             userEntity.setImage(dto.getImage());
         }
         FacultyInfoEntity facultyInfoEntity = facultyInfoRepository.findOneByUser_Id(dto.getId());
-        facultyInfoEntity.setFacultyName(dto.getFacultyName());
         facultyInfoEntity.setUser(userEntity);
         userEntity.setFalcutyInfo(facultyInfoEntity);
         return userEntity;
@@ -38,7 +38,6 @@ public class FacultyInfoUpdateOrSaveRequestConverter
     public UserEntity toEntity(FacultyInfoUpdateOrSaveRequestDTO dto) {
         UserEntity userEntity = super.toEntity(dto);
         FacultyInfoEntity facultyInfoEntity = new FacultyInfoEntity();
-        facultyInfoEntity.setFacultyName(dto.getFacultyName());
         facultyInfoEntity.setUser(userEntity);
         userEntity.setFalcutyInfo(facultyInfoEntity);
         return userEntity;

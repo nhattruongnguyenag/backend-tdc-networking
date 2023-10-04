@@ -24,6 +24,7 @@ public class BusinessInfoUpdateOrSaveRequestConverter
         userEntity.setId(dto.getId());
         userEntity.setEmail(dto.getEmail());
         userEntity.setName(dto.getName());
+        userEntity.setCode(dto.getCode());
         if (dto.getImage() != null) {
             userEntity.setImage(dto.getImage());
         }

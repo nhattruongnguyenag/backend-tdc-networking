@@ -24,6 +24,7 @@ public class FacultyInfoResponeConverter extends BaseConverter<FacultyInfoEntity
         facultyInfoResponeDTO.setImage(userEntity.getImage());
         facultyInfoResponeDTO.setName(userEntity.getName());
         facultyInfoResponeDTO.setStatus(userEntity.getStatus());
+        facultyInfoResponeDTO.setCode(userEntity.getCode());
         String roleCodes = "";
         for (int i = 0; i < entity.getUser().getRoles().size(); i++) {
             if (i != 0) {

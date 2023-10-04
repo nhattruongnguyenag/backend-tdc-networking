@@ -11,5 +11,6 @@ public class UserInfoResponseDTO extends BaseDTO {
     private String name;
     private String image;
     private Byte status;
+    private String code;
     private String roleCodes;
 }

@@ -9,9 +9,6 @@ import lombok.Data;
 @Data
 public class FacultyInfoEntity extends BaseEntity {
 
-    @Column(name = "faculty_name", nullable = false)
-    private String facultyName;
-
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;

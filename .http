@@ -30,6 +30,7 @@ Content-Type: application/json
     "email":"khoatienghanquoc@gmail.com",
     "name":"tieng han",
     "image":"tienhan.png",
+    "code":"123"
     "facultyName":"TH"
 }
 
@@ -45,6 +46,7 @@ Content-Type: application/json
     "name":"son",
     "password":"abc123",
     "image":"son.png",
+    "code":"student_1",
     "facultyName":"cntt",
     "major":"cntt e",
     "studentCode":"2356"
@@ -59,6 +61,7 @@ Content-Type: application/json
     "name":"son",
     "password":"abc123",
     "image":"son.png",
+    "code":"khoa_cntt",
     "facultyName":"cntt"
 }
 
@@ -71,6 +74,7 @@ Content-Type: application/json
     "name":"son",
     "password":"abc123",
     "image":"business.png",
+    "code":"food_cty",
     "representor":"gg",
     "taxCode":"546657",
     "address":"hai ba trung",
@@ -86,6 +90,7 @@ Content-Type: application/json
     "email":"ctysonghuong@gmail.com",
     "name":"song huong",
     "image":"tienhan.png",
+    "code":"123",
     "representor":"abc",
     "taxCode":"546657",
     "address":"thu duc",
