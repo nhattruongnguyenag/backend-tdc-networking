@@ -4,16 +4,18 @@ import com.chatapp.converter.request.MessageRequestConverter;
 import com.chatapp.converter.response.MessageResponseConverter;
 import com.chatapp.dto.request.MessageRequestDTO;
 import com.chatapp.dto.response.MessageResponseDTO;
+import com.chatapp.entity.ConversationEntity;
 import com.chatapp.entity.MessageEntity;
-import com.chatapp.repository.CustomizedMessageRepository;
-import com.chatapp.repository.MessageRepository;
-import com.chatapp.repository.UserRepository;
+import com.chatapp.entity.UserEntity;
+import com.chatapp.repository.*;
+import com.chatapp.service.ConversationService;
 import com.chatapp.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -27,9 +29,15 @@ public class MessageServiceImpl implements MessageService {
     private CustomizedMessageRepository customizedMessageRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CustomizedConversationRepository customizedConversationRepository;
+    @Autowired
+    private ConversationRepository conversationRepository;
+    @Autowired
+    private ConversationService conversationService;
 
     @Override
-    public List<MessageResponseDTO> findBySenderOrReceiver(Long senderId, Long receiverId) {
+    public List<MessageResponseDTO> findBySenderAndReceiver(Long senderId, Long receiverId) {
         if (userRepository.findById(senderId).isPresent()
                 && userRepository.findById(receiverId).isPresent()) {
             return messageResponseConverter.toDTOGroup(customizedMessageRepository.findBySenderOrReceiver(senderId, receiverId));
@@ -39,25 +47,46 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public MessageRequestDTO save(MessageRequestDTO messageDTO) {
-        if (userRepository.findById(messageDTO.getSenderId()).isPresent()
-                && userRepository.findById(messageDTO.getReceiverId()).isPresent()) {
-            return messageRequestConverter.toDTO(messageRepository.save(messageRequestConverter.toEntity(messageDTO)));
+    public List<MessageResponseDTO> findByConversations_Id(Long conversationId) {
+        Optional<ConversationEntity> conversationEntity = conversationRepository.findById(conversationId);
+        if (conversationEntity.isPresent()) {
+            return messageResponseConverter.toDTOGroup(messageRepository.findByConversations_Id(conversationId));
         }
-
-        throw new RuntimeException("user_does_not_exists");
+        throw new RuntimeException("conversation_not_exists");
     }
 
     @Override
-    public MessageRequestDTO delete(Long messageId) {
+    public MessageResponseDTO save(MessageRequestDTO messageRequestDTO) {
+        final Optional<UserEntity> sender = userRepository.findById(messageRequestDTO.getSenderId());
+        final Optional<UserEntity> receiver = userRepository.findById(messageRequestDTO.getReceiverId());
+
+        if (sender.isPresent() && receiver.isPresent()) {
+            MessageEntity messageEntity = messageRepository.save(messageRequestConverter.toEntity(messageRequestDTO));
+            List<ConversationEntity> conversationEntities = customizedConversationRepository.findBySenderAndReceiver(sender.get().getId(), receiver.get().getId());
+
+            if (conversationEntities.size() == 2) {
+                for (ConversationEntity conversationEntity : conversationEntities) {
+                    conversationEntity.getMessages().add(messageEntity);
+                }
+                conversationRepository.saveAll(conversationEntities);
+            }
+
+            return messageResponseConverter.toDTO(messageEntity);
+        }
+
+        throw new RuntimeException("user_not_exists");
+    }
+
+    @Override
+    public MessageResponseDTO delete(Long messageId) {
         Optional<MessageEntity> messageEntity = messageRepository.findById(messageId);
 
         if (messageEntity.isPresent()) {
-            MessageRequestDTO messageDTO = messageRequestConverter.toDTO(messageEntity.get());
+            MessageResponseDTO messageDTO = messageResponseConverter.toDTO(messageEntity.get());
             messageRepository.deleteById(messageId);
             return messageDTO;
         }
 
-        throw new RuntimeException("message_does_not_exists");
+        throw new RuntimeException("message_not_exists");
     }
 }
