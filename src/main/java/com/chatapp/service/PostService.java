@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
+import com.chatapp.dto.request.SurveySaveRequestDTO;
 import com.chatapp.dto.response.NormalPostResponeDTO;
 import com.chatapp.dto.response.PostInfoResponeDTO;
 import com.chatapp.dto.response.RecruitmentPostResponeDTO;
@@ -19,5 +20,6 @@ public interface PostService {
     List<RecruitmentPostResponeDTO> findAllRecruitmentPost();
     PostInfoResponeDTO recruitmentPostUpdateOrSave(RecruitmentPostUpdateOrSageRequestDTO recruitmentPostUpdateOrSageRequestDTO);
 
-    //short question
+    //save survey
+    String saveSurvey(SurveySaveRequestDTO saveRequestDTO);
 }

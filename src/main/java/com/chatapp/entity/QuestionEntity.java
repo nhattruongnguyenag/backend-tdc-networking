@@ -20,9 +20,9 @@ public class QuestionEntity extends BaseEntity {
     @JoinColumn(name = "post_id", nullable = false)
     private PostEntity post;
 
-    @OneToOne(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private ShortAnswerEntity shortAnswer;
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<ShortAnswerEntity> shortAnswers;
 
-    @OneToOne(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private VoteAnswerEntity voteAnswer;
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<VoteAnswerEntity> voteAnswers;
 }

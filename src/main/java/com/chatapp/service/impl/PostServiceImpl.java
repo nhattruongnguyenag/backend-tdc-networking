@@ -7,15 +7,15 @@ import org.springframework.stereotype.Service;
 
 import com.chatapp.converter.request.NormalPostUpdateOrSaveRequestConverter;
 import com.chatapp.converter.request.RecruitmentPosyUpdateOrSaveRequestConverter;
+import com.chatapp.converter.request.SurveySaveRequestConverter;
 import com.chatapp.converter.response.NormalPostResponeConverter;
 import com.chatapp.converter.response.PostInfoResponeConverter;
 import com.chatapp.converter.response.RecruitmentPostResponeConverter;
 import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
-import com.chatapp.dto.request.ShortAnswerSaveRequestDTO;
+import com.chatapp.dto.request.SurveySaveRequestDTO;
 import com.chatapp.dto.response.NormalPostResponeDTO;
 import com.chatapp.dto.response.PostInfoResponeDTO;
-import com.chatapp.dto.response.QuestionResponeDTO;
 import com.chatapp.dto.response.RecruitmentPostResponeDTO;
 import com.chatapp.entity.PostEntity;
 import com.chatapp.repository.NormalPostRepository;
@@ -47,6 +47,8 @@ public class PostServiceImpl implements PostService {
     private NormalPostUpdateOrSaveRequestConverter normalPostUpdateOrSaveRequestConverter;
     @Autowired
     private RecruitmentPosyUpdateOrSaveRequestConverter recruitmentPosyUpdateOrSaveRequestConverter;
+    @Autowired
+    private SurveySaveRequestConverter surveySaveRequestConverter;
 
     @Override
     public List<PostInfoResponeDTO> findAll() {
@@ -118,6 +120,12 @@ public class PostServiceImpl implements PostService {
         return postInfoResponeConverter.toDTO(postRepository.save(postEntity));
     }
 
-    // short question
-
+    @Override
+    public String saveSurvey(SurveySaveRequestDTO saveRequestDTO) {
+        PostEntity postEntity = surveySaveRequestConverter.toPostEntity(saveRequestDTO);
+        postEntity.setActive((byte) 1);
+        postEntity.setStatus((byte) 0);
+        postRepository.save(postEntity);
+        return "";
+    }
 }

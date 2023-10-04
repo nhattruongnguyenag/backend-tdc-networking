@@ -138,9 +138,31 @@ POST http://127.0.0.1:8080/api/posts/survey HTTP/1.1
 Content-Type: application/json
 
 {
-    "userId": 1,
-    "type":"survey",
-    "title":"hello",
-    "questionType":"short",
-    "content":"ban ten gi"
+   "type": "khao-sat",
+   "userId": 1,
+   "questions": [
+       {
+           "type": "tra-loi-ngan",
+           "title": "Ngôn ngữ lập trình bạn đang sử dụng là gì?"
+       },
+       {
+           "type": "chon-mot-dap-an",
+           "title": "Bạn có đi làm thêm không?",
+           "choices": [
+               "Có",
+               "Không"
+           ]
+       },
+       {
+           "type": "chon-nhieu-dap-an",
+           "title": "Bạn đi làm thêm vào thứ mấy?",
+           "choices": [
+               "Thứ 2",
+               "Thứ 3",
+               "Thứ 4"
+           ]
+       }
+   ]
 }
+
+

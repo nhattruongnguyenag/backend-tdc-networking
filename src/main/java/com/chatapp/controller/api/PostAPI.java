@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import com.chatapp.commond.ResponseData;
 import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
-import com.chatapp.dto.request.ShortAnswerSaveRequestDTO;
+import com.chatapp.dto.request.SurveySaveRequestDTO;
 import com.chatapp.dto.response.NormalPostResponeDTO;
 import com.chatapp.dto.response.PostInfoResponeDTO;
 import com.chatapp.dto.response.RecruitmentPostResponeDTO;
@@ -50,6 +50,13 @@ public class PostAPI {
     @PostMapping({ "posts/recruitment", "posts/recruitment/" })
     ResponseEntity<ResponseData<PostInfoResponeDTO>> updateOrSave(@RequestBody RecruitmentPostUpdateOrSageRequestDTO recruitmentPostUpdateOrSageRequestDTO) {
         ResponseData<PostInfoResponeDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"add or update recruitment post success",postService.recruitmentPostUpdateOrSave(recruitmentPostUpdateOrSageRequestDTO));
+        return ResponseEntity.created(null).body(responseData);
+    }
+
+    @PostMapping({ "posts/survey", "posts/survey/" })
+    ResponseEntity<ResponseData<?>> surveySave(@RequestBody SurveySaveRequestDTO surveySaveRequestDTO) {
+        postService.saveSurvey(surveySaveRequestDTO);
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED,"success",null);
         return ResponseEntity.created(null).body(responseData);
     }
 }
