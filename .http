@@ -146,6 +146,10 @@ Content-Type: application/json
            "title": "Ngôn ngữ lập trình bạn đang sử dụng là gì?"
        },
        {
+           "type": "tra-loi-ngan",
+           "title": "name?"
+       },
+       {
            "type": "chon-mot-dap-an",
            "title": "Bạn có đi làm thêm không?",
            "choices": [
