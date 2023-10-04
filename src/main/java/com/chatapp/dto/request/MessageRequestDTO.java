@@ -9,4 +9,5 @@ public class MessageRequestDTO extends BaseDTO {
     private String type;
     private Long senderId;
     private Long receiverId;
+    private Byte status;
 }

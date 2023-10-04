@@ -12,5 +12,6 @@ public class MessageResponseDTO extends BaseDTO{
     private String type;
     private UserMessageResponseDTO sender;
     private UserMessageResponseDTO receiver;
+    private Long status;
     private Date createdAt;
 }

@@ -1,7 +1,11 @@
 package com.chatapp.controller.api;
 
 import com.chatapp.dto.request.MessageRequestDTO;
+import com.chatapp.dto.response.ConversationResponseDTO;
 import com.chatapp.dto.response.MessageResponseDTO;
+import com.chatapp.entity.MessageEntity;
+import com.chatapp.repository.MessageRepository;
+import com.chatapp.service.ConversationService;
 import com.chatapp.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,14 +18,29 @@ import java.util.List;
 public class MessageAPI {
     @Autowired
     private MessageService messageService;
+    @Autowired
+    private ConversationService conversationService;
 
     @GetMapping("/messages/{senderId}/{receiverId}")
-    List<MessageResponseDTO> findMessagesBySenderOrReceiver(@PathVariable("senderId") Long senderId, @PathVariable("receiverId") Long receiverId) {
-        return messageService.findBySenderOrReceiver(senderId, receiverId);
+    List<ConversationResponseDTO> findMessagesBySenderOrReceiver(@PathVariable("senderId") Long senderId, @PathVariable("receiverId") Long receiverId) {
+        return conversationService.findBySenderAndReceiver(senderId, receiverId);
     }
 
-    @PostMapping("/messages")
-    MessageRequestDTO save(@RequestBody MessageRequestDTO messageDTO) {
+    @Autowired
+    private MessageRepository messageRepository;
+    @GetMapping("/messages/{conversationId}")
+    List<MessageResponseDTO> messageEntities(@PathVariable("conversationId") Long conversationId) {
+        return messageService.findByConversations_Id(conversationId);
+    }
+
+    @GetMapping("/messages")
+    MessageResponseDTO save() {
+        MessageRequestDTO messageDTO = new MessageRequestDTO();
+        messageDTO.setType("plain/message");
+        messageDTO.setContent("Hiiiiii");
+        messageDTO.setSenderId(1L);
+        messageDTO.setReceiverId(2L);
+        messageDTO.setStatus((byte) 0);
         return messageService.save(messageDTO);
     }
 
