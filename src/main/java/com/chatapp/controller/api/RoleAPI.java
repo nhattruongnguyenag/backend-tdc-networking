@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.chatapp.dto.response.RoleResponeDTO;
+import com.chatapp.dto.response.RoleResponseDTO;
 import com.chatapp.service.RoleService;
 
 @RestController
@@ -15,7 +15,7 @@ public class RoleAPI {
     RoleService roleService;
 
     @GetMapping({ "roles", "roles/" })
-    public List<RoleResponeDTO> findAll() {
+    public List<RoleResponseDTO> findAll() {
         return roleService.findAll();
     }
 }

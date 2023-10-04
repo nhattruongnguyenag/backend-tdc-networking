@@ -7,9 +7,9 @@ import com.chatapp.converter.request.FacultyInfoUpdateOrSaveRequestConverter;
 import com.chatapp.converter.request.StudentInfoRegisterRequestConverter;
 import com.chatapp.converter.request.StudentInfoUpdateOrSaveRequestConverter;
 import com.chatapp.converter.request.UserRequestConverter;
-import com.chatapp.converter.response.BusinessInfoResponeConverter;
-import com.chatapp.converter.response.FacultyInfoResponeConverter;
-import com.chatapp.converter.response.StudentInfoResponeConverter;
+import com.chatapp.converter.response.BusinessInfoResponseConverter;
+import com.chatapp.converter.response.FacultyInfoResponseConverter;
+import com.chatapp.converter.response.StudentInfoResponseConverter;
 import com.chatapp.converter.response.UserInfoResponseConverter;
 import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.BaseDTO;
@@ -22,8 +22,8 @@ import com.chatapp.dto.request.StudentInfoRegisterRequestDTO;
 import com.chatapp.dto.request.StudentInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.UserLoginRequestDTO;
 import com.chatapp.dto.response.BusinessInfoResponseDTO;
-import com.chatapp.dto.response.FacultyInfoResponeDTO;
-import com.chatapp.dto.response.StudentInfoResponeDTO;
+import com.chatapp.dto.response.FacultyInfoResponseDTO;
+import com.chatapp.dto.response.StudentInfoResponseDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.entity.RoleEntity;
 import com.chatapp.entity.UserEntity;
@@ -76,11 +76,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserInfoResponseConverter userInfoResponseConverter;
     @Autowired
-    private StudentInfoResponeConverter studentInfoResponeConverter;
+    private StudentInfoResponseConverter studentInfoResponeConverter;
     @Autowired
-    private FacultyInfoResponeConverter facultyInfoResponeConverter;
+    private FacultyInfoResponseConverter facultyInfoResponeConverter;
     @Autowired
-    private BusinessInfoResponeConverter businessInfoResponeConverter;
+    private BusinessInfoResponseConverter businessInfoResponeConverter;
 
     @Autowired
     private UserRequestConverter userConverter;
@@ -169,11 +169,11 @@ public class UserServiceImpl implements UserService {
         String email = tokenProvider.extractEmailFromToken(token);
         UserEntity userEntity = userRepository.findOneByEmail(email);
         if (studentInfoRepository.findOneByUser_Id(userEntity.getId()) != null) {
-            StudentInfoResponeDTO studentInfoResponeDTO = studentInfoResponeConverter
+            StudentInfoResponseDTO studentInfoResponeDTO = studentInfoResponeConverter
                     .toDTO(studentInfoRepository.findOneByUser_Id(userEntity.getId()));
             dto = studentInfoResponeDTO;
         } else if (facultyInfoRepository.findOneByUser_Id(userEntity.getId()) != null) {
-            FacultyInfoResponeDTO facultyInfoResponeDTO = facultyInfoResponeConverter
+            FacultyInfoResponseDTO facultyInfoResponeDTO = facultyInfoResponeConverter
                     .toDTO(facultyInfoRepository.findOneByUser_Id(userEntity.getId()));
             dto = facultyInfoResponeDTO;
         } else if (businessInfoRepository.findOneByUser_Id(userEntity.getId()) != null) {
@@ -221,7 +221,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<StudentInfoResponeDTO> findAllStudentInfo() {
+    public List<StudentInfoResponseDTO> findAllStudentInfo() {
         return studentInfoResponeConverter.toDTOGroup(studentInfoRepository.findAll());
     }
 
@@ -287,7 +287,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<FacultyInfoResponeDTO> findAllFacultyInfo() {
+    public List<FacultyInfoResponseDTO> findAllFacultyInfo() {
         return facultyInfoResponeConverter.toDTOGroup(facultyInfoRepository.findAll());
     }
 

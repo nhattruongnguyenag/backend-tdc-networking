@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BusinessInfoResponeConverter extends BaseConverter<BusinessesInfoEntity, BusinessInfoResponseDTO> {
+public class BusinessInfoResponseConverter extends BaseConverter<BusinessesInfoEntity, BusinessInfoResponseDTO> {
 
     @Autowired
     private UserRepository userRepository;

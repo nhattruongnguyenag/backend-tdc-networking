@@ -5,8 +5,8 @@ import com.chatapp.dto.BaseDTO;
 import lombok.Data;
 
 @Data
-public class RecruitmentPostResponeDTO extends BaseDTO{
-    private PostInfoResponeDTO post;
+public class RecruitmentPostResponseDTO extends BaseDTO{
+    private PostInfoResponseDTO post;
     private String title;
     private Long salary;
     private String benefit;

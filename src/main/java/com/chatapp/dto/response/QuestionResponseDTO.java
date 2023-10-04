@@ -5,8 +5,8 @@ import com.chatapp.dto.BaseDTO;
 import lombok.Data;
 
 @Data
-public class QuestionResponeDTO extends BaseDTO{
-    private PostInfoResponeDTO post;
+public class QuestionResponseDTO extends BaseDTO{
+    private PostInfoResponseDTO post;
     private String title;
     private String type;
 }

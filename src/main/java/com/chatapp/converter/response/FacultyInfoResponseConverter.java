@@ -1,7 +1,7 @@
 package com.chatapp.converter.response;
 
 import com.chatapp.converter.abstracts.BaseConverter;
-import com.chatapp.dto.response.FacultyInfoResponeDTO;
+import com.chatapp.dto.response.FacultyInfoResponseDTO;
 import com.chatapp.entity.FacultyInfoEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.repository.UserRepository;
@@ -10,14 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class FacultyInfoResponeConverter extends BaseConverter<FacultyInfoEntity, FacultyInfoResponeDTO> {
+public class FacultyInfoResponseConverter extends BaseConverter<FacultyInfoEntity, FacultyInfoResponseDTO> {
 
     @Autowired
     private UserRepository userRepository;
 
     @Override
-    public FacultyInfoResponeDTO toDTO(FacultyInfoEntity entity) {
-        FacultyInfoResponeDTO facultyInfoResponeDTO = super.toDTO(entity);
+    public FacultyInfoResponseDTO toDTO(FacultyInfoEntity entity) {
+        FacultyInfoResponseDTO facultyInfoResponeDTO = super.toDTO(entity);
         UserEntity userEntity = userRepository.findOneById(entity.getUser().getId());
         facultyInfoResponeDTO.setId(userEntity.getId());
         facultyInfoResponeDTO.setEmail(userEntity.getEmail());

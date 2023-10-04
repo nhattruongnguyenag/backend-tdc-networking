@@ -1,7 +1,7 @@
 package com.chatapp.converter.response;
 
 import com.chatapp.converter.abstracts.BaseConverter;
-import com.chatapp.dto.response.RecruitmentPostResponeDTO;
+import com.chatapp.dto.response.RecruitmentPostResponseDTO;
 import com.chatapp.entity.RecruitmentPostEntity;
 import com.chatapp.entity.RoleEntity;
 
@@ -9,12 +9,12 @@ import com.chatapp.entity.RoleEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RecruitmentPostResponeConverter extends BaseConverter<RecruitmentPostEntity, RecruitmentPostResponeDTO> {
+public class RecruitmentPostResponseConverter extends BaseConverter<RecruitmentPostEntity, RecruitmentPostResponseDTO> {
 
 
     @Override
-    public RecruitmentPostResponeDTO toDTO(RecruitmentPostEntity entity) {
-        RecruitmentPostResponeDTO recruitmentPostResponeDTO = super.toDTO(entity);
+    public RecruitmentPostResponseDTO toDTO(RecruitmentPostEntity entity) {
+        RecruitmentPostResponseDTO recruitmentPostResponeDTO = super.toDTO(entity);
         String roleCodes = "";
         for (int i = 0; i < entity.getPost().getUser().getRoles().size(); i++) {
             if (i != 0) {

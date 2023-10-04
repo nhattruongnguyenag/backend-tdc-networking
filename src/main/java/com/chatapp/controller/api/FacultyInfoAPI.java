@@ -11,7 +11,7 @@ import com.chatapp.commond.ResponseData;
 import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.request.FacultyInfoRegisterRequestDTO;
 import com.chatapp.dto.request.FacultyInfoUpdateOrSaveRequestDTO;
-import com.chatapp.dto.response.FacultyInfoResponeDTO;
+import com.chatapp.dto.response.FacultyInfoResponseDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.service.UserService;
 
@@ -22,8 +22,8 @@ public class FacultyInfoAPI {
     private UserService userService;
     
     @GetMapping({ "faculty", "faculty/" })
-    public ResponseEntity<ResponseData<List<FacultyInfoResponeDTO>>> findAll() {
-        ResponseData<List<FacultyInfoResponeDTO>> responseData = new ResponseData<>(HttpStatus.OK,"success",userService.findAllFacultyInfo());
+    public ResponseEntity<ResponseData<List<FacultyInfoResponseDTO>>> findAll() {
+        ResponseData<List<FacultyInfoResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK,"success",userService.findAllFacultyInfo());
         return ResponseEntity.ok(responseData);
     }
 

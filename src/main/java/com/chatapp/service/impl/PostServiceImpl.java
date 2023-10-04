@@ -8,15 +8,15 @@ import org.springframework.stereotype.Service;
 import com.chatapp.converter.request.NormalPostUpdateOrSaveRequestConverter;
 import com.chatapp.converter.request.RecruitmentPosyUpdateOrSaveRequestConverter;
 import com.chatapp.converter.request.SurveySaveRequestConverter;
-import com.chatapp.converter.response.NormalPostResponeConverter;
-import com.chatapp.converter.response.PostInfoResponeConverter;
-import com.chatapp.converter.response.RecruitmentPostResponeConverter;
+import com.chatapp.converter.response.NormalPostResponseConverter;
+import com.chatapp.converter.response.PostInfoResponseConverter;
+import com.chatapp.converter.response.RecruitmentPostResponseConverter;
 import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
 import com.chatapp.dto.request.SurveySaveRequestDTO;
-import com.chatapp.dto.response.NormalPostResponeDTO;
-import com.chatapp.dto.response.PostInfoResponeDTO;
-import com.chatapp.dto.response.RecruitmentPostResponeDTO;
+import com.chatapp.dto.response.NormalPostResponseDTO;
+import com.chatapp.dto.response.PostInfoResponseDTO;
+import com.chatapp.dto.response.RecruitmentPostResponseDTO;
 import com.chatapp.entity.PostEntity;
 import com.chatapp.repository.NormalPostRepository;
 import com.chatapp.repository.PostRepository;
@@ -37,11 +37,11 @@ public class PostServiceImpl implements PostService {
     private RecruitmentPostRepository recruitmentPostRepository;
 
     @Autowired
-    private PostInfoResponeConverter postInfoResponeConverter;
+    private PostInfoResponseConverter postInfoResponeConverter;
     @Autowired
-    private NormalPostResponeConverter normalPostResponeConverter;
+    private NormalPostResponseConverter normalPostResponeConverter;
     @Autowired
-    private RecruitmentPostResponeConverter recruitmentPostResponeConverter;
+    private RecruitmentPostResponseConverter recruitmentPostResponeConverter;
 
     @Autowired
     private NormalPostUpdateOrSaveRequestConverter normalPostUpdateOrSaveRequestConverter;
@@ -51,13 +51,13 @@ public class PostServiceImpl implements PostService {
     private SurveySaveRequestConverter surveySaveRequestConverter;
 
     @Override
-    public List<PostInfoResponeDTO> findAll() {
+    public List<PostInfoResponseDTO> findAll() {
         return postInfoResponeConverter.toDTOGroup(postRepository.findAll());
     }
 
     // normal post
     @Override
-    public List<NormalPostResponeDTO> findAllNormalPost() {
+    public List<NormalPostResponseDTO> findAllNormalPost() {
         return normalPostResponeConverter.toDTOGroup(normalPostRepository.findAll());
     }
 
@@ -75,7 +75,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostInfoResponeDTO normalPostUpdateOrSave(
+    public PostInfoResponseDTO normalPostUpdateOrSave(
             NormalPostUpdateOrSaveRequestDTO normalPostUpdateOrSaveRequestDTO) {
         PostEntity postEntity;
         if (normalPostUpdateOrSaveRequestDTO.getId() != null) {
@@ -88,7 +88,7 @@ public class PostServiceImpl implements PostService {
 
     // recruitment post
     @Override
-    public List<RecruitmentPostResponeDTO> findAllRecruitmentPost() {
+    public List<RecruitmentPostResponseDTO> findAllRecruitmentPost() {
         return recruitmentPostResponeConverter.toDTOGroup(recruitmentPostRepository.findAll());
     }
 
@@ -109,7 +109,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostInfoResponeDTO recruitmentPostUpdateOrSave(
+    public PostInfoResponseDTO recruitmentPostUpdateOrSave(
             RecruitmentPostUpdateOrSageRequestDTO recruitmentPostUpdateOrSageRequestDTO) {
         PostEntity postEntity;
         if (recruitmentPostUpdateOrSageRequestDTO.getId() != null) {

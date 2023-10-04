@@ -11,8 +11,8 @@ import com.chatapp.dto.request.StudentInfoRegisterRequestDTO;
 import com.chatapp.dto.request.StudentInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.UserLoginRequestDTO;
 import com.chatapp.dto.response.BusinessInfoResponseDTO;
-import com.chatapp.dto.response.FacultyInfoResponeDTO;
-import com.chatapp.dto.response.StudentInfoResponeDTO;
+import com.chatapp.dto.response.FacultyInfoResponseDTO;
+import com.chatapp.dto.response.StudentInfoResponseDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
 
 import java.util.List;
@@ -29,11 +29,11 @@ public interface UserService {
 
     //student service
     AuthTokenDTO studentRegister(StudentInfoRegisterRequestDTO studentRegisterDTO);
-    List<StudentInfoResponeDTO> findAllStudentInfo();
+    List<StudentInfoResponseDTO> findAllStudentInfo();
     UserInfoResponseDTO studentUpdateOrSave(StudentInfoUpdateOrSaveRequestDTO studentInfoUpdateOrSaveRequestDTO);
 
     //faculty service
-    List<FacultyInfoResponeDTO> findAllFacultyInfo();
+    List<FacultyInfoResponseDTO> findAllFacultyInfo();
     AuthTokenDTO facultyRegister(FacultyInfoRegisterRequestDTO facultyInfoRegisterRequestDTO);
     UserInfoResponseDTO facultyUpdateOrSave(FacultyInfoUpdateOrSaveRequestDTO facultyInfoUpdateOrSaveRequestDTO);
 
