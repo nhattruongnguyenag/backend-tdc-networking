@@ -8,7 +8,6 @@ import lombok.Data;
 @Table(name = "student_infos")
 @Data
 public class StudentInfoEntity extends BaseEntity {
-
     @Column(name = "student_code", nullable = false)
     private String studentCode;
 

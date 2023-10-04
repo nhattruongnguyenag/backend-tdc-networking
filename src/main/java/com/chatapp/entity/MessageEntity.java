@@ -1,5 +1,6 @@
 package com.chatapp.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -28,5 +29,5 @@ public class MessageEntity extends BaseEntity {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "conversation_message", joinColumns = @JoinColumn(name = "message_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "conversation_id", nullable = false))
-    private List<ConversationEntity> conversations;
+    private List<ConversationEntity> conversations = new ArrayList<>();
 }

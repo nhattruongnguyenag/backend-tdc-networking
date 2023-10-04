@@ -18,17 +18,15 @@ public class CustomizedMessageRepositoryImpl implements CustomizedMessageReposit
     @Override
     public List<MessageEntity> findBySenderOrReceiver(Long senderId, Long receiverId) {
         String sql = new StringBuilder("SELECT m FROM MessageEntity m")
-                .append("\nJOIN m.sender as s")
-                .append("\nJOIN m.receiver as r")
-                .append("\nWHERE (s.id = ?1 OR r.id = ?2)")
-                .append("\nAND (s.id = ?3 OR r.id = ?4)")
+                .append("\nJOIN m.conversations as c")
+                .append("\nJOIN c.sender as s")
+                .append("\nJOIN c.receiver as r")
+                .append("\nWHERE (s.id = ?1 AND r.id = ?2)")
                 .append("\nORDER BY m.createdAt ASC").toString();
 
         Query query = entityManager.createQuery(sql)
                 .setParameter(1, senderId)
-                .setParameter(2, senderId)
-                .setParameter(3, receiverId)
-                .setParameter(4, receiverId);
+                .setParameter(2, receiverId);
 
         return query.getResultList();
     }

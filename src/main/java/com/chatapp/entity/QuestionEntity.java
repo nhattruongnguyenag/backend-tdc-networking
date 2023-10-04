@@ -1,5 +1,6 @@
 package com.chatapp.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -21,8 +22,8 @@ public class QuestionEntity extends BaseEntity {
     private PostEntity post;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<ShortAnswerEntity> shortAnswers;
+    private List<ShortAnswerEntity> shortAnswers = new ArrayList<>();;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<VoteAnswerEntity> voteAnswers;
+    private List<VoteAnswerEntity> voteAnswers = new ArrayList<>();;
 }

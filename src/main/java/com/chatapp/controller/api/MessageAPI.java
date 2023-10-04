@@ -22,8 +22,8 @@ public class MessageAPI {
     private ConversationService conversationService;
 
     @GetMapping("/messages/{senderId}/{receiverId}")
-    List<ConversationResponseDTO> findMessagesBySenderOrReceiver(@PathVariable("senderId") Long senderId, @PathVariable("receiverId") Long receiverId) {
-        return conversationService.findBySenderAndReceiver(senderId, receiverId);
+    List<MessageResponseDTO> findMessagesBySenderOrReceiver(@PathVariable("senderId") Long senderId, @PathVariable("receiverId") Long receiverId) {
+        return messageService.findBySenderAndReceiver(senderId, receiverId);
     }
 
     @Autowired
@@ -33,15 +33,9 @@ public class MessageAPI {
         return messageService.findByConversations_Id(conversationId);
     }
 
-    @GetMapping("/messages")
-    MessageResponseDTO save() {
-        MessageRequestDTO messageDTO = new MessageRequestDTO();
-        messageDTO.setType("plain/message");
-        messageDTO.setContent("Hiiiiii");
-        messageDTO.setSenderId(1L);
-        messageDTO.setReceiverId(2L);
-        messageDTO.setStatus((byte) 0);
-        return messageService.save(messageDTO);
+    @PostMapping("/messages")
+    MessageResponseDTO save(@RequestBody MessageRequestDTO messageRequestDTO) {
+        return messageService.save(messageRequestDTO);
     }
 
     @DeleteMapping("/messages/{id}")

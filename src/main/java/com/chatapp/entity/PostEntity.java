@@ -1,5 +1,6 @@
 package com.chatapp.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -30,20 +31,20 @@ public class PostEntity extends BaseEntity {
     private RecruitmentPostEntity recruitmentPost;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<QuestionEntity> questions;
+    private List<QuestionEntity> questions = new ArrayList<>();;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<PostCommentEntity> comments;
+    private List<PostCommentEntity> comments = new ArrayList<>();;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<PostLikeEntity> likes;
+    private List<PostLikeEntity> likes = new ArrayList<>();;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<PostImageEntity> images;
+    private List<PostImageEntity> images = new ArrayList<>();;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<JobProfileEntity> jobProfiles;
+    private List<JobProfileEntity> jobProfiles = new ArrayList<>();;
 
     @ManyToMany(mappedBy = "postSave", fetch = FetchType.LAZY)
-    private List<UserEntity> users;
+    private List<UserEntity> users = new ArrayList<>();;
 }

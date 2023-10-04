@@ -13,6 +13,7 @@ import com.chatapp.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -64,17 +65,36 @@ public class MessageServiceImpl implements MessageService {
             MessageEntity messageEntity = messageRepository.save(messageRequestConverter.toEntity(messageRequestDTO));
             List<ConversationEntity> conversationEntities = customizedConversationRepository.findBySenderAndReceiver(sender.get().getId(), receiver.get().getId());
 
-            if (conversationEntities.size() == 2) {
+            if (conversationEntities.size() == 0) {
+                conversationEntities.add(createConversationEntity(sender, receiver, messageEntity));
+                conversationEntities.add(createConversationEntity(receiver, sender, messageEntity));
+            } else if (conversationEntities.size() == 1) {
+                conversationEntities.get(0).getMessages().add(messageEntity);
+                if (conversationEntities.get(0).getSender().getId() == sender.get().getId()) {
+                    conversationEntities.add(createConversationEntity(receiver, sender, messageEntity));
+                } else {
+                    conversationEntities.add(createConversationEntity(sender, receiver, messageEntity));
+                }
+            } else {
                 for (ConversationEntity conversationEntity : conversationEntities) {
                     conversationEntity.getMessages().add(messageEntity);
                 }
-                conversationRepository.saveAll(conversationEntities);
             }
+
+            conversationRepository.saveAll(conversationEntities);
 
             return messageResponseConverter.toDTO(messageEntity);
         }
 
         throw new RuntimeException("user_not_exists");
+    }
+
+    private static ConversationEntity createConversationEntity(Optional<UserEntity> sender, Optional<UserEntity> receiver, MessageEntity messageEntity) {
+        ConversationEntity senderConversation = new ConversationEntity();
+        senderConversation.setSender(sender.get());
+        senderConversation.setReceiver(receiver.get());
+        senderConversation.getMessages().add(messageEntity);
+        return senderConversation;
     }
 
     @Override
