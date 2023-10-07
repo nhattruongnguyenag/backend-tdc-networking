@@ -35,4 +35,9 @@ public class ConversationServiceImpl implements ConversationService {
     public List<ConversationResponseDTO> findBySenderAndReceiver(long senderId, long receiverId) {
         return conversationResponseConverter.toDTOGroup(customizedConversationRepository.findBySenderAndReceiver(senderId, receiverId));
     }
+
+    @Override
+    public List<ConversationResponseDTO> findBySender(long senderId) {
+        return conversationResponseConverter.toDTOGroup(conversationRepository.findBySender_Id(senderId));
+    }
 }

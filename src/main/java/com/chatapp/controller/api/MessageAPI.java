@@ -26,6 +26,11 @@ public class MessageAPI {
         return messageService.findBySenderAndReceiver(senderId, receiverId);
     }
 
+    @GetMapping("/conversations/{userId}")
+    List<ConversationResponseDTO> listConversations(@PathVariable("userId") Long userId) {
+        return conversationService.findBySender(userId);
+    }
+
     @Autowired
     private MessageRepository messageRepository;
     @GetMapping("/messages/{conversationId}")

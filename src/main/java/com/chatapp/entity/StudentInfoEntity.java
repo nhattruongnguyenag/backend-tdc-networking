@@ -1,12 +1,10 @@
 package com.chatapp.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
 
 
 @Entity
 @Table(name = "student_infos")
-@Data
 public class StudentInfoEntity extends BaseEntity {
     @Column(name = "student_code", nullable = false)
     private String studentCode;
@@ -20,4 +18,36 @@ public class StudentInfoEntity extends BaseEntity {
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
+
+    public String getStudentCode() {
+        return studentCode;
+    }
+
+    public void setStudentCode(String studentCode) {
+        this.studentCode = studentCode;
+    }
+
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
+    }
+
+    public String getFacultyName() {
+        return facultyName;
+    }
+
+    public void setFacultyName(String facultyName) {
+        this.facultyName = facultyName;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
 }

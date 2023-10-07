@@ -1,12 +1,10 @@
 package com.chatapp.entity;
 
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.*;
-import lombok.*;
-
-@Data
 @Entity
 @Table(name = "posts_comments")
 public class PostCommentEntity extends BaseEntity {
@@ -28,4 +26,44 @@ public class PostCommentEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "parent_comment_id", nullable = true)
     private PostCommentEntity postComment;
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public PostEntity getPost() {
+        return post;
+    }
+
+    public void setPost(PostEntity post) {
+        this.post = post;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
+    public List<PostCommentEntity> getPostComments() {
+        return postComments;
+    }
+
+    public void setPostComments(List<PostCommentEntity> postComments) {
+        this.postComments = postComments;
+    }
+
+    public PostCommentEntity getPostComment() {
+        return postComment;
+    }
+
+    public void setPostComment(PostCommentEntity postComment) {
+        this.postComment = postComment;
+    }
 }

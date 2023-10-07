@@ -16,4 +16,28 @@ public class JobProfileEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "post_id", nullable = true)
     private PostEntity post;
+
+    public String getCvUrl() {
+        return cvUrl;
+    }
+
+    public void setCvUrl(String cvUrl) {
+        this.cvUrl = cvUrl;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
+    public PostEntity getPost() {
+        return post;
+    }
+
+    public void setPost(PostEntity post) {
+        this.post = post;
+    }
 }

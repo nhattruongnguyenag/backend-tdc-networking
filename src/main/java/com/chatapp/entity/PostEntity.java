@@ -1,12 +1,10 @@
 package com.chatapp.entity;
 
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.*;
-import lombok.*;
-
-@Data
 @Entity
 @Table(name = "posts")
 public class PostEntity extends BaseEntity {
@@ -31,20 +29,116 @@ public class PostEntity extends BaseEntity {
     private RecruitmentPostEntity recruitmentPost;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<QuestionEntity> questions = new ArrayList<>();;
+    private List<QuestionEntity> questions = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<PostCommentEntity> comments = new ArrayList<>();;
+    private List<PostCommentEntity> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<PostLikeEntity> likes = new ArrayList<>();;
+    private List<PostLikeEntity> likes = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<PostImageEntity> images = new ArrayList<>();;
+    private List<PostImageEntity> images = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<JobProfileEntity> jobProfiles = new ArrayList<>();;
+    private List<JobProfileEntity> jobProfiles = new ArrayList<>();
 
     @ManyToMany(mappedBy = "postSave", fetch = FetchType.LAZY)
-    private List<UserEntity> users = new ArrayList<>();;
+    private List<UserEntity> users = new ArrayList<>();
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Byte getActive() {
+        return active;
+    }
+
+    public void setActive(Byte active) {
+        this.active = active;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
+    public NormalPostEntity getNormalPost() {
+        return normalPost;
+    }
+
+    public void setNormalPost(NormalPostEntity normalPost) {
+        this.normalPost = normalPost;
+    }
+
+    public RecruitmentPostEntity getRecruitmentPost() {
+        return recruitmentPost;
+    }
+
+    public void setRecruitmentPost(RecruitmentPostEntity recruitmentPost) {
+        this.recruitmentPost = recruitmentPost;
+    }
+
+    public List<QuestionEntity> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<QuestionEntity> questions) {
+        this.questions = questions;
+    }
+
+    public List<PostCommentEntity> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<PostCommentEntity> comments) {
+        this.comments = comments;
+    }
+
+    public List<PostLikeEntity> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(List<PostLikeEntity> likes) {
+        this.likes = likes;
+    }
+
+    public List<PostImageEntity> getImages() {
+        return images;
+    }
+
+    public void setImages(List<PostImageEntity> images) {
+        this.images = images;
+    }
+
+    public List<JobProfileEntity> getJobProfiles() {
+        return jobProfiles;
+    }
+
+    public void setJobProfiles(List<JobProfileEntity> jobProfiles) {
+        this.jobProfiles = jobProfiles;
+    }
+
+    public List<UserEntity> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<UserEntity> users) {
+        this.users = users;
+    }
 }
