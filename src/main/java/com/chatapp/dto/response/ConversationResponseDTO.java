@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 public class ConversationResponseDTO extends BaseDTO {
-    private Long senderId;
-    private Long receiverId;
+    private UserInfoResponseDTO sender;
+    private UserInfoResponseDTO receiver;
 }

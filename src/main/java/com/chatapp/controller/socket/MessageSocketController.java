@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,14 +19,9 @@ public class MessageSocketController {
 
     @MessageMapping({"/messages/{senderId}/{receiverId}", "/messages/{receiverId}/{senderId}"})
     @SendTo({"/topic/messages/{senderId}/{receiverId}", "/topic/messages/{receiverId}/{senderId}"})
-    public List<MessageResponseDTO> saveMessage(@DestinationVariable("senderId") Long senderId, @DestinationVariable("receiverId") Long receiverId, String content) {
-        MessageRequestDTO messageDTO = new MessageRequestDTO();
-        messageDTO.setSenderId(senderId);
-        messageDTO.setReceiverId(receiverId);
-        messageDTO.setContent(content);
-        messageDTO.setType("plain/text");
-        messageService.save(messageDTO);
-        return messageService.findBySenderAndReceiver(messageDTO.getSenderId(), messageDTO.getReceiverId());
+    public List<MessageResponseDTO> saveMessage(@RequestBody MessageRequestDTO messageRequestDTO) {
+        messageService.save(messageRequestDTO);
+        return messageService.findBySenderAndReceiver(messageRequestDTO.getSenderId(), messageRequestDTO.getReceiverId());
     }
 
     @MessageMapping({"/messages/{senderId}/{receiverId}/listen", "/messages/{receiverId}/{senderId}/listen"})

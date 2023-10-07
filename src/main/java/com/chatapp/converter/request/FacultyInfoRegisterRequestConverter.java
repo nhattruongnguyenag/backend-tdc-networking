@@ -14,7 +14,6 @@ public class FacultyInfoRegisterRequestConverter extends BaseConverter<UserEntit
     public UserEntity toEntity(FacultyInfoRegisterRequestDTO dto) {
         UserEntity userEntity = super.toEntity(dto);
         FacultyInfoEntity facultyInfoEntity = new FacultyInfoEntity();
-        facultyInfoEntity.setFacultyName(dto.getFacultyName());
         facultyInfoEntity.setUser(userEntity);
         userEntity.setFalcutyInfo(facultyInfoEntity);
         return userEntity;
