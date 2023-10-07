@@ -32,7 +32,7 @@ public class NotificationServiceImpl implements NotificationService {
     private NotificationChangeStatusRequestConverter notificationChangeStatusRequestConverter;
     @Autowired
     private NotificationRepository notificationRepository;
-     @Autowired
+    @Autowired
     private UserRepository userRepository;
 
     @Override
@@ -72,7 +72,21 @@ public class NotificationServiceImpl implements NotificationService {
         if (userRepository.findOneById(notificationChangeStatusRequestDTO.getUserId()) == null) {
             throw new DuplicateUsernameException("user_not_exists");
         }
-        NotificationEntity entity = notificationChangeStatusRequestConverter.toEntity(notificationChangeStatusRequestDTO);
+        NotificationEntity entity = notificationChangeStatusRequestConverter
+                .toEntity(notificationChangeStatusRequestDTO);
+        entity.setStatus((byte) 1);
         return notificationResponseConverter.toDTO(notificationRepository.save(entity));
+    }
+
+    @Override
+    public String deleteAll(Long userId) {
+        if (userRepository.findOneById(userId) == null) {
+            throw new DuplicateUsernameException("user_not_exists");
+        }
+        List<NotificationEntity> entities = notificationRepository.findByUser_Id(userId);
+        for (NotificationEntity notificationEntity : entities) {
+            notificationRepository.delete(notificationEntity);
+        }
+        return "";
     }
 }

@@ -49,4 +49,10 @@ public class NotificationAPI {
         ResponseData<NotificationResponseDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"success",notificationService.changeStatus(notificationChangeStatusRequestDTO));
         return ResponseEntity.ok(responseData);
     }
+
+    @DeleteMapping({ "notifications/all/{id}", "notifications/all/{id}/" })
+    ResponseEntity<ResponseData<String>> deleteAll(@PathVariable("id") Long userId) {
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED,"success",notificationService.deleteAll(userId));
+        return ResponseEntity.ok(responseData);
+    }
 }

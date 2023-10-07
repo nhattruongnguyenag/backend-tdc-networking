@@ -12,5 +12,6 @@ public interface NotificationService {
     List<NotificationResponseDTO> findById(Long id);
     NotificationResponseDTO save(NotificationSaveRequestDTO notificationSaveRequestDTO);
     String delete(NotificationDeleteRequestDTO notificationDeleteRequestDTO);
+    String deleteAll(Long userId);
     NotificationResponseDTO changeStatus(NotificationChangeStatusRequestDTO notificationChangeStatusRequestDTO);
 }
