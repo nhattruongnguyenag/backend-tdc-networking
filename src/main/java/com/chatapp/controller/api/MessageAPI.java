@@ -3,7 +3,6 @@ package com.chatapp.controller.api;
 import com.chatapp.dto.request.MessageRequestDTO;
 import com.chatapp.dto.response.ConversationResponseDTO;
 import com.chatapp.dto.response.MessageResponseDTO;
-import com.chatapp.entity.MessageEntity;
 import com.chatapp.repository.MessageRepository;
 import com.chatapp.service.ConversationService;
 import com.chatapp.service.MessageService;
