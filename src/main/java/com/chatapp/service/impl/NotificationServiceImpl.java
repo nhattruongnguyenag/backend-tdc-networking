@@ -2,6 +2,7 @@ package com.chatapp.service.impl;
 
 import java.util.List;
 
+import com.chatapp.converter.request.NotificationChangeAllStatusByUserIdRequest;
 import com.chatapp.converter.request.NotificationChangeStatusRequestConverter;
 import com.chatapp.converter.request.NotificationDeleteRequestConverter;
 import com.chatapp.converter.request.NotificationSaveRequestConverter;
@@ -79,14 +80,26 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public String deleteAll(Long userId) {
-        if (userRepository.findOneById(userId) == null) {
+    public String changeStatusAll(NotificationChangeAllStatusByUserIdRequest notificationChangeAllStatusByUserIdRequest) {
+        if (userRepository.findOneById(notificationChangeAllStatusByUserIdRequest.getUserId()) == null) {
             throw new DuplicateUsernameException("user_not_exists");
         }
-        List<NotificationEntity> entities = notificationRepository.findByUser_Id(userId);
-        for (NotificationEntity notificationEntity : entities) {
-            notificationRepository.delete(notificationEntity);
+        List<NotificationEntity> entities = notificationRepository.findByUser_Id(notificationChangeAllStatusByUserIdRequest.getUserId());
+        for (NotificationEntity entity : entities) {
+            entity.setStatus((byte)1);
+            notificationRepository.save(entity);
         }
         return "";
+    }
+
+    @Override
+    public NotificationResponseDTO makeNotSeen(NotificationChangeStatusRequestDTO notificationChangeStatusRequestDTO) {
+        if (userRepository.findOneById(notificationChangeStatusRequestDTO.getUserId()) == null) {
+            throw new DuplicateUsernameException("user_not_exists");
+        }
+        NotificationEntity entity = notificationChangeStatusRequestConverter
+                .toEntity(notificationChangeStatusRequestDTO);
+        entity.setStatus((byte) 0);
+        return notificationResponseConverter.toDTO(notificationRepository.save(entity));
     }
 }
