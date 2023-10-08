@@ -2,6 +2,7 @@ package com.chatapp.service;
 
 import java.util.List;
 
+import com.chatapp.dto.BaseDTO;
 import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
 import com.chatapp.dto.request.SurveySaveRequestDTO;
@@ -10,7 +11,7 @@ import com.chatapp.dto.response.PostInfoResponseDTO;
 import com.chatapp.dto.response.RecruitmentPostResponseDTO;
 
 public interface PostService {
-    List<PostInfoResponseDTO> findAll();
+    List<BaseDTO> findAll();
 
     //normal post
     List<NormalPostResponseDTO> findAllNormalPost();
