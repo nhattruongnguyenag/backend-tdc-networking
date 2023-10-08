@@ -31,6 +31,12 @@ public class UserEntity extends BaseEntity {
     @Column(name = "code", nullable = true, unique = true)
     private String code;
 
+    @Column(name = "is_typing", nullable = true, columnDefinition = "boolean default false")
+    private Boolean isTyping;
+
+    @Column(name = "is_message_connect", nullable = true, columnDefinition = "boolean default false")
+    private Boolean isMessageConnect;
+
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<MessageEntity> receivedMessages = new HashSet<>();
 
@@ -83,6 +89,9 @@ public class UserEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<JobProfileEntity> jobProfiles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<DeviceTokenEntity> deviceTokens = new ArrayList<>();
 
     public String getEmail() {
         return email;
@@ -138,6 +147,22 @@ public class UserEntity extends BaseEntity {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public Boolean getTyping() {
+        return isTyping;
+    }
+
+    public void setTyping(Boolean typing) {
+        isTyping = typing;
+    }
+
+    public Boolean getMessageConnect() {
+        return isMessageConnect;
+    }
+
+    public void setMessageConnect(Boolean messageConnect) {
+        isMessageConnect = messageConnect;
     }
 
     public Set<MessageEntity> getReceivedMessages() {
@@ -274,5 +299,17 @@ public class UserEntity extends BaseEntity {
 
     public void setJobProfiles(List<JobProfileEntity> jobProfiles) {
         this.jobProfiles = jobProfiles;
+    }
+
+    public List<DeviceTokenEntity> getDeviceTokens() {
+        return deviceTokens;
+    }
+
+    public void setDeviceTokens(List<DeviceTokenEntity> deviceTokens) {
+        this.deviceTokens = deviceTokens;
+    }
+
+    public boolean isTyping() {
+        return isTyping;
     }
 }
