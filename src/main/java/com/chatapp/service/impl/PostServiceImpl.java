@@ -63,7 +63,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<BaseDTO> findAll() {
         List<BaseDTO> dtos = new ArrayList<>();
-        List<PostInfoResponseDTO> responseDTOs = postInfoResponeConverter.toDTOGroup(postRepository.findAll());
+        List<PostInfoResponseDTO> responseDTOs = postInfoResponeConverter.toDTOGroup(postRepository.findAllByOrderByUpdatedAtDesc());
         for (int i = 0; i < responseDTOs.size(); i++) {
             BaseDTO dto = null;
             if (responseDTOs.get(i).getType().equals(PostType.NORMAL.getName())) {
