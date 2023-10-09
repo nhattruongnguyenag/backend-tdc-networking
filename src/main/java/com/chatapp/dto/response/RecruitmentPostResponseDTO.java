@@ -1,12 +1,8 @@
 package com.chatapp.dto.response;
-
-import com.chatapp.dto.BaseDTO;
-
 import lombok.Data;
 
 @Data
-public class RecruitmentPostResponseDTO extends BaseDTO{
-    private PostInfoResponseDTO post;
+public class RecruitmentPostResponseDTO extends PostInfoResponseDTO{
     private String title;
     private Long salary;
     private String benefit;

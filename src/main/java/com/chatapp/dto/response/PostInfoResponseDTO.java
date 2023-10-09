@@ -9,5 +9,6 @@ import lombok.*;
 public class PostInfoResponseDTO extends BaseDTO{
     private Byte status;
     private Byte active;
+    private String type;
     private UserInfoResponseDTO user;
 }
