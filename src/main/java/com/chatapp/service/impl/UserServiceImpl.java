@@ -46,6 +46,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -135,6 +136,7 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("user_does_not_exists");
         }
         userEntity.setStatus(status);
+        userEntity.setUpdatedAt(new Date());
 
         return userInfoResponseConverter.toDTO(userRepository.save(userEntity));
     }

@@ -1,5 +1,6 @@
 package com.chatapp.service.impl;
 
+import com.chatapp.constant.MessageStatus;
 import com.chatapp.converter.request.MessageRequestConverter;
 import com.chatapp.converter.response.MessageResponseConverter;
 import com.chatapp.dto.request.MessageRequestDTO;
@@ -54,6 +55,19 @@ public class MessageServiceImpl implements MessageService {
             return messageResponseConverter.toDTOGroup(messageRepository.findByConversations_Id(conversationId));
         }
         throw new RuntimeException("conversation_not_exists");
+    }
+
+    @Override
+    public List<MessageResponseDTO> updateMessagesToReadState(Long senderId, Long receiverId) {
+        List<MessageEntity> messages = customizedMessageRepository.findBySenderOrReceiver(senderId, receiverId);
+
+        for (MessageEntity message : messages) {
+            if (message.getSender().getId() == receiverId && message.getReceiver().getId() == senderId) {
+                message.setStatus(MessageStatus.SEEN);
+            }
+        }
+
+        return messageResponseConverter.toDTOGroup(messageRepository.saveAll(messages));
     }
 
     @Override

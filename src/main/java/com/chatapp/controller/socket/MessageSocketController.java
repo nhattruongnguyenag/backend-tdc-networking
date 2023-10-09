@@ -31,6 +31,7 @@ public class MessageSocketController {
     @MessageMapping({"/messages/{senderId}/{receiverId}/listen", "/messages/{receiverId}/{senderId}/listen"})
     @SendTo({"/topic/messages/{senderId}/{receiverId}", "/topic/messages/{receiverId}/{senderId}"})
     public List<MessageResponseDTO> getMessages(@DestinationVariable("senderId") Long senderId, @DestinationVariable("receiverId") Long receiverId) {
+        messageService.updateMessagesToReadState(senderId, receiverId);
         return messageService.findBySenderAndReceiver(senderId, receiverId);
     }
 }
