@@ -16,7 +16,6 @@ public class NotificationChangeStatusRequestConverter extends BaseConverter<Noti
     @Override
     public NotificationEntity toEntity(NotificationChangeStatusRequestDTO dto) {
         NotificationEntity entity = notificationRepository.findByIdAndUser_Id(dto.getId(), dto.getUserId());
-        entity.setStatus((byte)1);
         return entity;
     }
 }

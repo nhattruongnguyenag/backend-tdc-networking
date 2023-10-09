@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.chatapp.commond.ResponseData;
+import com.chatapp.converter.request.NotificationChangeAllStatusByUserIdRequest;
 import com.chatapp.dto.request.NotificationChangeStatusRequestDTO;
 import com.chatapp.dto.request.NotificationDeleteRequestDTO;
 import com.chatapp.dto.request.NotificationSaveRequestDTO;
@@ -46,7 +47,19 @@ public class NotificationAPI {
 
     @PutMapping({ "notifications/changeStatus", "notifications/changeStatus/" })
     ResponseEntity<ResponseData<NotificationResponseDTO>> changeStatus(@RequestBody NotificationChangeStatusRequestDTO notificationChangeStatusRequestDTO) {
-        ResponseData<NotificationResponseDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"success",notificationService.changeStatus(notificationChangeStatusRequestDTO));
+        ResponseData<NotificationResponseDTO> responseData = new ResponseData<>(HttpStatus.OK,"success",notificationService.changeStatus(notificationChangeStatusRequestDTO));
+        return ResponseEntity.ok(responseData);
+    }
+
+    @PutMapping({ "notifications/changeStatus/makeNotSeen", "notifications/changeStatus/makeNotSeen/" })
+    ResponseEntity<ResponseData<NotificationResponseDTO>> makeNotSeen(@RequestBody NotificationChangeStatusRequestDTO notificationChangeStatusRequestDTO) {
+        ResponseData<NotificationResponseDTO> responseData = new ResponseData<>(HttpStatus.OK,"success",notificationService.makeNotSeen(notificationChangeStatusRequestDTO));
+        return ResponseEntity.ok(responseData);
+    }
+
+    @PutMapping({ "notifications/changeStatus/all", "notifications/changeStatus/all/" })
+    ResponseEntity<ResponseData<String>> changeStatusAll(@RequestBody NotificationChangeAllStatusByUserIdRequest notificationChangeAllStatusByUserIdRequest) {
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK,"success",notificationService.changeStatusAll(notificationChangeAllStatusByUserIdRequest));
         return ResponseEntity.ok(responseData);
     }
 }

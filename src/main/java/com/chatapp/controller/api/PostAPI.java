@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.chatapp.commond.ResponseData;
+import com.chatapp.dto.BaseDTO;
+import com.chatapp.dto.request.LikeRequestDTO;
 import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
 import com.chatapp.dto.request.SurveySaveRequestDTO;
@@ -23,8 +25,9 @@ public class PostAPI {
     PostService postService;
 
     @GetMapping({"posts", "posts/"})
-    public List<PostInfoResponseDTO> findAll() {
-        return postService.findAll();
+    public ResponseEntity<ResponseData<List<BaseDTO>>> findAll() {
+        ResponseData<List<BaseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success", postService.findAll());
+        return ResponseEntity.ok(responseData);
     }
 
     //normalPost api
@@ -56,6 +59,13 @@ public class PostAPI {
     @PostMapping({ "posts/survey", "posts/survey/" })
     ResponseEntity<ResponseData<?>> surveySave(@RequestBody SurveySaveRequestDTO surveySaveRequestDTO) {
         postService.saveSurvey(surveySaveRequestDTO);
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED,"success",null);
+        return ResponseEntity.created(null).body(responseData);
+    }
+
+    @PostMapping({ "posts/like", "posts/like/" })
+    ResponseEntity<ResponseData<?>> like(@RequestBody LikeRequestDTO likeRequestDTO) {
+        postService.likePost(likeRequestDTO);
         ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED,"success",null);
         return ResponseEntity.created(null).body(responseData);
     }
