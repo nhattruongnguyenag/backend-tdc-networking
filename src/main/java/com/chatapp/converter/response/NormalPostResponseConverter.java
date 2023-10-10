@@ -5,10 +5,14 @@ import com.chatapp.dto.response.NormalPostResponseDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.entity.NormalPostEntity;
 import com.chatapp.entity.PostEntity;
+import com.chatapp.entity.PostLikeEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.enums.PostType;
 import com.chatapp.repository.PostRepository;
 import com.chatapp.repository.UserRepository;
+import java.util.List;
+
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -43,6 +47,11 @@ public class NormalPostResponseConverter extends BaseConverter<NormalPostEntity,
         }
         userInfoResponseDTO.setRoleCodes(roleCodes);
         normalPostResponeDTO.setUser(userInfoResponseDTO);
+        List<String> likes = new ArrayList<>();
+        for ( PostLikeEntity postLikeEntity : postEntity.getLikes()) {
+            likes.add(userRepository.findById(postLikeEntity.getUser().getId()).get().getEmail());
+        }
+        normalPostResponeDTO.setLikes(likes);
         return normalPostResponeDTO;
     }
 }

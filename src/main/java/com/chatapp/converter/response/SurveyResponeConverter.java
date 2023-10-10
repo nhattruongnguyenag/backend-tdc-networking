@@ -7,6 +7,7 @@ import com.chatapp.dto.response.SurveyResponeDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.entity.NormalPostEntity;
 import com.chatapp.entity.PostEntity;
+import com.chatapp.entity.PostLikeEntity;
 import com.chatapp.entity.QuestionEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.enums.PostType;
@@ -62,6 +63,11 @@ public class SurveyResponeConverter extends BaseConverter<List<QuestionEntity>, 
         }
         surveyResponeDTO.setQuestions(questionResponseDTOs);
         surveyResponeDTO.setUser(userInfoResponseDTO);
+        List<String> likes = new ArrayList<>();
+        for ( PostLikeEntity postLikeEntity : postEntity.getLikes()) {
+            likes.add(userRepository.findById(postLikeEntity.getUser().getId()).get().getEmail());
+        }
+        surveyResponeDTO.setLikes(likes);
         return surveyResponeDTO;
     }
 }

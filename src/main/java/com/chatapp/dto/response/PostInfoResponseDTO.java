@@ -1,5 +1,7 @@
 package com.chatapp.dto.response;
 
+import java.util.List;
+
 import com.chatapp.dto.BaseDTO;
 
 
@@ -11,4 +13,5 @@ public class PostInfoResponseDTO extends BaseDTO{
     private Byte active;
     private String type;
     private UserInfoResponseDTO user;
+    private List<String> likes;
 }

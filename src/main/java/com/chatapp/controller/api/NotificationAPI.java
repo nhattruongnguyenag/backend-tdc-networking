@@ -33,6 +33,12 @@ public class NotificationAPI {
         return ResponseEntity.ok(responseData);
     }
 
+    @GetMapping({"notifications/find", "notifications/find/"})
+    public ResponseEntity<ResponseData<List<NotificationResponseDTO>>> findByContent(@RequestParam(value = "content") String content) {
+        ResponseData<List<NotificationResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",notificationService.findByContent(content));
+        return ResponseEntity.ok(responseData);
+    }
+
     @PostMapping({ "notifications", "notifications/" })
     ResponseEntity<ResponseData<NotificationResponseDTO>> updateOrSave(@RequestBody NotificationSaveRequestDTO notificationSaveRequestDTO) {
         ResponseData<NotificationResponseDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"success",notificationService.save(notificationSaveRequestDTO));

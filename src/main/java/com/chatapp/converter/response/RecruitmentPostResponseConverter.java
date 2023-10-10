@@ -6,11 +6,15 @@ import com.chatapp.dto.response.RecruitmentPostResponseDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.entity.NormalPostEntity;
 import com.chatapp.entity.PostEntity;
+import com.chatapp.entity.PostLikeEntity;
 import com.chatapp.entity.RecruitmentPostEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.enums.PostType;
 import com.chatapp.repository.PostRepository;
 import com.chatapp.repository.UserRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -47,6 +51,11 @@ public class RecruitmentPostResponseConverter extends BaseConverter<RecruitmentP
         }
         userInfoResponseDTO.setRoleCodes(roleCodes);
         recruitmentPostResponseDTO.setUser(userInfoResponseDTO);
+        List<String> likes = new ArrayList<>();
+        for ( PostLikeEntity postLikeEntity : postEntity.getLikes()) {
+            likes.add(userRepository.findById(postLikeEntity.getUser().getId()).get().getEmail());
+        }
+        recruitmentPostResponseDTO.setLikes(likes);
         return recruitmentPostResponseDTO;
     }
 }

@@ -109,7 +109,7 @@ Content-Type: application/json
 
 {
     "userId": 1,
-    "type":"normal",
+    "type":"thong-thuong",
     "content":"jbdb"
 }
 
@@ -122,7 +122,7 @@ Content-Type: application/json
 
 {
     "userId": 1,
-    "type":"recruitment",
+    "type":"tuyen-dung",
     "title":"hello",
     "salary":26326,
     "benefit":"an",
@@ -180,8 +180,8 @@ POST http://127.0.0.1:8080/api/notifications HTTP/1.1
 Content-Type: application/json
 
 {
-    "userId": 1,
-    "content": "chao cu"
+    "userId": 3,
+    "content": "chao chao chao"
 }
 
 ###
@@ -227,3 +227,6 @@ Content-Type: application/json
     "id":1,
     "userId":1
 }
+
+###
+GET http://127.0.0.1:8080/api/notifications/find?content=cu HTTP/1.1
