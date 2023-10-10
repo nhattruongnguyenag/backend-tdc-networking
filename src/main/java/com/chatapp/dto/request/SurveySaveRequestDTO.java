@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class SurveySaveRequestDTO {
     private String type;
+    private List<String> images;
     private Long userId;
     private List<QuestionRequestDTO> questions;
 }

@@ -4,6 +4,7 @@ import com.chatapp.converter.abstracts.BaseConverter;
 import com.chatapp.dto.request.QuestionRequestDTO;
 import com.chatapp.dto.request.SurveySaveRequestDTO;
 import com.chatapp.entity.PostEntity;
+import com.chatapp.entity.PostImageEntity;
 import com.chatapp.entity.QuestionEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.repository.UserRepository;
@@ -27,6 +28,14 @@ public class SurveySaveRequestConverter extends BaseConverter<PostEntity, Survey
         UserEntity userEntity = userRepository.findOneById(dto.getUserId());
         PostEntity postEntity = new PostEntity();
         postEntity.setUser(userEntity);
+        List<PostImageEntity> postImageEntityList = new ArrayList<>();
+        for (String image : dto.getImages()) {
+            PostImageEntity postImageEntity = new PostImageEntity();
+            postImageEntity.setPost(postEntity);
+            postImageEntity.setUri(image);
+            postImageEntityList.add(postImageEntity);
+        }
+        postEntity.setImages(postImageEntityList);
         postEntity.setType(dto.getType());
         List<QuestionRequestDTO> questions = new ArrayList<QuestionRequestDTO>();
         for (QuestionRequestDTO questionDTO : dto.getQuestions()) {

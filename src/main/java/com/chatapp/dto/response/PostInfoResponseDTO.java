@@ -14,4 +14,5 @@ public class PostInfoResponseDTO extends BaseDTO{
     private String type;
     private UserInfoResponseDTO user;
     private List<String> likes;
+    private List<String> images;
 }

@@ -6,6 +6,7 @@ import com.chatapp.dto.response.RecruitmentPostResponseDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.entity.NormalPostEntity;
 import com.chatapp.entity.PostEntity;
+import com.chatapp.entity.PostImageEntity;
 import com.chatapp.entity.PostLikeEntity;
 import com.chatapp.entity.RecruitmentPostEntity;
 import com.chatapp.entity.UserEntity;
@@ -56,6 +57,11 @@ public class RecruitmentPostResponseConverter extends BaseConverter<RecruitmentP
             likes.add(userRepository.findById(postLikeEntity.getUser().getId()).get().getEmail());
         }
         recruitmentPostResponseDTO.setLikes(likes);
+        List<String> images = new ArrayList<>();
+        for ( PostImageEntity postImageEntity : postEntity.getImages()) {
+            images.add(postImageEntity.getUri());
+        }
+        recruitmentPostResponseDTO.setImages(images);
         return recruitmentPostResponseDTO;
     }
 }

@@ -3,6 +3,7 @@ package com.chatapp.converter.request;
 import com.chatapp.converter.abstracts.BaseConverter;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
 import com.chatapp.entity.PostEntity;
+import com.chatapp.entity.PostImageEntity;
 import com.chatapp.entity.RecruitmentPostEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.repository.PostRepository;
@@ -10,6 +11,8 @@ import com.chatapp.repository.RecruitmentPostRepository;
 import com.chatapp.repository.UserRepository;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -50,6 +53,14 @@ public class RecruitmentPosyUpdateOrSaveRequestConverter
         PostEntity postEntity = super.toEntity(dto);
         UserEntity userEntity = userRepository.findOneById(dto.getUserId());
         postEntity.setUser(userEntity);
+        List<PostImageEntity> postImageEntityList = new ArrayList<>();
+        for (String image : dto.getImages()) {
+            PostImageEntity postImageEntity = new PostImageEntity();
+            postImageEntity.setPost(postEntity);
+            postImageEntity.setUri(image);
+            postImageEntityList.add(postImageEntity);
+        }
+        postEntity.setImages(postImageEntityList);
         RecruitmentPostEntity recruitmentPostEntity = new RecruitmentPostEntity();
         recruitmentPostEntity.setTitle(dto.getTitle());
         recruitmentPostEntity.setSalary(dto.getSalary());

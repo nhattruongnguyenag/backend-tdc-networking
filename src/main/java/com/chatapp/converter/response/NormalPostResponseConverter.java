@@ -5,6 +5,7 @@ import com.chatapp.dto.response.NormalPostResponseDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.entity.NormalPostEntity;
 import com.chatapp.entity.PostEntity;
+import com.chatapp.entity.PostImageEntity;
 import com.chatapp.entity.PostLikeEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.enums.PostType;
@@ -52,6 +53,11 @@ public class NormalPostResponseConverter extends BaseConverter<NormalPostEntity,
             likes.add(userRepository.findById(postLikeEntity.getUser().getId()).get().getEmail());
         }
         normalPostResponeDTO.setLikes(likes);
+        List<String> images = new ArrayList<>();
+        for ( PostImageEntity postImageEntity : postEntity.getImages()) {
+            images.add(postImageEntity.getUri());
+        }
+        normalPostResponeDTO.setImages(images);
         return normalPostResponeDTO;
     }
 }

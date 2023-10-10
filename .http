@@ -110,6 +110,10 @@ Content-Type: application/json
 {
     "userId": 1,
     "type":"thong-thuong",
+    "images":[
+        "1aaed1f52741546bdb4affe2e3fcfbc1.png",
+        "1aaed1f52741546bdb4affe2e3fcfbc1.png"
+    ],
     "content":"jbdb"
 }
 
@@ -123,6 +127,10 @@ Content-Type: application/json
 {
     "userId": 1,
     "type":"tuyen-dung",
+    "images":[
+        "1aaed1f52741546bdb4affe2e3fcfbc1.png",
+        "1aaed1f52741546bdb4affe2e3fcfbc1.png"
+    ],
     "title":"hello",
     "salary":26326,
     "benefit":"an",
@@ -139,6 +147,10 @@ Content-Type: application/json
 
 {
    "type": "khao-sat",
+   "images":[
+        "1aaed1f52741546bdb4affe2e3fcfbc1.png",
+        "1aaed1f52741546bdb4affe2e3fcfbc1.png"
+    ],
    "userId": 1,
    "questions": [
        {
