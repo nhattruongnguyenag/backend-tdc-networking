@@ -1,11 +1,13 @@
 package com.chatapp.converter.response;
 
 import com.chatapp.converter.abstracts.BaseConverter;
+import com.chatapp.dto.response.CommentResponeseDTO;
 import com.chatapp.dto.response.NormalPostResponseDTO;
 import com.chatapp.dto.response.QuestionResponseDTO;
 import com.chatapp.dto.response.SurveyResponeDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.entity.NormalPostEntity;
+import com.chatapp.entity.PostCommentEntity;
 import com.chatapp.entity.PostEntity;
 import com.chatapp.entity.PostImageEntity;
 import com.chatapp.entity.PostLikeEntity;
@@ -35,9 +37,10 @@ public class SurveyResponeConverter extends BaseConverter<List<QuestionEntity>, 
 
     @Autowired
     private UserInfoResponseConverter userInfoResponseConverter;
-
     @Autowired
     private QuestionResponeConverter questionResponeConverter;
+    @Autowired
+    private CommentResponseConverter commentResponseConverter;
 
     @Override
     public SurveyResponeDTO toDTO(List<QuestionEntity> questions) {
@@ -74,6 +77,12 @@ public class SurveyResponeConverter extends BaseConverter<List<QuestionEntity>, 
             images.add(postImageEntity.getUri());
         }
         surveyResponeDTO.setImages(images);
+        List<CommentResponeseDTO> comments = new ArrayList<>();
+        for ( PostCommentEntity postCommentEntity : postEntity.getComments()) {
+            CommentResponeseDTO commentResponeseDTO = commentResponseConverter.toDTO(postCommentEntity);
+            comments.add(commentResponeseDTO);
+        }
+        surveyResponeDTO.setComment(comments);
         return surveyResponeDTO;
     }
 }

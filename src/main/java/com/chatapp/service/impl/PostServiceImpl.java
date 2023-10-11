@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.chatapp.converter.request.CommentSaveRequestConverter;
 import com.chatapp.converter.request.LikeRequestConverter;
 import com.chatapp.converter.request.NormalPostUpdateOrSaveRequestConverter;
 import com.chatapp.converter.request.RecruitmentPosyUpdateOrSaveRequestConverter;
@@ -15,6 +16,8 @@ import com.chatapp.converter.response.PostInfoResponseConverter;
 import com.chatapp.converter.response.RecruitmentPostResponseConverter;
 import com.chatapp.converter.response.SurveyResponeConverter;
 import com.chatapp.dto.BaseDTO;
+import com.chatapp.dto.request.CommentDeleteRequestDTO;
+import com.chatapp.dto.request.CommentSaveRequestDTO;
 import com.chatapp.dto.request.LikeRequestDTO;
 import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
@@ -23,11 +26,13 @@ import com.chatapp.dto.response.NormalPostResponseDTO;
 import com.chatapp.dto.response.PostInfoResponseDTO;
 import com.chatapp.dto.response.RecruitmentPostResponseDTO;
 import com.chatapp.dto.response.SurveyResponeDTO;
+import com.chatapp.entity.PostCommentEntity;
 import com.chatapp.entity.PostEntity;
 import com.chatapp.entity.PostLikeEntity;
 import com.chatapp.enums.PostType;
 import com.chatapp.exception.DuplicateUsernameException;
 import com.chatapp.repository.NormalPostRepository;
+import com.chatapp.repository.PostCommentRepository;
 import com.chatapp.repository.PostLikeRepository;
 import com.chatapp.repository.PostRepository;
 import com.chatapp.repository.QuestionRepository;
@@ -53,6 +58,8 @@ public class PostServiceImpl implements PostService {
     private QuestionRepository questionRepository;
     @Autowired
     private PostLikeRepository postLikeRepository;
+    @Autowired
+    private PostCommentRepository postCommentRepository;
 
     @Autowired
     private PostInfoResponseConverter postInfoResponeConverter;
@@ -71,6 +78,8 @@ public class PostServiceImpl implements PostService {
     private SurveySaveRequestConverter surveySaveRequestConverter;
     @Autowired
     private LikeRequestConverter likeRequestConverter;
+    @Autowired
+    private CommentSaveRequestConverter commentSaveRequestConverter;
 
     @Override
     public List<BaseDTO> findAll() {
@@ -184,6 +193,36 @@ public class PostServiceImpl implements PostService {
         } else {
             postLikeRepository.save(postLikeEntity);
         }
+        return "";
+    }
+
+    @Override
+    public String commentPost(CommentSaveRequestDTO commentSaveRequestDTO) {
+        if (userRepository.findById(commentSaveRequestDTO.getUserId()) == null) {
+            throw new DuplicateUsernameException("user_is_not_exist");
+        }
+        if (postRepository.findById(commentSaveRequestDTO.getPostId()) == null) {
+            throw new DuplicateUsernameException("post_is_not_exist");
+        }
+        if (postCommentRepository.findById(commentSaveRequestDTO.getParentCommentId()) == null) {
+            throw new DuplicateUsernameException("comment_is_not_exist");
+        }
+        PostCommentEntity entity = commentSaveRequestConverter.toEntity(commentSaveRequestDTO);
+        postCommentRepository.save(entity);
+        return "";
+    }
+
+    @Override
+    public String deleteComment(CommentDeleteRequestDTO commentDeleteRequestDTO) {
+        PostCommentEntity entity = postCommentRepository.findByIdAndUser_IdAndPost_Id(
+                commentDeleteRequestDTO.getCommentId(), commentDeleteRequestDTO.getUserId(),
+                commentDeleteRequestDTO.getPostId());
+        if (entity.getPostComments().size() > 0) {
+            for (PostCommentEntity postCommentEntity : entity.getPostComments()) {
+                postCommentRepository.delete(postCommentEntity);
+            }
+        }
+        postCommentRepository.delete(entity);
         return "";
     }
 

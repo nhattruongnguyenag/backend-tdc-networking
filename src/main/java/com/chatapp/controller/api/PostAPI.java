@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.chatapp.commond.ResponseData;
 import com.chatapp.dto.BaseDTO;
+import com.chatapp.dto.request.CommentDeleteRequestDTO;
+import com.chatapp.dto.request.CommentSaveRequestDTO;
 import com.chatapp.dto.request.LikeRequestDTO;
 import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
@@ -68,5 +70,19 @@ public class PostAPI {
         postService.likePost(likeRequestDTO);
         ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED,"success",null);
         return ResponseEntity.created(null).body(responseData);
+    }
+
+    @PostMapping({ "posts/comment", "posts/comment/" })
+    ResponseEntity<ResponseData<?>> comment(@RequestBody CommentSaveRequestDTO commentSaveRequestDTO) {
+        postService.commentPost(commentSaveRequestDTO);
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED,"success",null);
+        return ResponseEntity.created(null).body(responseData);
+    }
+
+    @DeleteMapping({ "posts/comment/delete", "posts/comment/delete/" })
+    ResponseEntity<ResponseData<?>> deleteComment(@RequestBody CommentDeleteRequestDTO commentDeleteRequestDTO) {
+        postService.deleteComment(commentDeleteRequestDTO);
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK,"success",null);
+        return ResponseEntity.ok(responseData);
     }
 }
