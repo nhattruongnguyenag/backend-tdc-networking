@@ -6,6 +6,7 @@ import com.chatapp.dto.response.NormalPostResponseDTO;
 import com.chatapp.dto.response.QuestionResponseDTO;
 import com.chatapp.dto.response.SurveyResponeDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
+import com.chatapp.dto.response.UserLikeResponeDTO;
 import com.chatapp.entity.NormalPostEntity;
 import com.chatapp.entity.PostCommentEntity;
 import com.chatapp.entity.PostEntity;
@@ -67,9 +68,13 @@ public class SurveyResponeConverter extends BaseConverter<List<QuestionEntity>, 
         }
         surveyResponeDTO.setQuestions(questionResponseDTOs);
         surveyResponeDTO.setUser(userInfoResponseDTO);
-        List<String> likes = new ArrayList<>();
+        List<UserLikeResponeDTO> likes = new ArrayList<>();
         for ( PostLikeEntity postLikeEntity : postEntity.getLikes()) {
-            likes.add(userRepository.findById(postLikeEntity.getUser().getId()).get().getEmail());
+            UserLikeResponeDTO userLikeResponeDTO = new UserLikeResponeDTO();
+            UserEntity uEntity = userRepository.findOneById(postLikeEntity.getUser().getId());
+            userLikeResponeDTO.setId(uEntity.getId());
+            userLikeResponeDTO.setImage(uEntity.getImage());
+            likes.add(userLikeResponeDTO);
         }
         surveyResponeDTO.setLikes(likes);
         List<String> images = new ArrayList<>();

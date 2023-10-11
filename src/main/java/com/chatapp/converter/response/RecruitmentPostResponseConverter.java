@@ -5,6 +5,7 @@ import com.chatapp.dto.response.CommentResponeseDTO;
 import com.chatapp.dto.response.NormalPostResponseDTO;
 import com.chatapp.dto.response.RecruitmentPostResponseDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
+import com.chatapp.dto.response.UserLikeResponeDTO;
 import com.chatapp.entity.NormalPostEntity;
 import com.chatapp.entity.PostCommentEntity;
 import com.chatapp.entity.PostEntity;
@@ -56,9 +57,13 @@ public class RecruitmentPostResponseConverter extends BaseConverter<RecruitmentP
         }
         userInfoResponseDTO.setRoleCodes(roleCodes);
         recruitmentPostResponseDTO.setUser(userInfoResponseDTO);
-        List<String> likes = new ArrayList<>();
+        List<UserLikeResponeDTO> likes = new ArrayList<>();
         for ( PostLikeEntity postLikeEntity : postEntity.getLikes()) {
-            likes.add(userRepository.findById(postLikeEntity.getUser().getId()).get().getEmail());
+            UserLikeResponeDTO userLikeResponeDTO = new UserLikeResponeDTO();
+            UserEntity uEntity = userRepository.findOneById(postLikeEntity.getUser().getId());
+            userLikeResponeDTO.setId(uEntity.getId());
+            userLikeResponeDTO.setImage(uEntity.getImage());
+            likes.add(userLikeResponeDTO);
         }
         recruitmentPostResponseDTO.setLikes(likes);
         List<String> images = new ArrayList<>();
