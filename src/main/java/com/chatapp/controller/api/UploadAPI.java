@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.chatapp.commond.ResponseData;
+import com.chatapp.constant.SystemConstant;
 import com.chatapp.enums.FileType;
 import com.chatapp.service.FileUploadService;
-import com.chatapp.util.FileUtil;
 
 
 @RestController
@@ -39,7 +39,7 @@ public class UploadAPI {
 
     @GetMapping({ "/images/{name}", "/images/{name}/" })
     public ResponseEntity<byte[]> identificationImage(@PathVariable String name) throws IOException{
-        byte[] image = fileUploadService.loadAsResource(FileUtil.folderPath + FileType.IMAGE.getName(), name);
+        byte[] image = fileUploadService.loadAsResource(SystemConstant.FILE_PATH_ORIGIN + FileType.IMAGE.getName(), name);
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
     }
 }
