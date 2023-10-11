@@ -8,6 +8,7 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
     UserEntity findOneByEmailAndStatus(String email, int status);
     List<UserEntity> findAllByStatusNot(Byte status);
+    List<UserEntity> findAllByNameContains(String name);
     UserEntity findOneById(Long id);
     UserEntity findOneByCode(String code);
     UserEntity findOneByEmailAndPassword(String email, String password);

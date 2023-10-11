@@ -20,12 +20,15 @@ import com.chatapp.dto.request.FacultyInfoRegisterRequestDTO;
 import com.chatapp.dto.request.FacultyInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.StudentInfoRegisterRequestDTO;
 import com.chatapp.dto.request.StudentInfoUpdateOrSaveRequestDTO;
+import com.chatapp.dto.request.UserInfoFindRequestDTO;
 import com.chatapp.dto.request.UserLoginRequestDTO;
 import com.chatapp.dto.response.BusinessInfoResponseDTO;
 import com.chatapp.dto.response.FacultyInfoResponseDTO;
 import com.chatapp.dto.response.StudentInfoResponseDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
+import com.chatapp.entity.BusinessesInfoEntity;
 import com.chatapp.entity.RoleEntity;
+import com.chatapp.entity.StudentInfoEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.enums.Role;
 import com.chatapp.exception.DuplicateUsernameException;
@@ -50,9 +53,6 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private Long STUDENT_CODE = Long.valueOf(2);
-    private Long ADMIN_CODE = Long.valueOf(1);
-    private Long BUSINESS_CODE = Long.valueOf(3);
     private String DEFAULT_PASSWORD = "123456";
 
     @Autowired
@@ -390,6 +390,35 @@ public class UserServiceImpl implements UserService {
             userEntity = this.businessSave(businessInfoUpdateOrSaveRequestDTO);
         }
         return userInfoResponseConverter.toDTO(userRepository.save(userEntity));
+    }
+
+    @Override
+    public List<BaseDTO> findUserByName(UserInfoFindRequestDTO userInfoFindRequestDTO) {
+        List<BaseDTO> dtos = new ArrayList<>();
+        List<UserInfoResponseDTO> userInfoResponseDTOs = userInfoResponseConverter
+                .toDTOGroup(userRepository.findAllByNameContains(userInfoFindRequestDTO.getName()));
+        if (userInfoFindRequestDTO.getType().equals(Role.STUDENT.getName())) {
+            for (UserInfoResponseDTO userInfoResponseDTO : userInfoResponseDTOs) {
+                if (userInfoResponseDTO.getRoleCodes().equals(Role.STUDENT.getName())) {
+                    StudentInfoEntity studentInfoEntity = studentInfoRepository
+                            .findOneByUser_Id(userInfoResponseDTO.getId());
+                    StudentInfoResponseDTO studentInfoResponseDTO = studentInfoResponeConverter
+                            .toDTO(studentInfoEntity);
+                    dtos.add(studentInfoResponseDTO);
+                }
+            }
+        } else if (userInfoFindRequestDTO.getType().equals(Role.BUSINESS.getName())) {
+            for (UserInfoResponseDTO userInfoResponseDTO : userInfoResponseDTOs) {
+                if (userInfoResponseDTO.getRoleCodes().equals(Role.BUSINESS.getName())) {
+                    BusinessesInfoEntity businessesInfoEntity = businessInfoRepository
+                            .findOneByUser_Id(userInfoResponseDTO.getId());
+                    BusinessInfoResponseDTO businessInfoResponseDTO = businessInfoResponeConverter
+                            .toDTO(businessesInfoEntity);
+                    dtos.add(businessInfoResponseDTO);
+                }
+            }
+        }
+        return dtos;
     }
 
 }
