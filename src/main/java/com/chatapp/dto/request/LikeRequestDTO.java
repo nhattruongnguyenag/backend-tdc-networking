@@ -6,6 +6,6 @@ import lombok.Data;
 
 @Data
 public class LikeRequestDTO extends BaseDTO{
-    private Long id;
+    private Long postId;
     private Long userId;
 }

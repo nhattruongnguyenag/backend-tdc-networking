@@ -191,8 +191,8 @@ public class PostServiceImpl implements PostService {
             throw new DuplicateUsernameException("user_is_not_exist");
         }
         PostLikeEntity postLikeEntity = likeRequestConverter.toEntity(likeRequestDTO);
-        if (postLikeRepository.findByIdAndUser_Id(likeRequestDTO.getId(), likeRequestDTO.getUserId()) != null) {
-            PostLikeEntity entity = postLikeRepository.findByIdAndUser_Id(likeRequestDTO.getId(),
+        if (postLikeRepository.findByPost_IdAndUser_Id(likeRequestDTO.getPostId(), likeRequestDTO.getUserId()) != null) {
+            PostLikeEntity entity = postLikeRepository.findByPost_IdAndUser_Id(likeRequestDTO.getPostId(),
                     likeRequestDTO.getUserId());
             postLikeRepository.delete(entity);
         } else {

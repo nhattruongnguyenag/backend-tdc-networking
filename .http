@@ -238,7 +238,7 @@ POST http://127.0.0.1:8080/api/posts/like HTTP/1.1
 Content-Type: application/json
 
 {
-    "id":1,
+    "postId":1,
     "userId":1
 }
 

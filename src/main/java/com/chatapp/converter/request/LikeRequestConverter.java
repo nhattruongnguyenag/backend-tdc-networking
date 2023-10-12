@@ -21,7 +21,7 @@ public class LikeRequestConverter extends BaseConverter<PostLikeEntity, LikeRequ
     @Override
     public PostLikeEntity toEntity(LikeRequestDTO dto) {
         PostLikeEntity postLikeEntity = super.toEntity(dto);
-        postLikeEntity.setPost(postRepository.findOneById(dto.getId()));
+        postLikeEntity.setPost(postRepository.findOneById(dto.getPostId()));
         postLikeEntity.setUser(userRepository.findOneById(dto.getUserId()));
         return postLikeEntity;
     }

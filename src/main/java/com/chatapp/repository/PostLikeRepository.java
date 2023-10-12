@@ -7,5 +7,5 @@ import com.chatapp.entity.PostLikeEntity;
 
 @Repository
 public interface PostLikeRepository extends JpaRepository<PostLikeEntity, Long> {
-    PostLikeEntity findByIdAndUser_Id(Long id, Long userId);
+    PostLikeEntity findByPost_IdAndUser_Id(Long postId, Long userId);
 }
