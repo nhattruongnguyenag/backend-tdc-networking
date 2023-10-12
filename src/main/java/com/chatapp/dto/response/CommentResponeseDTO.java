@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class CommentResponeseDTO extends BaseDTO{
     private String content;
-    private String user;
+    private UserCommentResponeDTO user;
     private Long postId;
     private CommentResponeseDTO parent;
 }
