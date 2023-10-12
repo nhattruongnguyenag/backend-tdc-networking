@@ -70,6 +70,7 @@ public class SurveyResponeConverter extends BaseConverter<SurveyPostEntity, Surv
             UserLikeResponeDTO userLikeResponeDTO = new UserLikeResponeDTO();
             UserEntity uEntity = userRepository.findOneById(postLikeEntity.getUser().getId());
             userLikeResponeDTO.setId(uEntity.getId());
+            userLikeResponeDTO.setName(uEntity.getName());
             userLikeResponeDTO.setImage(uEntity.getImage());
             likes.add(userLikeResponeDTO);
         }
