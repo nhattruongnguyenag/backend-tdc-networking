@@ -12,7 +12,7 @@ public class CommentResponseConverter extends BaseConverter<PostCommentEntity,Co
     @Override
     public CommentResponeseDTO toDTO(PostCommentEntity entity) {
         CommentResponeseDTO commentResponeseDTO = super.toDTO(entity);
-        commentResponeseDTO.setUser(entity.getUser().getEmail());
+        commentResponeseDTO.setUser(entity.getUser().getName());
         commentResponeseDTO.setPostId(entity.getPost().getId());
         commentResponeseDTO.setChildrens(this.toDTOGroup(entity.getPostComments()));
         return commentResponeseDTO;
