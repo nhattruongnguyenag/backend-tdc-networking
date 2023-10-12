@@ -32,10 +32,10 @@ public class UserEntity extends BaseEntity {
     private String code;
 
     @Column(name = "is_typing", nullable = true, columnDefinition = "boolean default false")
-    private Boolean isTyping;
+    private Boolean isTyping = false;
 
     @Column(name = "is_message_connect", nullable = true, columnDefinition = "boolean default false")
-    private Boolean isMessageConnect;
+    private Boolean isMessageConnect = false;
 
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<MessageEntity> receivedMessages = new HashSet<>();

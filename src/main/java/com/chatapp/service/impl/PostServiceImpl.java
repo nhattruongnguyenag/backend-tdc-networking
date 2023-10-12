@@ -129,7 +129,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostInfoResponseDTO normalPostUpdateOrSave(
+    public String normalPostUpdateOrSave(
             NormalPostUpdateOrSaveRequestDTO normalPostUpdateOrSaveRequestDTO) {
         PostEntity postEntity;
         if (normalPostUpdateOrSaveRequestDTO.getId() != null) {
@@ -137,7 +137,8 @@ public class PostServiceImpl implements PostService {
         } else {
             postEntity = this.normalPostSave(normalPostUpdateOrSaveRequestDTO);
         }
-        return postInfoResponeConverter.toDTO(postRepository.save(postEntity));
+        postRepository.save(postEntity);
+        return "";
     }
 
     // recruitment post
@@ -163,7 +164,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostInfoResponseDTO recruitmentPostUpdateOrSave(
+    public String recruitmentPostUpdateOrSave(
             RecruitmentPostUpdateOrSageRequestDTO recruitmentPostUpdateOrSageRequestDTO) {
         PostEntity postEntity;
         if (recruitmentPostUpdateOrSageRequestDTO.getId() != null) {
@@ -171,7 +172,8 @@ public class PostServiceImpl implements PostService {
         } else {
             postEntity = this.recruitmentPostSave(recruitmentPostUpdateOrSageRequestDTO);
         }
-        return postInfoResponeConverter.toDTO(postRepository.save(postEntity));
+        postRepository.save(postEntity);
+        return "";
     }
 
     @Override

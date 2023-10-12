@@ -5,6 +5,7 @@ import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
 import com.chatapp.entity.NormalPostEntity;
 import com.chatapp.entity.PostEntity;
 import com.chatapp.entity.PostImageEntity;
+import com.chatapp.entity.SurveyPostEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.repository.NormalPostRepository;
 import com.chatapp.repository.PostRepository;
@@ -42,8 +43,8 @@ public class NormalPostUpdateOrSaveRequestConverter
 
     @Override
     public PostEntity toEntity(NormalPostUpdateOrSaveRequestDTO dto) {
-        PostEntity postEntity = super.toEntity(dto);
         UserEntity userEntity = userRepository.findOneById(dto.getUserId());
+        PostEntity postEntity = new PostEntity();
         postEntity.setUser(userEntity);
         List<PostImageEntity> postImageEntityList = new ArrayList<>();
         for (String image : dto.getImages()) {
@@ -53,6 +54,7 @@ public class NormalPostUpdateOrSaveRequestConverter
             postImageEntityList.add(postImageEntity);
         }
         postEntity.setImages(postImageEntityList);
+        postEntity.setType(dto.getType());
         NormalPostEntity normalPostEntity = new NormalPostEntity();
         normalPostEntity.setContent(dto.getContent());
         normalPostEntity.setPost(postEntity);

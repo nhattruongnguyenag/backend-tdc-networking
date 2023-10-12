@@ -108,12 +108,12 @@ POST http://127.0.0.1:8080/api/posts/normal HTTP/1.1
 Content-Type: application/json
 
 {
-    "userId": 1,
     "type":"thong-thuong",
     "images":[
         "1aaed1f52741546bdb4affe2e3fcfbc1.png",
         "1aaed1f52741546bdb4affe2e3fcfbc1.png"
     ],
+    "userId": 1,
     "content":"jbdb"
 }
 
@@ -125,12 +125,12 @@ POST http://127.0.0.1:8080/api/posts/recruitment HTTP/1.1
 Content-Type: application/json
 
 {
-    "userId": 1,
     "type":"tuyen-dung",
     "images":[
         "1aaed1f52741546bdb4affe2e3fcfbc1.png",
         "1aaed1f52741546bdb4affe2e3fcfbc1.png"
     ],
+    "userId": 1,
     "title":"hello",
     "salary":26326,
     "benefit":"an",
@@ -250,10 +250,10 @@ POST http://127.0.0.1:8080/api/posts/comment HTTP/1.1
 Content-Type: application/json
 
 {
-    "postId":1,
+    "postId":2,
     "userId":1,
     "content":"hay qua",
-    "parentCommentId": 4
+    "parentCommentId": 1
 }
 
 ###

@@ -40,8 +40,8 @@ public class PostAPI {
     }
 
     @PostMapping({ "posts/normal", "posts/normal/" })
-    ResponseEntity<ResponseData<PostInfoResponseDTO>> updateOrSave(@RequestBody NormalPostUpdateOrSaveRequestDTO normalPostUpdateOrSaveRequestDTO) {
-        ResponseData<PostInfoResponseDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"add or update normal post success",postService.normalPostUpdateOrSave(normalPostUpdateOrSaveRequestDTO));
+    ResponseEntity<ResponseData<String>> updateOrSave(@RequestBody NormalPostUpdateOrSaveRequestDTO normalPostUpdateOrSaveRequestDTO) {
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED,"add or update normal post success",postService.normalPostUpdateOrSave(normalPostUpdateOrSaveRequestDTO));
         return ResponseEntity.created(null).body(responseData);
     }
 
@@ -53,8 +53,8 @@ public class PostAPI {
     }
 
     @PostMapping({ "posts/recruitment", "posts/recruitment/" })
-    ResponseEntity<ResponseData<PostInfoResponseDTO>> updateOrSave(@RequestBody RecruitmentPostUpdateOrSageRequestDTO recruitmentPostUpdateOrSageRequestDTO) {
-        ResponseData<PostInfoResponseDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"add or update recruitment post success",postService.recruitmentPostUpdateOrSave(recruitmentPostUpdateOrSageRequestDTO));
+    ResponseEntity<ResponseData<String>> updateOrSave(@RequestBody RecruitmentPostUpdateOrSageRequestDTO recruitmentPostUpdateOrSageRequestDTO) {
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED,"add or update recruitment post success",postService.recruitmentPostUpdateOrSave(recruitmentPostUpdateOrSageRequestDTO));
         return ResponseEntity.created(null).body(responseData);
     }
 
