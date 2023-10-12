@@ -33,9 +33,7 @@ public class FileUploadServiceImpl implements FileUploadService {
     @Override
     public List<String> upload(MultipartFile[] files, String type) {
         try {
-            createDirIfNotExist(SystemConstant.FILE_PATH_ORIGIN);
-            createDirIfNotExist(SystemConstant.FILE_PATH_ORIGIN + FileType.IMAGE.getName());
-            createDirIfNotExist(SystemConstant.FILE_PATH_ORIGIN + FileType.FILE.getName());
+            createDirIfNotExist(SystemConstant.FILE_PATH_ORIGIN + type);
 
             List<String> fileNames = new ArrayList<>();
             // read and write the file to the local folder
