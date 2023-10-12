@@ -21,6 +21,15 @@ public interface UserService {
     List<UserInfoResponseDTO> findAll();
     UserInfoResponseDTO findByEmailAndPassword(String email, String password);
     UserInfoResponseDTO saveOrUpdate(UserDTO userDTO);
+
+    boolean setIsMessageFocusIn(Long userId);
+
+    boolean setIsMessageFocusOut(Long userId);
+
+    boolean setIsTypingOn(Long userId);
+
+    boolean setIsTypingOff(Long userId);
+
     UserInfoResponseDTO delete(Long userId);
     UserInfoResponseDTO changeStatus(Long userId, Byte status);
     AuthTokenDTO login(UserLoginRequestDTO userDTORequest);

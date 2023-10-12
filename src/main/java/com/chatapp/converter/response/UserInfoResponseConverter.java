@@ -12,6 +12,8 @@ public class UserInfoResponseConverter extends BaseConverter<UserEntity, UserInf
     @Override
     public UserInfoResponseDTO toDTO(UserEntity entity) {
         UserInfoResponseDTO userInfoResponseDTO = super.toDTO(entity);
+        userInfoResponseDTO.setIsTyping(entity.isTyping() ? (byte) 1 : 0);
+        userInfoResponseDTO.setIsMessageConnect(entity.getMessageConnect() ? (byte) 1 : 0);
         String roleCodes = "";
         for (int i = 0; i < entity.getRoles().size(); i++) {
             if (i != 0) {

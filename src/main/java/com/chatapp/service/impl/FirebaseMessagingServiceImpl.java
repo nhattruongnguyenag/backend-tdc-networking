@@ -27,9 +27,12 @@ public class FirebaseMessagingServiceImpl implements FirebaseMessagingService {
 
         if (userEntityOptional.isPresent()) {
             UserEntity userEntity = userEntityOptional.get();
-            for (DeviceTokenEntity deviceToken: userEntity.getDeviceTokens()) {
-                sendNotificationToToken(getPushNotificationRequestDTO(messageContent, deviceToken, userEntity));
+            if (userEntity.getMessageConnect() == true) {
+                for (DeviceTokenEntity deviceToken: userEntity.getDeviceTokens()) {
+                    sendNotificationToToken(getPushNotificationRequestDTO(messageContent, deviceToken, userEntity));
+                }
             }
+            return true;
         }
 
         return false;

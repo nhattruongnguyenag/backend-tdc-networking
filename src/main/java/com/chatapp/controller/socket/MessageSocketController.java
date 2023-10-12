@@ -23,8 +23,9 @@ public class MessageSocketController {
     @MessageMapping({"/messages/{senderId}/{receiverId}", "/messages/{receiverId}/{senderId}"})
     @SendTo({"/topic/messages/{senderId}/{receiverId}", "/topic/messages/{receiverId}/{senderId}"})
     public List<MessageResponseDTO> saveMessage(@RequestBody MessageRequestDTO messageRequestDTO) {
-        MessageResponseDTO messageResponseDTO = messageService.save(messageRequestDTO);
-        firebaseMessagingService.sendNotificationToUser(messageResponseDTO.getSender().getId(), messageResponseDTO.getContent());
+        messageService.save(messageRequestDTO);
+        firebaseMessagingService.sendNotificationToUser(messageRequestDTO.getReceiverId(), messageRequestDTO.getContent());
+        messageService.updateMessagesToReadState(messageRequestDTO.getSenderId(), messageRequestDTO.getReceiverId());
         return messageService.findBySenderAndReceiver(messageRequestDTO.getSenderId(), messageRequestDTO.getReceiverId());
     }
 

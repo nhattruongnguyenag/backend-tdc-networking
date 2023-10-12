@@ -32,10 +32,11 @@ public class ConversationResponseConverter extends BaseConverter<ConversationEnt
         conversationResponseDTO.setLastMessageSentAt(lastMessage.getCreatedAt());
         long countMessagesNotSeen = conversationEntity.getMessages().stream().filter(messageEntity ->
                     messageEntity.getStatus() == MessageStatus.NOT_SEEN
-                            && messageEntity.getSender().getId() == conversationEntity.getSender().getId()
-                            && messageEntity.getReceiver().getId() == conversationEntity.getReceiver().getId()
+                            && messageEntity.getSender().getId() == conversationEntity.getReceiver().getId()
+                            && messageEntity.getReceiver().getId() == conversationEntity.getSender().getId()
         ).collect(Collectors.toList()).size();
         conversationResponseDTO.setCountNewMessage(countMessagesNotSeen);
+        conversationResponseDTO.setLastMessageType(lastMessage.getType());
         return conversationResponseDTO;
     }
 }
