@@ -47,6 +47,7 @@ public class SurveyResponeConverter extends BaseConverter<SurveyPostEntity, Surv
         surveyResponeDTO.setStatus((byte) 0);
         surveyResponeDTO.setType(PostType.SURVEY.getName());
         surveyResponeDTO.setTitle(entity.getTitle());
+        surveyResponeDTO.setDescription(entity.getDescription());
         PostEntity postEntity = postRepository.findOneById(entity.getPost().getId());
         UserEntity userEntity = userRepository.findOneById(postEntity.getUser().getId());
         UserInfoResponseDTO userInfoResponseDTO = userInfoResponseConverter.toDTO(userEntity);

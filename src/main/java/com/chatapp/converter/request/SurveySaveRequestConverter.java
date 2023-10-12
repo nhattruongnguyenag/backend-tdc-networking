@@ -41,6 +41,7 @@ public class SurveySaveRequestConverter extends BaseConverter<PostEntity, Survey
         SurveyPostEntity surveyPostEntity = new SurveyPostEntity();
         surveyPostEntity.setPost(postEntity);
         surveyPostEntity.setTitle(dto.getTitle());
+        surveyPostEntity.setDescription(dto.getDescription());
         List<QuestionRequestDTO> questions = new ArrayList<QuestionRequestDTO>();
         for (QuestionRequestDTO questionDTO : dto.getQuestions()) {
             QuestionRequestDTO questionRequestDTO = new QuestionRequestDTO();

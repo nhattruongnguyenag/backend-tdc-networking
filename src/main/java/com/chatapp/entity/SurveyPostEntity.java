@@ -12,6 +12,9 @@ public class SurveyPostEntity extends BaseEntity {
     @Column(name = "title", nullable = false)
     private String title;
 
+    @Column(name = "description", nullable = false)
+    private String description;
+
     @OneToOne
     @JoinColumn(name = "post_id", nullable = false)
     private PostEntity post;
@@ -25,6 +28,14 @@ public class SurveyPostEntity extends BaseEntity {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public PostEntity getPost() {

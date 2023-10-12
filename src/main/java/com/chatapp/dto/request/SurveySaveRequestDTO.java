@@ -10,5 +10,6 @@ public class SurveySaveRequestDTO {
     private List<String> images;
     private Long userId;
     private String title;
+    private String description;
     private List<QuestionRequestDTO> questions;
 }
