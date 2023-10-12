@@ -2,7 +2,6 @@ package com.chatapp.controller.api;
 
 import com.chatapp.commond.MessageResponseData;
 import com.chatapp.commond.ResponseData;
-import com.chatapp.converter.request.UserRequestConverter;
 import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.BaseDTO;
 import com.chatapp.dto.UserDTO;

@@ -102,4 +102,9 @@ public class NotificationServiceImpl implements NotificationService {
         entity.setStatus((byte) 0);
         return notificationResponseConverter.toDTO(notificationRepository.save(entity));
     }
+
+    @Override
+    public List<NotificationResponseDTO> findByContent(String content) {
+        return notificationResponseConverter.toDTOGroup(notificationRepository.findByContentContains(content));
+    }
 }

@@ -11,6 +11,7 @@ import com.chatapp.dto.response.NotificationResponseDTO;
 public interface NotificationService {
     List<NotificationResponseDTO> findAll();
     List<NotificationResponseDTO> findById(Long id);
+    List<NotificationResponseDTO> findByContent(String content);
     NotificationResponseDTO save(NotificationSaveRequestDTO notificationSaveRequestDTO);
     String delete(NotificationDeleteRequestDTO notificationDeleteRequestDTO);
     String changeStatusAll(NotificationChangeAllStatusByUserIdRequest notificationChangeAllStatusByUserIdRequest);

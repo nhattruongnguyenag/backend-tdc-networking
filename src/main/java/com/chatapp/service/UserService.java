@@ -9,6 +9,7 @@ import com.chatapp.dto.request.FacultyInfoRegisterRequestDTO;
 import com.chatapp.dto.request.FacultyInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.StudentInfoRegisterRequestDTO;
 import com.chatapp.dto.request.StudentInfoUpdateOrSaveRequestDTO;
+import com.chatapp.dto.request.UserInfoFindRequestDTO;
 import com.chatapp.dto.request.UserLoginRequestDTO;
 import com.chatapp.dto.response.BusinessInfoResponseDTO;
 import com.chatapp.dto.response.FacultyInfoResponseDTO;
@@ -49,4 +50,7 @@ public interface UserService {
     List<BusinessInfoResponseDTO> findAllBusinessInfo();
     AuthTokenDTO businessRegister(BusinessInfoRegisterRequestDTO businessInfoRegisterRequestDTO);
     UserInfoResponseDTO businessUpdateOrSave(BusinessInfoUpdateOrSaveRequestDTO businessInfoUpdateOrSaveRequestDTO);
+
+    //find
+    List<BaseDTO> findUserByName(UserInfoFindRequestDTO userInfoFindRequestDTO);
 }

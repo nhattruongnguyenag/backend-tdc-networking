@@ -3,6 +3,8 @@ package com.chatapp.service;
 import java.util.List;
 
 import com.chatapp.dto.BaseDTO;
+import com.chatapp.dto.request.CommentDeleteRequestDTO;
+import com.chatapp.dto.request.CommentSaveRequestDTO;
 import com.chatapp.dto.request.LikeRequestDTO;
 import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
@@ -27,4 +29,8 @@ public interface PostService {
 
     //post like
     String likePost(LikeRequestDTO likeRequestDTO);
+
+    //comment 
+    String commentPost(CommentSaveRequestDTO commentSaveRequestDTO);
+    String deleteComment(CommentDeleteRequestDTO commentDeleteRequestDTO);
 }

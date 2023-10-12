@@ -109,7 +109,11 @@ Content-Type: application/json
 
 {
     "userId": 1,
-    "type":"normal",
+    "type":"thong-thuong",
+    "images":[
+        "1aaed1f52741546bdb4affe2e3fcfbc1.png",
+        "1aaed1f52741546bdb4affe2e3fcfbc1.png"
+    ],
     "content":"jbdb"
 }
 
@@ -122,7 +126,11 @@ Content-Type: application/json
 
 {
     "userId": 1,
-    "type":"recruitment",
+    "type":"tuyen-dung",
+    "images":[
+        "1aaed1f52741546bdb4affe2e3fcfbc1.png",
+        "1aaed1f52741546bdb4affe2e3fcfbc1.png"
+    ],
     "title":"hello",
     "salary":26326,
     "benefit":"an",
@@ -139,6 +147,11 @@ Content-Type: application/json
 
 {
    "type": "khao-sat",
+   "title":"toi la nha phat trien",
+   "images":[
+        "1aaed1f52741546bdb4affe2e3fcfbc1.png",
+        "1aaed1f52741546bdb4affe2e3fcfbc1.png"
+    ],
    "userId": 1,
    "questions": [
        {
@@ -180,8 +193,8 @@ POST http://127.0.0.1:8080/api/notifications HTTP/1.1
 Content-Type: application/json
 
 {
-    "userId": 1,
-    "content": "chao cu"
+    "userId": 3,
+    "content": "chao chao chao"
 }
 
 ###
@@ -226,4 +239,37 @@ Content-Type: application/json
 {
     "id":1,
     "userId":1
+}
+
+###
+GET http://127.0.0.1:8080/api/notifications/find?content=cu HTTP/1.1
+
+###
+POST http://127.0.0.1:8080/api/posts/comment HTTP/1.1
+Content-Type: application/json
+
+{
+    "postId":1,
+    "userId":1,
+    "content":"hay qua",
+    "parentCommentId": 4
+}
+
+###
+DELETE http://127.0.0.1:8080/api/posts/comment/delete HTTP/1.1
+Content-Type: application/json
+
+{
+    "commentId":5,
+    "postId":1,
+    "userId":1
+}
+
+###
+POST http://127.0.0.1:8080/api/find/user HTTP/1.1
+Content-Type: application/json
+
+{
+    "type":"sinh-vien",
+    "name":"abc"
 }

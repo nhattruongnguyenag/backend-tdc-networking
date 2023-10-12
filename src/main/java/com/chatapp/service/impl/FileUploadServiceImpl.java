@@ -16,11 +16,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.core.io.Resource;
 
+import com.chatapp.constant.SystemConstant;
 import com.chatapp.enums.FileType;
 import com.chatapp.exception.DuplicateUsernameException;
 import com.chatapp.service.FileUploadService;
 import com.chatapp.util.EncryptUtils;
-import com.chatapp.util.FileUtil;
 
 import jakarta.transaction.Transactional;
 
@@ -33,7 +33,9 @@ public class FileUploadServiceImpl implements FileUploadService {
     @Override
     public List<String> upload(MultipartFile[] files, String type) {
         try {
-            createDirIfNotExist(FileUtil.folderPath);
+            createDirIfNotExist(SystemConstant.FILE_PATH_ORIGIN);
+            createDirIfNotExist(SystemConstant.FILE_PATH_ORIGIN + FileType.IMAGE.getName());
+            createDirIfNotExist(SystemConstant.FILE_PATH_ORIGIN + FileType.FILE.getName());
 
             List<String> fileNames = new ArrayList<>();
             // read and write the file to the local folder
@@ -43,7 +45,7 @@ public class FileUploadServiceImpl implements FileUploadService {
                     bytes = file.getBytes();
                     String newFileName = EncryptUtils.createMD5(String.valueOf(System.nanoTime()), EncryptUtils.MD5)
                             + "." + FilenameUtils.getExtension(file.getOriginalFilename());
-                    Files.write(Paths.get(FileUtil.folderPath + type + newFileName), bytes);
+                    Files.write(Paths.get(SystemConstant.FILE_PATH_ORIGIN + type + newFileName), bytes);
                     fileNames.add(newFileName);
                 } catch (IOException e) {
                     throw new DuplicateUsernameException("upload_failed");
@@ -60,14 +62,8 @@ public class FileUploadServiceImpl implements FileUploadService {
     private void createDirIfNotExist(String path) {
         // create directory to save the files
         File directory = new File(path);
-        File directoryImage = new File(path + FileType.IMAGE.getName());
-        File directoryFile = new File(path + FileType.FILE.getName());
         if (!directory.exists()) {
             directory.mkdir();
-            if (!directoryImage.exists() || !directoryFile.exists()) {
-                directoryImage.mkdirs();
-                directoryFile.mkdirs();
-            }
         }
     }
 

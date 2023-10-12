@@ -28,8 +28,8 @@ public class PostEntity extends BaseEntity {
     @OneToOne(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private RecruitmentPostEntity recruitmentPost;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<QuestionEntity> questions = new ArrayList<>();
+    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private SurveyPostEntity surveyPost;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<PostCommentEntity> comments = new ArrayList<>();
@@ -86,20 +86,20 @@ public class PostEntity extends BaseEntity {
         this.normalPost = normalPost;
     }
 
+    public SurveyPostEntity getSurveyPost() {
+        return surveyPost;
+    }
+
+    public void setSurveyPost(SurveyPostEntity surveyPost) {
+        this.surveyPost = surveyPost;
+    }
+
     public RecruitmentPostEntity getRecruitmentPost() {
         return recruitmentPost;
     }
 
     public void setRecruitmentPost(RecruitmentPostEntity recruitmentPost) {
         this.recruitmentPost = recruitmentPost;
-    }
-
-    public List<QuestionEntity> getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(List<QuestionEntity> questions) {
-        this.questions = questions;
     }
 
     public List<PostCommentEntity> getComments() {

@@ -4,10 +4,14 @@ import com.chatapp.converter.abstracts.BaseConverter;
 import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
 import com.chatapp.entity.NormalPostEntity;
 import com.chatapp.entity.PostEntity;
+import com.chatapp.entity.PostImageEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.repository.NormalPostRepository;
 import com.chatapp.repository.PostRepository;
 import com.chatapp.repository.UserRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,6 +45,14 @@ public class NormalPostUpdateOrSaveRequestConverter
         PostEntity postEntity = super.toEntity(dto);
         UserEntity userEntity = userRepository.findOneById(dto.getUserId());
         postEntity.setUser(userEntity);
+        List<PostImageEntity> postImageEntityList = new ArrayList<>();
+        for (String image : dto.getImages()) {
+            PostImageEntity postImageEntity = new PostImageEntity();
+            postImageEntity.setPost(postEntity);
+            postImageEntity.setUri(image);
+            postImageEntityList.add(postImageEntity);
+        }
+        postEntity.setImages(postImageEntityList);
         NormalPostEntity normalPostEntity = new NormalPostEntity();
         normalPostEntity.setContent(dto.getContent());
         normalPostEntity.setPost(postEntity);
