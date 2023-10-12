@@ -6,6 +6,7 @@ import com.chatapp.dto.request.SurveySaveRequestDTO;
 import com.chatapp.entity.PostEntity;
 import com.chatapp.entity.PostImageEntity;
 import com.chatapp.entity.QuestionEntity;
+import com.chatapp.entity.SurveyPostEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.repository.UserRepository;
 
@@ -37,6 +38,9 @@ public class SurveySaveRequestConverter extends BaseConverter<PostEntity, Survey
         }
         postEntity.setImages(postImageEntityList);
         postEntity.setType(dto.getType());
+        SurveyPostEntity surveyPostEntity = new SurveyPostEntity();
+        surveyPostEntity.setPost(postEntity);
+        surveyPostEntity.setTitle(dto.getTitle());
         List<QuestionRequestDTO> questions = new ArrayList<QuestionRequestDTO>();
         for (QuestionRequestDTO questionDTO : dto.getQuestions()) {
             QuestionRequestDTO questionRequestDTO = new QuestionRequestDTO();
@@ -53,9 +57,10 @@ public class SurveySaveRequestConverter extends BaseConverter<PostEntity, Survey
         }
         List<QuestionEntity> questionEntities = questionRequestConverter.toEntityGroup(questions);
         for (QuestionEntity entity : questionEntities) {
-            entity.setPost(postEntity);
+            entity.setSurvey(surveyPostEntity);
         }
-        postEntity.setQuestions(questionEntities);
+        surveyPostEntity.setQuestions(questionEntities);
+        postEntity.setSurveyPost(surveyPostEntity);
         return postEntity;
     }
 }

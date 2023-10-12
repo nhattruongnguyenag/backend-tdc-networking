@@ -147,6 +147,7 @@ Content-Type: application/json
 
 {
    "type": "khao-sat",
+   "title":"toi la nha phat trien",
    "images":[
         "1aaed1f52741546bdb4affe2e3fcfbc1.png",
         "1aaed1f52741546bdb4affe2e3fcfbc1.png"

@@ -37,6 +37,7 @@ import com.chatapp.repository.PostLikeRepository;
 import com.chatapp.repository.PostRepository;
 import com.chatapp.repository.QuestionRepository;
 import com.chatapp.repository.RecruitmentPostRepository;
+import com.chatapp.repository.SurveyPostRepository;
 import com.chatapp.repository.UserRepository;
 import com.chatapp.service.PostService;
 
@@ -56,6 +57,8 @@ public class PostServiceImpl implements PostService {
     private RecruitmentPostRepository recruitmentPostRepository;
     @Autowired
     private QuestionRepository questionRepository;
+    @Autowired
+    private SurveyPostRepository surveyPostRepository;
     @Autowired
     private PostLikeRepository postLikeRepository;
     @Autowired
@@ -98,7 +101,7 @@ public class PostServiceImpl implements PostService {
                 dto = recruitmentPostResponseDTO;
             } else if (responseDTOs.get(i).getType().equals(PostType.SURVEY.getName())) {
                 SurveyResponeDTO surveyResponeDTO = surveyResponeConverter
-                        .toDTO(questionRepository.findAllByPost_Id(responseDTOs.get(i).getId()));
+                        .toDTO(surveyPostRepository.findOneByPost_Id(responseDTOs.get(i).getId()));
                 dto = surveyResponeDTO;
             }
             dtos.add(dto);

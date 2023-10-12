@@ -16,8 +16,8 @@ public class QuestionEntity extends BaseEntity {
     private String type;
     
     @ManyToOne
-    @JoinColumn(name = "post_id", nullable = false)
-    private PostEntity post;
+    @JoinColumn(name = "survey_id", nullable = false)
+    private SurveyPostEntity survey;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ShortAnswerEntity> shortAnswers = new ArrayList<>();
@@ -41,12 +41,12 @@ public class QuestionEntity extends BaseEntity {
         this.type = type;
     }
 
-    public PostEntity getPost() {
-        return post;
+    public SurveyPostEntity getSurvey() {
+        return survey;
     }
 
-    public void setPost(PostEntity post) {
-        this.post = post;
+    public void setSurvey(SurveyPostEntity surveyPostEntity) {
+        this.survey = surveyPostEntity;
     }
 
     public List<ShortAnswerEntity> getShortAnswers() {

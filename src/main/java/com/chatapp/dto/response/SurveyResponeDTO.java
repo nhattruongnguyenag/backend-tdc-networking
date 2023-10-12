@@ -6,5 +6,6 @@ import lombok.Data;
 
 @Data
 public class SurveyResponeDTO extends PostInfoResponseDTO{
+    private String title;
     private List<QuestionResponseDTO> questions;
 }

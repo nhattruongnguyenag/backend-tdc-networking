@@ -7,16 +7,15 @@ import com.chatapp.dto.response.QuestionResponseDTO;
 import com.chatapp.dto.response.SurveyResponeDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.dto.response.UserLikeResponeDTO;
-import com.chatapp.entity.NormalPostEntity;
 import com.chatapp.entity.PostCommentEntity;
 import com.chatapp.entity.PostEntity;
 import com.chatapp.entity.PostImageEntity;
 import com.chatapp.entity.PostLikeEntity;
 import com.chatapp.entity.QuestionEntity;
+import com.chatapp.entity.SurveyPostEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.enums.PostType;
 import com.chatapp.repository.PostRepository;
-import com.chatapp.repository.QuestionRepository;
 import com.chatapp.repository.UserRepository;
 
 import java.util.ArrayList;
@@ -26,15 +25,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SurveyResponeConverter extends BaseConverter<List<QuestionEntity>, SurveyResponeDTO> {
+public class SurveyResponeConverter extends BaseConverter<SurveyPostEntity, SurveyResponeDTO> {
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private PostRepository postRepository;
-
-    @Autowired
-    private QuestionRepository questionRepository;
 
     @Autowired
     private UserInfoResponseConverter userInfoResponseConverter;
@@ -44,13 +40,14 @@ public class SurveyResponeConverter extends BaseConverter<List<QuestionEntity>, 
     private CommentResponseConverter commentResponseConverter;
 
     @Override
-    public SurveyResponeDTO toDTO(List<QuestionEntity> questions) {
-        SurveyResponeDTO surveyResponeDTO = super.toDTO(questions);
-        surveyResponeDTO.setId(questions.get(0).getPost().getId());
+    public SurveyResponeDTO toDTO(SurveyPostEntity entity) {
+        SurveyResponeDTO surveyResponeDTO = super.toDTO(entity);
+        surveyResponeDTO.setId(entity.getPost().getId());
         surveyResponeDTO.setActive((byte) 1);
         surveyResponeDTO.setStatus((byte) 0);
         surveyResponeDTO.setType(PostType.SURVEY.getName());
-        PostEntity postEntity = postRepository.findOneById(questions.get(0).getPost().getId());
+        surveyResponeDTO.setTitle(entity.getTitle());
+        PostEntity postEntity = postRepository.findOneById(entity.getPost().getId());
         UserEntity userEntity = userRepository.findOneById(postEntity.getUser().getId());
         UserInfoResponseDTO userInfoResponseDTO = userInfoResponseConverter.toDTO(userEntity);
         String roleCodes = "";
@@ -62,7 +59,7 @@ public class SurveyResponeConverter extends BaseConverter<List<QuestionEntity>, 
         }
         userInfoResponseDTO.setRoleCodes(roleCodes);
         List<QuestionResponseDTO> questionResponseDTOs = new ArrayList<>();
-        for (QuestionEntity questionEntity : questions) {
+        for (QuestionEntity questionEntity : entity.getQuestions()) {
             QuestionResponseDTO questionResponseDTO = questionResponeConverter.toDTO(questionEntity);
             questionResponseDTOs.add(questionResponseDTO);
         }
