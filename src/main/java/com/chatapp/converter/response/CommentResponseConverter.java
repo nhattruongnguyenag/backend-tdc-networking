@@ -7,15 +7,18 @@ import com.chatapp.entity.PostCommentEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CommentResponseConverter extends BaseConverter<PostCommentEntity,CommentResponeseDTO>{
+public class CommentResponseConverter extends BaseConverter<PostCommentEntity, CommentResponeseDTO> {
 
     @Override
     public CommentResponeseDTO toDTO(PostCommentEntity entity) {
         CommentResponeseDTO commentResponeseDTO = super.toDTO(entity);
         commentResponeseDTO.setUser(entity.getUser().getName());
         commentResponeseDTO.setPostId(entity.getPost().getId());
-        commentResponeseDTO.setChildrens(this.toDTOGroup(entity.getPostComments()));
+        if (entity.getPostComment() != null) {
+            commentResponeseDTO.setParent(this.toDTO(entity.getPostComment()));
+        } else {
+            commentResponeseDTO.setParent(null);
+        }
         return commentResponeseDTO;
     }
 }
-  
