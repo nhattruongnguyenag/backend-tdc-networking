@@ -49,6 +49,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -135,8 +136,51 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("user_does_not_exists");
         }
         userEntity.setStatus(status);
+        userEntity.setUpdatedAt(new Date());
 
         return userInfoResponseConverter.toDTO(userRepository.save(userEntity));
+    }
+
+    @Override
+    public boolean setIsMessageFocusIn(Long userId) {
+        return setMessengerConnectState(userId, true);
+    }
+
+    @Override
+    public boolean setIsMessageFocusOut(Long userId) {
+        return setMessengerConnectState(userId, false);
+    }
+
+    @Override
+    public boolean setIsTypingOn(Long userId) {
+        return setTypingState(userId, true);
+    }
+
+    @Override
+    public boolean setIsTypingOff(Long userId) {
+        return setTypingState(userId, false);
+    }
+
+    private boolean setMessengerConnectState(Long userId, boolean status) {
+        UserEntity userEntity = userRepository.findOneById(userId);
+
+        if (userEntity == null) {
+            throw new RuntimeException("user_does_not_exists");
+        }
+        userEntity.setMessageConnect(status);
+
+        return userRepository.save(userEntity) != null;
+    }
+
+    private boolean setTypingState(Long userId, boolean status) {
+        UserEntity userEntity = userRepository.findOneById(userId);
+
+        if (userEntity == null) {
+            throw new RuntimeException("user_does_not_exists");
+        }
+        userEntity.setTyping(status);
+
+        return userRepository.save(userEntity) != null;
     }
 
     @Override

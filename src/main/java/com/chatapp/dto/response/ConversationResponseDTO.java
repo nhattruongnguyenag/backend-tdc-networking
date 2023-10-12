@@ -12,4 +12,5 @@ public class ConversationResponseDTO extends BaseDTO {
     private Long countNewMessage;
     private String lastMessageContent;
     private Date lastMessageSentAt;
+    private String lastMessageType;
 }

@@ -1,6 +1,8 @@
 package com.chatapp.controller.api;
 
+import com.chatapp.commond.MessageResponseData;
 import com.chatapp.commond.ResponseData;
+import com.chatapp.converter.request.FCMNotificationRequestDTO;
 import com.chatapp.dto.request.PushNotificationRequestDTO;
 import com.chatapp.service.FirebaseMessagingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +29,16 @@ public class FirebaseMessagingAPI {
             ResponseData responseData = new ResponseData<>(HttpStatus.BAD_REQUEST, "fail to send push notification", null);
             return new ResponseEntity(responseData, HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @PostMapping("/fcm-notification")
+    public ResponseEntity<MessageResponseData> sendFCMNotificationToUser(@RequestBody FCMNotificationRequestDTO requestDTO) {
+        boolean isSuccess = firebaseMessagingService.sendNotificationToUser(requestDTO.getUserId(), requestDTO.getContent());
+
+        if (isSuccess) {
+            return ResponseEntity.ok(new MessageResponseData(HttpStatus.OK, "send_fcm_notification_success"));
+        }
+
+        return ResponseEntity.badRequest().body(new MessageResponseData(HttpStatus.BAD_REQUEST, "send_fcm_notification_fail"));
     }
 }

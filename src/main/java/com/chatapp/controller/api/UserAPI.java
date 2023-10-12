@@ -1,5 +1,6 @@
 package com.chatapp.controller.api;
 
+import com.chatapp.commond.MessageResponseData;
 import com.chatapp.commond.ResponseData;
 import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.BaseDTO;
@@ -43,7 +44,7 @@ public class UserAPI {
 
     @PostMapping({ "login", "login/" })
     ResponseEntity<?> login(@RequestBody UserLoginRequestDTO userDTORequest) {
-        ResponseData<AuthTokenDTO> responseData = new ResponseData<>(HttpStatus.OK, "success", userService.login(userDTORequest));
+        ResponseData<AuthTokenDTO> responseData = new ResponseData<>(HttpStatus.OK, "login_success", userService.login(userDTORequest));
         return ResponseEntity.ok(responseData);
     }
 
@@ -52,6 +53,24 @@ public class UserAPI {
         UserInfoResponseDTO tempUserDTO = userService.saveOrUpdate(userDTO);
         String token = tokenProvider.generateToken(tempUserDTO.getEmail());
         return new AuthTokenDTO(token);
+    }
+
+    @PutMapping("users/message/focus")
+    public ResponseEntity<MessageResponseData> updateUserFocusMessageFocusIn(@RequestBody UserDTO userDTO) {
+        boolean isSuccess = userService.setIsMessageFocusIn(userDTO.getId());
+        if (isSuccess) {
+            return new ResponseEntity<>(new MessageResponseData(HttpStatus.CREATED, "update_user_messages_focus_in_success"), HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(new MessageResponseData(HttpStatus.BAD_REQUEST, "fail_to_update_user_messages_focus_in"), HttpStatus.BAD_REQUEST);
+    }
+
+    @PutMapping("users/message/exit")
+    public ResponseEntity<MessageResponseData> updateUserFocusMessageFocusOut(@RequestBody UserDTO userDTO) {
+        boolean isSuccess = userService.setIsMessageFocusOut(userDTO.getId());
+        if (isSuccess) {
+            return new ResponseEntity<>(new MessageResponseData(HttpStatus.CREATED, "update_user_messages_exit_success"), HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(new MessageResponseData(HttpStatus.BAD_REQUEST, "update_user_messages_exit_failed"), HttpStatus.BAD_REQUEST);
     }
 
     @DeleteMapping({ "users/{id}", "users/{id}/" })

@@ -6,10 +6,7 @@ import com.chatapp.service.DeviceTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -21,8 +18,17 @@ public class DeviceTokenAPI {
     public ResponseEntity<MessageResponseData> updateDeviceToken(@RequestBody DeviceTokenRequestDTO requestDTO) {
         boolean isSuccess = deviceTokenService.saveUserDeviceToken(requestDTO);
         if (isSuccess) {
-            return new ResponseEntity<>(new MessageResponseData(HttpStatus.CREATED, "success"), HttpStatus.CREATED);
+            return new ResponseEntity<>(new MessageResponseData(HttpStatus.CREATED, "token_saved_success"), HttpStatus.CREATED);
         }
-        return new ResponseEntity<>(new MessageResponseData(HttpStatus.BAD_REQUEST, "failed"), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new MessageResponseData(HttpStatus.BAD_REQUEST, "failed_to_save_token"), HttpStatus.BAD_REQUEST);
+    }
+
+    @DeleteMapping("/device-token")
+    public ResponseEntity<MessageResponseData> deleteDeviceToken(@RequestBody DeviceTokenRequestDTO requestDTO) {
+        boolean isSuccess = deviceTokenService.deleteUserDeviceToken(requestDTO);
+        if (isSuccess) {
+            return new ResponseEntity<>(new MessageResponseData(HttpStatus.CREATED, "token_delete_success"), HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(new MessageResponseData(HttpStatus.BAD_REQUEST, "token_delete_failed"), HttpStatus.BAD_REQUEST);
     }
 }
