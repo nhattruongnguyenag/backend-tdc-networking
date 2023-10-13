@@ -32,6 +32,8 @@ public class NormalPostResponseConverter extends BaseConverter<NormalPostEntity,
     @Autowired
     private UserInfoResponseConverter userInfoResponseConverter;
     @Autowired
+    private UserCommentResponseConverter userCommentResponseConverter;
+    @Autowired
     private CommentResponseConverter commentResponseConverter;
 
     @Override
