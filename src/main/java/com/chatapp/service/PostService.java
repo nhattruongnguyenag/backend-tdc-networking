@@ -7,6 +7,7 @@ import com.chatapp.dto.request.CommentDeleteRequestDTO;
 import com.chatapp.dto.request.CommentSaveRequestDTO;
 import com.chatapp.dto.request.LikeRequestDTO;
 import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
+import com.chatapp.dto.request.PostFindRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
 import com.chatapp.dto.request.SurveySaveRequestDTO;
 import com.chatapp.dto.response.NormalPostResponseDTO;
@@ -32,4 +33,7 @@ public interface PostService {
     //comment 
     String commentPost(CommentSaveRequestDTO commentSaveRequestDTO);
     String deleteComment(CommentDeleteRequestDTO commentDeleteRequestDTO);
+
+    //find
+    List<BaseDTO> findPostByName(PostFindRequestDTO postFindRequestDTO);
 }

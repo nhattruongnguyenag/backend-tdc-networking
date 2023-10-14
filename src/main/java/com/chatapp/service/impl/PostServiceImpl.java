@@ -20,6 +20,7 @@ import com.chatapp.dto.request.CommentDeleteRequestDTO;
 import com.chatapp.dto.request.CommentSaveRequestDTO;
 import com.chatapp.dto.request.LikeRequestDTO;
 import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
+import com.chatapp.dto.request.PostFindRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
 import com.chatapp.dto.request.SurveySaveRequestDTO;
 import com.chatapp.dto.response.NormalPostResponseDTO;
@@ -191,7 +192,8 @@ public class PostServiceImpl implements PostService {
             throw new DuplicateUsernameException("user_is_not_exist");
         }
         PostLikeEntity postLikeEntity = likeRequestConverter.toEntity(likeRequestDTO);
-        if (postLikeRepository.findByPost_IdAndUser_Id(likeRequestDTO.getPostId(), likeRequestDTO.getUserId()) != null) {
+        if (postLikeRepository.findByPost_IdAndUser_Id(likeRequestDTO.getPostId(),
+                likeRequestDTO.getUserId()) != null) {
             PostLikeEntity entity = postLikeRepository.findByPost_IdAndUser_Id(likeRequestDTO.getPostId(),
                     likeRequestDTO.getUserId());
             postLikeRepository.delete(entity);
@@ -229,6 +231,25 @@ public class PostServiceImpl implements PostService {
         }
         postCommentRepository.delete(entity);
         return "";
+    }
+
+    @Override
+    public List<BaseDTO> findPostByName(PostFindRequestDTO postFindRequestDTO) {
+        List<BaseDTO> dtos = new ArrayList<>();
+        if (postFindRequestDTO.getType().equals(PostType.NORMAL.getName())) {
+            List<NormalPostResponseDTO> normalPostResponseDTOs = normalPostResponeConverter
+                    .toDTOGroup(normalPostRepository.findAllByContentContains(postFindRequestDTO.getName()));
+            dtos.addAll(normalPostResponseDTOs);
+        } else if (postFindRequestDTO.getType().equals(PostType.RECRUIMENT.getName())) {
+            List<RecruitmentPostResponseDTO> recruitmentPostResponseDTOs = recruitmentPostResponeConverter
+                    .toDTOGroup(recruitmentPostRepository.findAllByTitleContains(postFindRequestDTO.getName()));
+            dtos.addAll(recruitmentPostResponseDTOs);
+        } else if (postFindRequestDTO.getType().equals(PostType.SURVEY.getName())) {
+            List<SurveyResponeDTO> surveyResponeDTOs = surveyResponeConverter
+                    .toDTOGroup(surveyPostRepository.findAllByTitleContains(postFindRequestDTO.getName()));
+            dtos.addAll(surveyResponeDTOs);
+        }
+        return dtos;
     }
 
 }
