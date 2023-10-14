@@ -30,7 +30,7 @@ Content-Type: application/json
     "email":"khoatienghanquoc@gmail.com",
     "name":"tieng han",
     "image":"tienhan.png",
-    "code":"123"
+    "code":"123",
     "facultyName":"TH"
 }
 
