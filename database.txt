@@ -1,0 +1,80 @@
+INSERT INTO `roles`(`code`, `name`) VALUES 
+('doanh-nghiep', 'BUSINESS'),
+('khoa', 'FACULTY'),
+('sinh-vien', 'STUDENT')
+
+
+INSERT INTO `users`(`is_message_connect`, `is_typing`, `status`, `code`, `email`, `image`, `name`, `password`) 
+VALUES 
+(0,0,0,'khoa_dien_dien_tu','khoaddt@tdc.edu.vn','khoa_dien_dien_tu.png','Khoa điện - Điện tử','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
+(0,0,0,'khoa_cong_nghe_thong_tin','fit@tdc.edu.vn','khoa_cong_nghe_thong_tin.png','Khoa Công Nghệ Thông Tin','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
+(0,0,0,'khoa_cong_nghe_tu_dong','cntd@tdc.edu.vn','khoa_cong_nghe_tu_dong.png','Khoa Công Nghệ Tự Động','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
+(0,0,0,'khoa_co_khi_che_tao_may','fme@tdc.edu.vn','khoa_co_khi_che_tao_may.png','Khoa Cơ Khí Chế Tạo Máy','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
+(0,0,0,'khoa_co_khi_o_to','khoacokhioto@tdc.edu.vn','khoa_co_khi_o_to.png','Khoa Cơ Khí Ô Tô','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
+(0,0,0,'khoa_tai_chinh_ke_toan','khoatckt@tdc.edu.vn','khoa_co_khi_che_tao_may.png','Khoa Cơ Khí Chế Tạo Máy','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
+(0,0,0,'khoa_quan_tri_kinh_doanh','khoaqtkd@tdc.edu.vn','khoa_quan_tri_kinh_doanh.png','Khoa Quản Trị Kinh Doanh','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
+(0,0,0,'khoa_du_lich','khoadulich@tdc.edu.vn','khoa_du_lich.png','Khoa Du Lịch','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
+(0,0,0,'khoa_tieng_anh','khoatienganh@tdc.edu.vn','khoa_tieng_anh.png','Khoa Tiếng Anh','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
+(0,0,0,'khoa_tieng_han','khoatienghan@tdc.edu.vn','khoa_tieng_han.png','Khoa Tiếng Hàn','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
+(0,0,0,'khoa_bo_mon_tieng_nhat','bomontiengnhat@tdc.edu.vn','khoa_bo_mon_tieng_nhat.png','Khoa Bộ Môn Tiếng Nhật','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq')
+
+
+INSERT INTO `user_role`(`role_id`, `user_id`) 
+VALUES 
+(2,1),
+(2,2),
+(2,3),
+(2,4),
+(2,5),
+(2,6),
+(2,7),
+(2,8),
+(2,9),
+(2,10),
+(2,11)
+
+
+INSERT INTO `falcuty_infos`(`user_id`) VALUES
+(1),
+(2),
+(3),
+(4),
+(5),
+(6),
+(7),
+(8),
+(9),
+(10),
+(11)
+
+
+INSERT INTO `majors`(`faculty_id`,`name`,`code`) VALUES 
+(1,'Điện Công Nghiệp','DN'),
+(1,'Công Nghệ Kỹ Thuật Điện, Điện tử','DD'),
+(1,'CNKT Điện Tử Truyền Thông','DT'),
+(1,'Điện Tử Công Nghiệp','DC'),
+(1,'Kỹ Thuật Lắp Đặt Điện Và Điều Khiển Trong Công Nghiệp','LD'),
+(1,'Kỹ Thuật Máy Lạnh Và Điều Hòa Không Khí','MD'),
+(2,'Công Nghệ Thông Tin','TT'),
+(2,'Công Nghệ Thông Tin Nhật Bản','TFT'),
+(2,'Truyền Thông Và Mạng Máy Tính','TM'),
+(2,'Thiết Kế Đồ Họa','DH'),
+(3,'Công nghệ kỹ thuật Cơ – Điện tử','CD'),
+(3,'Công nghệ Kỹ thuật Điều khiển & Tự động hóa','DK'),
+(3,'Tự động hóa công nghiệp','TD'),
+(4,'Công nghệ kỹ thuật cơ khí','CK'),
+(4,'Chế tạo thiết bị cơ khí','CT'),
+(5,'Công nghệ kỹ thuật ô tô','OT'),
+(5,'Bảo trì & sửa chữa ô tô','BS'),
+(6,'Kế toán','KT'),
+(6,'Tài chính - Ngân hàng','TC'),
+(7,'Logistic','LG'),
+(7,'Kinh doanh thương mại','KD'),
+(7,'Quản trị kinh doanh','QT'),
+(7,'Quản lý & Bán hàng siêu thị','QB'),
+(8,'Dịch vụ & Du lịch lữ hành','LH'),
+(8,'Nhà hàng','NH'),
+(8,'Khách sạn','KS'),
+(9,'Tiếng anh','TA'),
+(10,'Tiếng hàn','TH'),
+(11,'Tiếng nhật','TN')
