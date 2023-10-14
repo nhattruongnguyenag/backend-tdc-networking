@@ -45,6 +45,7 @@ public interface UserService {
     //faculty service
     List<FacultyInfoResponseDTO> findAllFacultyInfo();
     AuthTokenDTO facultyRegister(FacultyInfoRegisterRequestDTO facultyInfoRegisterRequestDTO);
+    List<AuthTokenDTO> facultiesRegister(List<FacultyInfoRegisterRequestDTO> facultyInfoRegisterRequestDTOs);
     UserInfoResponseDTO facultyUpdateOrSave(FacultyInfoUpdateOrSaveRequestDTO facultyInfoUpdateOrSaveRequestDTO);
 
     List<BusinessInfoResponseDTO> findAllBusinessInfo();

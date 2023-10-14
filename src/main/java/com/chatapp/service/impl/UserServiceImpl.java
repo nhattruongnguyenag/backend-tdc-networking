@@ -465,4 +465,14 @@ public class UserServiceImpl implements UserService {
         return dtos;
     }
 
+    @Override
+    public List<AuthTokenDTO> facultiesRegister(List<FacultyInfoRegisterRequestDTO> facultyInfoRegisterRequestDTOs) {
+        List<AuthTokenDTO> tokenDTOs = new ArrayList<AuthTokenDTO>();
+        for (FacultyInfoRegisterRequestDTO facultyInfoRegisterRequestDTO : facultyInfoRegisterRequestDTOs) {
+            AuthTokenDTO token = this.facultyRegister(facultyInfoRegisterRequestDTO);
+            tokenDTOs.add(token);
+        }
+        return tokenDTOs;
+    }
+
 }
