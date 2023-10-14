@@ -8,4 +8,5 @@ import lombok.*;
 @Data
 public class MajorResponseDTO extends BaseDTO{
     private String name;
+    private String code;
 }

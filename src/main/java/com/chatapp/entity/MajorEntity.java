@@ -9,6 +9,9 @@ public class MajorEntity extends BaseEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "code", nullable = false , unique = true)
+    private String code;
+
     @ManyToOne
     @JoinColumn(name = "faculty_id", nullable = false)
     private FacultyInfoEntity faculty;
@@ -29,5 +32,15 @@ public class MajorEntity extends BaseEntity {
     public void setFaculty(FacultyInfoEntity faculty) {
         this.faculty = faculty;
     }
+
+
+    public String getCode() {
+        return this.code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
 
 }
