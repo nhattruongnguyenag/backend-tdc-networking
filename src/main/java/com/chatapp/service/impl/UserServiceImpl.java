@@ -455,13 +455,17 @@ public class UserServiceImpl implements UserService {
         List<UserFindResponseDTO> userFindResponseDTOs = userFindResponseConverter
                 .toDTOGroup(userRepository.findAllByNameContains(userInfoFindRequestDTO.getName()));
         for (UserFindResponseDTO userFindResponseDTO : userFindResponseDTOs) {
-            //set follow
+            // set follow
             UserEntity entity = userRepository.findOneById(userInfoFindRequestDTO.getUserId());
-            for (FollowEntity followEntity : entity.getFollowUsers()) {
-                if(followEntity.getUserFollow().getId() == userFindResponseDTO.getId()){
-                    userFindResponseDTO.setIsFollow(true);
-                    break;
+            if (entity.getFollowUsers().size() > 0) {
+                for (FollowEntity followEntity : entity.getFollowUsers()) {
+                    if (followEntity.getUserFollow().getId() == userFindResponseDTO.getId()) {
+                        userFindResponseDTO.setIsFollow(true);
+                        break;
+                    }
+                    userFindResponseDTO.setIsFollow(false);
                 }
+            }else{
                 userFindResponseDTO.setIsFollow(false);
             }
 
