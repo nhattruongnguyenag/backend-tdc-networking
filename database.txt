@@ -1,7 +1,7 @@
 INSERT INTO `roles`(`code`, `name`) VALUES 
 ('doanh-nghiep', 'BUSINESS'),
 ('khoa', 'FACULTY'),
-('sinh-vien', 'STUDENT')
+('sinh-vien', 'STUDENT');
 
 
 INSERT INTO `users`(`is_message_connect`, `is_typing`, `status`, `code`, `email`, `image`, `name`, `password`) 
@@ -16,7 +16,7 @@ VALUES
 (0,0,0,'khoa_du_lich','khoadulich@tdc.edu.vn','khoa_du_lich.png','Khoa Du Lịch','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
 (0,0,0,'khoa_tieng_anh','khoatienganh@tdc.edu.vn','khoa_tieng_anh.png','Khoa Tiếng Anh','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
 (0,0,0,'khoa_tieng_han','khoatienghan@tdc.edu.vn','khoa_tieng_han.png','Khoa Tiếng Hàn','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
-(0,0,0,'khoa_bo_mon_tieng_nhat','bomontiengnhat@tdc.edu.vn','khoa_bo_mon_tieng_nhat.png','Khoa Bộ Môn Tiếng Nhật','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq')
+(0,0,0,'khoa_bo_mon_tieng_nhat','bomontiengnhat@tdc.edu.vn','khoa_bo_mon_tieng_nhat.png','Khoa Bộ Môn Tiếng Nhật','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq');
 
 
 INSERT INTO `user_role`(`role_id`, `user_id`) 
@@ -31,7 +31,7 @@ VALUES
 (2,8),
 (2,9),
 (2,10),
-(2,11)
+(2,11);
 
 
 INSERT INTO `falcuty_infos`(`user_id`) VALUES
@@ -45,7 +45,7 @@ INSERT INTO `falcuty_infos`(`user_id`) VALUES
 (8),
 (9),
 (10),
-(11)
+(11);
 
 
 INSERT INTO `majors`(`faculty_id`,`name`,`code`) VALUES 
@@ -77,4 +77,4 @@ INSERT INTO `majors`(`faculty_id`,`name`,`code`) VALUES
 (8,'Khách sạn','KS'),
 (9,'Tiếng anh','TA'),
 (10,'Tiếng hàn','TH'),
-(11,'Tiếng nhật','TN')
+(11,'Tiếng nhật','TN');
