@@ -11,6 +11,7 @@ import com.chatapp.converter.request.UserRequestConverter;
 import com.chatapp.converter.response.BusinessInfoResponseConverter;
 import com.chatapp.converter.response.FacultyInfoResponseConverter;
 import com.chatapp.converter.response.StudentInfoResponseConverter;
+import com.chatapp.converter.response.UserFindResponseConverter;
 import com.chatapp.converter.response.UserInfoResponseConverter;
 import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.BaseDTO;
@@ -27,6 +28,7 @@ import com.chatapp.dto.request.UserLoginRequestDTO;
 import com.chatapp.dto.response.BusinessInfoResponseDTO;
 import com.chatapp.dto.response.FacultyInfoResponseDTO;
 import com.chatapp.dto.response.StudentInfoResponseDTO;
+import com.chatapp.dto.response.UserFindResponseDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.entity.BusinessesInfoEntity;
 import com.chatapp.entity.FacultyInfoEntity;
@@ -89,6 +91,8 @@ public class UserServiceImpl implements UserService {
     private FacultyInfoResponseConverter facultyInfoResponeConverter;
     @Autowired
     private BusinessInfoResponseConverter businessInfoResponeConverter;
+    @Autowired
+    private UserFindResponseConverter userFindResponseConverter;
 
     @Autowired
     private UserRequestConverter userConverter;
@@ -446,42 +450,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<BaseDTO> findUserByName(UserInfoFindRequestDTO userInfoFindRequestDTO) {
-        List<BaseDTO> dtos = new ArrayList<>();
-        List<UserInfoResponseDTO> userInfoResponseDTOs = userInfoResponseConverter
+    public List<UserFindResponseDTO> findUserByName(UserInfoFindRequestDTO userInfoFindRequestDTO) {
+        List<UserFindResponseDTO> result = new ArrayList<UserFindResponseDTO>();
+        List<UserFindResponseDTO> userFindResponseDTOs = userFindResponseConverter
                 .toDTOGroup(userRepository.findAllByNameContains(userInfoFindRequestDTO.getName()));
-        if (userInfoFindRequestDTO.getType().equals(Role.STUDENT.getName())) {
-            for (UserInfoResponseDTO userInfoResponseDTO : userInfoResponseDTOs) {
-                if (userInfoResponseDTO.getRoleCodes().equals(Role.STUDENT.getName())) {
-                    StudentInfoEntity studentInfoEntity = studentInfoRepository
-                            .findOneByUser_Id(userInfoResponseDTO.getId());
-                    StudentInfoResponseDTO studentInfoResponseDTO = studentInfoResponeConverter
-                            .toDTO(studentInfoEntity);
-                    dtos.add(studentInfoResponseDTO);
+        for (UserFindResponseDTO userFindResponseDTO : userFindResponseDTOs) {
+            //set follow
+            UserEntity entity = userRepository.findOneById(userInfoFindRequestDTO.getUserId());
+            for (FollowEntity followEntity : entity.getFollowUsers()) {
+                if(followEntity.getUserFollow().getId() == userFindResponseDTO.getId()){
+                    userFindResponseDTO.setIsFollow(true);
+                    break;
                 }
+                userFindResponseDTO.setIsFollow(false);
             }
-        } else if (userInfoFindRequestDTO.getType().equals(Role.BUSINESS.getName())) {
-            for (UserInfoResponseDTO userInfoResponseDTO : userInfoResponseDTOs) {
-                if (userInfoResponseDTO.getRoleCodes().equals(Role.BUSINESS.getName())) {
-                    BusinessesInfoEntity businessesInfoEntity = businessInfoRepository
-                            .findOneByUser_Id(userInfoResponseDTO.getId());
-                    BusinessInfoResponseDTO businessInfoResponseDTO = businessInfoResponeConverter
-                            .toDTO(businessesInfoEntity);
-                    dtos.add(businessInfoResponseDTO);
-                }
-            }
-        } else if (userInfoFindRequestDTO.getType().equals(Role.FACULTY.getName())) {
-            for (UserInfoResponseDTO userInfoResponseDTO : userInfoResponseDTOs) {
-                if (userInfoResponseDTO.getRoleCodes().equals(Role.FACULTY.getName())) {
-                    FacultyInfoEntity facultyInfoEntity = facultyInfoRepository
-                            .findOneByUser_Id(userInfoResponseDTO.getId());
-                    FacultyInfoResponseDTO facultyInfoResponseDTO = facultyInfoResponeConverter
-                            .toDTO(facultyInfoEntity);
-                    dtos.add(facultyInfoResponseDTO);
+
+            UserEntity userEntity = userRepository.findOneById(userFindResponseDTO.getId());
+            UserInfoResponseDTO userInfoResponseDTO = userInfoResponseConverter.toDTO(userEntity);
+            if (userInfoResponseDTO.getRoleCodes().equals(userInfoFindRequestDTO.getType())) {
+                if (userFindResponseDTO.getId() != userInfoFindRequestDTO.getUserId()) {
+                    result.add(userFindResponseDTO);
                 }
             }
         }
-        return dtos;
+        return result;
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.chatapp.commond.ResponseData;
 import com.chatapp.dto.BaseDTO;
 import com.chatapp.dto.request.PostFindRequestDTO;
 import com.chatapp.dto.request.UserInfoFindRequestDTO;
+import com.chatapp.dto.response.UserFindResponseDTO;
 import com.chatapp.service.PostService;
 import com.chatapp.service.UserService;
 
@@ -26,8 +27,8 @@ public class SearchAPI {
     private PostService postService;
 
     @PostMapping({ "find/user", "find/user/" })
-    ResponseEntity<ResponseData<List<BaseDTO>>> findUser(@RequestBody UserInfoFindRequestDTO userInfoFindRequestDTO) {
-        ResponseData<List<BaseDTO>> responseData = new ResponseData<>(HttpStatus.OK,"success",userService.findUserByName(userInfoFindRequestDTO));
+    ResponseEntity<ResponseData<List<UserFindResponseDTO>>> findUser(@RequestBody UserInfoFindRequestDTO userInfoFindRequestDTO) {
+        ResponseData<List<UserFindResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK,"success",userService.findUserByName(userInfoFindRequestDTO));
         return ResponseEntity.created(null).body(responseData);
     }
 

@@ -15,6 +15,7 @@ import com.chatapp.dto.request.UserLoginRequestDTO;
 import com.chatapp.dto.response.BusinessInfoResponseDTO;
 import com.chatapp.dto.response.FacultyInfoResponseDTO;
 import com.chatapp.dto.response.StudentInfoResponseDTO;
+import com.chatapp.dto.response.UserFindResponseDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
 
 import java.util.List;
@@ -54,7 +55,7 @@ public interface UserService {
     UserInfoResponseDTO businessUpdateOrSave(BusinessInfoUpdateOrSaveRequestDTO businessInfoUpdateOrSaveRequestDTO);
 
     //find
-    List<BaseDTO> findUserByName(UserInfoFindRequestDTO userInfoFindRequestDTO);
+    List<UserFindResponseDTO> findUserByName(UserInfoFindRequestDTO userInfoFindRequestDTO);
 
     //follow
     String follow(UserFollowRequestDTO userFollowRequestDTO);
