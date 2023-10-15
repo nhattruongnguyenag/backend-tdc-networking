@@ -29,6 +29,7 @@ import com.chatapp.dto.response.FacultyInfoResponseDTO;
 import com.chatapp.dto.response.StudentInfoResponseDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.entity.BusinessesInfoEntity;
+import com.chatapp.entity.FacultyInfoEntity;
 import com.chatapp.entity.FollowEntity;
 import com.chatapp.entity.RoleEntity;
 import com.chatapp.entity.StudentInfoEntity;
@@ -467,6 +468,16 @@ public class UserServiceImpl implements UserService {
                     BusinessInfoResponseDTO businessInfoResponseDTO = businessInfoResponeConverter
                             .toDTO(businessesInfoEntity);
                     dtos.add(businessInfoResponseDTO);
+                }
+            }
+        } else if (userInfoFindRequestDTO.getType().equals(Role.FACULTY.getName())) {
+            for (UserInfoResponseDTO userInfoResponseDTO : userInfoResponseDTOs) {
+                if (userInfoResponseDTO.getRoleCodes().equals(Role.FACULTY.getName())) {
+                    FacultyInfoEntity facultyInfoEntity = facultyInfoRepository
+                            .findOneByUser_Id(userInfoResponseDTO.getId());
+                    FacultyInfoResponseDTO facultyInfoResponseDTO = facultyInfoResponeConverter
+                            .toDTO(facultyInfoEntity);
+                    dtos.add(facultyInfoResponseDTO);
                 }
             }
         }
