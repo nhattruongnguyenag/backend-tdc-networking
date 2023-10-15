@@ -1,8 +1,8 @@
 package com.chatapp.enums;
 
 public enum FileType {
-    IMAGE("images//"),
-    FILE("files//");
+    IMAGE("images/"),
+    FILE("files/");
 
     private String role;
 

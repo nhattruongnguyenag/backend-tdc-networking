@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class FileUploadServiceImpl implements FileUploadService {
     ResourceLoader resourceLoader;
 
     @Override
-    public List<String> upload(MultipartFile[] files, String type) {
+    public List<String> upload(MultipartFile[] files, String type) throws IOException{
         try {
             createDirIfNotExist(SystemConstant.FILE_PATH_ORIGIN + type);
 
@@ -52,16 +53,16 @@ public class FileUploadServiceImpl implements FileUploadService {
 
             return fileNames;
 
-        } catch (Exception e) {
-            throw e;
+        } catch (IOException e) {
+            throw new IOException("upload_fail");
         }
     }
 
-    private void createDirIfNotExist(String path) {
+    private void createDirIfNotExist(String path) throws IOException{
         // create directory to save the files
         File directory = new File(path);
         if (!directory.exists()) {
-            directory.mkdir();
+            FileUtils.forceMkdir(directory);
         }
     }
 

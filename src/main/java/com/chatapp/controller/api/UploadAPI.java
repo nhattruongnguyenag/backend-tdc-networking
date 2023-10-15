@@ -24,14 +24,14 @@ public class UploadAPI {
     FileUploadService fileUploadService;
 
     @PostMapping({ "/upload/images", "upload/images/" })
-    public ResponseEntity<ResponseData<List<String>>> uploadImages(@RequestParam("files") MultipartFile[] files) {
+    public ResponseEntity<ResponseData<List<String>>> uploadImages(@RequestParam("files") MultipartFile[] files) throws IOException{
         ResponseData<List<String>> responseData = new ResponseData<List<String>>(HttpStatus.OK, "success",
                 fileUploadService.upload(files, FileType.IMAGE.getName()));
         return ResponseEntity.ok(responseData);
     }
 
     @PostMapping({ "/upload/files", "upload/files/" })
-    public ResponseEntity<ResponseData<List<String>>> uploadFiles(@RequestParam("files") MultipartFile[] files) {
+    public ResponseEntity<ResponseData<List<String>>> uploadFiles(@RequestParam("files") MultipartFile[] files) throws IOException{
         ResponseData<List<String>> responseData = new ResponseData<List<String>>(HttpStatus.OK, "success",
                 fileUploadService.upload(files, FileType.FILE.getName()));
         return ResponseEntity.ok(responseData);
