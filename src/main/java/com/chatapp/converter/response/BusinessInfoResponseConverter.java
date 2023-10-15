@@ -15,6 +15,9 @@ public class BusinessInfoResponseConverter extends BaseConverter<BusinessesInfoE
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private FollowResponseConverter followResponseConverter;
+
     @Override
     public BusinessInfoResponseDTO toDTO(BusinessesInfoEntity entity) {
         BusinessInfoResponseDTO businessInfoResponseDTO = super.toDTO(entity);
@@ -33,6 +36,7 @@ public class BusinessInfoResponseConverter extends BaseConverter<BusinessesInfoE
             roleCodes += entity.getUser().getRoles().get(i).getCode();
         }
         businessInfoResponseDTO.setRoleCodes(roleCodes);
+        businessInfoResponseDTO.setFollows(followResponseConverter.toDTOGroup(userEntity.getFollowUsers()));
         return businessInfoResponseDTO;
     }
 }

@@ -1,9 +1,10 @@
 package com.chatapp.dto.response;
 
 
+import java.util.List;
+
 import com.chatapp.dto.BaseDTO;
 
-import jakarta.persistence.Column;
 import lombok.Data;
 
 @Data
@@ -16,4 +17,5 @@ public class UserInfoResponseDTO extends BaseDTO {
     private Byte isTyping;
     private Byte isMessageConnect;
     private String roleCodes;
+    private List<UserFollowResponseDTO> follows;
 }

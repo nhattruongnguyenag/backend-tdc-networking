@@ -491,15 +491,15 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findById(userFollowRequestDTO.getUserFollowId()) == null) {
             throw new DuplicateUsernameException("user_follow_not_exists");
         }
-        // if (followReposittory.findOneByUser_IdAndFollow_User_Id(userFollowRequestDTO.getUserId(),
-        //         userFollowRequestDTO.getUserFollowId()) != null) {
-        //     FollowEntity followEntity = followReposittory.findOneByUser_IdAndFollow_User_Id(
-        //             userFollowRequestDTO.getUserId(), userFollowRequestDTO.getUserFollowId());
-        //     followReposittory.delete(followEntity);
-        // } else {
+        if (followReposittory.findOneByUser_IdAndFollow_Id(userFollowRequestDTO.getUserId(),
+                userFollowRequestDTO.getUserFollowId()) != null) {
+            FollowEntity followEntity = followReposittory.findOneByUser_IdAndFollow_Id(
+                    userFollowRequestDTO.getUserId(), userFollowRequestDTO.getUserFollowId());
+            followReposittory.delete(followEntity);
+        } else {
             FollowEntity followEntity = userFollowRequestConverter.toEntity(userFollowRequestDTO);
             followReposittory.save(followEntity);
-        //}
+        }
         return "";
     }
 

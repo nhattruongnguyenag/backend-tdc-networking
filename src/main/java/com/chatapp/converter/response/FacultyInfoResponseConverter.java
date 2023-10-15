@@ -15,6 +15,9 @@ public class FacultyInfoResponseConverter extends BaseConverter<FacultyInfoEntit
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private FollowResponseConverter followResponseConverter;
+
     @Override
     public FacultyInfoResponseDTO toDTO(FacultyInfoEntity entity) {
         FacultyInfoResponseDTO facultyInfoResponeDTO = super.toDTO(entity);
@@ -33,6 +36,7 @@ public class FacultyInfoResponseConverter extends BaseConverter<FacultyInfoEntit
             roleCodes += entity.getUser().getRoles().get(i).getCode();
         }
         facultyInfoResponeDTO.setRoleCodes(roleCodes);
+        facultyInfoResponeDTO.setFollows(followResponseConverter.toDTOGroup(userEntity.getFollowUsers()));
         return facultyInfoResponeDTO;
     }
 }
