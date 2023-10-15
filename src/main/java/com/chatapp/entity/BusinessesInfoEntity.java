@@ -7,13 +7,13 @@ import jakarta.persistence.*;
 @Table(name = "business_infos")
 public class BusinessesInfoEntity extends BaseEntity {
 
-    @Column(name = "representor", nullable = false)
+    @Column(name = "representor", nullable = false )
     private String representor;
 
     @Column(name = "tax_code", nullable = false)
     private String taxCode;
 
-    @Column(name = "address", nullable = false)
+    @Column(name = "address", nullable = false, length = 1024)
     private String address;
 
     @Column(name = "active_time", nullable = false)

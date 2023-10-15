@@ -12,7 +12,7 @@ public class RecruitmentPostEntity extends BaseEntity {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", nullable = false, length = 1024)
     private String description;
 
     @Column(name = "requirement", nullable = false)
