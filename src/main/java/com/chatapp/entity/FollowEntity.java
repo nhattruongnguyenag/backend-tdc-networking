@@ -15,8 +15,8 @@ public class FollowEntity extends BaseEntity {
     private UserEntity user;
 
     @ManyToOne
-    @JoinColumn(name = "follow_user_id", nullable = false)
-    private UserEntity userFollow;
+    @JoinColumn(name = "follow_id", nullable = false)
+    private UserEntity follow;
 
     public UserEntity getUser() {
         return user;
@@ -27,10 +27,10 @@ public class FollowEntity extends BaseEntity {
     }
 
     public UserEntity getUserFollow() {
-        return userFollow;
+        return follow;
     }
 
     public void setUserFollow(UserEntity userFollow) {
-        this.userFollow = userFollow;
+        this.follow = userFollow;
     }
 }

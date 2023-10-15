@@ -9,6 +9,7 @@ import com.chatapp.dto.request.FacultyInfoRegisterRequestDTO;
 import com.chatapp.dto.request.FacultyInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.StudentInfoRegisterRequestDTO;
 import com.chatapp.dto.request.StudentInfoUpdateOrSaveRequestDTO;
+import com.chatapp.dto.request.UserFollowRequestDTO;
 import com.chatapp.dto.request.UserInfoFindRequestDTO;
 import com.chatapp.dto.request.UserLoginRequestDTO;
 import com.chatapp.dto.response.BusinessInfoResponseDTO;
@@ -54,4 +55,7 @@ public interface UserService {
 
     //find
     List<BaseDTO> findUserByName(UserInfoFindRequestDTO userInfoFindRequestDTO);
+
+    //follow
+    String follow(UserFollowRequestDTO userFollowRequestDTO);
 }

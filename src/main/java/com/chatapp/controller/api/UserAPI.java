@@ -5,6 +5,7 @@ import com.chatapp.commond.ResponseData;
 import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.BaseDTO;
 import com.chatapp.dto.UserDTO;
+import com.chatapp.dto.request.UserFollowRequestDTO;
 import com.chatapp.dto.request.UserLoginRequestDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.service.UserService;
@@ -77,5 +78,12 @@ public class UserAPI {
     public ResponseEntity delete(@PathVariable("id") Long id) {
         userService.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping({ "users/follow", "users/follow" })
+    public ResponseEntity<ResponseData<String>> save(@RequestBody UserFollowRequestDTO userFollowRequestDTO) {
+        userService.follow(userFollowRequestDTO);
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK,"success",null);
+        return ResponseEntity.ok(responseData);
     }
 }

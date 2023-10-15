@@ -6,6 +6,7 @@ import com.chatapp.converter.request.FacultyInfoRegisterRequestConverter;
 import com.chatapp.converter.request.FacultyInfoUpdateOrSaveRequestConverter;
 import com.chatapp.converter.request.StudentInfoRegisterRequestConverter;
 import com.chatapp.converter.request.StudentInfoUpdateOrSaveRequestConverter;
+import com.chatapp.converter.request.UserFollowRequestConverter;
 import com.chatapp.converter.request.UserRequestConverter;
 import com.chatapp.converter.response.BusinessInfoResponseConverter;
 import com.chatapp.converter.response.FacultyInfoResponseConverter;
@@ -20,6 +21,7 @@ import com.chatapp.dto.request.FacultyInfoRegisterRequestDTO;
 import com.chatapp.dto.request.FacultyInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.StudentInfoRegisterRequestDTO;
 import com.chatapp.dto.request.StudentInfoUpdateOrSaveRequestDTO;
+import com.chatapp.dto.request.UserFollowRequestDTO;
 import com.chatapp.dto.request.UserInfoFindRequestDTO;
 import com.chatapp.dto.request.UserLoginRequestDTO;
 import com.chatapp.dto.response.BusinessInfoResponseDTO;
@@ -27,6 +29,7 @@ import com.chatapp.dto.response.FacultyInfoResponseDTO;
 import com.chatapp.dto.response.StudentInfoResponseDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.entity.BusinessesInfoEntity;
+import com.chatapp.entity.FollowEntity;
 import com.chatapp.entity.RoleEntity;
 import com.chatapp.entity.StudentInfoEntity;
 import com.chatapp.entity.UserEntity;
@@ -34,6 +37,7 @@ import com.chatapp.enums.Role;
 import com.chatapp.exception.DuplicateUsernameException;
 import com.chatapp.repository.BusinessInfoRepository;
 import com.chatapp.repository.FacultyInfoRepository;
+import com.chatapp.repository.FollowReposittory;
 import com.chatapp.repository.RoleRepository;
 import com.chatapp.repository.StudentInfoRepository;
 import com.chatapp.repository.UserRepository;
@@ -73,6 +77,8 @@ public class UserServiceImpl implements UserService {
     private FacultyInfoRepository facultyInfoRepository;
     @Autowired
     private BusinessInfoRepository businessInfoRepository;
+    @Autowired
+    private FollowReposittory followReposittory;
 
     @Autowired
     private UserInfoResponseConverter userInfoResponseConverter;
@@ -97,6 +103,8 @@ public class UserServiceImpl implements UserService {
     private FacultyInfoRegisterRequestConverter facultyInfoRegisterRequestConverter;
     @Autowired
     private BusinessInfoRegisterRequestConverter businessInfoRegisterRequestConverter;
+    @Autowired
+    private UserFollowRequestConverter userFollowRequestConverter;
 
     @Override
     public List<UserInfoResponseDTO> findAll() {
@@ -473,6 +481,26 @@ public class UserServiceImpl implements UserService {
             tokenDTOs.add(token);
         }
         return tokenDTOs;
+    }
+
+    @Override
+    public String follow(UserFollowRequestDTO userFollowRequestDTO) {
+        if (userRepository.findById(userFollowRequestDTO.getUserId()) == null) {
+            throw new DuplicateUsernameException("user_not_exists");
+        }
+        if (userRepository.findById(userFollowRequestDTO.getUserFollowId()) == null) {
+            throw new DuplicateUsernameException("user_follow_not_exists");
+        }
+        // if (followReposittory.findOneByUser_IdAndFollow_User_Id(userFollowRequestDTO.getUserId(),
+        //         userFollowRequestDTO.getUserFollowId()) != null) {
+        //     FollowEntity followEntity = followReposittory.findOneByUser_IdAndFollow_User_Id(
+        //             userFollowRequestDTO.getUserId(), userFollowRequestDTO.getUserFollowId());
+        //     followReposittory.delete(followEntity);
+        // } else {
+            FollowEntity followEntity = userFollowRequestConverter.toEntity(userFollowRequestDTO);
+            followReposittory.save(followEntity);
+        //}
+        return "";
     }
 
 }
