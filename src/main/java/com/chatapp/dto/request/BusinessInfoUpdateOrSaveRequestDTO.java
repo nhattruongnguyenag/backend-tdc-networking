@@ -12,5 +12,6 @@ public class BusinessInfoUpdateOrSaveRequestDTO {
     private String representor;
     private String taxCode;
     private String address;
+    private String phone;
     private String activeTime;
 }

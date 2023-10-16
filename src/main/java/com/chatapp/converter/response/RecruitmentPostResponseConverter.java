@@ -2,6 +2,7 @@ package com.chatapp.converter.response;
 
 import com.chatapp.converter.abstracts.BaseConverter;
 import com.chatapp.dto.response.CommentResponeseDTO;
+import com.chatapp.dto.response.ImageResponseDTO;
 import com.chatapp.dto.response.NormalPostResponseDTO;
 import com.chatapp.dto.response.RecruitmentPostResponseDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
@@ -25,7 +26,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class RecruitmentPostResponseConverter extends BaseConverter<RecruitmentPostEntity, RecruitmentPostResponseDTO> {
-
 
     @Autowired
     private UserRepository userRepository;
@@ -58,7 +58,7 @@ public class RecruitmentPostResponseConverter extends BaseConverter<RecruitmentP
         userInfoResponseDTO.setRoleCodes(roleCodes);
         recruitmentPostResponseDTO.setUser(userInfoResponseDTO);
         List<UserLikeResponeDTO> likes = new ArrayList<>();
-        for ( PostLikeEntity postLikeEntity : postEntity.getLikes()) {
+        for (PostLikeEntity postLikeEntity : postEntity.getLikes()) {
             UserLikeResponeDTO userLikeResponeDTO = new UserLikeResponeDTO();
             UserEntity uEntity = userRepository.findOneById(postLikeEntity.getUser().getId());
             userLikeResponeDTO.setId(uEntity.getId());
@@ -67,13 +67,16 @@ public class RecruitmentPostResponseConverter extends BaseConverter<RecruitmentP
             likes.add(userLikeResponeDTO);
         }
         recruitmentPostResponseDTO.setLikes(likes);
-        List<String> images = new ArrayList<>();
-        for ( PostImageEntity postImageEntity : postEntity.getImages()) {
-            images.add(postImageEntity.getUri());
+        List<ImageResponseDTO> images = new ArrayList<>();
+        for (PostImageEntity postImageEntity : postEntity.getImages()) {
+            ImageResponseDTO imageResponseDTO = new ImageResponseDTO();
+            imageResponseDTO.setId(postImageEntity.getId());
+            imageResponseDTO.setUri(postImageEntity.getUri());
+            images.add(imageResponseDTO);
         }
         recruitmentPostResponseDTO.setImages(images);
         List<CommentResponeseDTO> comments = new ArrayList<>();
-        for ( PostCommentEntity postCommentEntity : postEntity.getComments()) {
+        for (PostCommentEntity postCommentEntity : postEntity.getComments()) {
             CommentResponeseDTO commentResponeseDTO = commentResponseConverter.toDTO(postCommentEntity);
             comments.add(commentResponeseDTO);
         }

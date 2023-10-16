@@ -2,6 +2,7 @@ package com.chatapp.converter.response;
 
 import com.chatapp.converter.abstracts.BaseConverter;
 import com.chatapp.dto.response.CommentResponeseDTO;
+import com.chatapp.dto.response.ImageResponseDTO;
 import com.chatapp.dto.response.NormalPostResponseDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.dto.response.UserLikeResponeDTO;
@@ -65,9 +66,12 @@ public class NormalPostResponseConverter extends BaseConverter<NormalPostEntity,
             likes.add(userLikeResponeDTO);
         }
         normalPostResponeDTO.setLikes(likes);
-        List<String> images = new ArrayList<>();
+        List<ImageResponseDTO> images = new ArrayList<>();
         for ( PostImageEntity postImageEntity : postEntity.getImages()) {
-            images.add(postImageEntity.getUri());
+            ImageResponseDTO imageResponseDTO = new ImageResponseDTO();
+            imageResponseDTO.setId(postImageEntity.getId());
+            imageResponseDTO.setUri(postImageEntity.getUri());
+            images.add(imageResponseDTO);
         }
         normalPostResponeDTO.setImages(images);
         List<CommentResponeseDTO> comments = new ArrayList<>();

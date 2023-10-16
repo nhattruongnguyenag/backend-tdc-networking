@@ -10,6 +10,7 @@ public class BusinessInfoRegisterRequestDTO {
     private String image;
     private String code;
     private String representor;
+    private String phone;
     private String taxCode;
     private String address;
     private String activeTime;

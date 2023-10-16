@@ -77,6 +77,7 @@ Content-Type: application/json
     "code":"food_cty",
     "representor":"gg",
     "taxCode":"546657",
+    "phone":"0892626312",
     "address":"hai ba trung",
     "activeTime":"8h"
 }

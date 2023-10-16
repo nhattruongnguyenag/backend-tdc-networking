@@ -31,6 +31,7 @@ public class BusinessInfoUpdateOrSaveRequestConverter
         BusinessesInfoEntity businessesInfoEntity = businessInfoRepository.findOneByUser_Id(dto.getId());
         businessesInfoEntity.setRepresentor(dto.getRepresentor());
         businessesInfoEntity.setTaxCode(dto.getTaxCode());
+        businessesInfoEntity.setPhone(dto.getPhone());
         businessesInfoEntity.setAddress(dto.getAddress());
         businessesInfoEntity.setActiveTime(dto.getActiveTime());
         businessesInfoEntity.setUser(userEntity);
@@ -44,6 +45,7 @@ public class BusinessInfoUpdateOrSaveRequestConverter
         BusinessesInfoEntity businessesInfoEntity = new BusinessesInfoEntity();
         businessesInfoEntity.setRepresentor(dto.getRepresentor());
         businessesInfoEntity.setTaxCode(dto.getTaxCode());
+        businessesInfoEntity.setPhone(dto.getPhone());
         businessesInfoEntity.setAddress(dto.getAddress());
         businessesInfoEntity.setActiveTime(dto.getActiveTime());
         businessesInfoEntity.setUser(userEntity);
