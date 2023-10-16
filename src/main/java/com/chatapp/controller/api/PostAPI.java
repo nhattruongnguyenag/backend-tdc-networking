@@ -87,10 +87,10 @@ public class PostAPI {
         return ResponseEntity.ok(responseData);
     }
 
-    // //recruitmentPost api
-    // @GetMapping({ "posts/{id}/comments", "posts/{id}/comments" })
-    // public ResponseEntity<ResponseData<List<CommentResponeseDTO>>> getComments(@PathVariable Long id) {
-    //     ResponseData<List<CommentResponeseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success", postService.findCommentByPostId(id));
-    //     return ResponseEntity.ok(responseData);
-    // }
+    //recruitmentPost api
+    @GetMapping({ "posts/{id}/comments", "posts/{id}/comments" })
+    public ResponseEntity<ResponseData<List<CommentResponeseDTO>>> getComments(@PathVariable Long id) {
+        ResponseData<List<CommentResponeseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success", postService.findCommentByPostId(id));
+        return ResponseEntity.ok(responseData);
+    }
 }
