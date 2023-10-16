@@ -94,6 +94,7 @@ Content-Type: application/json
     "code":"123",
     "representor":"abc",
     "taxCode":"546657",
+    "phone":"0892626312",
     "address":"thu duc",
     "activeTime":"21h"
 }
