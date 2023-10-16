@@ -10,6 +10,7 @@ import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.PostFindRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
 import com.chatapp.dto.request.SurveySaveRequestDTO;
+import com.chatapp.dto.response.CommentResponeseDTO;
 import com.chatapp.dto.response.NormalPostResponseDTO;
 import com.chatapp.dto.response.RecruitmentPostResponseDTO;
 
@@ -36,4 +37,7 @@ public interface PostService {
 
     //find
     List<BaseDTO> findPostByName(PostFindRequestDTO postFindRequestDTO);
+
+    //find comments
+    List<CommentResponeseDTO> findCommentByPostId(Long postId);
 }

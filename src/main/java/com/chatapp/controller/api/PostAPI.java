@@ -15,6 +15,7 @@ import com.chatapp.dto.request.LikeRequestDTO;
 import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
 import com.chatapp.dto.request.SurveySaveRequestDTO;
+import com.chatapp.dto.response.CommentResponeseDTO;
 import com.chatapp.dto.response.NormalPostResponseDTO;
 import com.chatapp.dto.response.PostInfoResponseDTO;
 import com.chatapp.dto.response.RecruitmentPostResponseDTO;
@@ -85,4 +86,11 @@ public class PostAPI {
         ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK,"success",null);
         return ResponseEntity.ok(responseData);
     }
+
+    // //recruitmentPost api
+    // @GetMapping({ "posts/{id}/comments", "posts/{id}/comments" })
+    // public ResponseEntity<ResponseData<List<CommentResponeseDTO>>> getComments(@PathVariable Long id) {
+    //     ResponseData<List<CommentResponeseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success", postService.findCommentByPostId(id));
+    //     return ResponseEntity.ok(responseData);
+    // }
 }

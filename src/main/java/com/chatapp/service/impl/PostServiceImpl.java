@@ -11,6 +11,7 @@ import com.chatapp.converter.request.LikeRequestConverter;
 import com.chatapp.converter.request.NormalPostUpdateOrSaveRequestConverter;
 import com.chatapp.converter.request.RecruitmentPosyUpdateOrSaveRequestConverter;
 import com.chatapp.converter.request.SurveySaveRequestConverter;
+import com.chatapp.converter.response.CommentResponseConverter;
 import com.chatapp.converter.response.NormalPostResponseConverter;
 import com.chatapp.converter.response.PostInfoResponseConverter;
 import com.chatapp.converter.response.RecruitmentPostResponseConverter;
@@ -23,6 +24,7 @@ import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.PostFindRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
 import com.chatapp.dto.request.SurveySaveRequestDTO;
+import com.chatapp.dto.response.CommentResponeseDTO;
 import com.chatapp.dto.response.NormalPostResponseDTO;
 import com.chatapp.dto.response.PostInfoResponseDTO;
 import com.chatapp.dto.response.RecruitmentPostResponseDTO;
@@ -73,6 +75,8 @@ public class PostServiceImpl implements PostService {
     private RecruitmentPostResponseConverter recruitmentPostResponeConverter;
     @Autowired
     private SurveyResponeConverter surveyResponeConverter;
+    @Autowired
+    private CommentResponseConverter commentResponseConverter;
 
     @Autowired
     private NormalPostUpdateOrSaveRequestConverter normalPostUpdateOrSaveRequestConverter;
@@ -250,6 +254,13 @@ public class PostServiceImpl implements PostService {
             dtos.addAll(surveyResponeDTOs);
         }
         return dtos;
+    }
+
+    @Override
+    public List<CommentResponeseDTO> findCommentByPostId(Long postId) {
+        PostEntity postEntity = postRepository.findOneById(postId);
+        List<CommentResponeseDTO> commentResponeseDTOs = commentResponseConverter.toDTOGroup(postEntity.getComments());
+        return commentResponeseDTOs;
     }
 
 }
