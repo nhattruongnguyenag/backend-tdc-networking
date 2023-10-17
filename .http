@@ -255,7 +255,7 @@ Content-Type: application/json
     "postId":1,
     "userId":1,
     "content":"hay qua",
-    "parentCommentId": 1
+    "parentCommentId": 0
 }
 
 ###

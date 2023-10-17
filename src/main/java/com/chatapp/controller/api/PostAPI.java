@@ -28,7 +28,7 @@ public class PostAPI {
 
     @GetMapping({"posts", "posts/"})
     public ResponseEntity<ResponseData<List<BaseDTO>>> findAll() {
-        ResponseData<List<BaseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success", postService.findAllByRoleCode("Khoa"));
+        ResponseData<List<BaseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success", postService.findAll());
         return ResponseEntity.ok(responseData);
     }
 
