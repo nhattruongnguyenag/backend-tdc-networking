@@ -13,7 +13,7 @@ import com.chatapp.dto.response.CommentResponeseDTO;
 import com.chatapp.service.PostService;
 
 @RestController
-public class CommentSocketController {
+public class PostSocketController {
 
     @Autowired
     private PostService postService;
