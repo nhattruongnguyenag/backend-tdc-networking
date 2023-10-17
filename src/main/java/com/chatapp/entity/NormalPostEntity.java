@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "normal_posts")
 public class NormalPostEntity extends BaseEntity {
 
-    @Column(name = "content", nullable = false, length = 1024)
+    @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     private String content;
 
     @OneToOne

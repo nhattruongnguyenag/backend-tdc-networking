@@ -7,12 +7,14 @@ import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.chatapp.dto.request.UserFollowRequestDTO;
 import com.chatapp.dto.request.UserInfoFindRequestDTO;
 import com.chatapp.dto.response.UserFindResponseDTO;
 import com.chatapp.service.UserService;
 
+@RestController
 public class SearchSocketController {
 
     @Autowired

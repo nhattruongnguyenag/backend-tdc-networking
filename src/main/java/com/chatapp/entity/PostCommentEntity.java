@@ -9,7 +9,7 @@ import java.util.List;
 @Table(name = "posts_comments")
 public class PostCommentEntity extends BaseEntity {
 
-    @Column(name = "content", nullable = false, length = 1024)
+    @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     private String content;
 
     @ManyToOne

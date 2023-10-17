@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 @Table(name = "notifications")
 public class NotificationEntity extends BaseEntity {
 
-    @Column(name = "content", nullable = false, length = 1024)
+    @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     private String content;
 
     @Column(name = "status", nullable = false)

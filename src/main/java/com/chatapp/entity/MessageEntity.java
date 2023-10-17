@@ -8,7 +8,7 @@ import java.util.List;
 @Entity
 @Table(name = "messages")
 public class MessageEntity extends BaseEntity {
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false, columnDefinition = "TEXT")
     private String content;
 
     @Column(nullable = false, updatable = false)

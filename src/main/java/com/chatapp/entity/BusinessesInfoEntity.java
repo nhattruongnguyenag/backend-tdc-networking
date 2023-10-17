@@ -16,7 +16,7 @@ public class BusinessesInfoEntity extends BaseEntity {
     @Column(name = "phone", nullable = false)
     private String phone;
 
-    @Column(name = "address", nullable = false, length = 1024)
+    @Column(name = "address", nullable = false, columnDefinition = "TEXT")
     private String address;
 
     @Column(name = "active_time", nullable = false)
