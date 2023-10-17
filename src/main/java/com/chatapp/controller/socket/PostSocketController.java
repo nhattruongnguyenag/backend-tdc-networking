@@ -24,7 +24,7 @@ public class PostSocketController {
         return postService.findAllByRoleCode(code);
     }
 
-    @MessageMapping({"/posts/{code}/{postId}/like", "/posts/{code}/{postId}/like/"})
+    @MessageMapping({"/posts/{code}/like", "/posts/{code}/like/"})
     @SendTo({"/topic/posts/{code}", "/topic/posts/{code}"})
     public List<BaseDTO> saveMessage(@RequestBody LikeRequestDTO likeRequestDTO) {
         postService.likePost(likeRequestDTO);
