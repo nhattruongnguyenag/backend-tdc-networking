@@ -79,6 +79,7 @@ public class RecruitmentPostResponseConverter extends BaseConverter<RecruitmentP
             comments.add(commentResponeseDTO);
         }
         recruitmentPostResponseDTO.setComment(comments);
+        recruitmentPostResponseDTO.setCommentQuantity(Long.valueOf(comments.size()));
         return recruitmentPostResponseDTO;
     }
 }

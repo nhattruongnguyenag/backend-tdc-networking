@@ -78,6 +78,7 @@ public class NormalPostResponseConverter extends BaseConverter<NormalPostEntity,
             comments.add(commentResponeseDTO);
         }
         normalPostResponeDTO.setComment(comments);
+        normalPostResponeDTO.setCommentQuantity(Long.valueOf(comments.size()));
         return normalPostResponeDTO;
     }
 }

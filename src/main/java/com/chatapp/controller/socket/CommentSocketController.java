@@ -8,6 +8,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 
+import com.chatapp.dto.request.CommentDeleteRequestDTO;
 import com.chatapp.dto.request.CommentSaveRequestDTO;
 import com.chatapp.dto.response.CommentResponeseDTO;
 import com.chatapp.service.PostService;
@@ -23,6 +24,13 @@ public class CommentSocketController {
     public List<CommentResponeseDTO> saveComment(@RequestBody CommentSaveRequestDTO commentSaveRequestDTO) {
         postService.commentPost(commentSaveRequestDTO);
         return postService.findCommentByPostId(commentSaveRequestDTO.getPostId());
+    }
+
+    @MessageMapping({"/posts/{postId}/comments/delete", "/posts/{postId}/comments/delete"})
+    @SendTo({"/topic/posts/{postId}", "/topic/posts/{postId}"})
+    public List<CommentResponeseDTO> deleteComment(@RequestBody CommentDeleteRequestDTO commentDeleteRequestDTO) {
+        postService.deleteComment(commentDeleteRequestDTO);
+        return postService.findCommentByPostId(commentDeleteRequestDTO.getPostId());
     }
 
     @MessageMapping({"/posts/{postId}/comments/listen", "/posts/{postId}/comments/listen/"})
