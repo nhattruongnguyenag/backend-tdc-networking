@@ -17,7 +17,6 @@ import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
 import com.chatapp.dto.request.SurveySaveRequestDTO;
 import com.chatapp.dto.response.CommentResponeseDTO;
 import com.chatapp.dto.response.NormalPostResponseDTO;
-import com.chatapp.dto.response.PostInfoResponseDTO;
 import com.chatapp.dto.response.RecruitmentPostResponseDTO;
 import com.chatapp.service.PostService;
 

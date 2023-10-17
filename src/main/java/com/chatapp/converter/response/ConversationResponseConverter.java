@@ -5,8 +5,6 @@ import com.chatapp.converter.abstracts.BaseConverter;
 import com.chatapp.dto.response.ConversationResponseDTO;
 import com.chatapp.entity.ConversationEntity;
 import com.chatapp.entity.MessageEntity;
-import com.chatapp.repository.MessageRepository;
-import com.chatapp.util.DateTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,10 +14,7 @@ import java.util.stream.Collectors;
 public class ConversationResponseConverter extends BaseConverter<ConversationEntity, ConversationResponseDTO> {
     @Autowired
     private UserInfoResponseConverter userInfoResponseConverter;
-    @Autowired
-    private MessageRepository messageRepository;
-    @Autowired
-    private MessageResponseConverter messageConverter;
+
 
     @Override
     public ConversationResponseDTO toDTO(ConversationEntity conversationEntity) {

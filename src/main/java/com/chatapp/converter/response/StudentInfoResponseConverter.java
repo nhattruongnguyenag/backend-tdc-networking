@@ -2,7 +2,6 @@ package com.chatapp.converter.response;
 
 import com.chatapp.converter.abstracts.BaseConverter;
 import com.chatapp.dto.response.StudentInfoResponseDTO;
-import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.entity.StudentInfoEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.repository.UserRepository;

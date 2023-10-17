@@ -38,7 +38,6 @@ import com.chatapp.repository.NormalPostRepository;
 import com.chatapp.repository.PostCommentRepository;
 import com.chatapp.repository.PostLikeRepository;
 import com.chatapp.repository.PostRepository;
-import com.chatapp.repository.QuestionRepository;
 import com.chatapp.repository.RecruitmentPostRepository;
 import com.chatapp.repository.SurveyPostRepository;
 import com.chatapp.repository.UserRepository;
@@ -58,8 +57,6 @@ public class PostServiceImpl implements PostService {
     private NormalPostRepository normalPostRepository;
     @Autowired
     private RecruitmentPostRepository recruitmentPostRepository;
-    @Autowired
-    private QuestionRepository questionRepository;
     @Autowired
     private SurveyPostRepository surveyPostRepository;
     @Autowired

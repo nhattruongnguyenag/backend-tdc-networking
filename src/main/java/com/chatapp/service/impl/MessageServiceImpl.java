@@ -9,15 +9,12 @@ import com.chatapp.entity.ConversationEntity;
 import com.chatapp.entity.MessageEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.repository.*;
-import com.chatapp.service.ConversationService;
 import com.chatapp.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -35,8 +32,7 @@ public class MessageServiceImpl implements MessageService {
     private CustomizedConversationRepository customizedConversationRepository;
     @Autowired
     private ConversationRepository conversationRepository;
-    @Autowired
-    private ConversationService conversationService;
+
 
     @Override
     public List<MessageResponseDTO> findBySenderAndReceiver(Long senderId, Long receiverId) {

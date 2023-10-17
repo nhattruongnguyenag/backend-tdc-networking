@@ -1,6 +1,5 @@
 package com.chatapp.repository.impl;
 
-import com.chatapp.entity.ConversationEntity;
 import com.chatapp.entity.MessageEntity;
 import com.chatapp.repository.CustomizedMessageRepository;
 import jakarta.persistence.EntityManager;

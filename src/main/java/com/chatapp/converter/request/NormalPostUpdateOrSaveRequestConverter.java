@@ -5,7 +5,6 @@ import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
 import com.chatapp.entity.NormalPostEntity;
 import com.chatapp.entity.PostEntity;
 import com.chatapp.entity.PostImageEntity;
-import com.chatapp.entity.SurveyPostEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.repository.NormalPostRepository;
 import com.chatapp.repository.PostRepository;

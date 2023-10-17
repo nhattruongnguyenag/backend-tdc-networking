@@ -15,10 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.core.io.Resource;
 
 import com.chatapp.constant.SystemConstant;
-import com.chatapp.enums.FileType;
 import com.chatapp.exception.DuplicateUsernameException;
 import com.chatapp.service.FileUploadService;
 import com.chatapp.util.EncryptUtils;

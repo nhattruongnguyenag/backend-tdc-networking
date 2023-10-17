@@ -6,7 +6,6 @@ import com.chatapp.entity.UserEntity;
 import com.chatapp.repository.DeviceTokenRepository;
 import com.chatapp.repository.UserRepository;
 import com.chatapp.service.DeviceTokenService;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

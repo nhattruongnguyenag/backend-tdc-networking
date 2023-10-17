@@ -27,7 +27,7 @@ public class CommentSocketController {
 
     @MessageMapping({"/posts/{postId}/comments/listen", "/posts/{postId}/comments/listen/"})
     @SendTo({"/topic/posts/{postId}", "/topic/posts/{postId}"})
-    public List<CommentResponeseDTO> getMessages(@DestinationVariable("postId") Long postId){;
+    public List<CommentResponeseDTO> getMessages(@DestinationVariable("postId") Long postId){
         return postService.findCommentByPostId(postId);
     }
 }
