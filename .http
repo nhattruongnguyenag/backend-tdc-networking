@@ -189,7 +189,13 @@ Content-Type: application/json
 GET http://127.0.0.1:8080/api/notifications HTTP/1.1
 
 ###
-GET http://127.0.0.1:8080/api/notifications/user/3 HTTP/1.1
+POST http://127.0.0.1:8080/api/notifications/user HTTP/1.1
+Content-Type: application/json
+
+{
+    "id": 3
+}
+
 
 ###
 POST http://127.0.0.1:8080/api/notifications HTTP/1.1

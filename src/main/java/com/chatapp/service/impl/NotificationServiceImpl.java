@@ -7,6 +7,7 @@ import com.chatapp.converter.request.NotificationChangeStatusRequestConverter;
 import com.chatapp.converter.request.NotificationDeleteRequestConverter;
 import com.chatapp.converter.request.NotificationSaveRequestConverter;
 import com.chatapp.converter.response.NotificationResponseConverter;
+import com.chatapp.dto.request.NotificationByUserRequestDTO;
 import com.chatapp.dto.request.NotificationChangeStatusRequestDTO;
 import com.chatapp.dto.request.NotificationDeleteRequestDTO;
 import com.chatapp.dto.request.NotificationSaveRequestDTO;
@@ -42,11 +43,11 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public List<NotificationResponseDTO> findById(Long id) {
-        if (userRepository.findOneById(id) == null) {
+    public List<NotificationResponseDTO> findById(NotificationByUserRequestDTO notificationByUserRequestDTO) {
+        if (userRepository.findOneById(notificationByUserRequestDTO.getId()) == null) {
             throw new DuplicateUsernameException("user_not_exists");
         }
-        return notificationResponseConverter.toDTOGroup(notificationRepository.findByUser_Id(id));
+        return notificationResponseConverter.toDTOGroup(notificationRepository.findByUser_Id(notificationByUserRequestDTO.getId()));
     }
 
     @Override

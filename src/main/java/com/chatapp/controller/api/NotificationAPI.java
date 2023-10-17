@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.chatapp.commond.ResponseData;
 import com.chatapp.converter.request.NotificationChangeAllStatusByUserIdRequest;
+import com.chatapp.dto.request.NotificationByUserRequestDTO;
 import com.chatapp.dto.request.NotificationChangeStatusRequestDTO;
 import com.chatapp.dto.request.NotificationDeleteRequestDTO;
 import com.chatapp.dto.request.NotificationSaveRequestDTO;
@@ -27,9 +28,9 @@ public class NotificationAPI {
         return ResponseEntity.ok(responseData);
     }
 
-    @GetMapping({"notifications/user/{id}", "notifications/user/{id}/"})
-    public ResponseEntity<ResponseData<List<NotificationResponseDTO>>> findByUserId(@PathVariable("id") Long id) {
-        ResponseData<List<NotificationResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",notificationService.findById(id));
+    @PostMapping({"notifications/user", "notifications/user/"})
+    public ResponseEntity<ResponseData<List<NotificationResponseDTO>>> findByUserId(@RequestBody NotificationByUserRequestDTO notificationByUserRequestDTO) {
+        ResponseData<List<NotificationResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",notificationService.findById(notificationByUserRequestDTO));
         return ResponseEntity.ok(responseData);
     }
 
