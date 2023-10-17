@@ -260,4 +260,29 @@ public class PostServiceImpl implements PostService {
         return commentResponeseDTOs;
     }
 
+    @Override
+    public List<BaseDTO> findAllByRoleCode(String code) {
+        List<BaseDTO> dtos = new ArrayList<>();
+        List<PostInfoResponseDTO> responseDTOs = postInfoResponeConverter
+                .toDTOGroup(postRepository.findAllByUser_Roles_CodeOrderByUpdatedAtDesc(code));
+        for (int i = 0; i < responseDTOs.size(); i++) {
+            BaseDTO dto = null;
+            if (responseDTOs.get(i).getType().equals(PostType.NORMAL.getName())) {
+                NormalPostResponseDTO normalPostResponseDTO = normalPostResponeConverter
+                        .toDTO(normalPostRepository.findOneByPost_Id(responseDTOs.get(i).getId()));
+                dto = normalPostResponseDTO;
+            } else if (responseDTOs.get(i).getType().equals(PostType.RECRUIMENT.getName())) {
+                RecruitmentPostResponseDTO recruitmentPostResponseDTO = recruitmentPostResponeConverter
+                        .toDTO(recruitmentPostRepository.findOneByPost_Id(responseDTOs.get(i).getId()));
+                dto = recruitmentPostResponseDTO;
+            } else if (responseDTOs.get(i).getType().equals(PostType.SURVEY.getName())) {
+                SurveyResponeDTO surveyResponeDTO = surveyResponeConverter
+                        .toDTO(surveyPostRepository.findOneByPost_Id(responseDTOs.get(i).getId()));
+                dto = surveyResponeDTO;
+            }
+            dtos.add(dto);
+        }
+        return dtos;
+    }
+
 }

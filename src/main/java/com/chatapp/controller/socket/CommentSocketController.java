@@ -20,16 +20,14 @@ public class CommentSocketController {
 
     @MessageMapping({"/posts/{postId}/comments", "/posts/{postId}/comments/"})
     @SendTo({"/topic/posts/{postId}", "/topic/posts/{postId}"})
-    public List<CommentResponeseDTO> saveMessage(@RequestBody CommentSaveRequestDTO commentSaveRequestDTO) {
+    public List<CommentResponeseDTO> saveComment(@RequestBody CommentSaveRequestDTO commentSaveRequestDTO) {
         postService.commentPost(commentSaveRequestDTO);
         return postService.findCommentByPostId(commentSaveRequestDTO.getPostId());
     }
 
     @MessageMapping({"/posts/{postId}/comments/listen", "/posts/{postId}/comments/listen/"})
     @SendTo({"/topic/posts/{postId}", "/topic/posts/{postId}"})
-    public List<CommentResponeseDTO> getMessages(@DestinationVariable("postId") Long postId){
+    public List<CommentResponeseDTO> getComments(@DestinationVariable("postId") Long postId){
         return postService.findCommentByPostId(postId);
-    }
-
-    
+    } 
 }

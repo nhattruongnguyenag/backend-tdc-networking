@@ -12,4 +12,5 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
     PostEntity findOneById(Long id);
     List<PostEntity> findAllByOrderByUpdatedAtAsc();
     List<PostEntity> findAllByOrderByUpdatedAtDesc();
+    List<PostEntity> findAllByUser_Roles_CodeOrderByUpdatedAtDesc(String code);
 }
