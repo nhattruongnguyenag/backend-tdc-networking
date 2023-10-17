@@ -451,6 +451,7 @@ public class UserServiceImpl implements UserService {
         List<UserFindResponseDTO> userFindResponseDTOs = userFindResponseConverter
                 .toDTOGroup(userRepository.findAllByNameContainsAndRoles_Code(userInfoFindRequestDTO.getName(),
                         userInfoFindRequestDTO.getType()));
+        userFindResponseDTOs.remove(userFindResponseConverter.toDTO(userRepository.findOneById(userInfoFindRequestDTO.getUserId())));
         for (UserFindResponseDTO userFindResponseDTO : userFindResponseDTOs) {
             // set follow
             UserEntity entity = userRepository.findOneById(userInfoFindRequestDTO.getUserId());

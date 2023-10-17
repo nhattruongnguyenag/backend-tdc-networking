@@ -275,7 +275,7 @@ Content-Type: application/json
 {
     "userId":1,
     "type":"khoa",
-    "name":"Công"
+    "name":"Điện"
 }
 
 ###
