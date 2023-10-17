@@ -451,9 +451,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserFindResponseDTO> findUserByName(UserInfoFindRequestDTO userInfoFindRequestDTO) {
-        List<UserFindResponseDTO> result = new ArrayList<UserFindResponseDTO>();
         List<UserFindResponseDTO> userFindResponseDTOs = userFindResponseConverter
-                .toDTOGroup(userRepository.findAllByNameContains(userInfoFindRequestDTO.getName()));
+                .toDTOGroup(userRepository.findAllByNameContainsAndRoles_Code(userInfoFindRequestDTO.getName(),
+                        userInfoFindRequestDTO.getType()));
         for (UserFindResponseDTO userFindResponseDTO : userFindResponseDTOs) {
             // set follow
             UserEntity entity = userRepository.findOneById(userInfoFindRequestDTO.getUserId());
@@ -465,19 +465,11 @@ public class UserServiceImpl implements UserService {
                     }
                     userFindResponseDTO.setIsFollow(false);
                 }
-            }else{
+            } else {
                 userFindResponseDTO.setIsFollow(false);
             }
-
-            UserEntity userEntity = userRepository.findOneById(userFindResponseDTO.getId());
-            UserInfoResponseDTO userInfoResponseDTO = userInfoResponseConverter.toDTO(userEntity);
-            if (userInfoResponseDTO.getRoleCodes().equals(userInfoFindRequestDTO.getType())) {
-                if (userFindResponseDTO.getId() != userInfoFindRequestDTO.getUserId()) {
-                    result.add(userFindResponseDTO);
-                }
-            }
         }
-        return result;
+        return userFindResponseDTOs;
     }
 
     @Override
