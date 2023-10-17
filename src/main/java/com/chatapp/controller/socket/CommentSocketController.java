@@ -13,7 +13,7 @@ import com.chatapp.dto.response.CommentResponeseDTO;
 import com.chatapp.service.PostService;
 
 @RestController
-public class PostSocketController {
+public class CommentSocketController {
 
     @Autowired
     private PostService postService;
@@ -30,4 +30,6 @@ public class PostSocketController {
     public List<CommentResponeseDTO> getMessages(@DestinationVariable("postId") Long postId){
         return postService.findCommentByPostId(postId);
     }
+
+    
 }
