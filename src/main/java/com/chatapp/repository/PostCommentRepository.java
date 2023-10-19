@@ -9,4 +9,5 @@ import com.chatapp.entity.PostCommentEntity;
 public interface PostCommentRepository extends JpaRepository<PostCommentEntity, Long> {
     PostCommentEntity findOneById(Long id);
     PostCommentEntity findByIdAndUser_IdAndPost_Id(Long id,Long userId , Long postId);
+    PostCommentEntity findOneByParentComment_Id(Long parentId);
 }

@@ -26,7 +26,7 @@ public class CommentSaveRequestConverter extends BaseConverter<PostCommentEntity
         postCommentEntity.setUser(userRepository.findOneById(dto.getUserId()));
         postCommentEntity.setPost(postRepository.findOneById(dto.getPostId()));
         if(dto.getParentCommentId() != 0){
-            postCommentEntity.setPostComment(postCommentRepository.findOneById(dto.getParentCommentId()));
+            postCommentEntity.setParentComment(postCommentRepository.findOneById(dto.getParentCommentId()));
         }
         return postCommentEntity;
     }
