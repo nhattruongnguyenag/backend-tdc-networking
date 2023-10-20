@@ -29,7 +29,7 @@ public class CommentResponseConverter extends BaseConverter<PostCommentEntity,Co
         if(entity.getParentComment() != null){
             ParentCommentResponseDTO parentCommentResponseDTO = new ParentCommentResponseDTO();
             parentCommentResponseDTO.setParentId(entity.getParentComment().getId());
-            parentCommentResponseDTO.setName(postCommentRepository.findOneByParentComment_Id(entity.getParentComment().getId()).getUser().getName());
+            parentCommentResponseDTO.setName(postCommentRepository.findOneById(entity.getParentComment().getId()).getUser().getName());
             commentResponeseDTO.setParent(parentCommentResponseDTO);
         }
         else{
