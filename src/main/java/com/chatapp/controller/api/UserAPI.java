@@ -6,6 +6,7 @@ import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.BaseDTO;
 import com.chatapp.dto.UserDTO;
 import com.chatapp.dto.request.UserFollowRequestDTO;
+import com.chatapp.dto.request.UserGetRequestDTO;
 import com.chatapp.dto.request.UserLoginRequestDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.service.UserService;
@@ -29,6 +30,12 @@ public class UserAPI {
     @GetMapping({ "users", "users/" })
     public ResponseEntity<ResponseData<List<UserInfoResponseDTO>>> findAll() {
         ResponseData<List<UserInfoResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",userService.findAll());
+        return ResponseEntity.ok(responseData);
+    }
+
+    @PostMapping({ "users/by", "users/by/" })
+    public ResponseEntity<ResponseData<UserInfoResponseDTO>> findById(@RequestBody UserGetRequestDTO userGetRequestDTO) {
+        ResponseData<UserInfoResponseDTO> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",userService.getUserById(userGetRequestDTO));
         return ResponseEntity.ok(responseData);
     }
 

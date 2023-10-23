@@ -13,10 +13,14 @@ public class PostInfoResponseConverter extends BaseConverter<PostEntity,PostInfo
     @Autowired
     private UserInfoResponseConverter userInfoResponseConverter;
 
+    @Autowired
+    private GroupResponseConverter groupResponseConverter;
+
     @Override
     public PostInfoResponseDTO toDTO(PostEntity entity) {
         PostInfoResponseDTO postInfoResponeDTO = super.toDTO(entity);
         postInfoResponeDTO.setUser(userInfoResponseConverter.toDTO(entity.getUser()));
+        postInfoResponeDTO.setGroup(groupResponseConverter.toDTO(entity.getGroup()));
         return postInfoResponeDTO;
     }
     

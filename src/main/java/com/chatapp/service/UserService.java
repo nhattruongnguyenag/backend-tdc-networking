@@ -10,6 +10,7 @@ import com.chatapp.dto.request.FacultyInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.StudentInfoRegisterRequestDTO;
 import com.chatapp.dto.request.StudentInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.UserFollowRequestDTO;
+import com.chatapp.dto.request.UserGetRequestDTO;
 import com.chatapp.dto.request.UserInfoFindRequestDTO;
 import com.chatapp.dto.request.UserLoginRequestDTO;
 import com.chatapp.dto.response.BusinessInfoResponseDTO;
@@ -38,6 +39,7 @@ public interface UserService {
     AuthTokenDTO login(UserLoginRequestDTO userDTORequest);
     BaseDTO getUserFromToken(String token);
     UserInfoResponseDTO getUserByEmail(String email);
+    UserInfoResponseDTO getUserById(UserGetRequestDTO userGetRequestDTO);
 
     //student service
     AuthTokenDTO studentRegister(StudentInfoRegisterRequestDTO studentRegisterDTO);

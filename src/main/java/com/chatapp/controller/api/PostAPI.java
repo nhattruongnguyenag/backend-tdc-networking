@@ -18,6 +18,7 @@ import com.chatapp.dto.request.SurveySaveRequestDTO;
 import com.chatapp.dto.response.CommentResponeseDTO;
 import com.chatapp.dto.response.NormalPostResponseDTO;
 import com.chatapp.dto.response.RecruitmentPostResponseDTO;
+import com.chatapp.dto.response.SurveyResponeDTO;
 import com.chatapp.service.PostService;
 
 @RestController
@@ -63,6 +64,12 @@ public class PostAPI {
         postService.saveSurvey(surveySaveRequestDTO);
         ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED,"success",null);
         return ResponseEntity.created(null).body(responseData);
+    }
+
+    @GetMapping({ "posts/survey/{postId}", "posts/survey/{postId}/" })
+    ResponseEntity<ResponseData<SurveyResponeDTO>> getSurveyByPostId(@PathVariable Long postId) {
+        ResponseData<SurveyResponeDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"success",postService.getSurveyDetailByPostId(postId));
+        return ResponseEntity.ok(responseData);
     }
 
     @PostMapping({ "posts/like", "posts/like/" })

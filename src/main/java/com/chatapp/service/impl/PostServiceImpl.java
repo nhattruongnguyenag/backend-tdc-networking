@@ -285,4 +285,11 @@ public class PostServiceImpl implements PostService {
         return dtos;
     }
 
+    @Override
+    public SurveyResponeDTO getSurveyDetailByPostId(Long postId) {
+        SurveyResponeDTO surveyResponeDTO = surveyResponeConverter
+                .toDTO(surveyPostRepository.findOneByPost_Id(postId));
+        return surveyResponeDTO;
+    }
+
 }

@@ -13,6 +13,7 @@ import com.chatapp.dto.request.SurveySaveRequestDTO;
 import com.chatapp.dto.response.CommentResponeseDTO;
 import com.chatapp.dto.response.NormalPostResponseDTO;
 import com.chatapp.dto.response.RecruitmentPostResponseDTO;
+import com.chatapp.dto.response.SurveyResponeDTO;
 
 public interface PostService {
     List<BaseDTO> findAll();
@@ -27,6 +28,7 @@ public interface PostService {
 
     //save survey
     String saveSurvey(SurveySaveRequestDTO saveRequestDTO);
+    SurveyResponeDTO getSurveyDetailByPostId(Long postId);
 
     //post like
     String likePost(LikeRequestDTO likeRequestDTO);

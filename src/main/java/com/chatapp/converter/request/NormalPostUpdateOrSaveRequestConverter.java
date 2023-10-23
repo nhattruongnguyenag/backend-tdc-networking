@@ -2,10 +2,12 @@ package com.chatapp.converter.request;
 
 import com.chatapp.converter.abstracts.BaseConverter;
 import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
+import com.chatapp.entity.GroupEntity;
 import com.chatapp.entity.NormalPostEntity;
 import com.chatapp.entity.PostEntity;
 import com.chatapp.entity.PostImageEntity;
 import com.chatapp.entity.UserEntity;
+import com.chatapp.repository.GroupRepository;
 import com.chatapp.repository.NormalPostRepository;
 import com.chatapp.repository.PostRepository;
 import com.chatapp.repository.UserRepository;
@@ -25,11 +27,15 @@ public class NormalPostUpdateOrSaveRequestConverter
     @Autowired
     private UserRepository userRepository;
     @Autowired
+    private GroupRepository groupRepository;
+    @Autowired
     private NormalPostRepository normalPostRepository;
 
     public PostEntity toUpdatEntity(NormalPostUpdateOrSaveRequestDTO dto) {
         PostEntity postEntity = postRepository.findOneById(dto.getId());
         UserEntity userEntity = userRepository.findOneById(dto.getUserId());
+        GroupEntity groupEntity = groupRepository.findOneById(dto.getGroupId());
+        postEntity.setGroup(groupEntity);
         postEntity.setUser(userEntity);
         postEntity.setId(dto.getId());
         postEntity.setType(dto.getType());
@@ -43,7 +49,9 @@ public class NormalPostUpdateOrSaveRequestConverter
     @Override
     public PostEntity toEntity(NormalPostUpdateOrSaveRequestDTO dto) {
         UserEntity userEntity = userRepository.findOneById(dto.getUserId());
+        GroupEntity groupEntity = groupRepository.findOneById(dto.getGroupId());
         PostEntity postEntity = new PostEntity();
+        postEntity.setGroup(groupEntity);
         postEntity.setUser(userEntity);
         List<PostImageEntity> postImageEntityList = new ArrayList<>();
         for (String image : dto.getImages()) {
