@@ -9,6 +9,7 @@ import com.chatapp.dto.request.LikeRequestDTO;
 import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.PostFindRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
+import com.chatapp.dto.request.SurveyAnswerRequestDTO;
 import com.chatapp.dto.request.SurveySaveRequestDTO;
 import com.chatapp.dto.response.CommentResponeseDTO;
 import com.chatapp.dto.response.NormalPostResponseDTO;
@@ -29,6 +30,7 @@ public interface PostService {
     //save survey
     String saveSurvey(SurveySaveRequestDTO saveRequestDTO);
     SurveyResponeDTO getSurveyDetailByPostId(Long postId);
+    String answerSurvey(SurveyAnswerRequestDTO surveyAnswerRequestDTO);
 
     //post like
     String likePost(LikeRequestDTO likeRequestDTO);

@@ -17,12 +17,14 @@ import com.chatapp.converter.response.PostInfoResponseConverter;
 import com.chatapp.converter.response.RecruitmentPostResponseConverter;
 import com.chatapp.converter.response.SurveyResponeConverter;
 import com.chatapp.dto.BaseDTO;
+import com.chatapp.dto.request.AnswerRequestDTO;
 import com.chatapp.dto.request.CommentDeleteRequestDTO;
 import com.chatapp.dto.request.CommentSaveRequestDTO;
 import com.chatapp.dto.request.LikeRequestDTO;
 import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.PostFindRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
+import com.chatapp.dto.request.SurveyAnswerRequestDTO;
 import com.chatapp.dto.request.SurveySaveRequestDTO;
 import com.chatapp.dto.response.CommentResponeseDTO;
 import com.chatapp.dto.response.NormalPostResponseDTO;
@@ -32,15 +34,23 @@ import com.chatapp.dto.response.SurveyResponeDTO;
 import com.chatapp.entity.PostCommentEntity;
 import com.chatapp.entity.PostEntity;
 import com.chatapp.entity.PostLikeEntity;
+import com.chatapp.entity.QuestionEntity;
+import com.chatapp.entity.ShortAnswerEntity;
+import com.chatapp.entity.UserEntity;
+import com.chatapp.entity.VoteAnswerEntity;
 import com.chatapp.enums.PostType;
+import com.chatapp.enums.QuestionType;
 import com.chatapp.exception.DuplicateUsernameException;
 import com.chatapp.repository.NormalPostRepository;
 import com.chatapp.repository.PostCommentRepository;
 import com.chatapp.repository.PostLikeRepository;
 import com.chatapp.repository.PostRepository;
+import com.chatapp.repository.QuestionRepository;
 import com.chatapp.repository.RecruitmentPostRepository;
+import com.chatapp.repository.ShortAnswerRepository;
 import com.chatapp.repository.SurveyPostRepository;
 import com.chatapp.repository.UserRepository;
+import com.chatapp.repository.VoteAnswerRepository;
 import com.chatapp.service.PostService;
 
 import jakarta.transaction.Transactional;
@@ -62,7 +72,13 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private PostLikeRepository postLikeRepository;
     @Autowired
+    private ShortAnswerRepository shortAnswerRepository;
+    @Autowired
     private PostCommentRepository postCommentRepository;
+    @Autowired
+    private QuestionRepository questionRepository;
+    @Autowired
+    private VoteAnswerRepository voteAnswerRepository;
 
     @Autowired
     private PostInfoResponseConverter postInfoResponeConverter;
@@ -290,6 +306,30 @@ public class PostServiceImpl implements PostService {
         SurveyResponeDTO surveyResponeDTO = surveyResponeConverter
                 .toDTO(surveyPostRepository.findOneByPost_Id(postId));
         return surveyResponeDTO;
+    }
+
+    @Override
+    public String answerSurvey(SurveyAnswerRequestDTO surveyAnswerRequestDTO) {
+        UserEntity userEntity = userRepository.findOneById(surveyAnswerRequestDTO.getUser_id());
+        List<VoteAnswerEntity> voteAnswers = new ArrayList<>();
+        for (AnswerRequestDTO answerRequestDTO : surveyAnswerRequestDTO.getAnswers()) {
+            QuestionEntity questionEntity = questionRepository.findOneById(answerRequestDTO.getQuestion_id());
+            if (questionEntity.getType().equalsIgnoreCase(QuestionType.SHORT.getName())) {
+                ShortAnswerEntity shortAnswerEntity = new ShortAnswerEntity();
+                shortAnswerEntity.setUser(userEntity);
+                shortAnswerEntity.setContent(answerRequestDTO.getContent());
+                shortAnswerEntity.setQuestion(questionEntity);
+                shortAnswerRepository.save(shortAnswerEntity);
+            } else {
+                for (Long voteAnswerId : answerRequestDTO.getChoices_ids()) {
+                    VoteAnswerEntity voteAnswerEntity = voteAnswerRepository.findOneById(voteAnswerId);
+                    voteAnswers.add(voteAnswerEntity);
+                }
+                userEntity.setVoteAnswers(voteAnswers);
+                userRepository.save(userEntity);
+            }
+        }
+        return "";
     }
 
 }

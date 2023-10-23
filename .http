@@ -319,3 +319,28 @@ Content-Type: application/json
 
 ###
 GET http://127.0.0.1:8080/api/posts/survey/1 HTTP/1.1
+
+###
+POST http://127.0.0.1:8080/api/posts/survey/answer HTTP/1.1
+Content-Type: application/json
+
+{
+    "user_id": 2,
+    "answers": [
+        {
+            "question_id": 1,
+            "content": "1111111111",
+            "choices": []
+        },
+        {
+            "question_id": 3,
+            "content": "",
+            "choices_ids": [1]
+        },
+        {
+            "question_id": 4,
+            "content": "",
+            "choices_ids": [4,5]
+        }
+    ]
+}

@@ -73,6 +73,14 @@ public class UserEntity extends BaseEntity {
         return this.isTyping;
     }
 
+    public List<VoteAnswerEntity> getVoteAnswers() {
+        return this.voteAnswers;
+    }
+
+    public void setVoteAnswers(List<VoteAnswerEntity> voteAnswers) {
+        this.voteAnswers = voteAnswers;
+    }
+
     public void setIsTyping(Boolean isTyping) {
         this.isTyping = isTyping;
     }

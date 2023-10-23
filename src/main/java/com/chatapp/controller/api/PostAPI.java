@@ -14,6 +14,7 @@ import com.chatapp.dto.request.CommentSaveRequestDTO;
 import com.chatapp.dto.request.LikeRequestDTO;
 import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
+import com.chatapp.dto.request.SurveyAnswerRequestDTO;
 import com.chatapp.dto.request.SurveySaveRequestDTO;
 import com.chatapp.dto.response.CommentResponeseDTO;
 import com.chatapp.dto.response.NormalPostResponseDTO;
@@ -62,6 +63,13 @@ public class PostAPI {
     @PostMapping({ "posts/survey", "posts/survey/" })
     ResponseEntity<ResponseData<?>> surveySave(@RequestBody SurveySaveRequestDTO surveySaveRequestDTO) {
         postService.saveSurvey(surveySaveRequestDTO);
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED,"success",null);
+        return ResponseEntity.created(null).body(responseData);
+    }
+
+    @PostMapping({ "posts/survey/answer", "posts/survey/answer" })
+    ResponseEntity<ResponseData<?>> surveyAnswer(@RequestBody SurveyAnswerRequestDTO surveyAnswerRequestDTO) {
+        postService.answerSurvey(surveyAnswerRequestDTO);
         ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED,"success",null);
         return ResponseEntity.created(null).body(responseData);
     }
