@@ -67,7 +67,7 @@ public class PostAPI {
         return ResponseEntity.created(null).body(responseData);
     }
 
-    @PostMapping({ "posts/survey/answer", "posts/survey/answer" })
+    @PostMapping({ "posts/survey/conduct", "posts/survey/conduct/" })
     ResponseEntity<ResponseData<?>> surveyAnswer(@RequestBody SurveyAnswerRequestDTO surveyAnswerRequestDTO) {
         postService.answerSurvey(surveyAnswerRequestDTO);
         ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED,"success",null);
