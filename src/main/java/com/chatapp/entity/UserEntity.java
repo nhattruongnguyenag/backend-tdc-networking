@@ -52,6 +52,10 @@ public class UserEntity extends BaseEntity {
     private List<PostEntity> postSave = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_vote_answer", joinColumns = @JoinColumn(name = "user_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "vote_answer_id", nullable = false))
+    private List<VoteAnswerEntity> voteAnswers = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_group", joinColumns = @JoinColumn(name = "user_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "group_id", nullable = false))
     private List<GroupEntity> groups = new ArrayList<>();
 

@@ -7,5 +7,11 @@ import com.chatapp.entity.GroupEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GroupResponseConverter extends BaseConverter<GroupEntity,GroupResponseDTO>{    
+public class GroupResponseConverter extends BaseConverter<GroupEntity, GroupResponseDTO> {
+
+    @Override
+    public GroupResponseDTO toDTO(GroupEntity entity) {
+        GroupResponseDTO groupResponseDTO = super.toDTO(entity);
+        return groupResponseDTO;
+    }
 }

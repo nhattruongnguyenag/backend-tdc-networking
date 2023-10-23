@@ -32,6 +32,14 @@ public class GroupEntity extends BaseEntity {
         this.active = active;
     }
 
+    public String getImage() {
+        return this.image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public String getName() {
         return this.name;
     }
