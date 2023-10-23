@@ -51,11 +51,47 @@ public class UserEntity extends BaseEntity {
     @JoinTable(name = "user_save_posts", joinColumns = @JoinColumn(name = "user_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "post_id", nullable = false))
     private List<PostEntity> postSave = new ArrayList<>();
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_group", joinColumns = @JoinColumn(name = "user_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "group_id", nullable = false))
+    private List<GroupEntity> groups = new ArrayList<>();
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<PostEntity> posts = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ShortAnswerEntity> shortAnswers = new ArrayList<>();
+
+    public Boolean isIsTyping() {
+        return this.isTyping;
+    }
+
+    public Boolean getIsTyping() {
+        return this.isTyping;
+    }
+
+    public void setIsTyping(Boolean isTyping) {
+        this.isTyping = isTyping;
+    }
+
+    public Boolean isIsMessageConnect() {
+        return this.isMessageConnect;
+    }
+
+    public Boolean getIsMessageConnect() {
+        return this.isMessageConnect;
+    }
+
+    public void setIsMessageConnect(Boolean isMessageConnect) {
+        this.isMessageConnect = isMessageConnect;
+    }
+
+    public List<GroupEntity> getGroups() {
+        return this.groups;
+    }
+
+    public void setGroups(List<GroupEntity> groups) {
+        this.groups = groups;
+    }
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<PostCommentEntity> comments = new ArrayList<>();
