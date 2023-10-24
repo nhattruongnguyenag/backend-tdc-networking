@@ -54,6 +54,12 @@ public class PostAPI {
         return ResponseEntity.ok(responseData);
     }
 
+    @GetMapping({ "posts/recruitment/{postId}", "posts/recruitment/{postId}/" })
+    public ResponseEntity<ResponseData<RecruitmentPostResponseDTO>> getRecruimentPostByPostId(@PathVariable Long postId) {
+        ResponseData<RecruitmentPostResponseDTO> responseData = new ResponseData<>(HttpStatus.OK, "success", postService.getRecruimentDetailByPostId(postId));
+        return ResponseEntity.ok(responseData);
+    }
+
     @PostMapping({ "posts/recruitment", "posts/recruitment/" })
     ResponseEntity<ResponseData<String>> updateOrSave(@RequestBody RecruitmentPostUpdateOrSageRequestDTO recruitmentPostUpdateOrSageRequestDTO) {
         ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED,"add or update recruitment post success",postService.recruitmentPostUpdateOrSave(recruitmentPostUpdateOrSageRequestDTO));
@@ -76,7 +82,7 @@ public class PostAPI {
 
     @GetMapping({ "posts/survey/{postId}", "posts/survey/{postId}/" })
     ResponseEntity<ResponseData<SurveyResponeDTO>> getSurveyByPostId(@PathVariable Long postId) {
-        ResponseData<SurveyResponeDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"success",postService.getSurveyDetailByPostId(postId));
+        ResponseData<SurveyResponeDTO> responseData = new ResponseData<>(HttpStatus.OK,"success",postService.getSurveyDetailByPostId(postId));
         return ResponseEntity.ok(responseData);
     }
 

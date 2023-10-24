@@ -303,9 +303,14 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public SurveyResponeDTO getSurveyDetailByPostId(Long postId) {
-        SurveyResponeDTO surveyResponeDTO = surveyResponeConverter
-                .toDTO(surveyPostRepository.findOneByPost_Id(postId));
-        return surveyResponeDTO;
+        PostEntity postEntity = postRepository.findOneById(postId);
+        if (postEntity.getType().equals(PostType.SURVEY.getName())) {
+            SurveyResponeDTO surveyResponeDTO = surveyResponeConverter
+                    .toDTO(surveyPostRepository.findOneByPost_Id(postId));
+            return surveyResponeDTO;
+        } else {
+            throw new RuntimeException("survey_at_this_post_id_not_exist");
+        }
     }
 
     @Override
@@ -337,6 +342,19 @@ public class PostServiceImpl implements PostService {
             }
         }
         return "";
+    }
+
+    @Override
+    public RecruitmentPostResponseDTO getRecruimentDetailByPostId(Long postId) {
+        PostEntity postEntity = postRepository.findOneById(postId);
+        if (postEntity.getType().equals(PostType.RECRUIMENT.getName())) {
+            RecruitmentPostResponseDTO recruitmentPostResponseDTO = recruitmentPostResponeConverter
+                    .toDTO(recruitmentPostRepository.findOneByPost_Id(postId));
+            return recruitmentPostResponseDTO;
+        }
+        else{
+            throw new RuntimeException("recruitment_at_this_post_id_not_exist");
+        }
     }
 
 }

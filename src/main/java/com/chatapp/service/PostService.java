@@ -25,6 +25,7 @@ public interface PostService {
 
     //recruitment post
     List<RecruitmentPostResponseDTO> findAllRecruitmentPost();
+    RecruitmentPostResponseDTO getRecruimentDetailByPostId(Long postId);
     String recruitmentPostUpdateOrSave(RecruitmentPostUpdateOrSageRequestDTO recruitmentPostUpdateOrSageRequestDTO);
 
     //save survey
