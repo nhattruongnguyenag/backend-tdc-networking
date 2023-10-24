@@ -315,11 +315,18 @@ public class PostServiceImpl implements PostService {
         for (AnswerRequestDTO answerRequestDTO : surveyAnswerRequestDTO.getAnswers()) {
             QuestionEntity questionEntity = questionRepository.findOneById(answerRequestDTO.getQuestion_id());
             if (questionEntity.getType().equalsIgnoreCase(QuestionType.SHORT.getName())) {
-                ShortAnswerEntity shortAnswerEntity = new ShortAnswerEntity();
-                shortAnswerEntity.setUser(userEntity);
-                shortAnswerEntity.setContent(answerRequestDTO.getContent());
-                shortAnswerEntity.setQuestion(questionEntity);
-                shortAnswerRepository.save(shortAnswerEntity);
+                if (shortAnswerRepository.findOneByUser_Id(userEntity.getId()) != null) {
+                    ShortAnswerEntity shortAnswerEntity = shortAnswerRepository.findOneByUser_Id(userEntity.getId());
+                    shortAnswerEntity.setContent(answerRequestDTO.getContent());
+                    shortAnswerRepository.save(shortAnswerEntity);
+                } else {
+                    ShortAnswerEntity shortAnswerEntity = new ShortAnswerEntity();
+                    shortAnswerEntity.setUser(userEntity);
+                    shortAnswerEntity.setContent(answerRequestDTO.getContent());
+                    shortAnswerEntity.setQuestion(questionEntity);
+                    shortAnswerRepository.save(shortAnswerEntity);
+                }
+
             } else {
                 for (Long voteAnswerId : answerRequestDTO.getChoices_ids()) {
                     VoteAnswerEntity voteAnswerEntity = voteAnswerRepository.findOneById(voteAnswerId);
