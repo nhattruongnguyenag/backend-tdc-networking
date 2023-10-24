@@ -41,6 +41,7 @@ import com.chatapp.entity.VoteAnswerEntity;
 import com.chatapp.enums.PostType;
 import com.chatapp.enums.QuestionType;
 import com.chatapp.exception.DuplicateUsernameException;
+import com.chatapp.repository.GroupRepository;
 import com.chatapp.repository.NormalPostRepository;
 import com.chatapp.repository.PostCommentRepository;
 import com.chatapp.repository.PostLikeRepository;
@@ -79,6 +80,8 @@ public class PostServiceImpl implements PostService {
     private QuestionRepository questionRepository;
     @Autowired
     private VoteAnswerRepository voteAnswerRepository;
+    @Autowired
+    private GroupRepository groupRepository;
 
     @Autowired
     private PostInfoResponseConverter postInfoResponeConverter;
@@ -351,10 +354,37 @@ public class PostServiceImpl implements PostService {
             RecruitmentPostResponseDTO recruitmentPostResponseDTO = recruitmentPostResponeConverter
                     .toDTO(recruitmentPostRepository.findOneByPost_Id(postId));
             return recruitmentPostResponseDTO;
-        }
-        else{
+        } else {
             throw new RuntimeException("recruitment_at_this_post_id_not_exist");
         }
+    }
+
+    @Override
+    public List<BaseDTO> findAllByGroupId(Long groupId) {
+        if (groupRepository.findOneById(groupId) == null) {
+            throw new DuplicateUsernameException("group_does_not_exist");
+        }
+        List<BaseDTO> dtos = new ArrayList<>();
+        List<PostInfoResponseDTO> responseDTOs = postInfoResponeConverter
+                .toDTOGroup(postRepository.findAllByGroup_IdOrderByUpdatedAtDesc(groupId));
+        for (int i = 0; i < responseDTOs.size(); i++) {
+            BaseDTO dto = null;
+            if (responseDTOs.get(i).getType().equals(PostType.NORMAL.getName())) {
+                NormalPostResponseDTO normalPostResponseDTO = normalPostResponeConverter
+                        .toDTO(normalPostRepository.findOneByPost_Id(responseDTOs.get(i).getId()));
+                dto = normalPostResponseDTO;
+            } else if (responseDTOs.get(i).getType().equals(PostType.RECRUIMENT.getName())) {
+                RecruitmentPostResponseDTO recruitmentPostResponseDTO = recruitmentPostResponeConverter
+                        .toDTO(recruitmentPostRepository.findOneByPost_Id(responseDTOs.get(i).getId()));
+                dto = recruitmentPostResponseDTO;
+            } else if (responseDTOs.get(i).getType().equals(PostType.SURVEY.getName())) {
+                SurveyResponeDTO surveyResponeDTO = surveyResponeConverter
+                        .toDTO(surveyPostRepository.findOneByPost_Id(responseDTOs.get(i).getId()));
+                dto = surveyResponeDTO;
+            }
+            dtos.add(dto);
+        }
+        return dtos;
     }
 
 }

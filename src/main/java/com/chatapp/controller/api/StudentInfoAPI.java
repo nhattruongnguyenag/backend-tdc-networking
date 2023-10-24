@@ -27,6 +27,12 @@ public class StudentInfoAPI {
         return ResponseEntity.ok(responseData);
     }
 
+    @GetMapping({ "student/{userId}", "student/{userId}/" })
+    public ResponseEntity<ResponseData<StudentInfoResponseDTO>> getStudentByUserId(@PathVariable Long userId) {
+        ResponseData<StudentInfoResponseDTO> responseData = new ResponseData<StudentInfoResponseDTO>(HttpStatus.OK, "success", userService.getStudentDetailByUserId(userId));
+        return ResponseEntity.ok(responseData);
+    }
+
     @PostMapping({ "student", "student/" })
     ResponseEntity<ResponseData<UserInfoResponseDTO>> updateOrSave(@RequestBody StudentInfoUpdateOrSaveRequestDTO studentInfoUpdateOrSaveRequestDTO) {
         ResponseData<UserInfoResponseDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"add or update student success",userService.studentUpdateOrSave(studentInfoUpdateOrSaveRequestDTO));

@@ -47,4 +47,6 @@ public interface PostService {
     List<CommentResponeseDTO> findCommentByPostId(Long postId);
 
     List<BaseDTO> findAllByRoleCode(String code);
+
+    List<BaseDTO> findAllByGroupId(Long groupId);
 }

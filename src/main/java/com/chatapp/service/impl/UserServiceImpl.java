@@ -506,4 +506,44 @@ public class UserServiceImpl implements UserService {
         return "";
     }
 
+    @Override
+    public StudentInfoResponseDTO getStudentDetailByUserId(Long userId) {
+        UserEntity userEntity = userRepository.findOneById(userId);
+        UserInfoResponseDTO userInfoResponseDTO = userInfoResponseConverter.toDTO(userEntity);
+        if(userInfoResponseDTO.getRoleCodes().equals(Role.STUDENT.getName())){
+            StudentInfoResponseDTO studentInfoResponseDTO = studentInfoResponeConverter.toDTO(studentInfoRepository.findOneByUser_Id(userId));
+            return studentInfoResponseDTO;
+        }
+        else{
+            throw new RuntimeException("student_at_this_user_id_not_exist");
+        }
+    }
+
+    @Override
+    public FacultyInfoResponseDTO getFacultyDetailByUserId(Long userId) {
+        UserEntity userEntity = userRepository.findOneById(userId);
+        UserInfoResponseDTO userInfoResponseDTO = userInfoResponseConverter.toDTO(userEntity);
+        if(userInfoResponseDTO.getRoleCodes().equals(Role.FACULTY.getName())){
+            FacultyInfoResponseDTO facultyInfoResponseDTO = facultyInfoResponeConverter.toDTO(facultyInfoRepository.findOneByUser_Id(userId));
+            return facultyInfoResponseDTO;
+        }
+        else{
+            throw new RuntimeException("faculty_at_this_user_id_not_exist");
+        }
+    }
+
+    @Override
+    public BusinessInfoResponseDTO getBusinessDetailByUserId(Long userId) {
+        UserEntity userEntity = userRepository.findOneById(userId);
+        UserInfoResponseDTO userInfoResponseDTO = userInfoResponseConverter.toDTO(userEntity);
+        if(userInfoResponseDTO.getRoleCodes().equals(Role.BUSINESS.getName())){
+            BusinessInfoResponseDTO businessInfoResponseDTO = businessInfoResponeConverter.toDTO(businessInfoRepository.findOneByUser_Id(userId));
+            return businessInfoResponseDTO;
+        }
+        else{
+            throw new RuntimeException("business_at_this_user_id_not_exist");
+        }
+    }
+
+    
 }

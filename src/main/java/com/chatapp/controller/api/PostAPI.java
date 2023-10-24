@@ -108,9 +108,15 @@ public class PostAPI {
     }
 
     //recruitmentPost api
-    @GetMapping({ "posts/{id}/comments", "posts/{id}/comments" })
+    @GetMapping({ "posts/{id}/comments", "posts/{id}/comments/" })
     public ResponseEntity<ResponseData<List<CommentResponeseDTO>>> getComments(@PathVariable Long id) {
         ResponseData<List<CommentResponeseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success", postService.findCommentByPostId(id));
+        return ResponseEntity.ok(responseData);
+    }
+
+    @GetMapping({ "posts/group/{groupId}", "posts/group/{groupId}/" })
+    public ResponseEntity<ResponseData<List<BaseDTO>>> getByGroupId(@PathVariable Long groupId) {
+        ResponseData<List<BaseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success", postService.findAllByGroupId(groupId));
         return ResponseEntity.ok(responseData);
     }
 }

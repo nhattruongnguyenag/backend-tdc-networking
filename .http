@@ -347,3 +347,15 @@ Content-Type: application/json
         }
     ]
 }
+
+###
+GET http://127.0.0.1:8080/api/student/12 HTTP/1.1
+
+###
+GET http://127.0.0.1:8080/api/faculty/1 HTTP/1.1
+
+###
+GET http://127.0.0.1:8080/api/business/13 HTTP/1.1
+
+###
+GET http://127.0.0.1:8080/api/posts/group/1 HTTP/1.1
