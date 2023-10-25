@@ -360,13 +360,13 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<BaseDTO> findAllByGroupId(Long groupId) {
-        if (groupRepository.findOneById(groupId) == null) {
+    public List<BaseDTO> findAllByGroupCode(String groupCode) {
+        if (groupRepository.findOneByCode(groupCode) == null) {
             throw new DuplicateUsernameException("group_does_not_exist");
         }
         List<BaseDTO> dtos = new ArrayList<>();
         List<PostInfoResponseDTO> responseDTOs = postInfoResponeConverter
-                .toDTOGroup(postRepository.findAllByGroup_IdOrderByUpdatedAtDesc(groupId));
+                .toDTOGroup(postRepository.findAllByGroup_IdOrderByUpdatedAtDesc(groupRepository.findOneByCode(groupCode).getId()));
         for (int i = 0; i < responseDTOs.size(); i++) {
             BaseDTO dto = null;
             if (responseDTOs.get(i).getType().equals(PostType.NORMAL.getName())) {

@@ -23,6 +23,7 @@ public class BusinessInfoResponseConverter extends BaseConverter<BusinessesInfoE
         BusinessInfoResponseDTO businessInfoResponseDTO = super.toDTO(entity);
         UserEntity userEntity = userRepository.findOneById(entity.getUser().getId());
         businessInfoResponseDTO.setId(userEntity.getId());
+        businessInfoResponseDTO.setPhone(userEntity.getPhone());
         businessInfoResponseDTO.setEmail(userEntity.getEmail());
         businessInfoResponseDTO.setImage(userEntity.getImage());
         businessInfoResponseDTO.setName(userEntity.getName());

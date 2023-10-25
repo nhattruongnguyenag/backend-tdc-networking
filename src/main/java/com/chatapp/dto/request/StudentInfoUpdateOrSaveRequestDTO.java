@@ -8,6 +8,7 @@ public class StudentInfoUpdateOrSaveRequestDTO {
     private String email;
     private String name;
     private String image;
+    private String phone;
     private String code;
     private String facultyName;
     private String major;

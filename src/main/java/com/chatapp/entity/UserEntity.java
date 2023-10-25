@@ -22,6 +22,9 @@ public class UserEntity extends BaseEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "phone", nullable = true)
+    private String phone;
+
     @Column(name = "status", nullable = false)
     private Byte status;
 
@@ -359,5 +362,13 @@ public class UserEntity extends BaseEntity {
 
     public boolean isTyping() {
         return isTyping;
+    }
+
+    public String getPhone() {
+        return this.phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

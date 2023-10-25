@@ -26,6 +26,7 @@ public class StudentInfoResponseConverter extends BaseConverter<StudentInfoEntit
         studentInfoResponeDTO.setEmail(userEntity.getEmail());
         studentInfoResponeDTO.setImage(userEntity.getImage());
         studentInfoResponeDTO.setName(userEntity.getName());
+        studentInfoResponeDTO.setPhone(userEntity.getPhone());
         studentInfoResponeDTO.setStatus(userEntity.getStatus());
         studentInfoResponeDTO.setCode(userEntity.getCode());
         String roleCodes = "";

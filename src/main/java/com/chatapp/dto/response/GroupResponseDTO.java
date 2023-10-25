@@ -9,4 +9,5 @@ public class GroupResponseDTO extends BaseDTO{
     private Byte active;
     private String image;
     private String name;
+    private String code;
 }

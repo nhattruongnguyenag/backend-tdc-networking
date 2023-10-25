@@ -23,6 +23,7 @@ public class StudentInfoUpdateOrSaveRequestConverter extends BaseConverter<UserE
         userEntity.setId(dto.getId());
         userEntity.setEmail(dto.getEmail());
         userEntity.setName(dto.getName());
+        userEntity.setPhone(dto.getPhone());
         userEntity.setCode(dto.getCode());
         if (dto.getImage() != null) {
             userEntity.setImage(dto.getImage());

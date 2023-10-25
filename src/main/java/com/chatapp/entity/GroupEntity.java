@@ -15,6 +15,9 @@ public class GroupEntity extends BaseEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "code", nullable = false , unique = true)
+    private String code;
+
     @Column(name = "image", nullable = false)
     private String image;
 
@@ -63,4 +66,13 @@ public class GroupEntity extends BaseEntity {
     public void setUsers(List<UserEntity> users) {
         this.users = users;
     }
+
+    public String getCode() {
+        return this.code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
 }

@@ -59,6 +59,8 @@ public class RecruitmentPosyUpdateOrSaveRequestConverter
     public PostEntity toEntity(RecruitmentPostUpdateOrSageRequestDTO dto) {
         PostEntity postEntity = super.toEntity(dto);
         UserEntity userEntity = userRepository.findOneById(dto.getUserId());
+        GroupEntity groupEntity = groupRepository.findOneById(dto.getGroupId());
+        postEntity.setGroup(groupEntity);
         postEntity.setUser(userEntity);
         List<PostImageEntity> postImageEntityList = new ArrayList<>();
         for (String image : dto.getImages()) {

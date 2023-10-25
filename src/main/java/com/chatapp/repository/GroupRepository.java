@@ -8,4 +8,5 @@ import com.chatapp.entity.GroupEntity;
 @Repository
 public interface GroupRepository extends JpaRepository<GroupEntity, Long> {
     GroupEntity findOneById(Long id);
+    GroupEntity findOneByCode(String code);
 }

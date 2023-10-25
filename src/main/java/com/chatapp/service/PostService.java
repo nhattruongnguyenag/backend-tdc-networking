@@ -49,7 +49,7 @@ public interface PostService {
 
     List<BaseDTO> findAllByRoleCode(String code);
 
-    List<BaseDTO> findAllByGroupId(Long groupId);
+    List<BaseDTO> findAllByGroupCode(String groupCode);
 
     List<BaseDTO> getAllPostByUserIdAndType(Long userId, String type);
 }

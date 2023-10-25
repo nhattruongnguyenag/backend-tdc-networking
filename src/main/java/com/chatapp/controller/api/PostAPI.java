@@ -155,10 +155,10 @@ public class PostAPI {
         return ResponseEntity.ok(responseData);
     }
 
-    @GetMapping({ "posts/group/{groupId}", "posts/group/{groupId}/" })
-    public ResponseEntity<ResponseData<List<BaseDTO>>> getByGroupId(@PathVariable Long groupId) {
+    @GetMapping({ "posts/group/{groupCode}", "posts/group/{groupCode}/" })
+    public ResponseEntity<ResponseData<List<BaseDTO>>> getByGroupId(@PathVariable String groupCode) {
         ResponseData<List<BaseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
-                postService.findAllByGroupId(groupId));
+                postService.findAllByGroupCode(groupCode));
         return ResponseEntity.ok(responseData);
     }
 }

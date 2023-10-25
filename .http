@@ -46,6 +46,7 @@ Content-Type: application/json
     "name":"son",
     "password":"abc123",
     "image":"son.png",
+    "phone":"56856863",
     "code":"student_1",
     "facultyName":"cntt",
     "major":"cntt e",
@@ -61,6 +62,7 @@ Content-Type: application/json
     "name":"son",
     "password":"abc123",
     "image":"son.png",
+    "phone":"56856864",
     "code":"khoa_cntt",
     "facultyName":"cntt"
 }
@@ -74,10 +76,10 @@ Content-Type: application/json
     "name":"son",
     "password":"abc123",
     "image":"business.png",
+    "phone":"56856867",
     "code":"food_cty",
     "representor":"gg",
     "taxCode":"546657",
-    "phone":"0892626312",
     "address":"hai ba trung",
     "activeTime":"8h"
 }
@@ -94,7 +96,6 @@ Content-Type: application/json
     "code":"123",
     "representor":"abc",
     "taxCode":"546657",
-    "phone":"0892626312",
     "address":"thu duc",
     "activeTime":"21h"
 }
@@ -308,6 +309,8 @@ Content-Type: application/json
 ###
 GET http://127.0.0.1:8080/api/posts/1/comments HTTP/1.1
 
+
+
 # sprint 2
 ###
 POST http://127.0.0.1:8080/api/users/by HTTP/1.1
@@ -370,4 +373,4 @@ GET http://127.0.0.1:8080/api/faculty/1 HTTP/1.1
 GET http://127.0.0.1:8080/api/business/13 HTTP/1.1
 
 ###
-GET http://127.0.0.1:8080/api/posts/group/1 HTTP/1.1
+GET http://127.0.0.1:8080/api/posts/group/group_1 HTTP/1.1
