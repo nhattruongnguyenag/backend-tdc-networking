@@ -302,8 +302,8 @@ POST http://127.0.0.1:8080/api/users/follow HTTP/1.1
 Content-Type: application/json
 
 {
-    "userFollowId":2,
-    "userId":1
+    "userFollowId":1,
+    "userId":3
 }
 
 ###
@@ -312,13 +312,6 @@ GET http://127.0.0.1:8080/api/posts/1/comments HTTP/1.1
 
 
 # sprint 2
-###
-POST http://127.0.0.1:8080/api/users/by HTTP/1.1
-Content-Type: application/json
-
-{
-    "id":1
-}
 
 ###
 GET http://127.0.0.1:8080/api/posts/survey/1 HTTP/1.1
@@ -374,3 +367,19 @@ GET http://127.0.0.1:8080/api/business/13 HTTP/1.1
 
 ###
 GET http://127.0.0.1:8080/api/posts/group/group_1 HTTP/1.1
+
+###
+POST http://127.0.0.1:8080/api/users/follow/me HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":1
+}
+
+###
+POST http://127.0.0.1:8080/api/users/follow/other HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":1
+}
