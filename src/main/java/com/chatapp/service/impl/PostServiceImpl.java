@@ -387,4 +387,47 @@ public class PostServiceImpl implements PostService {
         return dtos;
     }
 
+    @Override
+    public NormalPostResponseDTO getNormalDetailByPostId(Long postId) {
+        PostEntity postEntity = postRepository.findOneById(postId);
+        if (postEntity.getType().equals(PostType.NORMAL.getName())) {
+            NormalPostResponseDTO normalPostResponseDTO = normalPostResponeConverter
+                    .toDTO(normalPostRepository.findOneByPost_Id(postId));
+            return normalPostResponseDTO;
+        } else {
+            throw new RuntimeException("normal_post_at_this_post_id_not_exist");
+        }
+    }
+
+    @Override
+    public List<BaseDTO> getAllPostByUserIdAndType(Long userId, String type) {
+        List<BaseDTO> dtos = new ArrayList<BaseDTO>();
+        if (type.equals(PostType.NORMAL.getName())) {
+            List<PostEntity> posts = postRepository.findAllByUser_IdAndTypeOrderByUpdatedAtDesc(userId, type);
+            for (PostEntity post : posts) {
+                NormalPostResponseDTO normalPostResponseDTO = normalPostResponeConverter
+                        .toDTO(normalPostRepository.findOneByPost_Id(post.getId()));
+                dtos.add(normalPostResponseDTO);
+            }
+            return dtos;
+        } else if (type.equals(PostType.RECRUIMENT.getName())) {
+            List<PostEntity> posts = postRepository.findAllByUser_IdAndTypeOrderByUpdatedAtDesc(userId, type);
+            for (PostEntity post : posts) {
+                RecruitmentPostResponseDTO recruitmentPostResponseDTO = recruitmentPostResponeConverter
+                        .toDTO(recruitmentPostRepository.findOneByPost_Id(post.getId()));
+                dtos.add(recruitmentPostResponseDTO);
+            }
+            return dtos;
+        } else if (type.equals(PostType.SURVEY.getName())) {
+            List<PostEntity> posts = postRepository.findAllByUser_IdAndTypeOrderByUpdatedAtDesc(userId, type);
+            for (PostEntity post : posts) {
+                SurveyResponeDTO surveyResponeDTO = surveyResponeConverter
+                        .toDTO(surveyPostRepository.findOneByPost_Id(post.getId()));
+                dtos.add(surveyResponeDTO);
+            }
+            return dtos;
+        } else{
+            throw new RuntimeException("can_not_get_list_" + type);
+        }
+    }
 }

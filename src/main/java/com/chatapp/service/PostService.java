@@ -22,6 +22,7 @@ public interface PostService {
     //normal post
     List<NormalPostResponseDTO> findAllNormalPost();
     String normalPostUpdateOrSave(NormalPostUpdateOrSaveRequestDTO normalPostUpdateOrSaveRequestDTO);
+    NormalPostResponseDTO getNormalDetailByPostId(Long postId);
 
     //recruitment post
     List<RecruitmentPostResponseDTO> findAllRecruitmentPost();
@@ -49,4 +50,6 @@ public interface PostService {
     List<BaseDTO> findAllByRoleCode(String code);
 
     List<BaseDTO> findAllByGroupId(Long groupId);
+
+    List<BaseDTO> getAllPostByUserIdAndType(Long userId, String type);
 }
