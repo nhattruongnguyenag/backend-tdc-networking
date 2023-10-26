@@ -13,9 +13,6 @@ public class BusinessesInfoEntity extends BaseEntity {
     @Column(name = "tax_code", nullable = false)
     private String taxCode;
 
-    @Column(name = "phone", nullable = false)
-    private String phone;
-
     @Column(name = "address", nullable = false, columnDefinition = "TEXT")
     private String address;
 
@@ -65,14 +62,4 @@ public class BusinessesInfoEntity extends BaseEntity {
     public void setUser(UserEntity user) {
         this.user = user;
     }
-
-
-    public String getPhone() {
-        return this.phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
 }

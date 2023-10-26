@@ -1,6 +1,9 @@
 package com.chatapp.converter.response;
 
 import com.chatapp.converter.abstracts.BaseConverter;
+import com.chatapp.dto.response.BusinessInfoResponseDTO;
+import com.chatapp.dto.response.FacultyInfoResponseDTO;
+import com.chatapp.dto.response.StudentInfoResponseDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.entity.UserEntity;
 
@@ -14,6 +17,7 @@ public class UserInfoResponseConverter extends BaseConverter<UserEntity, UserInf
 
     @Override
     public UserInfoResponseDTO toDTO(UserEntity entity) {
+        
         UserInfoResponseDTO userInfoResponseDTO = super.toDTO(entity);
         userInfoResponseDTO.setIsTyping(entity.isTyping() ? (byte) 1 : 0);
         userInfoResponseDTO.setIsMessageConnect(entity.getMessageConnect() ? (byte) 1 : 0);

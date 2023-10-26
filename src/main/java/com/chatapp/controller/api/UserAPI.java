@@ -6,7 +6,9 @@ import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.BaseDTO;
 import com.chatapp.dto.UserDTO;
 import com.chatapp.dto.request.UserFollowRequestDTO;
+import com.chatapp.dto.request.UserGetRequestDTO;
 import com.chatapp.dto.request.UserLoginRequestDTO;
+import com.chatapp.dto.response.UserFollowResponseDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.service.UserService;
 import com.chatapp.util.TokenProvider;
@@ -84,6 +86,19 @@ public class UserAPI {
     public ResponseEntity<ResponseData<String>> save(@RequestBody UserFollowRequestDTO userFollowRequestDTO) {
         userService.follow(userFollowRequestDTO);
         ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK,"success",null);
+        return ResponseEntity.ok(responseData);
+    }
+
+    
+    @PostMapping({ "users/follow/me", "users/follow/me/" })
+    public ResponseEntity<ResponseData<List<UserFollowResponseDTO>>> getFollowsByUserId(@RequestBody UserGetRequestDTO userGetRequestDTO) {
+        ResponseData<List<UserFollowResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",userService.getFollowsByUserId(userGetRequestDTO));
+        return ResponseEntity.ok(responseData);
+    }
+
+    @PostMapping({ "users/follow/other", "users/follow/other/" })
+    public ResponseEntity<ResponseData<List<UserFollowResponseDTO>>> getOtherFollowByUserId(@RequestBody UserGetRequestDTO userGetRequestDTO) {
+        ResponseData<List<UserFollowResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",userService.getOtherPeopleFollowByUserId(userGetRequestDTO));
         return ResponseEntity.ok(responseData);
     }
 }

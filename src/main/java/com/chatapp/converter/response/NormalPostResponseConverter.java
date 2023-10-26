@@ -34,6 +34,8 @@ public class NormalPostResponseConverter extends BaseConverter<NormalPostEntity,
     private UserInfoResponseConverter userInfoResponseConverter;
     @Autowired
     private CommentResponseConverter commentResponseConverter;
+    @Autowired
+    private GroupResponseConverter groupResponseConverter;
 
     @Override
     public NormalPostResponseDTO toDTO(NormalPostEntity entity) {
@@ -54,6 +56,7 @@ public class NormalPostResponseConverter extends BaseConverter<NormalPostEntity,
         }
         userInfoResponseDTO.setRoleCodes(roleCodes);
         normalPostResponeDTO.setUser(userInfoResponseDTO);
+        normalPostResponeDTO.setGroup(groupResponseConverter.toDTO(postEntity.getGroup()));
         List<UserLikeResponeDTO> likes = new ArrayList<>();
         for ( PostLikeEntity postLikeEntity : postEntity.getLikes()) {
             UserLikeResponeDTO userLikeResponeDTO = new UserLikeResponeDTO();

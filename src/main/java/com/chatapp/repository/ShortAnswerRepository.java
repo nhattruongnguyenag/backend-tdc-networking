@@ -7,5 +7,5 @@ import com.chatapp.entity.ShortAnswerEntity;
 
 @Repository
 public interface ShortAnswerRepository extends JpaRepository<ShortAnswerEntity, Long> {
-
+    ShortAnswerEntity findOneByUser_Id(Long id);
 }

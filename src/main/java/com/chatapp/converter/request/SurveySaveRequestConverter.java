@@ -3,11 +3,13 @@ package com.chatapp.converter.request;
 import com.chatapp.converter.abstracts.BaseConverter;
 import com.chatapp.dto.request.QuestionRequestDTO;
 import com.chatapp.dto.request.SurveySaveRequestDTO;
+import com.chatapp.entity.GroupEntity;
 import com.chatapp.entity.PostEntity;
 import com.chatapp.entity.PostImageEntity;
 import com.chatapp.entity.QuestionEntity;
 import com.chatapp.entity.SurveyPostEntity;
 import com.chatapp.entity.UserEntity;
+import com.chatapp.repository.GroupRepository;
 import com.chatapp.repository.UserRepository;
 
 import java.util.ArrayList;
@@ -17,17 +19,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SurveySaveRequestConverter extends BaseConverter<PostEntity, SurveySaveRequestDTO>{
+public class SurveySaveRequestConverter extends BaseConverter<PostEntity, SurveySaveRequestDTO> {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private GroupRepository groupRepository;
 
-    @Autowired 
+    @Autowired
     private QuestionRequestConverter questionRequestConverter;
 
-    public PostEntity toPostEntity(SurveySaveRequestDTO dto){
+    public PostEntity toPostEntity(SurveySaveRequestDTO dto) {
         UserEntity userEntity = userRepository.findOneById(dto.getUserId());
         PostEntity postEntity = new PostEntity();
+        GroupEntity groupEntity = groupRepository.findOneById(dto.getGroupId());
+        postEntity.setGroup(groupEntity);
         postEntity.setUser(userEntity);
         List<PostImageEntity> postImageEntityList = new ArrayList<>();
         for (String image : dto.getImages()) {
@@ -45,12 +51,11 @@ public class SurveySaveRequestConverter extends BaseConverter<PostEntity, Survey
         List<QuestionRequestDTO> questions = new ArrayList<QuestionRequestDTO>();
         for (QuestionRequestDTO questionDTO : dto.getQuestions()) {
             QuestionRequestDTO questionRequestDTO = new QuestionRequestDTO();
-            if(questionDTO.getChoices()!= null){
+            if (questionDTO.getChoices() != null) {
                 questionRequestDTO.setTitle(questionDTO.getTitle());
                 questionRequestDTO.setType(questionDTO.getType());
                 questionRequestDTO.setChoices(questionDTO.getChoices());
-            }
-            else{
+            } else {
                 questionRequestDTO.setTitle(questionDTO.getTitle());
                 questionRequestDTO.setType(questionDTO.getType());
             }
@@ -65,4 +70,3 @@ public class SurveySaveRequestConverter extends BaseConverter<PostEntity, Survey
         return postEntity;
     }
 }
-

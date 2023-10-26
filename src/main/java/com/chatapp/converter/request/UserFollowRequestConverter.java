@@ -15,7 +15,7 @@ public class UserFollowRequestConverter extends BaseConverter<FollowEntity, User
 
     @Override
     public FollowEntity toEntity(UserFollowRequestDTO dto) {
-        FollowEntity pFollowEntity = super.toEntity(dto);
+        FollowEntity pFollowEntity = new FollowEntity();
         pFollowEntity.setUser(userRepository.findOneById(dto.getUserId()));
         pFollowEntity.setUserFollow(userRepository.findOneById(dto.getUserFollowId()));
         return pFollowEntity;

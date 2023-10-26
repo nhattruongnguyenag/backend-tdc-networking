@@ -10,6 +10,8 @@ import com.chatapp.converter.request.UserFollowRequestConverter;
 import com.chatapp.converter.request.UserRequestConverter;
 import com.chatapp.converter.response.BusinessInfoResponseConverter;
 import com.chatapp.converter.response.FacultyInfoResponseConverter;
+import com.chatapp.converter.response.FollowByOtherResponseConverter;
+import com.chatapp.converter.response.FollowResponseConverter;
 import com.chatapp.converter.response.StudentInfoResponseConverter;
 import com.chatapp.converter.response.UserFindResponseConverter;
 import com.chatapp.converter.response.UserInfoResponseConverter;
@@ -23,12 +25,14 @@ import com.chatapp.dto.request.FacultyInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.StudentInfoRegisterRequestDTO;
 import com.chatapp.dto.request.StudentInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.UserFollowRequestDTO;
+import com.chatapp.dto.request.UserGetRequestDTO;
 import com.chatapp.dto.request.UserInfoFindRequestDTO;
 import com.chatapp.dto.request.UserLoginRequestDTO;
 import com.chatapp.dto.response.BusinessInfoResponseDTO;
 import com.chatapp.dto.response.FacultyInfoResponseDTO;
 import com.chatapp.dto.response.StudentInfoResponseDTO;
 import com.chatapp.dto.response.UserFindResponseDTO;
+import com.chatapp.dto.response.UserFollowResponseDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.entity.FollowEntity;
 import com.chatapp.entity.RoleEntity;
@@ -90,6 +94,10 @@ public class UserServiceImpl implements UserService {
     private BusinessInfoResponseConverter businessInfoResponeConverter;
     @Autowired
     private UserFindResponseConverter userFindResponseConverter;
+    @Autowired
+    private FollowResponseConverter followResponseConverter;
+    @Autowired
+    private FollowByOtherResponseConverter followByOtherResponseConverter;
 
     @Autowired
     private UserRequestConverter userConverter;
@@ -241,6 +249,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserInfoResponseDTO getUserByEmail(String email) {
         return userInfoResponseConverter.toDTO(userRepository.findOneByEmail(email));
+    }
+
+    @Override
+    public UserInfoResponseDTO getUserById(UserGetRequestDTO userGetRequestDTO) {
+        return userInfoResponseConverter.toDTO(userRepository.findOneById(userGetRequestDTO.getId()));
     }
 
     // studentInfo service
@@ -500,4 +513,64 @@ public class UserServiceImpl implements UserService {
         return "";
     }
 
+    @Override
+    public StudentInfoResponseDTO getStudentDetailByUserId(Long userId) {
+        UserEntity userEntity = userRepository.findOneById(userId);
+        UserInfoResponseDTO userInfoResponseDTO = userInfoResponseConverter.toDTO(userEntity);
+        if(userInfoResponseDTO.getRoleCodes().equals(Role.STUDENT.getName())){
+            StudentInfoResponseDTO studentInfoResponseDTO = studentInfoResponeConverter.toDTO(studentInfoRepository.findOneByUser_Id(userId));
+            return studentInfoResponseDTO;
+        }
+        else{
+            throw new RuntimeException("student_at_this_user_id_not_exist");
+        }
+    }
+
+    @Override
+    public FacultyInfoResponseDTO getFacultyDetailByUserId(Long userId) {
+        UserEntity userEntity = userRepository.findOneById(userId);
+        UserInfoResponseDTO userInfoResponseDTO = userInfoResponseConverter.toDTO(userEntity);
+        if(userInfoResponseDTO.getRoleCodes().equals(Role.FACULTY.getName())){
+            FacultyInfoResponseDTO facultyInfoResponseDTO = facultyInfoResponeConverter.toDTO(facultyInfoRepository.findOneByUser_Id(userId));
+            return facultyInfoResponseDTO;
+        }
+        else{
+            throw new RuntimeException("faculty_at_this_user_id_not_exist");
+        }
+    }
+
+    @Override
+    public BusinessInfoResponseDTO getBusinessDetailByUserId(Long userId) {
+        UserEntity userEntity = userRepository.findOneById(userId);
+        UserInfoResponseDTO userInfoResponseDTO = userInfoResponseConverter.toDTO(userEntity);
+        if(userInfoResponseDTO.getRoleCodes().equals(Role.BUSINESS.getName())){
+            BusinessInfoResponseDTO businessInfoResponseDTO = businessInfoResponeConverter.toDTO(businessInfoRepository.findOneByUser_Id(userId));
+            return businessInfoResponseDTO;
+        }
+        else{
+            throw new RuntimeException("business_at_this_user_id_not_exist");
+        }
+    }
+
+    @Override
+    public List<UserFollowResponseDTO> getFollowsByUserId(UserGetRequestDTO userGetRequestDTO) {
+        if (userRepository.findOneById(userGetRequestDTO.getId()) == null) {
+            throw new DuplicateUsernameException("user_not_exists");
+        }
+        UserEntity userEntity = userRepository.findOneById(userGetRequestDTO.getId());
+        List<UserFollowResponseDTO> userFollowResponseDTOs = followResponseConverter.toDTOGroup(userEntity.getFollowUsers());
+        return userFollowResponseDTOs;
+    }
+
+    @Override
+    public List<UserFollowResponseDTO> getOtherPeopleFollowByUserId(UserGetRequestDTO userGetRequestDTO) {
+        if (userRepository.findOneById(userGetRequestDTO.getId()) == null) {
+            throw new DuplicateUsernameException("user_not_exists");
+        }
+        UserEntity userEntity = userRepository.findOneById(userGetRequestDTO.getId());
+        List<UserFollowResponseDTO> userFollowResponseDTOs = followByOtherResponseConverter.toDTOGroup(userEntity.getFollowByUsers());
+        return userFollowResponseDTOs;
+    }
+
+    
 }

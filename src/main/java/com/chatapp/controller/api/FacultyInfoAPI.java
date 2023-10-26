@@ -27,6 +27,12 @@ public class FacultyInfoAPI {
         return ResponseEntity.ok(responseData);
     }
 
+    @GetMapping({ "faculty/{userId}", "faculty/{userId}/"})
+    public ResponseEntity<ResponseData<FacultyInfoResponseDTO>> getFacultyByUserId(@PathVariable Long userId) {
+        ResponseData<FacultyInfoResponseDTO> responseData = new ResponseData<>(HttpStatus.OK,"success",userService.getFacultyDetailByUserId(userId));
+        return ResponseEntity.ok(responseData);
+    }
+
     @PostMapping({ "faculty", "faculty/" })
     ResponseEntity<ResponseData<UserInfoResponseDTO>> updateOrSave(@RequestBody FacultyInfoUpdateOrSaveRequestDTO facultyInfoUpdateOrSaveRequestDTO) {
         ResponseData<UserInfoResponseDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"add or update success",userService.facultyUpdateOrSave(facultyInfoUpdateOrSaveRequestDTO));

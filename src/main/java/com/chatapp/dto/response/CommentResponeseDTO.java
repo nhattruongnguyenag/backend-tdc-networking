@@ -12,6 +12,6 @@ public class CommentResponeseDTO extends BaseDTO{
     private String content;
     private UserCommentResponeDTO user;
     private Long postId;
-    private Long parentId;
+    private ParentCommentResponseDTO parent;
     private List<CommentResponeseDTO> childrens;
 }

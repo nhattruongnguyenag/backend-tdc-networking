@@ -20,12 +20,12 @@ public class PostCommentEntity extends BaseEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
-    @OneToMany(mappedBy = "postComment", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<PostCommentEntity> postComments = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "parent_comment_id", nullable = true)
-    private PostCommentEntity postComment;
+    private PostCommentEntity parentComment;
 
     public String getContent() {
         return content;
@@ -59,11 +59,11 @@ public class PostCommentEntity extends BaseEntity {
         this.postComments = postComments;
     }
 
-    public PostCommentEntity getPostComment() {
-        return postComment;
+    public PostCommentEntity getParentComment() {
+        return parentComment;
     }
 
-    public void setPostComment(PostCommentEntity postComment) {
-        this.postComment = postComment;
+    public void setParentComment(PostCommentEntity parentComment) {
+        this.parentComment = parentComment;
     }
 }

@@ -8,5 +8,6 @@ public class FacultyInfoRegisterRequestDTO {
     private String password;
     private String name;
     private String image;
+    private String phone;
     private String code;
 }

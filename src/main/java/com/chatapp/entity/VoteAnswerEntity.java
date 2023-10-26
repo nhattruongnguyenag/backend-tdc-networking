@@ -1,5 +1,8 @@
 package com.chatapp.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,6 +19,9 @@ public class VoteAnswerEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "question_id", nullable = false)
     private QuestionEntity question;
+
+    @ManyToMany(mappedBy = "voteAnswers", fetch = FetchType.LAZY)
+    private List<UserEntity> users = new ArrayList<>();
 
     public String getContent() {
         return content;

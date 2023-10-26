@@ -38,6 +38,8 @@ public class SurveyResponeConverter extends BaseConverter<SurveyPostEntity, Surv
     private QuestionResponeConverter questionResponeConverter;
     @Autowired
     private CommentResponseConverter commentResponseConverter;
+    @Autowired
+    private GroupResponseConverter groupResponseConverter;
 
     @Override
     public SurveyResponeDTO toDTO(SurveyPostEntity entity) {
@@ -66,6 +68,7 @@ public class SurveyResponeConverter extends BaseConverter<SurveyPostEntity, Surv
         }
         surveyResponeDTO.setQuestions(questionResponseDTOs);
         surveyResponeDTO.setUser(userInfoResponseDTO);
+        surveyResponeDTO.setGroup(groupResponseConverter.toDTO(postEntity.getGroup()));
         List<UserLikeResponeDTO> likes = new ArrayList<>();
         for ( PostLikeEntity postLikeEntity : postEntity.getLikes()) {
             UserLikeResponeDTO userLikeResponeDTO = new UserLikeResponeDTO();

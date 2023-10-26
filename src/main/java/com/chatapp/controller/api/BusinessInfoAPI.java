@@ -28,6 +28,13 @@ public class BusinessInfoAPI {
         return ResponseEntity.ok(responseData);
     }
 
+    @GetMapping({ "business/{userId}", "business/{userId}/" })
+    public ResponseEntity<ResponseData<BusinessInfoResponseDTO>> getBusinessByUserId(@PathVariable Long userId) {
+        ResponseData<BusinessInfoResponseDTO> responseData = new ResponseData<>(HttpStatus.OK, "success",
+                userService.getBusinessDetailByUserId(userId));
+        return ResponseEntity.ok(responseData);
+    }
+
     @PostMapping({ "business", "business/" })
     ResponseEntity<ResponseData<UserInfoResponseDTO>> updateOrSave(
             @RequestBody BusinessInfoUpdateOrSaveRequestDTO businessInfoUpdateOrSaveRequestDTO) {

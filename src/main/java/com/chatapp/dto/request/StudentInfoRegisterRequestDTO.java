@@ -8,6 +8,7 @@ public class StudentInfoRegisterRequestDTO {
     private String password;
     private String name;
     private String image;
+    private String phone;
     private String code;
     private String facultyName;
     private String major;

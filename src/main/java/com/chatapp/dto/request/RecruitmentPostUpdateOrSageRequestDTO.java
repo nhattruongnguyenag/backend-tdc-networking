@@ -9,6 +9,7 @@ import lombok.Data;
 public class RecruitmentPostUpdateOrSageRequestDTO {
     private Long id;
     private Long userId;
+    private Long groupId;
     private String type;
     private List<String> images;
     private String title;

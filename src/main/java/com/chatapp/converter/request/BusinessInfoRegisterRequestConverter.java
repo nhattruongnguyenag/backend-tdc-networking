@@ -18,7 +18,6 @@ public class BusinessInfoRegisterRequestConverter extends BaseConverter<UserEnti
         businessesInfoEntity.setTaxCode(dto.getTaxCode());
         businessesInfoEntity.setAddress(dto.getAddress());
         businessesInfoEntity.setActiveTime(dto.getActiveTime());
-        businessesInfoEntity.setPhone(dto.getPhone());
         businessesInfoEntity.setUser(userEntity);
         userEntity.setBusinessesInfos(businessesInfoEntity);
         return userEntity;

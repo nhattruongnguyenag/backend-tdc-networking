@@ -22,6 +22,10 @@ public class PostEntity extends BaseEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
+    @ManyToOne
+    @JoinColumn(name = "group_id", nullable = false)
+    private GroupEntity group;
+
     @OneToOne(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private NormalPostEntity normalPost;
 
@@ -46,6 +50,11 @@ public class PostEntity extends BaseEntity {
     @ManyToMany(mappedBy = "postSave", fetch = FetchType.LAZY)
     private List<UserEntity> users = new ArrayList<>();
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "post_topic", joinColumns = @JoinColumn(name = "post_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "topic_id", nullable = false))
+    private List<TopicEntity> topics = new ArrayList<>();
+
+
     public Byte getStatus() {
         return status;
     }
@@ -60,6 +69,22 @@ public class PostEntity extends BaseEntity {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public List<TopicEntity> getTopics() {
+        return this.topics;
+    }
+
+    public void setTopics(List<TopicEntity> topics) {
+        this.topics = topics;
+    }
+
+    public GroupEntity getGroup() {
+        return this.group;
+    }
+
+    public void setGroup(GroupEntity group) {
+        this.group = group;
     }
 
     public Byte getActive() {

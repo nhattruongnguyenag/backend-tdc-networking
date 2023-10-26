@@ -10,5 +10,5 @@ import lombok.Data;
 public class QuestionResponseDTO extends BaseDTO{
     private String title;
     private String type;
-    private List<String> choices;
+    private List<VoteQuestionResponseDTO> choices;
 }

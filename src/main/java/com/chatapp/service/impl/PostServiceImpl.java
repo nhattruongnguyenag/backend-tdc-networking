@@ -11,36 +11,59 @@ import com.chatapp.converter.request.LikeRequestConverter;
 import com.chatapp.converter.request.NormalPostUpdateOrSaveRequestConverter;
 import com.chatapp.converter.request.RecruitmentPosyUpdateOrSaveRequestConverter;
 import com.chatapp.converter.request.SurveySaveRequestConverter;
+import com.chatapp.converter.response.BusinessInfoResponseConverter;
 import com.chatapp.converter.response.CommentResponseConverter;
+import com.chatapp.converter.response.FacultyInfoResponseConverter;
 import com.chatapp.converter.response.NormalPostResponseConverter;
 import com.chatapp.converter.response.PostInfoResponseConverter;
 import com.chatapp.converter.response.RecruitmentPostResponseConverter;
+import com.chatapp.converter.response.StudentInfoResponseConverter;
 import com.chatapp.converter.response.SurveyResponeConverter;
+import com.chatapp.converter.response.UserInfoResponseConverter;
 import com.chatapp.dto.BaseDTO;
+import com.chatapp.dto.request.AnswerRequestDTO;
 import com.chatapp.dto.request.CommentDeleteRequestDTO;
 import com.chatapp.dto.request.CommentSaveRequestDTO;
 import com.chatapp.dto.request.LikeRequestDTO;
 import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.PostFindRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
+import com.chatapp.dto.request.SurveyAnswerRequestDTO;
 import com.chatapp.dto.request.SurveySaveRequestDTO;
+import com.chatapp.dto.response.BusinessInfoResponseDTO;
 import com.chatapp.dto.response.CommentResponeseDTO;
+import com.chatapp.dto.response.FacultyInfoResponseDTO;
 import com.chatapp.dto.response.NormalPostResponseDTO;
 import com.chatapp.dto.response.PostInfoResponseDTO;
 import com.chatapp.dto.response.RecruitmentPostResponseDTO;
+import com.chatapp.dto.response.StudentInfoResponseDTO;
 import com.chatapp.dto.response.SurveyResponeDTO;
+import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.entity.PostCommentEntity;
 import com.chatapp.entity.PostEntity;
 import com.chatapp.entity.PostLikeEntity;
+import com.chatapp.entity.QuestionEntity;
+import com.chatapp.entity.ShortAnswerEntity;
+import com.chatapp.entity.UserEntity;
+import com.chatapp.entity.VoteAnswerEntity;
 import com.chatapp.enums.PostType;
+import com.chatapp.enums.QuestionType;
+import com.chatapp.enums.Role;
 import com.chatapp.exception.DuplicateUsernameException;
+import com.chatapp.repository.BusinessInfoRepository;
+import com.chatapp.repository.FacultyInfoRepository;
+import com.chatapp.repository.GroupRepository;
 import com.chatapp.repository.NormalPostRepository;
 import com.chatapp.repository.PostCommentRepository;
 import com.chatapp.repository.PostLikeRepository;
 import com.chatapp.repository.PostRepository;
+import com.chatapp.repository.QuestionRepository;
 import com.chatapp.repository.RecruitmentPostRepository;
+import com.chatapp.repository.ShortAnswerRepository;
+import com.chatapp.repository.StudentInfoRepository;
 import com.chatapp.repository.SurveyPostRepository;
 import com.chatapp.repository.UserRepository;
+import com.chatapp.repository.VoteAnswerRepository;
 import com.chatapp.service.PostService;
 
 import jakarta.transaction.Transactional;
@@ -62,7 +85,21 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private PostLikeRepository postLikeRepository;
     @Autowired
+    private ShortAnswerRepository shortAnswerRepository;
+    @Autowired
     private PostCommentRepository postCommentRepository;
+    @Autowired
+    private QuestionRepository questionRepository;
+    @Autowired
+    private VoteAnswerRepository voteAnswerRepository;
+    @Autowired
+    private GroupRepository groupRepository;
+    @Autowired
+    private StudentInfoRepository studentInfoRepository;
+    @Autowired
+    private FacultyInfoRepository facultyInfoRepository;
+    @Autowired
+    private BusinessInfoRepository businessInfoRepository;
 
     @Autowired
     private PostInfoResponseConverter postInfoResponeConverter;
@@ -74,6 +111,14 @@ public class PostServiceImpl implements PostService {
     private SurveyResponeConverter surveyResponeConverter;
     @Autowired
     private CommentResponseConverter commentResponseConverter;
+    @Autowired
+    private UserInfoResponseConverter userInfoResponseConverter;
+    @Autowired
+    private StudentInfoResponseConverter studentInfoResponseConverter;
+    @Autowired
+    private FacultyInfoResponseConverter facultyInfoResponseConverter;
+    @Autowired
+    private BusinessInfoResponseConverter businessInfoResponseConverter;
 
     @Autowired
     private NormalPostUpdateOrSaveRequestConverter normalPostUpdateOrSaveRequestConverter;
@@ -104,6 +149,34 @@ public class PostServiceImpl implements PostService {
             } else if (responseDTOs.get(i).getType().equals(PostType.SURVEY.getName())) {
                 SurveyResponeDTO surveyResponeDTO = surveyResponeConverter
                         .toDTO(surveyPostRepository.findOneByPost_Id(responseDTOs.get(i).getId()));
+                dto = surveyResponeDTO;
+            }
+            dtos.add(dto);
+        }
+        return dtos;
+    }
+
+    @Override
+    public List<BaseDTO> findAllByUserId(Long id) {
+        List<BaseDTO> dtos = new ArrayList<>();
+        List<PostInfoResponseDTO> responseDTOs = postInfoResponeConverter
+                .toDTOGroup(postRepository.findAllByUser_IdOrderByUpdatedAtDesc(id));
+        for (int i = 0; i < responseDTOs.size(); i++) {
+            BaseDTO dto = null;
+            if (responseDTOs.get(i).getType().equals(PostType.NORMAL.getName())) {
+                NormalPostResponseDTO normalPostResponseDTO = normalPostResponeConverter
+                        .toDTO(normalPostRepository.findOneByPost_Id(responseDTOs.get(i).getId()));
+                this.setUserDetail(normalPostResponseDTO);
+                dto = normalPostResponseDTO;
+            } else if (responseDTOs.get(i).getType().equals(PostType.RECRUIMENT.getName())) {
+                RecruitmentPostResponseDTO recruitmentPostResponseDTO = recruitmentPostResponeConverter
+                        .toDTO(recruitmentPostRepository.findOneByPost_Id(responseDTOs.get(i).getId()));
+                this.setUserDetail(recruitmentPostResponseDTO);
+                dto = recruitmentPostResponseDTO;
+            } else if (responseDTOs.get(i).getType().equals(PostType.SURVEY.getName())) {
+                SurveyResponeDTO surveyResponeDTO = surveyResponeConverter
+                        .toDTO(surveyPostRepository.findOneByPost_Id(responseDTOs.get(i).getId()));
+                this.setUserDetail(surveyResponeDTO);
                 dto = surveyResponeDTO;
             }
             dtos.add(dto);
@@ -285,4 +358,156 @@ public class PostServiceImpl implements PostService {
         return dtos;
     }
 
+    @Override
+    public SurveyResponeDTO getSurveyDetailByPostId(Long postId) {
+        PostEntity postEntity = postRepository.findOneById(postId);
+        if (postEntity.getType().equals(PostType.SURVEY.getName())) {
+            SurveyResponeDTO surveyResponeDTO = surveyResponeConverter
+                    .toDTO(surveyPostRepository.findOneByPost_Id(postId));
+            return surveyResponeDTO;
+        } else {
+            throw new RuntimeException("survey_at_this_post_id_not_exist");
+        }
+    }
+
+    @Override
+    public String answerSurvey(SurveyAnswerRequestDTO surveyAnswerRequestDTO) {
+        UserEntity userEntity = userRepository.findOneById(surveyAnswerRequestDTO.getUser_id());
+        List<VoteAnswerEntity> voteAnswers = new ArrayList<>();
+        for (AnswerRequestDTO answerRequestDTO : surveyAnswerRequestDTO.getAnswers()) {
+            QuestionEntity questionEntity = questionRepository.findOneById(answerRequestDTO.getQuestion_id());
+            if (questionEntity.getType().equalsIgnoreCase(QuestionType.SHORT.getName())) {
+                if (shortAnswerRepository.findOneByUser_Id(userEntity.getId()) != null) {
+                    ShortAnswerEntity shortAnswerEntity = shortAnswerRepository.findOneByUser_Id(userEntity.getId());
+                    shortAnswerEntity.setContent(answerRequestDTO.getContent());
+                    shortAnswerRepository.save(shortAnswerEntity);
+                } else {
+                    ShortAnswerEntity shortAnswerEntity = new ShortAnswerEntity();
+                    shortAnswerEntity.setUser(userEntity);
+                    shortAnswerEntity.setContent(answerRequestDTO.getContent());
+                    shortAnswerEntity.setQuestion(questionEntity);
+                    shortAnswerRepository.save(shortAnswerEntity);
+                }
+
+            } else {
+                for (Long voteAnswerId : answerRequestDTO.getChoices_ids()) {
+                    VoteAnswerEntity voteAnswerEntity = voteAnswerRepository.findOneById(voteAnswerId);
+                    voteAnswers.add(voteAnswerEntity);
+                }
+                userEntity.setVoteAnswers(voteAnswers);
+                userRepository.save(userEntity);
+            }
+        }
+        return "";
+    }
+
+    @Override
+    public RecruitmentPostResponseDTO getRecruimentDetailByPostId(Long postId) {
+        PostEntity postEntity = postRepository.findOneById(postId);
+        if (postEntity.getType().equals(PostType.RECRUIMENT.getName())) {
+            RecruitmentPostResponseDTO recruitmentPostResponseDTO = recruitmentPostResponeConverter
+                    .toDTO(recruitmentPostRepository.findOneByPost_Id(postId));
+            return recruitmentPostResponseDTO;
+        } else {
+            throw new RuntimeException("recruitment_at_this_post_id_not_exist");
+        }
+    }
+
+    @Override
+    public List<BaseDTO> findAllByGroupCode(String groupCode) {
+        if (groupRepository.findOneByCode(groupCode) == null) {
+            throw new DuplicateUsernameException("group_does_not_exist");
+        }
+        List<BaseDTO> dtos = new ArrayList<>();
+        List<PostInfoResponseDTO> responseDTOs = postInfoResponeConverter
+                .toDTOGroup(postRepository
+                        .findAllByGroup_IdOrderByUpdatedAtDesc(groupRepository.findOneByCode(groupCode).getId()));
+        for (int i = 0; i < responseDTOs.size(); i++) {
+            BaseDTO dto = null;
+            if (responseDTOs.get(i).getType().equals(PostType.NORMAL.getName())) {
+                NormalPostResponseDTO normalPostResponseDTO = normalPostResponeConverter
+                        .toDTO(normalPostRepository.findOneByPost_Id(responseDTOs.get(i).getId()));
+                dto = normalPostResponseDTO;
+            } else if (responseDTOs.get(i).getType().equals(PostType.RECRUIMENT.getName())) {
+                RecruitmentPostResponseDTO recruitmentPostResponseDTO = recruitmentPostResponeConverter
+                        .toDTO(recruitmentPostRepository.findOneByPost_Id(responseDTOs.get(i).getId()));
+                dto = recruitmentPostResponseDTO;
+            } else if (responseDTOs.get(i).getType().equals(PostType.SURVEY.getName())) {
+                SurveyResponeDTO surveyResponeDTO = surveyResponeConverter
+                        .toDTO(surveyPostRepository.findOneByPost_Id(responseDTOs.get(i).getId()));
+                dto = surveyResponeDTO;
+            }
+            dtos.add(dto);
+        }
+        return dtos;
+    }
+
+    @Override
+    public NormalPostResponseDTO getNormalDetailByPostId(Long postId) {
+        PostEntity postEntity = postRepository.findOneById(postId);
+        if (postEntity.getType().equals(PostType.NORMAL.getName())) {
+            NormalPostResponseDTO normalPostResponseDTO = normalPostResponeConverter
+                    .toDTO(normalPostRepository.findOneByPost_Id(postId));
+            return normalPostResponseDTO;
+        } else {
+            throw new RuntimeException("normal_post_at_this_post_id_not_exist");
+        }
+    }
+
+    @Override
+    public List<BaseDTO> getAllPostByUserIdAndType(Long userId, String type) {
+        List<BaseDTO> dtos = new ArrayList<BaseDTO>();
+        if (type.equals(PostType.NORMAL.getName())) {
+            List<PostEntity> posts = postRepository.findAllByUser_IdAndTypeOrderByUpdatedAtDesc(userId, type);
+            for (PostEntity post : posts) {
+                NormalPostResponseDTO normalPostResponseDTO = normalPostResponeConverter
+                        .toDTO(normalPostRepository.findOneByPost_Id(post.getId()));
+                setUserDetail(normalPostResponseDTO);
+                dtos.add(normalPostResponseDTO);
+            }
+            return dtos;
+        } else if (type.equals(PostType.RECRUIMENT.getName())) {
+            List<PostEntity> posts = postRepository.findAllByUser_IdAndTypeOrderByUpdatedAtDesc(userId, type);
+            for (PostEntity post : posts) {
+                RecruitmentPostResponseDTO recruitmentPostResponseDTO = recruitmentPostResponeConverter
+                        .toDTO(recruitmentPostRepository.findOneByPost_Id(post.getId()));
+                setUserDetail(recruitmentPostResponseDTO);
+                dtos.add(recruitmentPostResponseDTO);
+            }
+            return dtos;
+        } else if (type.equals(PostType.SURVEY.getName())) {
+            List<PostEntity> posts = postRepository.findAllByUser_IdAndTypeOrderByUpdatedAtDesc(userId, type);
+            for (PostEntity post : posts) {
+                SurveyResponeDTO surveyResponeDTO = surveyResponeConverter
+                        .toDTO(surveyPostRepository.findOneByPost_Id(post.getId()));
+                setUserDetail(surveyResponeDTO);
+                dtos.add(surveyResponeDTO);
+            }
+            return dtos;
+        } else if (type.equals("null")) {
+            dtos = this.findAllByUserId(userId);
+            return dtos;
+        } else {
+            throw new RuntimeException("can_not_get_list_" + type);
+        }
+    }
+
+    private PostInfoResponseDTO setUserDetail(PostInfoResponseDTO dto) {
+        UserInfoResponseDTO userInfoResponseDTO = userInfoResponseConverter
+                .toDTO(userRepository.findOneById(dto.getUser().getId()));
+        if (userInfoResponseDTO.getRoleCodes().equals(Role.STUDENT.getName())) {
+            StudentInfoResponseDTO studentInfoResponseDTO = studentInfoResponseConverter
+                    .toDTO(studentInfoRepository.findOneByUser_Id(dto.getUser().getId()));
+            dto.setUser(studentInfoResponseDTO);
+        } else if (userInfoResponseDTO.getRoleCodes().equals(Role.BUSINESS.getName())) {
+            BusinessInfoResponseDTO businessInfoResponseDTO = businessInfoResponseConverter
+                    .toDTO(businessInfoRepository.findOneByUser_Id(dto.getUser().getId()));
+            dto.setUser(businessInfoResponseDTO);
+        } else if (userInfoResponseDTO.getRoleCodes().equals(Role.FACULTY.getName())) {
+            FacultyInfoResponseDTO facultyInfoResponseDTO = facultyInfoResponseConverter
+                    .toDTO(facultyInfoRepository.findOneByUser_Id(dto.getUser().getId()));
+            dto.setUser(facultyInfoResponseDTO);
+        }
+        return dto;
+    }
 }
