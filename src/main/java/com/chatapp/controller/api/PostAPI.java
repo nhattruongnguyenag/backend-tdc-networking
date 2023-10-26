@@ -35,6 +35,13 @@ public class PostAPI {
         return ResponseEntity.ok(responseData);
     }
 
+    @GetMapping({ "posts/user/{userId}", "posts/user/{userId}/" })
+    ResponseEntity<ResponseData<List<BaseDTO>>> getPostsByUserId(@PathVariable Long userId) {
+        ResponseData<List<BaseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
+                postService.getAllPostByUserIdAndType(userId, "null"));
+        return ResponseEntity.ok(responseData);
+    }
+
     // normalPost api
     @GetMapping({ "posts/normal", "posts/normal/" })
     public ResponseEntity<ResponseData<List<NormalPostResponseDTO>>> findAllNormalPosts() {

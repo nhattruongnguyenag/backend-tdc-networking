@@ -18,6 +18,7 @@ import com.chatapp.dto.response.SurveyResponeDTO;
 
 public interface PostService {
     List<BaseDTO> findAll();
+    List<BaseDTO> findAllByUserId(Long id);
 
     //normal post
     List<NormalPostResponseDTO> findAllNormalPost();

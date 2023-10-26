@@ -19,8 +19,8 @@ public class UserPageSocketController {
     @Autowired
     private UserService userService;
 
-    @MessageMapping({"/user/detail/follow", "/user/detail/follow/"})
-    @SendTo({"/topic/user/detail/follow/me", "/topic/user/detail/follow/me"})
+    @MessageMapping({"/user/detail/follow/following", "/user/detail/follow/following"})
+    @SendTo({"/topic/user/detail/follow/following", "/topic/user/detail/follow/following/"})
     public List<UserFollowResponseDTO> getFollowerInUserPage(@RequestBody UserFollowRequestDTO userFollowRequestDTO){
         if(userFollowRequestDTO.getUserFollowId() != null){
             userService.follow(userFollowRequestDTO);
@@ -30,8 +30,8 @@ public class UserPageSocketController {
         return userService.getFollowsByUserId(userGetRequestDTO);
     }
 
-    @MessageMapping({"/user/detail/follow", "/user/detail/follow/"})
-    @SendTo({"/topic/user/detail/follow/other", "/topic/user/detail/follow/other"})
+    @MessageMapping({"/user/detail/follow/follower", "/user/detail/follow/follower/"})
+    @SendTo({"/topic/user/detail/follow/follower", "/topic/user/detail/follow/follower/"})
     public List<UserFollowResponseDTO> getFollowingInUserPage(@RequestBody UserFollowRequestDTO userFollowRequestDTO){
         if(userFollowRequestDTO.getUserFollowId() != null){
             userService.follow(userFollowRequestDTO);
