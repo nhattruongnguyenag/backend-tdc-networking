@@ -386,3 +386,13 @@ Content-Type: application/json
 {
     "id":1
 }
+
+###
+POST http://127.0.0.1:8080/api/job/apply HTTP/1.1
+Content-Type: application/json
+
+{
+    "post_id":2,
+    "user_id":1,
+    "cv_url":"a.pdf"
+}
