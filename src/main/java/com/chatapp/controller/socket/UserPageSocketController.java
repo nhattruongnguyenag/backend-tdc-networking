@@ -8,6 +8,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.chatapp.dto.request.UserFindRequestDTO;
 import com.chatapp.dto.request.UserFollowRequestDTO;
 import com.chatapp.dto.request.UserGetRequestDTO;
 import com.chatapp.dto.response.UserFollowResponseDTO;
@@ -39,5 +40,18 @@ public class UserPageSocketController {
         UserGetRequestDTO userGetRequestDTO = new UserGetRequestDTO();
         userGetRequestDTO.setId(userFollowRequestDTO.getUserId());
         return userService.getOtherPeopleFollowByUserId(userGetRequestDTO);
+    }
+
+    
+    @MessageMapping({"/user/detail/follow/following/search", "/user/detail/follow/following/search"})
+    @SendTo({"/topic/user/detail/follow/following", "/topic/user/detail/follow/following/"})
+    public List<UserFollowResponseDTO> searchInFollowingUserPage(@RequestBody UserFindRequestDTO userFindRequestDTO){
+        return userService.findUserByNameInListFollowingByUserId(userFindRequestDTO);
+    }
+
+    @MessageMapping({"/user/detail/follow/follower/search", "/user/detail/follow/follower/search"})
+    @SendTo({"/topic/user/detail/follow/follower", "/topic/user/detail/follow/follower/"})
+    public List<UserFollowResponseDTO> searchInFollowerUserPage(@RequestBody UserFindRequestDTO userFindRequestDTO){
+        return userService.findUserByNameInListFollowerByUserId(userFindRequestDTO);
     }
 }

@@ -24,6 +24,7 @@ import com.chatapp.dto.request.FacultyInfoRegisterRequestDTO;
 import com.chatapp.dto.request.FacultyInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.StudentInfoRegisterRequestDTO;
 import com.chatapp.dto.request.StudentInfoUpdateOrSaveRequestDTO;
+import com.chatapp.dto.request.UserFindRequestDTO;
 import com.chatapp.dto.request.UserFollowRequestDTO;
 import com.chatapp.dto.request.UserGetRequestDTO;
 import com.chatapp.dto.request.UserInfoFindRequestDTO;
@@ -464,7 +465,8 @@ public class UserServiceImpl implements UserService {
         List<UserFindResponseDTO> userFindResponseDTOs = userFindResponseConverter
                 .toDTOGroup(userRepository.findAllByNameContainsAndRoles_Code(userInfoFindRequestDTO.getName(),
                         userInfoFindRequestDTO.getType()));
-        userFindResponseDTOs.remove(userFindResponseConverter.toDTO(userRepository.findOneById(userInfoFindRequestDTO.getUserId())));
+        userFindResponseDTOs.remove(
+                userFindResponseConverter.toDTO(userRepository.findOneById(userInfoFindRequestDTO.getUserId())));
         for (UserFindResponseDTO userFindResponseDTO : userFindResponseDTOs) {
             // set follow
             UserEntity entity = userRepository.findOneById(userInfoFindRequestDTO.getUserId());
@@ -517,11 +519,11 @@ public class UserServiceImpl implements UserService {
     public StudentInfoResponseDTO getStudentDetailByUserId(Long userId) {
         UserEntity userEntity = userRepository.findOneById(userId);
         UserInfoResponseDTO userInfoResponseDTO = userInfoResponseConverter.toDTO(userEntity);
-        if(userInfoResponseDTO.getRoleCodes().equals(Role.STUDENT.getName())){
-            StudentInfoResponseDTO studentInfoResponseDTO = studentInfoResponeConverter.toDTO(studentInfoRepository.findOneByUser_Id(userId));
+        if (userInfoResponseDTO.getRoleCodes().equals(Role.STUDENT.getName())) {
+            StudentInfoResponseDTO studentInfoResponseDTO = studentInfoResponeConverter
+                    .toDTO(studentInfoRepository.findOneByUser_Id(userId));
             return studentInfoResponseDTO;
-        }
-        else{
+        } else {
             throw new RuntimeException("student_at_this_user_id_not_exist");
         }
     }
@@ -530,11 +532,11 @@ public class UserServiceImpl implements UserService {
     public FacultyInfoResponseDTO getFacultyDetailByUserId(Long userId) {
         UserEntity userEntity = userRepository.findOneById(userId);
         UserInfoResponseDTO userInfoResponseDTO = userInfoResponseConverter.toDTO(userEntity);
-        if(userInfoResponseDTO.getRoleCodes().equals(Role.FACULTY.getName())){
-            FacultyInfoResponseDTO facultyInfoResponseDTO = facultyInfoResponeConverter.toDTO(facultyInfoRepository.findOneByUser_Id(userId));
+        if (userInfoResponseDTO.getRoleCodes().equals(Role.FACULTY.getName())) {
+            FacultyInfoResponseDTO facultyInfoResponseDTO = facultyInfoResponeConverter
+                    .toDTO(facultyInfoRepository.findOneByUser_Id(userId));
             return facultyInfoResponseDTO;
-        }
-        else{
+        } else {
             throw new RuntimeException("faculty_at_this_user_id_not_exist");
         }
     }
@@ -543,11 +545,11 @@ public class UserServiceImpl implements UserService {
     public BusinessInfoResponseDTO getBusinessDetailByUserId(Long userId) {
         UserEntity userEntity = userRepository.findOneById(userId);
         UserInfoResponseDTO userInfoResponseDTO = userInfoResponseConverter.toDTO(userEntity);
-        if(userInfoResponseDTO.getRoleCodes().equals(Role.BUSINESS.getName())){
-            BusinessInfoResponseDTO businessInfoResponseDTO = businessInfoResponeConverter.toDTO(businessInfoRepository.findOneByUser_Id(userId));
+        if (userInfoResponseDTO.getRoleCodes().equals(Role.BUSINESS.getName())) {
+            BusinessInfoResponseDTO businessInfoResponseDTO = businessInfoResponeConverter
+                    .toDTO(businessInfoRepository.findOneByUser_Id(userId));
             return businessInfoResponseDTO;
-        }
-        else{
+        } else {
             throw new RuntimeException("business_at_this_user_id_not_exist");
         }
     }
@@ -558,7 +560,8 @@ public class UserServiceImpl implements UserService {
             throw new DuplicateUsernameException("user_not_exists");
         }
         UserEntity userEntity = userRepository.findOneById(userGetRequestDTO.getId());
-        List<UserFollowResponseDTO> userFollowResponseDTOs = followResponseConverter.toDTOGroup(userEntity.getFollowUsers());
+        List<UserFollowResponseDTO> userFollowResponseDTOs = followResponseConverter
+                .toDTOGroup(userEntity.getFollowUsers());
         return userFollowResponseDTOs;
     }
 
@@ -568,9 +571,45 @@ public class UserServiceImpl implements UserService {
             throw new DuplicateUsernameException("user_not_exists");
         }
         UserEntity userEntity = userRepository.findOneById(userGetRequestDTO.getId());
-        List<UserFollowResponseDTO> userFollowResponseDTOs = followByOtherResponseConverter.toDTOGroup(userEntity.getFollowByUsers());
+        List<UserFollowResponseDTO> userFollowResponseDTOs = followByOtherResponseConverter
+                .toDTOGroup(userEntity.getFollowByUsers());
         return userFollowResponseDTOs;
     }
 
-    
+    @Override
+    public List<UserFollowResponseDTO> findUserByNameInListFollowingByUserId(UserFindRequestDTO userFindRequestDTO) {
+        UserGetRequestDTO userGetRequestDTO = new UserGetRequestDTO();
+        userGetRequestDTO.setId(userFindRequestDTO.getUserId());
+        List<UserFollowResponseDTO> userFollowResponseDTOs = this.getFollowsByUserId(userGetRequestDTO);
+        if (userFindRequestDTO.getSearch().equals("")) {
+            return userFollowResponseDTOs;
+        }
+        List<UserFollowResponseDTO> result = new ArrayList<UserFollowResponseDTO>();
+        for (UserFollowResponseDTO userFollowResponseDTO : userFollowResponseDTOs) {
+            UserEntity userEntity = userRepository.findOneById(userFollowResponseDTO.getId());
+            if (userEntity.getName().contains(userFindRequestDTO.getSearch())) {
+                result.add(userFollowResponseDTO);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public List<UserFollowResponseDTO> findUserByNameInListFollowerByUserId(UserFindRequestDTO userFindRequestDTO) {
+        UserGetRequestDTO userGetRequestDTO = new UserGetRequestDTO();
+        userGetRequestDTO.setId(userFindRequestDTO.getUserId());
+        List<UserFollowResponseDTO> userFollowResponseDTOs = this.getOtherPeopleFollowByUserId(userGetRequestDTO);
+        if (userFindRequestDTO.getSearch().equals("")) {
+            return userFollowResponseDTOs;
+        }
+        List<UserFollowResponseDTO> result = new ArrayList<UserFollowResponseDTO>();
+        for (UserFollowResponseDTO userFollowResponseDTO : userFollowResponseDTOs) {
+            UserEntity userEntity = userRepository.findOneById(userFollowResponseDTO.getId());
+            if (userEntity.getName().contains(userFindRequestDTO.getSearch())) {
+                result.add(userFollowResponseDTO);
+            }
+        }
+        return result;
+    }
+
 }

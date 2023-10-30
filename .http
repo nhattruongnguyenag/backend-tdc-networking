@@ -42,12 +42,12 @@ POST http://127.0.0.1:8080/api/student/register HTTP/1.1
 Content-Type: application/json
 
 {
-    "email":"sonthu3335@gmail.com",
+    "email":"sonthu3334@gmail.com",
     "name":"son",
     "password":"abc123",
     "image":"son.png",
     "phone":"56856863",
-    "code":"student_1",
+    "code":"student_2",
     "facultyName":"cntt",
     "major":"cntt e",
     "studentCode":"2356"
@@ -395,4 +395,13 @@ Content-Type: application/json
     "post_id":2,
     "user_id":1,
     "cv_url":"a.pdf"
+}
+
+###
+POST http://127.0.0.1:8080/api/abc HTTP/1.1
+Content-Type: application/json
+
+{
+    "userId": 1,
+    "search": "Khoa Cong"
 }

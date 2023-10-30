@@ -5,6 +5,7 @@ import com.chatapp.commond.ResponseData;
 import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.BaseDTO;
 import com.chatapp.dto.UserDTO;
+import com.chatapp.dto.request.UserFindRequestDTO;
 import com.chatapp.dto.request.UserFollowRequestDTO;
 import com.chatapp.dto.request.UserGetRequestDTO;
 import com.chatapp.dto.request.UserLoginRequestDTO;
