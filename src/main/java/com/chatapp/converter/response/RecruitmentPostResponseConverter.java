@@ -57,7 +57,9 @@ public class RecruitmentPostResponseConverter extends BaseConverter<RecruitmentP
         }
         userInfoResponseDTO.setRoleCodes(roleCodes);
         recruitmentPostResponseDTO.setUser(userInfoResponseDTO);
-        recruitmentPostResponseDTO.setGroup(groupResponseConverter.toDTO(postEntity.getGroup()));
+        if (postEntity.getGroup() != null) {
+            recruitmentPostResponseDTO.setGroup(groupResponseConverter.toDTO(postEntity.getGroup()));
+        }
         List<UserLikeResponeDTO> likes = new ArrayList<>();
         for (PostLikeEntity postLikeEntity : postEntity.getLikes()) {
             UserLikeResponeDTO userLikeResponeDTO = new UserLikeResponeDTO();

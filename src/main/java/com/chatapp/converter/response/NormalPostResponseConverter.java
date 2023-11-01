@@ -56,9 +56,11 @@ public class NormalPostResponseConverter extends BaseConverter<NormalPostEntity,
         }
         userInfoResponseDTO.setRoleCodes(roleCodes);
         normalPostResponeDTO.setUser(userInfoResponseDTO);
-        normalPostResponeDTO.setGroup(groupResponseConverter.toDTO(postEntity.getGroup()));
+        if (postEntity.getGroup() != null) {
+            normalPostResponeDTO.setGroup(groupResponseConverter.toDTO(postEntity.getGroup()));
+        }
         List<UserLikeResponeDTO> likes = new ArrayList<>();
-        for ( PostLikeEntity postLikeEntity : postEntity.getLikes()) {
+        for (PostLikeEntity postLikeEntity : postEntity.getLikes()) {
             UserLikeResponeDTO userLikeResponeDTO = new UserLikeResponeDTO();
             UserEntity uEntity = userRepository.findOneById(postLikeEntity.getUser().getId());
             userLikeResponeDTO.setId(uEntity.getId());
@@ -68,7 +70,7 @@ public class NormalPostResponseConverter extends BaseConverter<NormalPostEntity,
         }
         normalPostResponeDTO.setLikes(likes);
         List<ImageResponseDTO> images = new ArrayList<>();
-        for ( PostImageEntity postImageEntity : postEntity.getImages()) {
+        for (PostImageEntity postImageEntity : postEntity.getImages()) {
             ImageResponseDTO imageResponseDTO = new ImageResponseDTO();
             imageResponseDTO.setId(postImageEntity.getId());
             imageResponseDTO.setUri(postImageEntity.getUri());
@@ -76,7 +78,7 @@ public class NormalPostResponseConverter extends BaseConverter<NormalPostEntity,
         }
         normalPostResponeDTO.setImages(images);
         List<CommentResponeseDTO> comments = new ArrayList<>();
-        for ( PostCommentEntity postCommentEntity : postEntity.getComments()) {
+        for (PostCommentEntity postCommentEntity : postEntity.getComments()) {
             CommentResponeseDTO commentResponeseDTO = commentResponseConverter.toDTO(postCommentEntity);
             comments.add(commentResponeseDTO);
         }

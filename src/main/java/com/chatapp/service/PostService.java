@@ -3,6 +3,7 @@ package com.chatapp.service;
 import java.util.List;
 
 import com.chatapp.dto.BaseDTO;
+import com.chatapp.dto.request.AllPostByUserAndGroupResponseDTO;
 import com.chatapp.dto.request.CommentDeleteRequestDTO;
 import com.chatapp.dto.request.CommentSaveRequestDTO;
 import com.chatapp.dto.request.LikeRequestDTO;
@@ -19,6 +20,7 @@ import com.chatapp.dto.response.SurveyResponeDTO;
 public interface PostService {
     List<BaseDTO> findAll();
     List<BaseDTO> findAllByUserId(Long id);
+    String delete(Long postid);
 
     //normal post
     List<NormalPostResponseDTO> findAllNormalPost();
@@ -53,4 +55,6 @@ public interface PostService {
     List<BaseDTO> findAllByGroupCode(String groupCode);
 
     List<BaseDTO> getAllPostByUserIdAndType(Long userId, String type);
+
+    List<BaseDTO> getAllPostByUserIdAndGroupCode(AllPostByUserAndGroupResponseDTO allPostByUserAndGroupResponseDTO);
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.chatapp.commond.ResponseData;
 import com.chatapp.dto.BaseDTO;
+import com.chatapp.dto.request.AllPostByUserAndGroupResponseDTO;
 import com.chatapp.dto.request.CommentDeleteRequestDTO;
 import com.chatapp.dto.request.CommentSaveRequestDTO;
 import com.chatapp.dto.request.LikeRequestDTO;
@@ -166,6 +167,20 @@ public class PostAPI {
     public ResponseEntity<ResponseData<List<BaseDTO>>> getByGroupId(@PathVariable String groupCode) {
         ResponseData<List<BaseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
                 postService.findAllByGroupCode(groupCode));
+        return ResponseEntity.ok(responseData);
+    }
+
+    @PostMapping({ "posts/group/user", "posts/group/user/" })
+    public ResponseEntity<ResponseData<List<BaseDTO>>> getByUserIdAndGroupCode(@RequestBody AllPostByUserAndGroupResponseDTO allPostByUserAndGroupResponseDTO) {
+        ResponseData<List<BaseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
+                postService.getAllPostByUserIdAndGroupCode(allPostByUserAndGroupResponseDTO));
+        return ResponseEntity.ok(responseData);
+    }
+
+    @DeleteMapping({ "posts/{postId}", "posts/{postId}/" })
+    ResponseEntity<ResponseData<?>> deletePost(@RequestParam Long postId) {
+        postService.delete(postId);
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK, "success", null);
         return ResponseEntity.ok(responseData);
     }
 }

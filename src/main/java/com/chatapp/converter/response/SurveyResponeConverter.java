@@ -68,9 +68,11 @@ public class SurveyResponeConverter extends BaseConverter<SurveyPostEntity, Surv
         }
         surveyResponeDTO.setQuestions(questionResponseDTOs);
         surveyResponeDTO.setUser(userInfoResponseDTO);
-        surveyResponeDTO.setGroup(groupResponseConverter.toDTO(postEntity.getGroup()));
+        if (postEntity.getGroup() != null) {
+            surveyResponeDTO.setGroup(groupResponseConverter.toDTO(postEntity.getGroup()));
+        }
         List<UserLikeResponeDTO> likes = new ArrayList<>();
-        for ( PostLikeEntity postLikeEntity : postEntity.getLikes()) {
+        for (PostLikeEntity postLikeEntity : postEntity.getLikes()) {
             UserLikeResponeDTO userLikeResponeDTO = new UserLikeResponeDTO();
             UserEntity uEntity = userRepository.findOneById(postLikeEntity.getUser().getId());
             userLikeResponeDTO.setId(uEntity.getId());
@@ -88,7 +90,7 @@ public class SurveyResponeConverter extends BaseConverter<SurveyPostEntity, Surv
         }
         surveyResponeDTO.setImages(images);
         List<CommentResponeseDTO> comments = new ArrayList<>();
-        for ( PostCommentEntity postCommentEntity : postEntity.getComments()) {
+        for (PostCommentEntity postCommentEntity : postEntity.getComments()) {
             CommentResponeseDTO commentResponeseDTO = commentResponseConverter.toDTO(postCommentEntity);
             comments.add(commentResponeseDTO);
         }

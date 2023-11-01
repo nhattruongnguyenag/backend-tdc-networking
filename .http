@@ -369,7 +369,7 @@ GET http://127.0.0.1:8080/api/faculty/1 HTTP/1.1
 GET http://127.0.0.1:8080/api/business/14 HTTP/1.1
 
 ###
-GET http://127.0.0.1:8080/api/posts/group/group_1 HTTP/1.1
+GET http://127.0.0.1:8080/api/posts/group/group_tdc HTTP/1.1
 
 ###
 POST http://127.0.0.1:8080/api/users/follow/me HTTP/1.1
@@ -404,4 +404,12 @@ Content-Type: application/json
 {
     "userId": 1,
     "search": "Khoa Cong"
+}
+
+###
+POST http://127.0.0.1:8080/api/posts/group/user HTTP/1.1
+Content-Type: application/json
+
+{
+    "userId": 1
 }
