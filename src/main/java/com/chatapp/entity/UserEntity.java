@@ -28,6 +28,9 @@ public class UserEntity extends BaseEntity {
     @Column(name = "status", nullable = false)
     private Byte status;
 
+    @Column(name = "background", nullable = true)
+    private String background;
+
     @Column(name = "image", nullable = true)
     private String image;
 
@@ -370,5 +373,13 @@ public class UserEntity extends BaseEntity {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getBackground() {
+        return this.background;
+    }
+
+    public void setBackground(String background) {
+        this.background = background;
     }
 }

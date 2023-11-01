@@ -21,6 +21,9 @@ public class GroupEntity extends BaseEntity {
     @Column(name = "image", nullable = false)
     private String image;
 
+    @Column(name = "background", nullable = true)
+    private String background;
+
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<PostEntity> posts = new ArrayList<>();
 
@@ -74,5 +77,14 @@ public class GroupEntity extends BaseEntity {
     public void setCode(String code) {
         this.code = code;
     }
+
+    public String getBackground() {
+        return this.background;
+    }
+
+    public void setBackground(String background) {
+        this.background = background;
+    }
+
 
 }

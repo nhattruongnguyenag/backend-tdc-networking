@@ -11,7 +11,7 @@ VALUES
 (0,0,0,'khoa_cong_nghe_tu_dong','cntd@tdc.edu.vn','khoa_cong_nghe_tu_dong.png','Khoa Công Nghệ Tự Động','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
 (0,0,0,'khoa_co_khi_che_tao_may','fme@tdc.edu.vn','khoa_co_khi_che_tao_may.png','Khoa Cơ Khí Chế Tạo Máy','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
 (0,0,0,'khoa_co_khi_o_to','khoacokhioto@tdc.edu.vn','khoa_co_khi_o_to.png','Khoa Cơ Khí Ô Tô','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
-(0,0,0,'khoa_tai_chinh_ke_toan','khoatckt@tdc.edu.vn','khoa_co_khi_che_tao_may.png','Khoa Cơ Khí Chế Tạo Máy','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
+(0,0,0,'khoa_tai_chinh_ke_toan','khoatckt@tdc.edu.vn','khoa_tai_chinh_ke_toan.png','Khoa Tài Chính - Kế Toán','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
 (0,0,0,'khoa_quan_tri_kinh_doanh','khoaqtkd@tdc.edu.vn','khoa_quan_tri_kinh_doanh.png','Khoa Quản Trị Kinh Doanh','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
 (0,0,0,'khoa_du_lich','khoadulich@tdc.edu.vn','khoa_du_lich.png','Khoa Du Lịch','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
 (0,0,0,'khoa_tieng_anh','khoatienganh@tdc.edu.vn','khoa_tieng_anh.png','Khoa Tiếng Anh','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
@@ -78,3 +78,31 @@ INSERT INTO `majors`(`faculty_id`,`name`,`code`) VALUES
 (9,'Tiếng anh','TA'),
 (10,'Tiếng hàn','TH'),
 (11,'Tiếng nhật','TN');
+
+INSERT INTO `_groups`(`active`, `background`, `code`, `image`, `name`) VALUES 
+(1,'group_tdc_background.png','group_tdc','group_tdc_avartar.png','Group by TDC - Trường Cao Đẳng Công Nghệ Thủ Đức'),
+(1,'group_connect_business_background.png','group_connect_business','group_connect_business_avartar.png','Cộng Đồng Kết Nối Doanh Nghiệp'),
+(1,'dien_dien_tu_background.png','group_dien_dien_tu','dien_dien_tu_avartar.png','Điện - Điện Tử Group'),
+(1,'cong_nghe_thong_tin_background.png','group_cong_nghe_thong_tin','cong_nghe_thong_tin_avartar.png','Công Nghệ Thông Tin Group'),
+(1,'cong_nghe_tu_dong_background.png','group_cong_nghe_tu_dong','cong_nghe_tu_dong_avartar.png','Công Nghệ Tự Động Group'),
+(1,'co_khi_che_tao_may_background.png','group_co_khi_che_tao_may','co_khi_che_tao_may_avartar.png','Cơ Khí Chế Tạo Máy Group'),
+(1,'co_khi_oto_background.png','group_co_khi_oto','co_khi_oto_avartar.png','Cơ Khí Ô Tô Group'),
+(1,'tai_chinh_ke_toan_background.png','group_tai_chinh_ke_toan','tai_chinh_ke_toan_avartar.png','Tài Chính - Kế Toán Group'),
+(1,'quan_tri_kinh_doanh_background.png','group_quan_tri_kinh_doanh','quan_tri_kinh_doanh_avartar.png','Quản Trị Kinh Doanh Group'),
+(1,'du_lich_background.png','group_du_lich','du_lich_avartar.png','Du Lịch Group'),
+(1,'tieng_anh_background.png','group_tieng_anh','tieng_anh_avartar.png','Tiếng Anh Group'),
+(1,'tieng_han_background.png','group_tieng_han','tieng_han_avartar.png','Tiếng Hàn Group'),
+(1,'bo_mon_tieng_nhat_background.png','group_bo_mon_tieng_nhat','bo_mon_tieng_nhat_avartar.png','Bộ Môn Tiếng Nhật Group');
+
+INSERT INTO `user_group`(`group_id`, `user_id`) VALUES 
+(3,1),
+(4,2),
+(5,3),
+(6,4),
+(7,5),
+(8,6),
+(9,7),
+(10,8),
+(11,9),
+(12,10),
+(13,11);
