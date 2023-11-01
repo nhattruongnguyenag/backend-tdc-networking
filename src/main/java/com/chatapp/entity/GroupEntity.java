@@ -18,9 +18,6 @@ public class GroupEntity extends BaseEntity {
     @Column(name = "code", nullable = false , unique = true)
     private String code;
 
-    @Column(name = "image", nullable = false)
-    private String image;
-
     @Column(name = "background", nullable = true)
     private String background;
 
@@ -36,14 +33,6 @@ public class GroupEntity extends BaseEntity {
 
     public void setActive(Byte active) {
         this.active = active;
-    }
-
-    public String getImage() {
-        return this.image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public String getName() {

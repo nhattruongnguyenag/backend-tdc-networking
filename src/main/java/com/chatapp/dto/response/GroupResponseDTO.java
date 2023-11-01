@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class GroupResponseDTO extends BaseDTO{
     private Byte active;
-    private String image;
+    private String background;
     private String name;
     private String code;
 }

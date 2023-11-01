@@ -11,6 +11,7 @@ import com.chatapp.converter.request.LikeRequestConverter;
 import com.chatapp.converter.request.NormalPostUpdateOrSaveRequestConverter;
 import com.chatapp.converter.request.RecruitmentPosyUpdateOrSaveRequestConverter;
 import com.chatapp.converter.request.SurveySaveRequestConverter;
+import com.chatapp.converter.request.UserSavePostRequestConverter;
 import com.chatapp.converter.response.BusinessInfoResponseConverter;
 import com.chatapp.converter.response.CommentResponseConverter;
 import com.chatapp.converter.response.FacultyInfoResponseConverter;
@@ -31,6 +32,7 @@ import com.chatapp.dto.request.PostFindRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
 import com.chatapp.dto.request.SurveyAnswerRequestDTO;
 import com.chatapp.dto.request.SurveySaveRequestDTO;
+import com.chatapp.dto.request.UserSavePostRequestDTO;
 import com.chatapp.dto.response.BusinessInfoResponseDTO;
 import com.chatapp.dto.response.CommentResponeseDTO;
 import com.chatapp.dto.response.FacultyInfoResponseDTO;
@@ -131,6 +133,8 @@ public class PostServiceImpl implements PostService {
     private LikeRequestConverter likeRequestConverter;
     @Autowired
     private CommentSaveRequestConverter commentSaveRequestConverter;
+    @Autowired
+    private UserSavePostRequestConverter userSavePostRequestConverter;
 
     @Override
     public List<BaseDTO> findAll() {
@@ -559,5 +563,15 @@ public class PostServiceImpl implements PostService {
             }
             return result;
         }
+    }
+
+    @Override
+    public String userSavePost(UserSavePostRequestDTO userSavePostRequestDTO) {
+        if (userRepository.findOneById(userSavePostRequestDTO.getUserId()) == null) {
+            throw new DuplicateUsernameException("user_does_not_exist");
+        }
+        UserEntity userEntity = userSavePostRequestConverter.toEntity(userSavePostRequestDTO);
+        userRepository.save(userEntity);
+        return "";
     }
 }

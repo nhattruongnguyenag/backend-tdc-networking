@@ -17,6 +17,7 @@ import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
 import com.chatapp.dto.request.SurveyAnswerRequestDTO;
 import com.chatapp.dto.request.SurveySaveRequestDTO;
+import com.chatapp.dto.request.UserSavePostRequestDTO;
 import com.chatapp.dto.response.CommentResponeseDTO;
 import com.chatapp.dto.response.NormalPostResponseDTO;
 import com.chatapp.dto.response.RecruitmentPostResponseDTO;
@@ -40,6 +41,13 @@ public class PostAPI {
     ResponseEntity<ResponseData<List<BaseDTO>>> getPostsByUserId(@PathVariable Long userId) {
         ResponseData<List<BaseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
                 postService.getAllPostByUserIdAndType(userId, "null"));
+        return ResponseEntity.ok(responseData);
+    }
+
+    @PostMapping({ "posts/user/save", "posts/user/save/" })
+    ResponseEntity<ResponseData<?>> userSavePost(@RequestBody UserSavePostRequestDTO userSavePostRequestDTO) {
+        ResponseData<?> responseData = new ResponseData<>(HttpStatus.OK, "success",
+                postService.userSavePost(userSavePostRequestDTO));
         return ResponseEntity.ok(responseData);
     }
 
