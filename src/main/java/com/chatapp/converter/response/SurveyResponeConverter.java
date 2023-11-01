@@ -71,6 +71,9 @@ public class SurveyResponeConverter extends BaseConverter<SurveyPostEntity, Surv
         if (postEntity.getGroup() != null) {
             surveyResponeDTO.setGroup(groupResponseConverter.toDTO(postEntity.getGroup()));
         }
+        else{
+            surveyResponeDTO.setGroup(null);
+        }
         List<UserLikeResponeDTO> likes = new ArrayList<>();
         for (PostLikeEntity postLikeEntity : postEntity.getLikes()) {
             UserLikeResponeDTO userLikeResponeDTO = new UserLikeResponeDTO();

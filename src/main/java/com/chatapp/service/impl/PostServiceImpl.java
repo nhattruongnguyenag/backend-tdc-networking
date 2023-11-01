@@ -549,7 +549,15 @@ public class PostServiceImpl implements PostService {
             }
             return dtos;
         } else {
-            return this.getAllPostByUserIdAndType(allPostByUserAndGroupResponseDTO.getUserId(), "null");
+            dtos = this.getAllPostByUserIdAndType(allPostByUserAndGroupResponseDTO.getUserId(), "null");
+            List<BaseDTO> result = new ArrayList<BaseDTO>();
+            for (BaseDTO dto : dtos) {
+                PostInfoResponseDTO postInfoResponseDTO = postInfoResponeConverter.toDTO(postRepository.findOneById(dto.getId()));
+                if(postInfoResponseDTO.getGroup() == null){
+                    result.add(dto);
+                }
+            }
+            return result;
         }
     }
 }

@@ -59,6 +59,9 @@ public class NormalPostResponseConverter extends BaseConverter<NormalPostEntity,
         if (postEntity.getGroup() != null) {
             normalPostResponeDTO.setGroup(groupResponseConverter.toDTO(postEntity.getGroup()));
         }
+        else{
+            normalPostResponeDTO.setGroup(null);
+        }
         List<UserLikeResponeDTO> likes = new ArrayList<>();
         for (PostLikeEntity postLikeEntity : postEntity.getLikes()) {
             UserLikeResponeDTO userLikeResponeDTO = new UserLikeResponeDTO();

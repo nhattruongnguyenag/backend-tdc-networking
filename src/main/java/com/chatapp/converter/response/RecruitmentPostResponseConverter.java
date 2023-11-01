@@ -60,6 +60,9 @@ public class RecruitmentPostResponseConverter extends BaseConverter<RecruitmentP
         if (postEntity.getGroup() != null) {
             recruitmentPostResponseDTO.setGroup(groupResponseConverter.toDTO(postEntity.getGroup()));
         }
+        else{
+            recruitmentPostResponseDTO.setGroup(null);
+        }
         List<UserLikeResponeDTO> likes = new ArrayList<>();
         for (PostLikeEntity postLikeEntity : postEntity.getLikes()) {
             UserLikeResponeDTO userLikeResponeDTO = new UserLikeResponeDTO();

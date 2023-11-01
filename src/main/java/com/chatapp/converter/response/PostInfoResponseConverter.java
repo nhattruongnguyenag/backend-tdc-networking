@@ -24,6 +24,9 @@ public class PostInfoResponseConverter extends BaseConverter<PostEntity, PostInf
         if (entity.getGroup() != null) {
             postInfoResponeDTO.setGroup(groupResponseConverter.toDTO(entity.getGroup()));
         }
+        else{
+            postInfoResponeDTO.setGroup(null);
+        }
         return postInfoResponeDTO;
     }
 }
