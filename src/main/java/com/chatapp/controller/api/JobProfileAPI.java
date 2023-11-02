@@ -20,19 +20,19 @@ public class JobProfileAPI {
 
     @PostMapping({ "job/apply", "job/apply/" })
     public ResponseEntity<ResponseData<String>> applyJobProfile(@RequestBody JobApplyProfileRequestDTO jobApplyProfileRequestDTO) {
-        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED, "sucesss",jobProfileService.applyJobProfile(jobApplyProfileRequestDTO));
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",jobProfileService.applyJobProfile(jobApplyProfileRequestDTO));
         return ResponseEntity.created(null).body(responseData);
     }
 
     @GetMapping({ "job/post/{postId}", "job/post/{postId}" })
     public ResponseEntity<ResponseData<List<JobProfileResponseDTO>>> getListJobProfileByPostId(@PathVariable Long postId) {
         ResponseData<List<JobProfileResponseDTO>> responseData = new ResponseData<>(HttpStatus.CREATED, "sucesss",jobProfileService.getJobprofileByPostId(postId));
-        return ResponseEntity.created(null).body(responseData);
+        return ResponseEntity.ok(responseData);
     }
 
-    @GetMapping({ "job/post/{postId}/{jobId}", "job/post/{postId}/{jobId}/" })
-    public ResponseEntity<ResponseData<JobProfileResponseDTO>> getJobProfileDetailByPostIdAndJobId(@PathVariable Long postId, @PathVariable Long jobId) {
-        ResponseData<JobProfileResponseDTO> responseData = new ResponseData<>(HttpStatus.CREATED, "sucesss",jobProfileService.getJobProfileDetail(postId,jobId));
-        return ResponseEntity.created(null).body(responseData);
+    @GetMapping({ "job/{jobId}", "job/{jobId}/" })
+    public ResponseEntity<ResponseData<JobProfileResponseDTO>> getJobProfileDetailByPostIdAndJobId(@PathVariable Long jobId) {
+        ResponseData<JobProfileResponseDTO> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",jobProfileService.getJobProfileDetail(jobId));
+        return ResponseEntity.ok(responseData);
     }
 }
