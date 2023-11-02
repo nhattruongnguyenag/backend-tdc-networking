@@ -53,6 +53,9 @@ public class JobprofileServiceImpl implements JobProfileService {
 
     @Override
     public List<JobProfileResponseDTO> getJobprofileByPostId(Long postId) {
+        if (postRepository.findOneById(postId) == null) {
+            throw new RuntimeException("this_post_does_not_exist");
+        }
         PostEntity postEntity = postRepository.findOneById(postId);
         if (!postEntity.getType().equals(PostType.RECRUIMENT.getName())) {
             throw new RuntimeException("this_post_is_not_a_recruitment");
@@ -63,12 +66,8 @@ public class JobprofileServiceImpl implements JobProfileService {
     }
 
     @Override
-    public JobProfileResponseDTO getJobProfileDetail(Long postId, Long jobId) {
-        PostEntity postEntity = postRepository.findOneById(postId);
-        if (!postEntity.getType().equals(PostType.RECRUIMENT.getName())) {
-            throw new RuntimeException("this_post_is_not_a_recruitment");
-        }
-        JobProfileResponseDTO jobProfileResponseDTO = jobProfileResponseConverter.toDTO(jobProfileRepository.findOneByPost_IdAndId(postId, jobId));
+    public JobProfileResponseDTO getJobProfileDetail(Long jobId) {
+        JobProfileResponseDTO jobProfileResponseDTO = jobProfileResponseConverter.toDTO(jobProfileRepository.findOneById(jobId));
         return jobProfileResponseDTO;
     }
 

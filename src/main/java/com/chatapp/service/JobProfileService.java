@@ -8,5 +8,5 @@ import com.chatapp.dto.response.JobProfileResponseDTO;
 public interface JobProfileService {
     String applyJobProfile(JobApplyProfileRequestDTO jobApplyProfileRequestDTO);
     List<JobProfileResponseDTO> getJobprofileByPostId(Long postId);
-    JobProfileResponseDTO getJobProfileDetail(Long postId , Long jobId);
+    JobProfileResponseDTO getJobProfileDetail(Long jobId);
 }
