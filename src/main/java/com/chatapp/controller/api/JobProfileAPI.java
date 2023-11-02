@@ -26,7 +26,7 @@ public class JobProfileAPI {
 
     @GetMapping({ "job/post/{postId}", "job/post/{postId}" })
     public ResponseEntity<ResponseData<List<JobProfileResponseDTO>>> getListJobProfileByPostId(@PathVariable Long postId) {
-        ResponseData<List<JobProfileResponseDTO>> responseData = new ResponseData<>(HttpStatus.CREATED, "sucesss",jobProfileService.getJobprofileByPostId(postId));
+        ResponseData<List<JobProfileResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",jobProfileService.getJobprofileByPostId(postId));
         return ResponseEntity.ok(responseData);
     }
 
