@@ -5,12 +5,11 @@ import com.chatapp.dto.request.StudentInfoRegisterRequestDTO;
 import com.chatapp.entity.StudentInfoEntity;
 import com.chatapp.entity.UserEntity;
 
+
 import org.springframework.stereotype.Component;
 
 @Component
 public class StudentInfoRegisterRequestConverter extends BaseConverter<UserEntity, StudentInfoRegisterRequestDTO>{
-
-    @Override
     public UserEntity toEntity(StudentInfoRegisterRequestDTO dto) {
         UserEntity userEntity = super.toEntity(dto);
         StudentInfoEntity studentInfoEntity = new StudentInfoEntity();
@@ -21,5 +20,4 @@ public class StudentInfoRegisterRequestConverter extends BaseConverter<UserEntit
         userEntity.setStudentInfo(studentInfoEntity);
         return userEntity;
     }
-
 }

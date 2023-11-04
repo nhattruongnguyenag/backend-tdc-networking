@@ -10,7 +10,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://127.0.0.1:8080/api/users/token/eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbnR0YWJjZEBnbWFpbC5jb20iLCJpYXQiOjE2OTYzMDQ2NDcsImV4cCI6MTY5NjMwODI0N30.eX8SlRgJxOeBjTxDNNpgoBvE23XzmBNqvBPymPt1Gak HTTP/1.1
+GET http://127.0.0.1:8080/api/users/token/eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb250aHUxMjQ1QGdtYWlsLmNvbSIsImlhdCI6MTY5OTA4NDQ0MywiZXhwIjoxNjk5MDg4MDQzfQ.X7WkjfwYxoRCPFNosWamkdT3lShlESWfnjl_FwINp44 HTTP/1.1
 
 ###
 GET http://127.0.0.1:8080/api/users HTTP/1.1
@@ -42,13 +42,13 @@ POST http://127.0.0.1:8080/api/student/register HTTP/1.1
 Content-Type: application/json
 
 {
-    "email":"sonthu3334@gmail.com",
+    "email":"sonthu1245@gmail.com",
     "name":"son",
     "password":"abc123",
     "image":"son.png",
     "phone":"56856863",
-    "code":"student_2",
-    "facultyName":"cntt",
+    "code":"student_10",
+    "facultyName":"Khoa Công Nghệ Thông Tin",
     "major":"cntt e",
     "studentCode":"2356"
 }

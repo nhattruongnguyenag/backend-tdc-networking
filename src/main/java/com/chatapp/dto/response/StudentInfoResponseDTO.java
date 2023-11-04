@@ -7,4 +7,5 @@ public class StudentInfoResponseDTO extends UserInfoResponseDTO {
     String facultyName;
     String major;
     String studentCode;
+    String facultyGroupCode;
 }

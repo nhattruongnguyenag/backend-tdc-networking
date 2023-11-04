@@ -36,13 +36,16 @@ import com.chatapp.dto.response.UserFindResponseDTO;
 import com.chatapp.dto.response.UserFollowResponseDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.entity.FollowEntity;
+import com.chatapp.entity.GroupEntity;
 import com.chatapp.entity.RoleEntity;
 import com.chatapp.entity.UserEntity;
+import com.chatapp.enums.GroupDefault;
 import com.chatapp.enums.Role;
 import com.chatapp.exception.DuplicateUsernameException;
 import com.chatapp.repository.BusinessInfoRepository;
 import com.chatapp.repository.FacultyInfoRepository;
 import com.chatapp.repository.FollowReposittory;
+import com.chatapp.repository.GroupRepository;
 import com.chatapp.repository.RoleRepository;
 import com.chatapp.repository.StudentInfoRepository;
 import com.chatapp.repository.UserRepository;
@@ -84,6 +87,8 @@ public class UserServiceImpl implements UserService {
     private BusinessInfoRepository businessInfoRepository;
     @Autowired
     private FollowReposittory followReposittory;
+    @Autowired
+    private GroupRepository groupRepository;
 
     @Autowired
     private UserInfoResponseConverter userInfoResponseConverter;
@@ -274,6 +279,7 @@ public class UserServiceImpl implements UserService {
         studentRegisterDTO.setPassword(passwordEncoder.encode(studentRegisterDTO.getPassword()));
 
         userEntity = studentInfoRegisterRequestConverter.toEntity(studentRegisterDTO);
+        setGroupToStudent(userEntity);
         userEntity.setRoles(roles);
         userEntity.setStatus((byte) 0);
         userRepository.save(userEntity);
@@ -610,6 +616,37 @@ public class UserServiceImpl implements UserService {
             }
         }
         return result;
+    }
+
+    private void setGroupToStudent(UserEntity userEntity) {
+        String falcutyName = userEntity.getStudentInfo().getFacultyName();
+        List<GroupEntity> groups = new ArrayList<>();
+        groups.add(groupRepository.findOneByCode(GroupDefault.GROUP_TDC.getCodeGroup()));
+        groups.add(groupRepository.findOneByCode(GroupDefault.GROUP_KET_NOI_DOANH_NGHIEP.getCodeGroup()));
+        if (falcutyName.equals(GroupDefault.GROUP_DIEN_DIEN_TU.getName())) {
+            groups.add(groupRepository.findOneByCode(GroupDefault.GROUP_DIEN_DIEN_TU.getCodeGroup()));
+        } else if (falcutyName.equals(GroupDefault.GROUP_CONG_NGHE_THONG_TIN.getName())) {
+            groups.add(groupRepository.findOneByCode(GroupDefault.GROUP_CONG_NGHE_THONG_TIN.getCodeGroup()));
+        } else if (falcutyName.equals(GroupDefault.GROUP_CONG_NGHE_TU_DONG.getName())) {
+            groups.add(groupRepository.findOneByCode(GroupDefault.GROUP_CONG_NGHE_TU_DONG.getCodeGroup()));
+        } else if (falcutyName.equals(GroupDefault.GROUP_CO_KHI_CHE_TAO_MAY.getName())) {
+            groups.add(groupRepository.findOneByCode(GroupDefault.GROUP_CO_KHI_CHE_TAO_MAY.getCodeGroup()));
+        } else if (falcutyName.equals(GroupDefault.GROUP_CO_KHI_OTO.getName())) {
+            groups.add(groupRepository.findOneByCode(GroupDefault.GROUP_CO_KHI_OTO.getCodeGroup()));
+        } else if (falcutyName.equals(GroupDefault.GROUP_TAI_CHINH_KE_TOAN.getName())) {
+            groups.add(groupRepository.findOneByCode(GroupDefault.GROUP_TAI_CHINH_KE_TOAN.getCodeGroup()));
+        } else if (falcutyName.equals(GroupDefault.GROUP_QUAN_TRI_KINH_DOANH.getName())) {
+            groups.add(groupRepository.findOneByCode(GroupDefault.GROUP_QUAN_TRI_KINH_DOANH.getCodeGroup()));
+        } else if (falcutyName.equals(GroupDefault.GROUP_DU_LICH.getName())) {
+            groups.add(groupRepository.findOneByCode(GroupDefault.GROUP_DU_LICH.getCodeGroup()));
+        } else if (falcutyName.equals(GroupDefault.GROUP_TIENG_ANH.getName())) {
+            groups.add(groupRepository.findOneByCode(GroupDefault.GROUP_TIENG_ANH.getCodeGroup()));
+        } else if (falcutyName.equals(GroupDefault.GROUP_TIENG_HAN.getName())) {
+            groups.add(groupRepository.findOneByCode(GroupDefault.GROUP_TIENG_HAN.getCodeGroup()));
+        } else if (falcutyName.equals(GroupDefault.GROUP_BO_MON_TIENG_NHAT.getName())) {
+            groups.add(groupRepository.findOneByCode(GroupDefault.GROUP_BO_MON_TIENG_NHAT.getCodeGroup()));
+        }
+        userEntity.setGroups(groups);
     }
 
 }
