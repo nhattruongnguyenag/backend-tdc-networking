@@ -20,6 +20,7 @@ import com.chatapp.converter.response.PostInfoResponseConverter;
 import com.chatapp.converter.response.RecruitmentPostResponseConverter;
 import com.chatapp.converter.response.StudentInfoResponseConverter;
 import com.chatapp.converter.response.SurveyResponeConverter;
+import com.chatapp.converter.response.SurveyResultResponseConverter;
 import com.chatapp.converter.response.UserInfoResponseConverter;
 import com.chatapp.dto.BaseDTO;
 import com.chatapp.dto.request.AllPostByUserAndGroupResponseDTO;
@@ -42,12 +43,14 @@ import com.chatapp.dto.response.PostInfoResponseDTO;
 import com.chatapp.dto.response.RecruitmentPostResponseDTO;
 import com.chatapp.dto.response.StudentInfoResponseDTO;
 import com.chatapp.dto.response.SurveyResponeDTO;
+import com.chatapp.dto.response.SurveyResultResponseDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.entity.PostCommentEntity;
 import com.chatapp.entity.PostEntity;
 import com.chatapp.entity.PostLikeEntity;
 import com.chatapp.entity.QuestionEntity;
 import com.chatapp.entity.ShortAnswerEntity;
+import com.chatapp.entity.SurveyPostEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.entity.VoteAnswerEntity;
 import com.chatapp.enums.PostType;
@@ -123,6 +126,8 @@ public class PostServiceImpl implements PostService {
     private FacultyInfoResponseConverter facultyInfoResponseConverter;
     @Autowired
     private BusinessInfoResponseConverter businessInfoResponseConverter;
+    @Autowired
+    private SurveyResultResponseConverter surveyResultResponseConverter;
 
     @Autowired
     private NormalPostUpdateOrSaveRequestConverter normalPostUpdateOrSaveRequestConverter;
@@ -420,7 +425,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<BaseDTO> findAllByGroupCode(String groupCode) {
+    public List<BaseDTO> findAllByGroupCode(String groupCode, Long userLogin) {
         if (groupRepository.findOneByCode(groupCode) == null) {
             throw new DuplicateUsernameException("group_does_not_exist");
         }
@@ -441,6 +446,9 @@ public class PostServiceImpl implements PostService {
             } else if (responseDTOs.get(i).getType().equals(PostType.SURVEY.getName())) {
                 SurveyResponeDTO surveyResponeDTO = surveyResponeConverter
                         .toDTO(surveyPostRepository.findOneByPost_Id(responseDTOs.get(i).getId()));
+                Long isConducted = this.checkUserLoginHadConducted(
+                        surveyPostRepository.findOneByPost_Id(responseDTOs.get(i).getId()), userLogin);
+                surveyResponeDTO.setIsConduct(isConducted);
                 dto = surveyResponeDTO;
             }
             dtos.add(dto);
@@ -557,8 +565,9 @@ public class PostServiceImpl implements PostService {
             dtos = this.getAllPostByUserIdAndType(allPostByUserAndGroupResponseDTO.getUserId(), "null");
             List<BaseDTO> result = new ArrayList<BaseDTO>();
             for (BaseDTO dto : dtos) {
-                PostInfoResponseDTO postInfoResponseDTO = postInfoResponeConverter.toDTO(postRepository.findOneById(dto.getId()));
-                if(postInfoResponseDTO.getGroup() == null){
+                PostInfoResponseDTO postInfoResponseDTO = postInfoResponeConverter
+                        .toDTO(postRepository.findOneById(dto.getId()));
+                if (postInfoResponseDTO.getGroup() == null) {
                     result.add(dto);
                 }
             }
@@ -603,4 +612,40 @@ public class PostServiceImpl implements PostService {
         }
         return dtos;
     }
+
+    private Long checkUserLoginHadConducted(SurveyPostEntity surveyPostEntity, Long userLogin) {
+        Long isConducted = Long.valueOf(0);
+        for (QuestionEntity questionEntity : surveyPostEntity.getQuestions()) {
+            if (questionEntity.getType().equals(QuestionType.SHORT.getName())) {
+                if (shortAnswerRepository.findOneByUser_Id(userLogin) != null) {
+                    isConducted = Long.valueOf(1);
+                    return isConducted;
+                }
+            }
+            else {
+                    List<VoteAnswerEntity> voteAnswerEntities = voteAnswerRepository
+                            .findAllByQuestion_Id(questionEntity.getId());
+                    for (VoteAnswerEntity voteAnswerEntity : voteAnswerEntities) {
+                        if (userRepository.findOneById(userLogin).getVoteAnswers().contains(voteAnswerEntity)) {
+                            isConducted = Long.valueOf(1);
+                            return isConducted;
+                        }
+                    }
+                }
+        }
+        return isConducted;
+    }
+
+    @Override
+    public List<SurveyResultResponseDTO> getSurveyResultByPostId(Long postId) {
+        PostEntity postEntity = postRepository.findOneById(postId);
+        SurveyPostEntity surveyPostEntity = surveyPostRepository.findOneByPost_Id(postId);
+        if (postEntity.getType().equals(PostType.SURVEY.getName())) {
+            return surveyResultResponseConverter.toDTOGroup(questionRepository.findAllBySurvey_Id(surveyPostEntity.getId()));
+        } else {
+            throw new RuntimeException("survey_at_this_post_id_not_exist");
+        }
+    }
+
+    
 }

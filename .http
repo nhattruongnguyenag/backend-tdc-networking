@@ -163,15 +163,18 @@ Content-Type: application/json
    "questions": [
        {
            "type": "tra-loi-ngan",
-           "title": "Ngôn ngữ lập trình bạn đang sử dụng là gì?"
+           "title": "Ngôn ngữ lập trình bạn đang sử dụng là gì?",
+           "required": 0
        },
        {
            "type": "tra-loi-ngan",
-           "title": "name?"
+           "title": "name?",
+           "required": 0
        },
        {
            "type": "chon-mot-dap-an",
            "title": "Bạn có đi làm thêm không?",
+           "required": 1,
            "choices": [
                "Có",
                "Không"
@@ -180,6 +183,7 @@ Content-Type: application/json
        {
            "type": "chon-nhieu-dap-an",
            "title": "Bạn đi làm thêm vào thứ mấy?",
+           "required": 0,
            "choices": [
                "Thứ 2",
                "Thứ 3",
@@ -339,7 +343,7 @@ POST http://127.0.0.1:8080/api/posts/survey/conduct HTTP/1.1
 Content-Type: application/json
 
 {
-    "user_id": 1,
+    "user_id": 3,
     "answers": [
         {
             "question_id": 1,
@@ -349,7 +353,7 @@ Content-Type: application/json
         {
             "question_id": 3,
             "content": "",
-            "choices_ids": [1]
+            "choices_ids": [2]
         },
         {
             "question_id": 4,
@@ -369,7 +373,7 @@ GET http://127.0.0.1:8080/api/faculty/1 HTTP/1.1
 GET http://127.0.0.1:8080/api/business/14 HTTP/1.1
 
 ###
-GET http://127.0.0.1:8080/api/posts/group/group_tdc HTTP/1.1
+GET http://127.0.0.1:8080/api/posts/group?code=group_tdc&userLogin=2 HTTP/1.1
 
 ###
 POST http://127.0.0.1:8080/api/users/follow/me HTTP/1.1
@@ -420,7 +424,7 @@ Content-Type: application/json
 
 {
     "userId": 1,
-    "postId": 3
+    "postId": 6
 }
 
 ###
@@ -431,3 +435,6 @@ GET http://127.0.0.1:8080/api/job/2 HTTP/1.1
 
 ###
 GET  http://127.0.0.1:8080/api/posts/user/save/1 HTTP/1.1
+
+###
+GET  http://127.0.0.1:8080/api/posts/survey/1/result HTTP/1.1
