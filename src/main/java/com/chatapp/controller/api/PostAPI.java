@@ -46,8 +46,15 @@ public class PostAPI {
 
     @PostMapping({ "posts/user/save", "posts/user/save/" })
     ResponseEntity<ResponseData<?>> userSavePost(@RequestBody UserSavePostRequestDTO userSavePostRequestDTO) {
-        ResponseData<?> responseData = new ResponseData<>(HttpStatus.OK, "success",
+        ResponseData<?> responseData = new ResponseData<>(HttpStatus.CREATED, "success",
                 postService.userSavePost(userSavePostRequestDTO));
+        return ResponseEntity.created(null).body(responseData);
+    }
+
+    @GetMapping({ "posts/user/save/{userId}", "posts/user/save/{userId}/" })
+    ResponseEntity<ResponseData<?>> userSavePost(@PathVariable Long userId) {
+        ResponseData<?> responseData = new ResponseData<>(HttpStatus.OK, "success",
+                postService.getPostSaveByUserId(userId));
         return ResponseEntity.ok(responseData);
     }
 

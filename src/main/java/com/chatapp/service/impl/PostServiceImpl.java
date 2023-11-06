@@ -32,6 +32,7 @@ import com.chatapp.dto.request.PostFindRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
 import com.chatapp.dto.request.SurveyAnswerRequestDTO;
 import com.chatapp.dto.request.SurveySaveRequestDTO;
+import com.chatapp.dto.request.UserGetRequestDTO;
 import com.chatapp.dto.request.UserSavePostRequestDTO;
 import com.chatapp.dto.response.BusinessInfoResponseDTO;
 import com.chatapp.dto.response.CommentResponeseDTO;
@@ -573,5 +574,33 @@ public class PostServiceImpl implements PostService {
         UserEntity userEntity = userSavePostRequestConverter.toEntity(userSavePostRequestDTO);
         userRepository.save(userEntity);
         return "";
+    }
+
+    @Override
+    public List<BaseDTO> getPostSaveByUserId(Long userId) {
+        if (userRepository.findOneById(userId) == null) {
+            throw new DuplicateUsernameException("user_does_not_exist");
+        }
+        List<BaseDTO> dtos = new ArrayList<>();
+        List<PostInfoResponseDTO> responseDTOs = postInfoResponeConverter
+                .toDTOGroup(userRepository.findOneById(userId).getPostSave());
+        for (int i = 0; i < responseDTOs.size(); i++) {
+            BaseDTO dto = null;
+            if (responseDTOs.get(i).getType().equals(PostType.NORMAL.getName())) {
+                NormalPostResponseDTO normalPostResponseDTO = normalPostResponeConverter
+                        .toDTO(normalPostRepository.findOneByPost_Id(responseDTOs.get(i).getId()));
+                dto = normalPostResponseDTO;
+            } else if (responseDTOs.get(i).getType().equals(PostType.RECRUIMENT.getName())) {
+                RecruitmentPostResponseDTO recruitmentPostResponseDTO = recruitmentPostResponeConverter
+                        .toDTO(recruitmentPostRepository.findOneByPost_Id(responseDTOs.get(i).getId()));
+                dto = recruitmentPostResponseDTO;
+            } else if (responseDTOs.get(i).getType().equals(PostType.SURVEY.getName())) {
+                SurveyResponeDTO surveyResponeDTO = surveyResponeConverter
+                        .toDTO(surveyPostRepository.findOneByPost_Id(responseDTOs.get(i).getId()));
+                dto = surveyResponeDTO;
+            }
+            dtos.add(dto);
+        }
+        return dtos;
     }
 }

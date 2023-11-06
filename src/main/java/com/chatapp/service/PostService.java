@@ -12,6 +12,7 @@ import com.chatapp.dto.request.PostFindRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
 import com.chatapp.dto.request.SurveyAnswerRequestDTO;
 import com.chatapp.dto.request.SurveySaveRequestDTO;
+import com.chatapp.dto.request.UserGetRequestDTO;
 import com.chatapp.dto.request.UserSavePostRequestDTO;
 import com.chatapp.dto.response.CommentResponeseDTO;
 import com.chatapp.dto.response.NormalPostResponseDTO;
@@ -61,4 +62,6 @@ public interface PostService {
 
     //user save post
     String userSavePost(UserSavePostRequestDTO userSavePostRequestDTO);
+    List<BaseDTO> getPostSaveByUserId(Long userId);
+
 }

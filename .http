@@ -420,7 +420,7 @@ Content-Type: application/json
 
 {
     "userId": 1,
-    "postId": 2
+    "postId": 3
 }
 
 ###
@@ -428,3 +428,6 @@ GET http://127.0.0.1:8080/api/job/post/2 HTTP/1.1
 
 ###
 GET http://127.0.0.1:8080/api/job/2 HTTP/1.1
+
+###
+GET  http://127.0.0.1:8080/api/posts/user/save/1 HTTP/1.1

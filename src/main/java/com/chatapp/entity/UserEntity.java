@@ -54,6 +54,7 @@ public class UserEntity extends BaseEntity {
     private List<RoleEntity> roles = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
+    @OrderBy("updatedAt DESC")
     @JoinTable(name = "user_save_posts", joinColumns = @JoinColumn(name = "user_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "post_id", nullable = false))
     private List<PostEntity> postSave = new ArrayList<>();
 
