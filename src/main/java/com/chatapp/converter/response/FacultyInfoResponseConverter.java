@@ -38,6 +38,7 @@ public class FacultyInfoResponseConverter extends BaseConverter<FacultyInfoEntit
             roleCodes += entity.getUser().getRoles().get(i).getCode();
         }
         facultyInfoResponeDTO.setRoleCodes(roleCodes);
+        facultyInfoResponeDTO.setFacultyGroupCode(getFacultyGroupCode(userEntity).getCodeGroup());
         facultyInfoResponeDTO.setFacultyGroupId(getFacultyGroupCode(userEntity).getIdGroup());
         facultyInfoResponeDTO.setFollows(followResponseConverter.toDTOGroup(userEntity.getFollowUsers()));
         return facultyInfoResponeDTO;
