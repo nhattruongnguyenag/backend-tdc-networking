@@ -512,7 +512,15 @@ public class PostServiceImpl implements PostService {
             return dtos;
         } else if (type.equals("null")) {
             dtos = this.findAllByUserId(userId);
-            return dtos;
+            List<BaseDTO> result = new ArrayList<BaseDTO>();
+            for (BaseDTO dto : dtos) {
+                PostInfoResponseDTO postInfoResponseDTO = postInfoResponeConverter
+                        .toDTO(postRepository.findOneById(dto.getId()));
+                if (postInfoResponseDTO.getGroup() == null) {
+                    result.add(dto);
+                }
+            }
+            return result;
         } else {
             throw new RuntimeException("can_not_get_list_" + type);
         }
