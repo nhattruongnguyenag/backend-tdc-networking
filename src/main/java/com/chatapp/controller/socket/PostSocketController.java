@@ -21,17 +21,17 @@ public class PostSocketController {
     @Autowired
     private PostService postService;
 
-    @MessageMapping({ "/posts/{code}/listen", "/posts/{code}/listen/" })
-    @SendTo({ "/topic/posts/{code}", "/topic/posts/{code}" })
-    public List<BaseDTO> getPostsByCode(@DestinationVariable("code") String code) {
-        return postService.findAllByRoleCode(code);
+    @MessageMapping({ "/posts/group/{code}/listen", "/posts/group/{code}/listen" })
+    @SendTo({ "/topic/posts/group/{code}", "/topic/posts/group/{code}/" })
+    public List<BaseDTO> getPostsByCode(@DestinationVariable("code") String code , @RequestParam("userLogin") Long userLogin) {
+        return postService.findAllByGroupCode(code,userLogin);
     }
 
-    @MessageMapping({ "/posts/{code}/like", "/posts/{code}/like/" })
-    @SendTo({ "/topic/posts/{code}", "/topic/posts/{code}" })
-    public List<BaseDTO> saveMessage(@RequestBody LikeRequestDTO likeRequestDTO) {
+    @MessageMapping({ "/posts/group/{code}/like", "/posts/group/{code}/like/"})
+    @SendTo({ "/topic/posts/group/{code}", "/topic/posts/group/{code}" })
+    public List<BaseDTO> saveMessage(@DestinationVariable("code") String code ,@RequestBody LikeRequestDTO likeRequestDTO) {
         postService.likePost(likeRequestDTO);
-        return postService.findAllByRoleCode(likeRequestDTO.getCode());
+        return postService.findAllByGroupCode(code,likeRequestDTO.getUserId());
     }
 
     @MessageMapping({ "/posts/user/unsave", "/posts/user/unsave/" })
