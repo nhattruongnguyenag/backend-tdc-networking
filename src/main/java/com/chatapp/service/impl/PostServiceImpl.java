@@ -512,27 +512,26 @@ public class PostServiceImpl implements PostService {
             return dtos;
         } else if (type.equals("null")) {
             dtos = this.findAllByUserId(userId);
-            if (dtos.size() > 0) {
-                UserInfoResponseDTO userInfoResponseDTO = userInfoResponseConverter
-                        .toDTO(userRepository.findOneById(userId));
-                if (userInfoResponseDTO.getRoleCodes().equals(Role.BUSINESS.getName())) {
-                    return dtos;
-                } else {
-                    List<BaseDTO> result = new ArrayList<BaseDTO>();
-                    for (BaseDTO dto : dtos) {
-                        PostInfoResponseDTO postInfoResponseDTO = postInfoResponeConverter
-                                .toDTO(postRepository.findOneById(dto.getId()));
-                        if (postInfoResponseDTO.getGroup() == null) {
-                            result.add(dto);
-                        }
-                    }
-                    return result;
-                }
-            } else {
-                UserInfoResponseDTO userInfoResponseDTO = userInfoResponseConverter
-                        .toDTO(userRepository.findOneById(userId));
-                dtos.add(this.setUserDetail(userInfoResponseDTO));
+            UserInfoResponseDTO userInfoResponseDTO = userInfoResponseConverter
+                    .toDTO(userRepository.findOneById(userId));
+            if (userInfoResponseDTO.getRoleCodes().equals(Role.BUSINESS.getName())) {
                 return dtos;
+            } else {
+                List<BaseDTO> result = new ArrayList<BaseDTO>();
+                for (BaseDTO dto : dtos) {
+                    PostInfoResponseDTO postInfoResponseDTO = postInfoResponeConverter
+                            .toDTO(postRepository.findOneById(dto.getId()));
+                    if (postInfoResponseDTO.getGroup() == null) {
+                        result.add(dto);
+                    }
+                }
+
+                if (result.size() > 0) {
+                    return result;
+                } else {
+                    dtos.add(this.setUserDetail(userInfoResponseDTO));
+                    return dtos;
+                }
             }
         } else {
             throw new RuntimeException("can_not_get_list_" + type);
