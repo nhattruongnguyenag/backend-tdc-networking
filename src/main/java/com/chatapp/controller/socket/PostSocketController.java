@@ -21,9 +21,9 @@ public class PostSocketController {
     @Autowired
     private PostService postService;
 
-    @MessageMapping({ "/posts/group/{code}/listen", "/posts/group/{code}/listen" })
+    @MessageMapping({ "/posts/group/{code}/listen/{userlogin}", "/posts/group/{code}/listen/{userlogin}/" })
     @SendTo({ "/topic/posts/group/{code}", "/topic/posts/group/{code}/" })
-    public List<BaseDTO> getPostsByCode(@DestinationVariable("code") String code , @RequestParam("userLogin") Long userLogin) {
+    public List<BaseDTO> getPostsByCode(@DestinationVariable("code") String code , @DestinationVariable("userLogin") Long userLogin) {
         return postService.findAllByGroupCode(code,userLogin);
     }
 
