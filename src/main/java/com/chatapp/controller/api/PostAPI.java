@@ -22,6 +22,7 @@ import com.chatapp.dto.response.CommentResponeseDTO;
 import com.chatapp.dto.response.NormalPostResponseDTO;
 import com.chatapp.dto.response.RecruitmentPostResponseDTO;
 import com.chatapp.dto.response.SurveyResponeDTO;
+import com.chatapp.dto.response.SurveyResultResponseDTO;
 import com.chatapp.enums.PostType;
 import com.chatapp.service.PostService;
 
@@ -46,8 +47,15 @@ public class PostAPI {
 
     @PostMapping({ "posts/user/save", "posts/user/save/" })
     ResponseEntity<ResponseData<?>> userSavePost(@RequestBody UserSavePostRequestDTO userSavePostRequestDTO) {
-        ResponseData<?> responseData = new ResponseData<>(HttpStatus.OK, "success",
+        ResponseData<?> responseData = new ResponseData<>(HttpStatus.CREATED, "success",
                 postService.userSavePost(userSavePostRequestDTO));
+        return ResponseEntity.created(null).body(responseData);
+    }
+
+    @GetMapping({ "posts/user/save/{userId}", "posts/user/save/{userId}/" })
+    ResponseEntity<ResponseData<?>> userSavePost(@PathVariable Long userId) {
+        ResponseData<?> responseData = new ResponseData<>(HttpStatus.OK, "success",
+                postService.getPostSaveByUserId(userId));
         return ResponseEntity.ok(responseData);
     }
 
@@ -142,6 +150,13 @@ public class PostAPI {
         return ResponseEntity.ok(responseData);
     }
 
+    @GetMapping({ "posts/survey/{postId}/result", "posts/survey/{postId}/result/" })
+    ResponseEntity<ResponseData<List<SurveyResultResponseDTO>>> getResultSurveyByPostId(@PathVariable Long postId) {
+        ResponseData<List<SurveyResultResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
+                postService.getSurveyResultByPostId(postId));
+        return ResponseEntity.ok(responseData);
+    }
+
     // other api
     @PostMapping({ "posts/like", "posts/like/" })
     ResponseEntity<ResponseData<?>> like(@RequestBody LikeRequestDTO likeRequestDTO) {
@@ -171,10 +186,10 @@ public class PostAPI {
         return ResponseEntity.ok(responseData);
     }
 
-    @GetMapping({ "posts/group/{groupCode}", "posts/group/{groupCode}/" })
-    public ResponseEntity<ResponseData<List<BaseDTO>>> getByGroupId(@PathVariable String groupCode) {
+    @GetMapping({ "posts/group", "posts/group/" })
+    public ResponseEntity<ResponseData<List<BaseDTO>>> getByGroupId(@RequestParam String code , @RequestParam Long userLogin) {
         ResponseData<List<BaseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
-                postService.findAllByGroupCode(groupCode));
+                postService.findAllByGroupCode(code , userLogin));
         return ResponseEntity.ok(responseData);
     }
 

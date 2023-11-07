@@ -101,4 +101,5 @@ public class SurveyResponeConverter extends BaseConverter<SurveyPostEntity, Surv
         surveyResponeDTO.setCommentQuantity(Long.valueOf(comments.size()));
         return surveyResponeDTO;
     }
+    
 }

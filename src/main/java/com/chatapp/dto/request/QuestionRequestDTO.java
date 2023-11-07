@@ -8,5 +8,6 @@ import lombok.Data;
 public class QuestionRequestDTO {
     private String type;
     private String title;
+    private Long required;
     private List<String> choices;
 }

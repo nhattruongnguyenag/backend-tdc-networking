@@ -10,7 +10,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://127.0.0.1:8080/api/users/token/eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbnR0YWJjZEBnbWFpbC5jb20iLCJpYXQiOjE2OTYzMDQ2NDcsImV4cCI6MTY5NjMwODI0N30.eX8SlRgJxOeBjTxDNNpgoBvE23XzmBNqvBPymPt1Gak HTTP/1.1
+GET http://127.0.0.1:8080/api/users/token/eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb250aHUxMjQ1QGdtYWlsLmNvbSIsImlhdCI6MTY5OTA4NDQ0MywiZXhwIjoxNjk5MDg4MDQzfQ.X7WkjfwYxoRCPFNosWamkdT3lShlESWfnjl_FwINp44 HTTP/1.1
 
 ###
 GET http://127.0.0.1:8080/api/users HTTP/1.1
@@ -42,13 +42,13 @@ POST http://127.0.0.1:8080/api/student/register HTTP/1.1
 Content-Type: application/json
 
 {
-    "email":"sonthu3334@gmail.com",
+    "email":"sonthu1245@gmail.com",
     "name":"son",
     "password":"abc123",
     "image":"son.png",
     "phone":"56856863",
-    "code":"student_2",
-    "facultyName":"cntt",
+    "code":"student_10",
+    "facultyName":"Khoa Công Nghệ Thông Tin",
     "major":"cntt e",
     "studentCode":"2356"
 }
@@ -163,15 +163,18 @@ Content-Type: application/json
    "questions": [
        {
            "type": "tra-loi-ngan",
-           "title": "Ngôn ngữ lập trình bạn đang sử dụng là gì?"
+           "title": "Ngôn ngữ lập trình bạn đang sử dụng là gì?",
+           "required": 0
        },
        {
            "type": "tra-loi-ngan",
-           "title": "name?"
+           "title": "name?",
+           "required": 0
        },
        {
            "type": "chon-mot-dap-an",
            "title": "Bạn có đi làm thêm không?",
+           "required": 1,
            "choices": [
                "Có",
                "Không"
@@ -180,6 +183,7 @@ Content-Type: application/json
        {
            "type": "chon-nhieu-dap-an",
            "title": "Bạn đi làm thêm vào thứ mấy?",
+           "required": 0,
            "choices": [
                "Thứ 2",
                "Thứ 3",
@@ -339,7 +343,7 @@ POST http://127.0.0.1:8080/api/posts/survey/conduct HTTP/1.1
 Content-Type: application/json
 
 {
-    "user_id": 1,
+    "user_id": 5,
     "answers": [
         {
             "question_id": 1,
@@ -354,7 +358,7 @@ Content-Type: application/json
         {
             "question_id": 4,
             "content": "",
-            "choices_ids": [3,4,5]
+            "choices_ids": [3,4]
         }
     ]
 }
@@ -369,7 +373,7 @@ GET http://127.0.0.1:8080/api/faculty/1 HTTP/1.1
 GET http://127.0.0.1:8080/api/business/14 HTTP/1.1
 
 ###
-GET http://127.0.0.1:8080/api/posts/group/group_tdc HTTP/1.1
+GET http://127.0.0.1:8080/api/posts/group?code=group_tdc&userLogin=2 HTTP/1.1
 
 ###
 POST http://127.0.0.1:8080/api/users/follow/me HTTP/1.1
@@ -420,7 +424,7 @@ Content-Type: application/json
 
 {
     "userId": 1,
-    "postId": 2
+    "postId": 6
 }
 
 ###
@@ -428,3 +432,9 @@ GET http://127.0.0.1:8080/api/job/post/2 HTTP/1.1
 
 ###
 GET http://127.0.0.1:8080/api/job/2 HTTP/1.1
+
+###
+GET  http://127.0.0.1:8080/api/posts/user/save/1 HTTP/1.1
+
+###
+GET  http://127.0.0.1:8080/api/posts/survey/1/result HTTP/1.1

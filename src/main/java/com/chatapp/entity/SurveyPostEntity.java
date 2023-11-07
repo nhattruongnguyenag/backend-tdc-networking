@@ -53,4 +53,5 @@ public class SurveyPostEntity extends BaseEntity {
     public void setQuestions(List<QuestionEntity> questions) {
         this.questions = questions;
     }
+
 }

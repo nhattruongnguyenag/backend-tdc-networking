@@ -9,4 +9,5 @@ public class SurveyResponeDTO extends PostInfoResponseDTO{
     private String title;
     private String description;
     private List<QuestionResponseDTO> questions;
+    private Long isConduct;
 }

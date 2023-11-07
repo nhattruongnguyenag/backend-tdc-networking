@@ -3,16 +3,29 @@ package com.chatapp.converter.request;
 import com.chatapp.converter.abstracts.BaseConverter;
 import com.chatapp.dto.request.BusinessInfoRegisterRequestDTO;
 import com.chatapp.entity.BusinessesInfoEntity;
+import com.chatapp.entity.GroupEntity;
 import com.chatapp.entity.UserEntity;
+import com.chatapp.enums.GroupDefault;
+import com.chatapp.repository.GroupRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class BusinessInfoRegisterRequestConverter extends BaseConverter<UserEntity, BusinessInfoRegisterRequestDTO>{
 
+    @Autowired
+    GroupRepository groupRepository;
+
     @Override
     public UserEntity toEntity(BusinessInfoRegisterRequestDTO dto) {
         UserEntity userEntity = super.toEntity(dto);
+        List<GroupEntity> groups = new ArrayList<>();
+        groups.add(groupRepository.findOneByCode(GroupDefault.GROUP_KET_NOI_DOANH_NGHIEP.getCodeGroup()));
+        userEntity.setGroups(groups);
         BusinessesInfoEntity businessesInfoEntity = new BusinessesInfoEntity();
         businessesInfoEntity.setRepresentor(dto.getRepresentor());
         businessesInfoEntity.setTaxCode(dto.getTaxCode());

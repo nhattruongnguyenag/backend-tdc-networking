@@ -12,11 +12,13 @@ import com.chatapp.dto.request.PostFindRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
 import com.chatapp.dto.request.SurveyAnswerRequestDTO;
 import com.chatapp.dto.request.SurveySaveRequestDTO;
+import com.chatapp.dto.request.UserGetRequestDTO;
 import com.chatapp.dto.request.UserSavePostRequestDTO;
 import com.chatapp.dto.response.CommentResponeseDTO;
 import com.chatapp.dto.response.NormalPostResponseDTO;
 import com.chatapp.dto.response.RecruitmentPostResponseDTO;
 import com.chatapp.dto.response.SurveyResponeDTO;
+import com.chatapp.dto.response.SurveyResultResponseDTO;
 
 public interface PostService {
     List<BaseDTO> findAll();
@@ -37,6 +39,7 @@ public interface PostService {
     String saveSurvey(SurveySaveRequestDTO saveRequestDTO);
     SurveyResponeDTO getSurveyDetailByPostId(Long postId);
     String answerSurvey(SurveyAnswerRequestDTO surveyAnswerRequestDTO);
+    List<SurveyResultResponseDTO> getSurveyResultByPostId(Long postId);
 
     //post like
     String likePost(LikeRequestDTO likeRequestDTO);
@@ -53,7 +56,7 @@ public interface PostService {
 
     List<BaseDTO> findAllByRoleCode(String code);
 
-    List<BaseDTO> findAllByGroupCode(String groupCode);
+    List<BaseDTO> findAllByGroupCode(String groupCode , Long userLogin);
 
     List<BaseDTO> getAllPostByUserIdAndType(Long userId, String type);
 
@@ -61,4 +64,6 @@ public interface PostService {
 
     //user save post
     String userSavePost(UserSavePostRequestDTO userSavePostRequestDTO);
+    List<BaseDTO> getPostSaveByUserId(Long userId);
+
 }

@@ -54,10 +54,12 @@ public class SurveySaveRequestConverter extends BaseConverter<PostEntity, Survey
             if (questionDTO.getChoices() != null) {
                 questionRequestDTO.setTitle(questionDTO.getTitle());
                 questionRequestDTO.setType(questionDTO.getType());
+                questionRequestDTO.setRequired(questionDTO.getRequired());
                 questionRequestDTO.setChoices(questionDTO.getChoices());
             } else {
                 questionRequestDTO.setTitle(questionDTO.getTitle());
                 questionRequestDTO.setType(questionDTO.getType());
+                questionRequestDTO.setRequired(questionDTO.getRequired());
             }
             questions.add(questionRequestDTO);
         }
