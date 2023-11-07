@@ -10,7 +10,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://127.0.0.1:8080/api/users/token/eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb250aHUxMjQ1QGdtYWlsLmNvbSIsImlhdCI6MTY5OTA4NDQ0MywiZXhwIjoxNjk5MDg4MDQzfQ.X7WkjfwYxoRCPFNosWamkdT3lShlESWfnjl_FwINp44 HTTP/1.1
+GET http://127.0.0.1:8080/api/users/token/eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJraG9hZGR0QHRkYy5lZHUudm4iLCJpYXQiOjE2OTkzNjc3NjksImV4cCI6MTY5OTM3MTM2OX0.Rtn8mNxlhhniT_lrvHA8wtQOvFgIk7I8BUSKUXgp_xA HTTP/1.1
 
 ###
 GET http://127.0.0.1:8080/api/users HTTP/1.1
@@ -438,3 +438,13 @@ GET  http://127.0.0.1:8080/api/posts/user/save/1 HTTP/1.1
 
 ###
 GET  http://127.0.0.1:8080/api/posts/survey/1/result HTTP/1.1
+
+###
+###
+POST http://127.0.0.1:8080/api/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email":"khoaddt@tdc.edu.vn",
+    "password":"abc123"
+}
