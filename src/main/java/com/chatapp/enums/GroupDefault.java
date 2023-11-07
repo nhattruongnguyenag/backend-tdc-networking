@@ -7,7 +7,7 @@ public enum GroupDefault {
     GROUP_CONG_NGHE_THONG_TIN("Khoa Công Nghệ Thông Tin","group_cong_nghe_thong_tin",Long.valueOf(4)),
     GROUP_CONG_NGHE_TU_DONG("Khoa Công Nghệ Tự Động","group_cong_nghe_tu_dong",Long.valueOf(5)),
     GROUP_CO_KHI_CHE_TAO_MAY("Khoa Cơ Khí Chế Tạo Máy","group_co_khi_che_tao_may",Long.valueOf(6)),
-    GROUP_CO_KHI_OTO("Khoa Cơ Khí Ô Tô","group_co_khi_che_oto",Long.valueOf(7)),
+    GROUP_CO_KHI_OTO("Khoa Cơ Khí Ô Tô","group_co_khi_oto",Long.valueOf(7)),
     GROUP_TAI_CHINH_KE_TOAN("Khoa Tài Chính - Kế Toán","group_tai_chinh_ke_toan",Long.valueOf(8)),
     GROUP_QUAN_TRI_KINH_DOANH("Khoa Quản Trị Kinh Doanh","group_quan_tri_kinh_doanh",Long.valueOf(9)),
     GROUP_DU_LICH("Khoa Du Lịch","group_du_lich",Long.valueOf(10)),
