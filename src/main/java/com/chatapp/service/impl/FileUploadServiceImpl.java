@@ -12,11 +12,13 @@ import java.util.List;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.chatapp.constant.SystemConstant;
+import com.chatapp.enums.FileType;
 import com.chatapp.exception.DuplicateUsernameException;
 import com.chatapp.service.FileUploadService;
 import com.chatapp.util.EncryptUtils;
@@ -70,4 +72,13 @@ public class FileUploadServiceImpl implements FileUploadService {
         return image;
     }
 
+    @Override
+    public Resource loadFileAsResource(String path, String fileName) {
+        String filename = path + fileName;
+        try {
+            return resourceLoader.getResource("file:" + filename);
+        } catch (Exception e) {
+            throw new DuplicateUsernameException("get_file_failed");
+        }
+    }
 }
