@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -50,9 +51,14 @@ public class UploadAPI {
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
     }
 
-    @GetMapping(value = {"/files/{name}","/files/{name}/"}, produces = "application/pdf")
+    @GetMapping(value = { "/files/{name}", "/files/{name}/" }, produces = "application/pdf")
     public ResponseEntity<Resource> getFile(@PathVariable String name) {
-        Resource resource = fileUploadService.loadFileAsResource(SystemConstant.FILE_PATH_ORIGIN + FileType.FILE.getName(), name);
-        return ResponseEntity.ok(resource);
+        Resource resource = fileUploadService
+                .loadFileAsResource(SystemConstant.FILE_PATH_ORIGIN + FileType.FILE.getName(), name);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.set("Content-Disposition", "attachment");
+        return ResponseEntity.ok()
+                .headers(httpHeaders)
+                .body(resource);
     }
 }
