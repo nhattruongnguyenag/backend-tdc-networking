@@ -343,7 +343,7 @@ POST http://127.0.0.1:8080/api/posts/survey/conduct HTTP/1.1
 Content-Type: application/json
 
 {
-    "user_id": 3,
+    "user_id": 5,
     "answers": [
         {
             "question_id": 1,
@@ -353,12 +353,12 @@ Content-Type: application/json
         {
             "question_id": 3,
             "content": "",
-            "choices_ids": [2]
+            "choices_ids": [1]
         },
         {
             "question_id": 4,
             "content": "",
-            "choices_ids": [3,4,5]
+            "choices_ids": [3,4]
         }
     ]
 }

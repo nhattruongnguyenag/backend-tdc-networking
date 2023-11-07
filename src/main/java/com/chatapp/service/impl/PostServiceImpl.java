@@ -385,6 +385,16 @@ public class PostServiceImpl implements PostService {
     public String answerSurvey(SurveyAnswerRequestDTO surveyAnswerRequestDTO) {
         UserEntity userEntity = userRepository.findOneById(surveyAnswerRequestDTO.getUser_id());
         List<VoteAnswerEntity> voteAnswers = new ArrayList<>();
+        //check if user already conducted the survey
+        if (userRepository.findOneById(surveyAnswerRequestDTO.getUser_id()).getVoteAnswers().size() != 0) {
+            List<VoteAnswerEntity> voteAnswerEntities = userRepository.findOneById(surveyAnswerRequestDTO.getUser_id())
+                    .getVoteAnswers();
+            for (VoteAnswerEntity voteAnswerEntity : voteAnswerEntities) {
+                Integer newCount = voteAnswerEntity.getCountVote() - 1;
+                voteAnswerEntity.setCountVote(newCount);
+                voteAnswerRepository.save(voteAnswerEntity);
+            }
+        }
         for (AnswerRequestDTO answerRequestDTO : surveyAnswerRequestDTO.getAnswers()) {
             QuestionEntity questionEntity = questionRepository.findOneById(answerRequestDTO.getQuestion_id());
             if (questionEntity.getType().equalsIgnoreCase(QuestionType.SHORT.getName())) {
@@ -403,6 +413,8 @@ public class PostServiceImpl implements PostService {
             } else {
                 for (Long voteAnswerId : answerRequestDTO.getChoices_ids()) {
                     VoteAnswerEntity voteAnswerEntity = voteAnswerRepository.findOneById(voteAnswerId);
+                    Integer newCount = voteAnswerEntity.getCountVote() + 1;
+                    voteAnswerEntity.setCountVote(newCount);
                     voteAnswers.add(voteAnswerEntity);
                 }
                 userEntity.setVoteAnswers(voteAnswers);
@@ -621,17 +633,16 @@ public class PostServiceImpl implements PostService {
                     isConducted = Long.valueOf(1);
                     return isConducted;
                 }
-            }
-            else {
-                    List<VoteAnswerEntity> voteAnswerEntities = voteAnswerRepository
-                            .findAllByQuestion_Id(questionEntity.getId());
-                    for (VoteAnswerEntity voteAnswerEntity : voteAnswerEntities) {
-                        if (userRepository.findOneById(userLogin).getVoteAnswers().contains(voteAnswerEntity)) {
-                            isConducted = Long.valueOf(1);
-                            return isConducted;
-                        }
+            } else {
+                List<VoteAnswerEntity> voteAnswerEntities = voteAnswerRepository
+                        .findAllByQuestion_Id(questionEntity.getId());
+                for (VoteAnswerEntity voteAnswerEntity : voteAnswerEntities) {
+                    if (userRepository.findOneById(userLogin).getVoteAnswers().contains(voteAnswerEntity)) {
+                        isConducted = Long.valueOf(1);
+                        return isConducted;
                     }
                 }
+            }
         }
         return isConducted;
     }
@@ -641,11 +652,11 @@ public class PostServiceImpl implements PostService {
         PostEntity postEntity = postRepository.findOneById(postId);
         SurveyPostEntity surveyPostEntity = surveyPostRepository.findOneByPost_Id(postId);
         if (postEntity.getType().equals(PostType.SURVEY.getName())) {
-            return surveyResultResponseConverter.toDTOGroup(questionRepository.findAllBySurvey_Id(surveyPostEntity.getId()));
+            return surveyResultResponseConverter
+                    .toDTOGroup(questionRepository.findAllBySurvey_Id(surveyPostEntity.getId()));
         } else {
             throw new RuntimeException("survey_at_this_post_id_not_exist");
         }
     }
 
-    
 }
