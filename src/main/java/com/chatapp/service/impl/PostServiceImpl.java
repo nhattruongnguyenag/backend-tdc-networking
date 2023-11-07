@@ -177,17 +177,17 @@ public class PostServiceImpl implements PostService {
             if (responseDTOs.get(i).getType().equals(PostType.NORMAL.getName())) {
                 NormalPostResponseDTO normalPostResponseDTO = normalPostResponeConverter
                         .toDTO(normalPostRepository.findOneByPost_Id(responseDTOs.get(i).getId()));
-                this.setUserDetail(normalPostResponseDTO);
+                this.setUserDetailOfPost(normalPostResponseDTO);
                 dto = normalPostResponseDTO;
             } else if (responseDTOs.get(i).getType().equals(PostType.RECRUIMENT.getName())) {
                 RecruitmentPostResponseDTO recruitmentPostResponseDTO = recruitmentPostResponeConverter
                         .toDTO(recruitmentPostRepository.findOneByPost_Id(responseDTOs.get(i).getId()));
-                this.setUserDetail(recruitmentPostResponseDTO);
+                this.setUserDetailOfPost(recruitmentPostResponseDTO);
                 dto = recruitmentPostResponseDTO;
             } else if (responseDTOs.get(i).getType().equals(PostType.SURVEY.getName())) {
                 SurveyResponeDTO surveyResponeDTO = surveyResponeConverter
                         .toDTO(surveyPostRepository.findOneByPost_Id(responseDTOs.get(i).getId()));
-                this.setUserDetail(surveyResponeDTO);
+                this.setUserDetailOfPost(surveyResponeDTO);
                 dto = surveyResponeDTO;
             }
             dtos.add(dto);
@@ -598,17 +598,17 @@ public class PostServiceImpl implements PostService {
                 if (post.getType().equals(PostType.NORMAL.getName())) {
                     NormalPostResponseDTO normalPostResponseDTO = normalPostResponeConverter
                             .toDTO(normalPostRepository.findOneByPost_Id(post.getId()));
-                    setUserDetail(normalPostResponseDTO);
+                    setUserDetailOfPost(normalPostResponseDTO);
                     dtos.add(normalPostResponseDTO);
                 } else if (post.getType().equals(PostType.RECRUIMENT.getName())) {
                     RecruitmentPostResponseDTO recruitmentPostResponseDTO = recruitmentPostResponeConverter
                             .toDTO(recruitmentPostRepository.findOneByPost_Id(post.getId()));
-                    setUserDetail(recruitmentPostResponseDTO);
+                    setUserDetailOfPost(recruitmentPostResponseDTO);
                     dtos.add(recruitmentPostResponseDTO);
                 } else if (post.getType().equals(PostType.SURVEY.getName())) {
                     SurveyResponeDTO surveyResponeDTO = surveyResponeConverter
                             .toDTO(surveyPostRepository.findOneByPost_Id(post.getId()));
-                    setUserDetail(surveyResponeDTO);
+                    setUserDetailOfPost(surveyResponeDTO);
                     dtos.add(surveyResponeDTO);
                 }
             }
