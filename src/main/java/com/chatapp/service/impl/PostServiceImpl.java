@@ -33,7 +33,6 @@ import com.chatapp.dto.request.PostFindRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
 import com.chatapp.dto.request.SurveyAnswerRequestDTO;
 import com.chatapp.dto.request.SurveySaveRequestDTO;
-import com.chatapp.dto.request.UserGetRequestDTO;
 import com.chatapp.dto.request.UserSavePostRequestDTO;
 import com.chatapp.dto.response.BusinessInfoResponseDTO;
 import com.chatapp.dto.response.CommentResponeseDTO;
