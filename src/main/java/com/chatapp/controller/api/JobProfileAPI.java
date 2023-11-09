@@ -20,7 +20,13 @@ public class JobProfileAPI {
 
     @PostMapping({ "job/apply", "job/apply/" })
     public ResponseEntity<ResponseData<String>> applyJobProfile(@RequestBody JobApplyProfileRequestDTO jobApplyProfileRequestDTO) {
-        ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",jobProfileService.applyJobProfile(jobApplyProfileRequestDTO));
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED, "sucesss",jobProfileService.applyJobProfile(jobApplyProfileRequestDTO));
+        return ResponseEntity.created(null).body(responseData);
+    }
+
+    @PostMapping({ "job/update", "job/update/" })
+    public ResponseEntity<ResponseData<String>> updateJobProfile(@RequestBody JobApplyProfileRequestDTO jobApplyProfileRequestDTO) {
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED, "sucesss",jobProfileService.updateJobProfile(jobApplyProfileRequestDTO));
         return ResponseEntity.created(null).body(responseData);
     }
 

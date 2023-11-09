@@ -9,7 +9,6 @@ import com.chatapp.converter.request.JobApplyProfileRequestConverter;
 import com.chatapp.converter.response.JobProfileResponseConverter;
 import com.chatapp.dto.request.JobApplyProfileRequestDTO;
 import com.chatapp.dto.response.JobProfileResponseDTO;
-import com.chatapp.dto.response.SurveyResponeDTO;
 import com.chatapp.entity.JobProfileEntity;
 import com.chatapp.entity.PostEntity;
 import com.chatapp.enums.PostType;
@@ -46,9 +45,17 @@ public class JobprofileServiceImpl implements JobProfileService {
         if (userRepository.findOneById(jobApplyProfileRequestDTO.getUser_id()) == null) {
             throw new RuntimeException("user_is_not_exist");
         }
-        JobProfileEntity jobProfileEntity = jobApplyProfileRequestConverter.toEntity(jobApplyProfileRequestDTO);
-        jobProfileRepository.save(jobProfileEntity);
-        return "";
+        if (jobProfileRepository.findOneByPost_IdAndUser_Id(jobApplyProfileRequestDTO.getPost_id(),
+                jobApplyProfileRequestDTO.getUser_id()) != null) {
+            JobProfileEntity jobProfileEntity = jobApplyProfileRequestConverter
+                    .toUpdateEntity(jobApplyProfileRequestDTO);
+            jobProfileRepository.save(jobProfileEntity);
+            return "";
+        } else {
+            JobProfileEntity jobProfileEntity = jobApplyProfileRequestConverter.toEntity(jobApplyProfileRequestDTO);
+            jobProfileRepository.save(jobProfileEntity);
+            return "";
+        }
     }
 
     @Override
@@ -67,8 +74,26 @@ public class JobprofileServiceImpl implements JobProfileService {
 
     @Override
     public JobProfileResponseDTO getJobProfileDetail(Long jobId) {
-        JobProfileResponseDTO jobProfileResponseDTO = jobProfileResponseConverter.toDTO(jobProfileRepository.findOneById(jobId));
+        JobProfileResponseDTO jobProfileResponseDTO = jobProfileResponseConverter
+                .toDTO(jobProfileRepository.findOneById(jobId));
         return jobProfileResponseDTO;
+    }
+
+    @Override
+    public String updateJobProfile(JobApplyProfileRequestDTO jobApplyProfileRequestDTO) {
+        if (postRepository.findOneById(jobApplyProfileRequestDTO.getPost_id()) == null) {
+            throw new RuntimeException("this_post_does_not_exist");
+        }
+        PostEntity postEntity = postRepository.findOneById(jobApplyProfileRequestDTO.getPost_id());
+        if (!postEntity.getType().equals(PostType.RECRUIMENT.getName())) {
+            throw new RuntimeException("this_post_is_not_a_recruitment");
+        }
+        if (userRepository.findOneById(jobApplyProfileRequestDTO.getUser_id()) == null) {
+            throw new RuntimeException("user_is_not_exist");
+        }
+        JobProfileEntity jobProfileEntity = jobApplyProfileRequestConverter.toUpdateEntity(jobApplyProfileRequestDTO);
+        jobProfileRepository.save(jobProfileEntity);
+        return "";
     }
 
 }

@@ -32,7 +32,7 @@ public interface PostService {
 
     //recruitment post
     List<RecruitmentPostResponseDTO> findAllRecruitmentPost();
-    RecruitmentPostResponseDTO getRecruimentDetailByPostId(Long postId);
+    RecruitmentPostResponseDTO getRecruimentDetailByPostId(Long postId , Long userLogin);
     String recruitmentPostUpdateOrSave(RecruitmentPostUpdateOrSageRequestDTO recruitmentPostUpdateOrSageRequestDTO);
 
     //save survey

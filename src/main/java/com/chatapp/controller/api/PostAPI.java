@@ -90,18 +90,18 @@ public class PostAPI {
     }
 
     // recruitmentPost api
-    @GetMapping({ "posts/recruitment", "posts/recruitment/" })
-    public ResponseEntity<ResponseData<List<RecruitmentPostResponseDTO>>> findRecruitmentPosts() {
-        ResponseData<List<RecruitmentPostResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
-                postService.findAllRecruitmentPost());
-        return ResponseEntity.ok(responseData);
-    }
+    // @GetMapping({ "posts/recruitment", "posts/recruitment/" })
+    // public ResponseEntity<ResponseData<List<RecruitmentPostResponseDTO>>> findRecruitmentPosts() {
+    //     ResponseData<List<RecruitmentPostResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
+    //             postService.findAllRecruitmentPost());
+    //     return ResponseEntity.ok(responseData);
+    // }
 
-    @GetMapping({ "posts/recruitment/{postId}", "posts/recruitment/{postId}/" })
+    @GetMapping({ "posts/recruitment", "posts/recruitment" })
     public ResponseEntity<ResponseData<RecruitmentPostResponseDTO>> getRecruimentPostByPostId(
-            @PathVariable Long postId) {
+            @RequestParam Long postId , @RequestParam Long userLogin) {
         ResponseData<RecruitmentPostResponseDTO> responseData = new ResponseData<>(HttpStatus.OK, "success",
-                postService.getRecruimentDetailByPostId(postId));
+                postService.getRecruimentDetailByPostId(postId , userLogin));
         return ResponseEntity.ok(responseData);
     }
 

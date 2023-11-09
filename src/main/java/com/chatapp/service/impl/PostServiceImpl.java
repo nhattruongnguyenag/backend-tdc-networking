@@ -60,6 +60,7 @@ import com.chatapp.exception.DuplicateUsernameException;
 import com.chatapp.repository.BusinessInfoRepository;
 import com.chatapp.repository.FacultyInfoRepository;
 import com.chatapp.repository.GroupRepository;
+import com.chatapp.repository.JobProfileRepository;
 import com.chatapp.repository.NormalPostRepository;
 import com.chatapp.repository.PostCommentRepository;
 import com.chatapp.repository.PostLikeRepository;
@@ -107,6 +108,8 @@ public class PostServiceImpl implements PostService {
     private FacultyInfoRepository facultyInfoRepository;
     @Autowired
     private BusinessInfoRepository businessInfoRepository;
+    @Autowired
+    private JobProfileRepository jobProfileRepository;
 
     @Autowired
     private PostInfoResponseConverter postInfoResponeConverter;
@@ -428,11 +431,14 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public RecruitmentPostResponseDTO getRecruimentDetailByPostId(Long postId) {
+    public RecruitmentPostResponseDTO getRecruimentDetailByPostId(Long postId , Long userLogin) {
         PostEntity postEntity = postRepository.findOneById(postId);
         if (postEntity.getType().equals(PostType.RECRUIMENT.getName())) {
             RecruitmentPostResponseDTO recruitmentPostResponseDTO = recruitmentPostResponeConverter
                     .toDTO(recruitmentPostRepository.findOneByPost_Id(postId));
+            Long isApplyJob = this.checkUserLoginHadApplied(
+                        recruitmentPostRepository.findOneByPost_Id(postId), userLogin);
+                recruitmentPostResponseDTO.setIsApplyJob(isApplyJob);
             return recruitmentPostResponseDTO;
         } else {
             throw new RuntimeException("recruitment_at_this_post_id_not_exist");
@@ -692,8 +698,11 @@ public class PostServiceImpl implements PostService {
         return isConducted;
     }
 
-    private Long checkUserLoginHadApplied(RecruitmentPostEntity postEntity, Long userLogin) {
+    private Long checkUserLoginHadApplied(RecruitmentPostEntity recruitmentEntity, Long userLogin) {
         Long isApplied = Long.valueOf(0);
+        if(jobProfileRepository.findOneByPost_IdAndUser_Id(recruitmentEntity.getPost().getId(), userLogin) != null){
+            isApplied = Long.valueOf(1);
+        }
         return isApplied;
     }
 
