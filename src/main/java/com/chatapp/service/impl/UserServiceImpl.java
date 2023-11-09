@@ -12,6 +12,7 @@ import com.chatapp.converter.response.BusinessInfoResponseConverter;
 import com.chatapp.converter.response.FacultyInfoResponseConverter;
 import com.chatapp.converter.response.FollowByOtherResponseConverter;
 import com.chatapp.converter.response.FollowResponseConverter;
+import com.chatapp.converter.response.GroupResponseConverter;
 import com.chatapp.converter.response.StudentInfoResponseConverter;
 import com.chatapp.converter.response.UserFindResponseConverter;
 import com.chatapp.converter.response.UserInfoResponseConverter;
@@ -31,6 +32,7 @@ import com.chatapp.dto.request.UserInfoFindRequestDTO;
 import com.chatapp.dto.request.UserLoginRequestDTO;
 import com.chatapp.dto.response.BusinessInfoResponseDTO;
 import com.chatapp.dto.response.FacultyInfoResponseDTO;
+import com.chatapp.dto.response.GroupResponseDTO;
 import com.chatapp.dto.response.StudentInfoResponseDTO;
 import com.chatapp.dto.response.UserFindResponseDTO;
 import com.chatapp.dto.response.UserFollowResponseDTO;
@@ -104,6 +106,8 @@ public class UserServiceImpl implements UserService {
     private FollowResponseConverter followResponseConverter;
     @Autowired
     private FollowByOtherResponseConverter followByOtherResponseConverter;
+    @Autowired
+    private GroupResponseConverter groupResponseConverter;
 
     @Autowired
     private UserRequestConverter userConverter;
@@ -647,6 +651,16 @@ public class UserServiceImpl implements UserService {
             groups.add(groupRepository.findOneByCode(GroupDefault.GROUP_BO_MON_TIENG_NHAT.getCodeGroup()));
         }
         userEntity.setGroups(groups);
+    }
+
+    @Override
+    public List<GroupResponseDTO> getGroupByUserId(Long userId) {
+        if (userRepository.findOneById(userId) == null) {
+            throw new DuplicateUsernameException("user_not_exists");
+        }
+        UserEntity userEntity = userRepository.findOneById(userId);
+        List<GroupResponseDTO> groupResponseDTOs = groupResponseConverter.toDTOGroup(userEntity.getGroups());
+        return groupResponseDTOs;
     }
 
 }

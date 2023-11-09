@@ -37,7 +37,7 @@ public interface PostService {
 
     //save survey
     String saveSurvey(SurveySaveRequestDTO saveRequestDTO);
-    SurveyResponeDTO getSurveyDetailByPostId(Long postId);
+    SurveyResponeDTO getSurveyDetailByPostId(Long postId , Long userLogin);
     String answerSurvey(SurveyAnswerRequestDTO surveyAnswerRequestDTO);
     List<SurveyResultResponseDTO> getSurveyResultByPostId(Long postId);
 

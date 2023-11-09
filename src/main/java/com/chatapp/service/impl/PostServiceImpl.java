@@ -48,6 +48,7 @@ import com.chatapp.entity.PostCommentEntity;
 import com.chatapp.entity.PostEntity;
 import com.chatapp.entity.PostLikeEntity;
 import com.chatapp.entity.QuestionEntity;
+import com.chatapp.entity.RecruitmentPostEntity;
 import com.chatapp.entity.ShortAnswerEntity;
 import com.chatapp.entity.SurveyPostEntity;
 import com.chatapp.entity.UserEntity;
@@ -369,11 +370,14 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public SurveyResponeDTO getSurveyDetailByPostId(Long postId) {
+    public SurveyResponeDTO getSurveyDetailByPostId(Long postId, Long userLogin) {
         PostEntity postEntity = postRepository.findOneById(postId);
         if (postEntity.getType().equals(PostType.SURVEY.getName())) {
             SurveyResponeDTO surveyResponeDTO = surveyResponeConverter
                     .toDTO(surveyPostRepository.findOneByPost_Id(postId));
+            Long isConducted = this.checkUserLoginHadConducted(
+                    surveyPostRepository.findOneByPost_Id(postId), userLogin);
+            surveyResponeDTO.setIsConduct(isConducted);
             return surveyResponeDTO;
         } else {
             throw new RuntimeException("survey_at_this_post_id_not_exist");
@@ -453,6 +457,9 @@ public class PostServiceImpl implements PostService {
             } else if (responseDTOs.get(i).getType().equals(PostType.RECRUIMENT.getName())) {
                 RecruitmentPostResponseDTO recruitmentPostResponseDTO = recruitmentPostResponeConverter
                         .toDTO(recruitmentPostRepository.findOneByPost_Id(responseDTOs.get(i).getId()));
+                Long isApplyJob = this.checkUserLoginHadApplied(
+                        recruitmentPostRepository.findOneByPost_Id(responseDTOs.get(i).getId()), userLogin);
+                recruitmentPostResponseDTO.setIsApplyJob(isApplyJob);
                 dto = recruitmentPostResponseDTO;
             } else if (responseDTOs.get(i).getType().equals(PostType.SURVEY.getName())) {
                 SurveyResponeDTO surveyResponeDTO = surveyResponeConverter
@@ -529,8 +536,8 @@ public class PostServiceImpl implements PostService {
                 if (result.size() > 0) {
                     return result;
                 } else {
-                    dtos.add(this.setUserDetail(userInfoResponseDTO));
-                    return dtos;
+                    result.add(this.setUserDetail(userInfoResponseDTO));
+                    return result;
                 }
             }
         } else {
@@ -683,6 +690,11 @@ public class PostServiceImpl implements PostService {
             }
         }
         return isConducted;
+    }
+
+    private Long checkUserLoginHadApplied(RecruitmentPostEntity postEntity, Long userLogin) {
+        Long isApplied = Long.valueOf(0);
+        return isApplied;
     }
 
     @Override

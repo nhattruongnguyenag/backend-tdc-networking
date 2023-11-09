@@ -136,10 +136,10 @@ public class PostAPI {
         return ResponseEntity.created(null).body(responseData);
     }
 
-    @GetMapping({ "posts/survey/{postId}", "posts/survey/{postId}/" })
-    ResponseEntity<ResponseData<SurveyResponeDTO>> getSurveyByPostId(@PathVariable Long postId) {
+    @GetMapping({ "posts/survey", "posts/survey" })
+    ResponseEntity<ResponseData<SurveyResponeDTO>> getSurveyByPostId(@RequestParam Long postId , @RequestParam Long userLogin) {
         ResponseData<SurveyResponeDTO> responseData = new ResponseData<>(HttpStatus.OK, "success",
-                postService.getSurveyDetailByPostId(postId));
+                postService.getSurveyDetailByPostId(postId ,userLogin));
         return ResponseEntity.ok(responseData);
     }
 

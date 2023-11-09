@@ -11,4 +11,5 @@ public class RecruitmentPostResponseDTO extends PostInfoResponseDTO{
     private String expiration;
     private String location;
     private String requirement;
+    private Long isApplyJob;
 }

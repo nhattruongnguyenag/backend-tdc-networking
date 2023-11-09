@@ -16,6 +16,7 @@ import com.chatapp.dto.request.UserInfoFindRequestDTO;
 import com.chatapp.dto.request.UserLoginRequestDTO;
 import com.chatapp.dto.response.BusinessInfoResponseDTO;
 import com.chatapp.dto.response.FacultyInfoResponseDTO;
+import com.chatapp.dto.response.GroupResponseDTO;
 import com.chatapp.dto.response.StudentInfoResponseDTO;
 import com.chatapp.dto.response.UserFindResponseDTO;
 import com.chatapp.dto.response.UserFollowResponseDTO;
@@ -72,4 +73,7 @@ public interface UserService {
     String follow(UserFollowRequestDTO userFollowRequestDTO);
     List<UserFollowResponseDTO> getFollowsByUserId(UserGetRequestDTO userGetRequestDTO);
     List<UserFollowResponseDTO> getOtherPeopleFollowByUserId(UserGetRequestDTO userGetRequestDTO);
+
+    //group
+    List<GroupResponseDTO> getGroupByUserId(Long userId);
 }

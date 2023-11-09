@@ -9,6 +9,7 @@ import com.chatapp.dto.request.UserFindRequestDTO;
 import com.chatapp.dto.request.UserFollowRequestDTO;
 import com.chatapp.dto.request.UserGetRequestDTO;
 import com.chatapp.dto.request.UserLoginRequestDTO;
+import com.chatapp.dto.response.GroupResponseDTO;
 import com.chatapp.dto.response.UserFollowResponseDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.service.UserService;
@@ -100,6 +101,12 @@ public class UserAPI {
     @PostMapping({ "users/follow/other", "users/follow/other/" })
     public ResponseEntity<ResponseData<List<UserFollowResponseDTO>>> getOtherFollowByUserId(@RequestBody UserGetRequestDTO userGetRequestDTO) {
         ResponseData<List<UserFollowResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",userService.getOtherPeopleFollowByUserId(userGetRequestDTO));
+        return ResponseEntity.ok(responseData);
+    }
+
+    @GetMapping({ "users/{userId}/group", "users/{userId}/group/" })
+    public ResponseEntity<ResponseData<List<GroupResponseDTO>>> getGroupByUserId(@PathVariable Long userId) {
+        ResponseData<List<GroupResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",userService.getGroupByUserId(userId));
         return ResponseEntity.ok(responseData);
     }
 }
