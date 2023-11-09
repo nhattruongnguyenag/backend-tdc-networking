@@ -45,38 +45,39 @@ public class StudentInfoResponseConverter extends BaseConverter<StudentInfoEntit
             roleCodes += entity.getUser().getRoles().get(i).getCode();
         }
         studentInfoResponeDTO.setRoleCodes(roleCodes);
-        studentInfoResponeDTO.setFacultyGroupCode(getFacultyGroupCode(userEntity));
+        studentInfoResponeDTO.setFacultyGroupCode(getFacultyGroupCode(userEntity).getCodeGroup());
+        studentInfoResponeDTO.setFacultyGroupId(getFacultyGroupCode(userEntity).getIdGroup());
         studentInfoResponeDTO.setFollows(followResponseConverter.toDTOGroup(userEntity.getFollowUsers()));
         return studentInfoResponeDTO;
     }
 
-    private String getFacultyGroupCode(UserEntity userEntity) {
+    private GroupDefault getFacultyGroupCode(UserEntity userEntity) {
         String falcutyName = userEntity.getStudentInfo().getFacultyName();
         if (falcutyName.equals(GroupDefault.GROUP_DIEN_DIEN_TU.getName())) {
-            return GroupDefault.GROUP_DIEN_DIEN_TU.getCodeGroup();
+            return GroupDefault.GROUP_DIEN_DIEN_TU;
         } else if (falcutyName.equals(GroupDefault.GROUP_CONG_NGHE_THONG_TIN.getName())) {
-            return GroupDefault.GROUP_CONG_NGHE_THONG_TIN.getCodeGroup();
+            return GroupDefault.GROUP_CONG_NGHE_THONG_TIN;
         } else if (falcutyName.equals(GroupDefault.GROUP_CONG_NGHE_TU_DONG.getName())) {
-            return GroupDefault.GROUP_CONG_NGHE_TU_DONG.getCodeGroup();
+            return GroupDefault.GROUP_CONG_NGHE_TU_DONG;
         } else if (falcutyName.equals(GroupDefault.GROUP_CO_KHI_CHE_TAO_MAY.getName())) {
-            return GroupDefault.GROUP_CO_KHI_CHE_TAO_MAY.getCodeGroup();
+            return GroupDefault.GROUP_CO_KHI_CHE_TAO_MAY;
         } else if (falcutyName.equals(GroupDefault.GROUP_CO_KHI_OTO.getName())) {
-            return GroupDefault.GROUP_CO_KHI_OTO.getCodeGroup();
+            return GroupDefault.GROUP_CO_KHI_OTO;
         } else if (falcutyName.equals(GroupDefault.GROUP_TAI_CHINH_KE_TOAN.getName())) {
-            return GroupDefault.GROUP_TAI_CHINH_KE_TOAN.getCodeGroup();
+            return GroupDefault.GROUP_TAI_CHINH_KE_TOAN;
         } else if (falcutyName.equals(GroupDefault.GROUP_QUAN_TRI_KINH_DOANH.getName())) {
-            return GroupDefault.GROUP_QUAN_TRI_KINH_DOANH.getCodeGroup();
+            return GroupDefault.GROUP_QUAN_TRI_KINH_DOANH;
         } else if (falcutyName.equals(GroupDefault.GROUP_DU_LICH.getName())) {
-            return GroupDefault.GROUP_DU_LICH.getCodeGroup();
+            return GroupDefault.GROUP_DU_LICH;
         } else if (falcutyName.equals(GroupDefault.GROUP_TIENG_ANH.getName())) {
-            return GroupDefault.GROUP_TIENG_ANH.getCodeGroup();
+            return GroupDefault.GROUP_TIENG_ANH;
         } else if (falcutyName.equals(GroupDefault.GROUP_TIENG_HAN.getName())) {
-            return GroupDefault.GROUP_TIENG_HAN.getCodeGroup();
+            return GroupDefault.GROUP_TIENG_HAN;
         } else if (falcutyName.equals(GroupDefault.GROUP_BO_MON_TIENG_NHAT.getName())) {
-            return GroupDefault.GROUP_BO_MON_TIENG_NHAT.getCodeGroup();
+            return GroupDefault.GROUP_BO_MON_TIENG_NHAT;
         }
         else {
-            return "";
+            return null;
         }
     }
 }

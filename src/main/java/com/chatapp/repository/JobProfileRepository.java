@@ -11,4 +11,5 @@ import com.chatapp.entity.JobProfileEntity;
 public interface JobProfileRepository extends JpaRepository<JobProfileEntity,Long> {
     List<JobProfileEntity> findAllByPost_Id(Long postId);
     JobProfileEntity findOneById(Long id);
+    JobProfileEntity findOneByPost_IdAndUser_Id(Long postId, Long userId);
 }

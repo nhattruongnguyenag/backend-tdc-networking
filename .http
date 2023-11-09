@@ -10,7 +10,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://127.0.0.1:8080/api/users/token/eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb250aHUxMjQ1QGdtYWlsLmNvbSIsImlhdCI6MTY5OTA4NDQ0MywiZXhwIjoxNjk5MDg4MDQzfQ.X7WkjfwYxoRCPFNosWamkdT3lShlESWfnjl_FwINp44 HTTP/1.1
+GET http://127.0.0.1:8080/api/users/token/eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJraG9hZGR0QHRkYy5lZHUudm4iLCJpYXQiOjE2OTkzNjc3NjksImV4cCI6MTY5OTM3MTM2OX0.Rtn8mNxlhhniT_lrvHA8wtQOvFgIk7I8BUSKUXgp_xA HTTP/1.1
 
 ###
 GET http://127.0.0.1:8080/api/users HTTP/1.1
@@ -112,7 +112,7 @@ Content-Type: application/json
 
 {
     "type":"thong-thuong",
-    "groupId": 1,
+    "groupId": 0,
     "images":[
         "1aaed1f52741546bdb4affe2e3fcfbc1.png",
         "1aaed1f52741546bdb4affe2e3fcfbc1.png"
@@ -318,7 +318,7 @@ GET http://127.0.0.1:8080/api/posts/1/comments HTTP/1.1
 # sprint 2
 
 ###
-GET http://127.0.0.1:8080/api/posts/survey/1 HTTP/1.1
+GET http://127.0.0.1:8080/api/posts/survey?postId=1&&userLogin=6 HTTP/1.1
 
 ###
 GET http://127.0.0.1:8080/api/posts/survey/user/14 HTTP/1.1
@@ -330,7 +330,7 @@ GET http://127.0.0.1:8080/api/posts/normal/3 HTTP/1.1
 GET http://127.0.0.1:8080/api/posts/normal/user/1 HTTP/1.1
 
 ###
-GET http://127.0.0.1:8080/api/posts/recruitment/2 HTTP/1.1
+GET http://127.0.0.1:8080/api/posts/recruitment?postId=4&&userLogin=3 HTTP/1.1
 
 ###
 GET http://127.0.0.1:8080/api/posts/recruitment/user/1 HTTP/1.1
@@ -373,7 +373,7 @@ GET http://127.0.0.1:8080/api/faculty/1 HTTP/1.1
 GET http://127.0.0.1:8080/api/business/14 HTTP/1.1
 
 ###
-GET http://127.0.0.1:8080/api/posts/group?code=group_tdc&userLogin=2 HTTP/1.1
+GET http://127.0.0.1:8080/api/posts/group?code=group_tdc&userLogin=3 HTTP/1.1
 
 ###
 POST http://127.0.0.1:8080/api/users/follow/me HTTP/1.1
@@ -396,9 +396,19 @@ POST http://127.0.0.1:8080/api/job/apply HTTP/1.1
 Content-Type: application/json
 
 {
-    "post_id":2,
-    "user_id":1,
+    "post_id":4,
+    "user_id":2,
     "cv_url":"a.pdf"
+}
+
+###
+POST http://127.0.0.1:8080/api/job/update HTTP/1.1
+Content-Type: application/json
+
+{
+    "post_id":4,
+    "user_id":2,
+    "cv_url":"Via.pdf"
 }
 
 ###
@@ -434,7 +444,21 @@ GET http://127.0.0.1:8080/api/job/post/2 HTTP/1.1
 GET http://127.0.0.1:8080/api/job/2 HTTP/1.1
 
 ###
-GET  http://127.0.0.1:8080/api/posts/user/save/1 HTTP/1.1
+GET  http://127.0.0.1:8080/api/posts/user/save/10 HTTP/1.1
 
 ###
 GET  http://127.0.0.1:8080/api/posts/survey/1/result HTTP/1.1
+
+###
+GET  http://127.0.0.1:8080/api/users/1/group HTTP/1.1
+
+###
+POST http://127.0.0.1:8080/api/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email":"khoaddt@tdc.edu.vn",
+    "password":"abc123"
+}
+
+###

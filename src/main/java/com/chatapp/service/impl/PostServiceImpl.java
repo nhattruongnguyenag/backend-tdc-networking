@@ -33,7 +33,6 @@ import com.chatapp.dto.request.PostFindRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
 import com.chatapp.dto.request.SurveyAnswerRequestDTO;
 import com.chatapp.dto.request.SurveySaveRequestDTO;
-import com.chatapp.dto.request.UserGetRequestDTO;
 import com.chatapp.dto.request.UserSavePostRequestDTO;
 import com.chatapp.dto.response.BusinessInfoResponseDTO;
 import com.chatapp.dto.response.CommentResponeseDTO;
@@ -49,6 +48,7 @@ import com.chatapp.entity.PostCommentEntity;
 import com.chatapp.entity.PostEntity;
 import com.chatapp.entity.PostLikeEntity;
 import com.chatapp.entity.QuestionEntity;
+import com.chatapp.entity.RecruitmentPostEntity;
 import com.chatapp.entity.ShortAnswerEntity;
 import com.chatapp.entity.SurveyPostEntity;
 import com.chatapp.entity.UserEntity;
@@ -60,6 +60,7 @@ import com.chatapp.exception.DuplicateUsernameException;
 import com.chatapp.repository.BusinessInfoRepository;
 import com.chatapp.repository.FacultyInfoRepository;
 import com.chatapp.repository.GroupRepository;
+import com.chatapp.repository.JobProfileRepository;
 import com.chatapp.repository.NormalPostRepository;
 import com.chatapp.repository.PostCommentRepository;
 import com.chatapp.repository.PostLikeRepository;
@@ -107,6 +108,8 @@ public class PostServiceImpl implements PostService {
     private FacultyInfoRepository facultyInfoRepository;
     @Autowired
     private BusinessInfoRepository businessInfoRepository;
+    @Autowired
+    private JobProfileRepository jobProfileRepository;
 
     @Autowired
     private PostInfoResponseConverter postInfoResponeConverter;
@@ -177,17 +180,17 @@ public class PostServiceImpl implements PostService {
             if (responseDTOs.get(i).getType().equals(PostType.NORMAL.getName())) {
                 NormalPostResponseDTO normalPostResponseDTO = normalPostResponeConverter
                         .toDTO(normalPostRepository.findOneByPost_Id(responseDTOs.get(i).getId()));
-                this.setUserDetail(normalPostResponseDTO);
+                this.setUserDetailOfPost(normalPostResponseDTO);
                 dto = normalPostResponseDTO;
             } else if (responseDTOs.get(i).getType().equals(PostType.RECRUIMENT.getName())) {
                 RecruitmentPostResponseDTO recruitmentPostResponseDTO = recruitmentPostResponeConverter
                         .toDTO(recruitmentPostRepository.findOneByPost_Id(responseDTOs.get(i).getId()));
-                this.setUserDetail(recruitmentPostResponseDTO);
+                this.setUserDetailOfPost(recruitmentPostResponseDTO);
                 dto = recruitmentPostResponseDTO;
             } else if (responseDTOs.get(i).getType().equals(PostType.SURVEY.getName())) {
                 SurveyResponeDTO surveyResponeDTO = surveyResponeConverter
                         .toDTO(surveyPostRepository.findOneByPost_Id(responseDTOs.get(i).getId()));
-                this.setUserDetail(surveyResponeDTO);
+                this.setUserDetailOfPost(surveyResponeDTO);
                 dto = surveyResponeDTO;
             }
             dtos.add(dto);
@@ -370,11 +373,14 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public SurveyResponeDTO getSurveyDetailByPostId(Long postId) {
+    public SurveyResponeDTO getSurveyDetailByPostId(Long postId, Long userLogin) {
         PostEntity postEntity = postRepository.findOneById(postId);
         if (postEntity.getType().equals(PostType.SURVEY.getName())) {
             SurveyResponeDTO surveyResponeDTO = surveyResponeConverter
                     .toDTO(surveyPostRepository.findOneByPost_Id(postId));
+            Long isConducted = this.checkUserLoginHadConducted(
+                    surveyPostRepository.findOneByPost_Id(postId), userLogin);
+            surveyResponeDTO.setIsConduct(isConducted);
             return surveyResponeDTO;
         } else {
             throw new RuntimeException("survey_at_this_post_id_not_exist");
@@ -385,7 +391,7 @@ public class PostServiceImpl implements PostService {
     public String answerSurvey(SurveyAnswerRequestDTO surveyAnswerRequestDTO) {
         UserEntity userEntity = userRepository.findOneById(surveyAnswerRequestDTO.getUser_id());
         List<VoteAnswerEntity> voteAnswers = new ArrayList<>();
-        //check if user already conducted the survey
+        // check if user already conducted the survey
         if (userRepository.findOneById(surveyAnswerRequestDTO.getUser_id()).getVoteAnswers().size() != 0) {
             List<VoteAnswerEntity> voteAnswerEntities = userRepository.findOneById(surveyAnswerRequestDTO.getUser_id())
                     .getVoteAnswers();
@@ -425,11 +431,14 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public RecruitmentPostResponseDTO getRecruimentDetailByPostId(Long postId) {
+    public RecruitmentPostResponseDTO getRecruimentDetailByPostId(Long postId , Long userLogin) {
         PostEntity postEntity = postRepository.findOneById(postId);
         if (postEntity.getType().equals(PostType.RECRUIMENT.getName())) {
             RecruitmentPostResponseDTO recruitmentPostResponseDTO = recruitmentPostResponeConverter
                     .toDTO(recruitmentPostRepository.findOneByPost_Id(postId));
+            Long isApplyJob = this.checkUserLoginHadApplied(
+                        recruitmentPostRepository.findOneByPost_Id(postId), userLogin);
+                recruitmentPostResponseDTO.setIsApplyJob(isApplyJob);
             return recruitmentPostResponseDTO;
         } else {
             throw new RuntimeException("recruitment_at_this_post_id_not_exist");
@@ -454,6 +463,9 @@ public class PostServiceImpl implements PostService {
             } else if (responseDTOs.get(i).getType().equals(PostType.RECRUIMENT.getName())) {
                 RecruitmentPostResponseDTO recruitmentPostResponseDTO = recruitmentPostResponeConverter
                         .toDTO(recruitmentPostRepository.findOneByPost_Id(responseDTOs.get(i).getId()));
+                Long isApplyJob = this.checkUserLoginHadApplied(
+                        recruitmentPostRepository.findOneByPost_Id(responseDTOs.get(i).getId()), userLogin);
+                recruitmentPostResponseDTO.setIsApplyJob(isApplyJob);
                 dto = recruitmentPostResponseDTO;
             } else if (responseDTOs.get(i).getType().equals(PostType.SURVEY.getName())) {
                 SurveyResponeDTO surveyResponeDTO = surveyResponeConverter
@@ -482,13 +494,14 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<BaseDTO> getAllPostByUserIdAndType(Long userId, String type) {
+
         List<BaseDTO> dtos = new ArrayList<BaseDTO>();
         if (type.equals(PostType.NORMAL.getName())) {
             List<PostEntity> posts = postRepository.findAllByUser_IdAndTypeOrderByUpdatedAtDesc(userId, type);
             for (PostEntity post : posts) {
                 NormalPostResponseDTO normalPostResponseDTO = normalPostResponeConverter
                         .toDTO(normalPostRepository.findOneByPost_Id(post.getId()));
-                setUserDetail(normalPostResponseDTO);
+                setUserDetailOfPost(normalPostResponseDTO);
                 dtos.add(normalPostResponseDTO);
             }
             return dtos;
@@ -497,7 +510,7 @@ public class PostServiceImpl implements PostService {
             for (PostEntity post : posts) {
                 RecruitmentPostResponseDTO recruitmentPostResponseDTO = recruitmentPostResponeConverter
                         .toDTO(recruitmentPostRepository.findOneByPost_Id(post.getId()));
-                setUserDetail(recruitmentPostResponseDTO);
+                setUserDetailOfPost(recruitmentPostResponseDTO);
                 dtos.add(recruitmentPostResponseDTO);
             }
             return dtos;
@@ -506,19 +519,39 @@ public class PostServiceImpl implements PostService {
             for (PostEntity post : posts) {
                 SurveyResponeDTO surveyResponeDTO = surveyResponeConverter
                         .toDTO(surveyPostRepository.findOneByPost_Id(post.getId()));
-                setUserDetail(surveyResponeDTO);
+                setUserDetailOfPost(surveyResponeDTO);
                 dtos.add(surveyResponeDTO);
             }
             return dtos;
         } else if (type.equals("null")) {
             dtos = this.findAllByUserId(userId);
-            return dtos;
+            UserInfoResponseDTO userInfoResponseDTO = userInfoResponseConverter
+                    .toDTO(userRepository.findOneById(userId));
+            if (userInfoResponseDTO.getRoleCodes().equals(Role.BUSINESS.getName())) {
+                return dtos;
+            } else {
+                List<BaseDTO> result = new ArrayList<BaseDTO>();
+                for (BaseDTO dto : dtos) {
+                    PostInfoResponseDTO postInfoResponseDTO = postInfoResponeConverter
+                            .toDTO(postRepository.findOneById(dto.getId()));
+                    if (postInfoResponseDTO.getGroup() == null) {
+                        result.add(dto);
+                    }
+                }
+
+                if (result.size() > 0) {
+                    return result;
+                } else {
+                    result.add(this.setUserDetail(userInfoResponseDTO));
+                    return result;
+                }
+            }
         } else {
             throw new RuntimeException("can_not_get_list_" + type);
         }
     }
 
-    private PostInfoResponseDTO setUserDetail(PostInfoResponseDTO dto) {
+    private PostInfoResponseDTO setUserDetailOfPost(PostInfoResponseDTO dto) {
         UserInfoResponseDTO userInfoResponseDTO = userInfoResponseConverter
                 .toDTO(userRepository.findOneById(dto.getUser().getId()));
         if (userInfoResponseDTO.getRoleCodes().equals(Role.STUDENT.getName())) {
@@ -535,6 +568,24 @@ public class PostServiceImpl implements PostService {
             dto.setUser(facultyInfoResponseDTO);
         }
         return dto;
+    }
+
+    private UserInfoResponseDTO setUserDetail(UserInfoResponseDTO userInfoResponseDTO) {
+        if (userInfoResponseDTO.getRoleCodes().equals(Role.STUDENT.getName())) {
+            StudentInfoResponseDTO studentInfoResponseDTO = studentInfoResponseConverter
+                    .toDTO(studentInfoRepository.findOneByUser_Id(userInfoResponseDTO.getId()));
+            return studentInfoResponseDTO;
+        } else if (userInfoResponseDTO.getRoleCodes().equals(Role.BUSINESS.getName())) {
+            BusinessInfoResponseDTO businessInfoResponseDTO = businessInfoResponseConverter
+                    .toDTO(businessInfoRepository.findOneByUser_Id(userInfoResponseDTO.getId()));
+            return businessInfoResponseDTO;
+        } else if (userInfoResponseDTO.getRoleCodes().equals(Role.FACULTY.getName())) {
+            FacultyInfoResponseDTO facultyInfoResponseDTO = facultyInfoResponseConverter
+                    .toDTO(facultyInfoRepository.findOneByUser_Id(userInfoResponseDTO.getId()));
+            return facultyInfoResponseDTO;
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -558,17 +609,17 @@ public class PostServiceImpl implements PostService {
                 if (post.getType().equals(PostType.NORMAL.getName())) {
                     NormalPostResponseDTO normalPostResponseDTO = normalPostResponeConverter
                             .toDTO(normalPostRepository.findOneByPost_Id(post.getId()));
-                    setUserDetail(normalPostResponseDTO);
+                    setUserDetailOfPost(normalPostResponseDTO);
                     dtos.add(normalPostResponseDTO);
                 } else if (post.getType().equals(PostType.RECRUIMENT.getName())) {
                     RecruitmentPostResponseDTO recruitmentPostResponseDTO = recruitmentPostResponeConverter
                             .toDTO(recruitmentPostRepository.findOneByPost_Id(post.getId()));
-                    setUserDetail(recruitmentPostResponseDTO);
+                    setUserDetailOfPost(recruitmentPostResponseDTO);
                     dtos.add(recruitmentPostResponseDTO);
                 } else if (post.getType().equals(PostType.SURVEY.getName())) {
                     SurveyResponeDTO surveyResponeDTO = surveyResponeConverter
                             .toDTO(surveyPostRepository.findOneByPost_Id(post.getId()));
-                    setUserDetail(surveyResponeDTO);
+                    setUserDetailOfPost(surveyResponeDTO);
                     dtos.add(surveyResponeDTO);
                 }
             }
@@ -645,6 +696,14 @@ public class PostServiceImpl implements PostService {
             }
         }
         return isConducted;
+    }
+
+    private Long checkUserLoginHadApplied(RecruitmentPostEntity recruitmentEntity, Long userLogin) {
+        Long isApplied = Long.valueOf(0);
+        if(jobProfileRepository.findOneByPost_IdAndUser_Id(recruitmentEntity.getPost().getId(), userLogin) != null){
+            isApplied = Long.valueOf(1);
+        }
+        return isApplied;
     }
 
     @Override

@@ -32,12 +32,12 @@ public interface PostService {
 
     //recruitment post
     List<RecruitmentPostResponseDTO> findAllRecruitmentPost();
-    RecruitmentPostResponseDTO getRecruimentDetailByPostId(Long postId);
+    RecruitmentPostResponseDTO getRecruimentDetailByPostId(Long postId , Long userLogin);
     String recruitmentPostUpdateOrSave(RecruitmentPostUpdateOrSageRequestDTO recruitmentPostUpdateOrSageRequestDTO);
 
     //save survey
     String saveSurvey(SurveySaveRequestDTO saveRequestDTO);
-    SurveyResponeDTO getSurveyDetailByPostId(Long postId);
+    SurveyResponeDTO getSurveyDetailByPostId(Long postId , Long userLogin);
     String answerSurvey(SurveyAnswerRequestDTO surveyAnswerRequestDTO);
     List<SurveyResultResponseDTO> getSurveyResultByPostId(Long postId);
 

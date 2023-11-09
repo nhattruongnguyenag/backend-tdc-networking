@@ -3,6 +3,7 @@ package com.chatapp.converter.request;
 import com.chatapp.converter.abstracts.BaseConverter;
 import com.chatapp.dto.request.JobApplyProfileRequestDTO;
 import com.chatapp.entity.JobProfileEntity;
+import com.chatapp.repository.JobProfileRepository;
 import com.chatapp.repository.PostRepository;
 import com.chatapp.repository.UserRepository;
 
@@ -18,11 +19,20 @@ public class JobApplyProfileRequestConverter extends BaseConverter<JobProfileEnt
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private JobProfileRepository jobProfileRepository;
+
     @Override
     public JobProfileEntity toEntity(JobApplyProfileRequestDTO dto) {
         JobProfileEntity jobProfileEntity = super.toEntity(dto);
         jobProfileEntity.setPost(postRepository.findOneById(dto.getPost_id()));
         jobProfileEntity.setUser(userRepository.findOneById(dto.getUser_id()));
+        jobProfileEntity.setCvUrl(dto.getCv_url());
+        return jobProfileEntity;
+    }
+
+    public JobProfileEntity toUpdateEntity(JobApplyProfileRequestDTO dto) {
+        JobProfileEntity jobProfileEntity = jobProfileRepository.findOneByPost_IdAndUser_Id(dto.getPost_id(), dto.getUser_id());
         jobProfileEntity.setCvUrl(dto.getCv_url());
         return jobProfileEntity;
     }

@@ -8,4 +8,6 @@ import lombok.*;
 @Data
 public class FacultyInfoResponseDTO extends UserInfoResponseDTO{
     List<MajorResponseDTO> majors;
+    String facultyGroupCode;
+    Long facultyGroupId;
 }
