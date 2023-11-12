@@ -25,6 +25,7 @@ import com.chatapp.dto.request.FacultyInfoRegisterRequestDTO;
 import com.chatapp.dto.request.FacultyInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.StudentInfoRegisterRequestDTO;
 import com.chatapp.dto.request.StudentInfoUpdateOrSaveRequestDTO;
+import com.chatapp.dto.request.UserDetailInGroupRequestDTO;
 import com.chatapp.dto.request.UserFindRequestDTO;
 import com.chatapp.dto.request.UserFollowRequestDTO;
 import com.chatapp.dto.request.UserGetRequestDTO;
@@ -662,5 +663,4 @@ public class UserServiceImpl implements UserService {
         List<GroupResponseDTO> groupResponseDTOs = groupResponseConverter.toDTOGroup(userEntity.getGroups());
         return groupResponseDTOs;
     }
-
 }

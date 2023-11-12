@@ -17,12 +17,14 @@ import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
 import com.chatapp.dto.request.SurveyAnswerRequestDTO;
 import com.chatapp.dto.request.SurveySaveRequestDTO;
+import com.chatapp.dto.request.UserDetailInGroupRequestDTO;
 import com.chatapp.dto.request.UserSavePostRequestDTO;
 import com.chatapp.dto.response.CommentResponeseDTO;
 import com.chatapp.dto.response.NormalPostResponseDTO;
 import com.chatapp.dto.response.RecruitmentPostResponseDTO;
 import com.chatapp.dto.response.SurveyResponeDTO;
 import com.chatapp.dto.response.SurveyResultResponseDTO;
+import com.chatapp.dto.response.UserDetailInGroupResponseDTO;
 import com.chatapp.enums.PostType;
 import com.chatapp.service.PostService;
 
@@ -35,13 +37,6 @@ public class PostAPI {
     @GetMapping({ "posts", "posts/" })
     public ResponseEntity<ResponseData<List<BaseDTO>>> findAll() {
         ResponseData<List<BaseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success", postService.findAll());
-        return ResponseEntity.ok(responseData);
-    }
-
-    @GetMapping({ "posts/user/{userId}", "posts/user/{userId}/" })
-    ResponseEntity<ResponseData<List<BaseDTO>>> getPostsByUserId(@PathVariable Long userId) {
-        ResponseData<List<BaseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
-                postService.getAllPostByUserIdAndType(userId, "null"));
         return ResponseEntity.ok(responseData);
     }
 
@@ -88,14 +83,6 @@ public class PostAPI {
                 postService.getAllPostByUserIdAndType(userId, PostType.NORMAL.getName()));
         return ResponseEntity.ok(responseData);
     }
-
-    // recruitmentPost api
-    // @GetMapping({ "posts/recruitment", "posts/recruitment/" })
-    // public ResponseEntity<ResponseData<List<RecruitmentPostResponseDTO>>> findRecruitmentPosts() {
-    //     ResponseData<List<RecruitmentPostResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
-    //             postService.findAllRecruitmentPost());
-    //     return ResponseEntity.ok(responseData);
-    // }
 
     @GetMapping({ "posts/recruitment", "posts/recruitment" })
     public ResponseEntity<ResponseData<RecruitmentPostResponseDTO>> getRecruimentPostByPostId(
@@ -204,6 +191,13 @@ public class PostAPI {
     ResponseEntity<ResponseData<?>> deletePost(@RequestParam Long postId) {
         postService.delete(postId);
         ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK, "success", null);
+        return ResponseEntity.ok(responseData);
+    }
+
+    @PostMapping({ "posts/group/user/detail", "posts/group/user/detail/" })
+    public ResponseEntity<ResponseData<UserDetailInGroupResponseDTO>> getByUserDetailInGroup(@RequestBody UserDetailInGroupRequestDTO userDetailInGroupRequestDTO) {
+        ResponseData<UserDetailInGroupResponseDTO> responseData = new ResponseData<>(HttpStatus.OK, "success",
+                postService.getUserPageInGroup(userDetailInGroupRequestDTO));
         return ResponseEntity.ok(responseData);
     }
 }

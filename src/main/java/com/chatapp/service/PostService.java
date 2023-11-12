@@ -12,6 +12,7 @@ import com.chatapp.dto.request.PostFindRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
 import com.chatapp.dto.request.SurveyAnswerRequestDTO;
 import com.chatapp.dto.request.SurveySaveRequestDTO;
+import com.chatapp.dto.request.UserDetailInGroupRequestDTO;
 import com.chatapp.dto.request.UserGetRequestDTO;
 import com.chatapp.dto.request.UserSavePostRequestDTO;
 import com.chatapp.dto.response.CommentResponeseDTO;
@@ -19,51 +20,65 @@ import com.chatapp.dto.response.NormalPostResponseDTO;
 import com.chatapp.dto.response.RecruitmentPostResponseDTO;
 import com.chatapp.dto.response.SurveyResponeDTO;
 import com.chatapp.dto.response.SurveyResultResponseDTO;
+import com.chatapp.dto.response.UserDetailInGroupResponseDTO;
 
 public interface PostService {
     List<BaseDTO> findAll();
+
     List<BaseDTO> findAllByUserId(Long id);
+
     String delete(Long postid);
 
-    //normal post
+    // normal post
     List<NormalPostResponseDTO> findAllNormalPost();
+
     String normalPostUpdateOrSave(NormalPostUpdateOrSaveRequestDTO normalPostUpdateOrSaveRequestDTO);
+
     NormalPostResponseDTO getNormalDetailByPostId(Long postId);
 
-    //recruitment post
+    // recruitment post
     List<RecruitmentPostResponseDTO> findAllRecruitmentPost();
-    RecruitmentPostResponseDTO getRecruimentDetailByPostId(Long postId , Long userLogin);
+
+    RecruitmentPostResponseDTO getRecruimentDetailByPostId(Long postId, Long userLogin);
+
     String recruitmentPostUpdateOrSave(RecruitmentPostUpdateOrSageRequestDTO recruitmentPostUpdateOrSageRequestDTO);
 
-    //save survey
+    // save survey
     String saveSurvey(SurveySaveRequestDTO saveRequestDTO);
-    SurveyResponeDTO getSurveyDetailByPostId(Long postId , Long userLogin);
+
+    SurveyResponeDTO getSurveyDetailByPostId(Long postId, Long userLogin);
+
     String answerSurvey(SurveyAnswerRequestDTO surveyAnswerRequestDTO);
+
     List<SurveyResultResponseDTO> getSurveyResultByPostId(Long postId);
 
-    //post like
+    // post like
     String likePost(LikeRequestDTO likeRequestDTO);
 
-    //comment 
+    // comment
     String commentPost(CommentSaveRequestDTO commentSaveRequestDTO);
+
     String deleteComment(CommentDeleteRequestDTO commentDeleteRequestDTO);
 
-    //find
+    // find
     List<BaseDTO> findPostByName(PostFindRequestDTO postFindRequestDTO);
 
-    //find comments
+    // find comments
     List<CommentResponeseDTO> findCommentByPostId(Long postId);
 
     List<BaseDTO> findAllByRoleCode(String code);
 
-    List<BaseDTO> findAllByGroupCode(String groupCode , Long userLogin);
+    List<BaseDTO> findAllByGroupCode(String groupCode, Long userLogin);
 
     List<BaseDTO> getAllPostByUserIdAndType(Long userId, String type);
 
     List<BaseDTO> getAllPostByUserIdAndGroupCode(AllPostByUserAndGroupResponseDTO allPostByUserAndGroupResponseDTO);
 
-    //user save post
+    // user save post
     String userSavePost(UserSavePostRequestDTO userSavePostRequestDTO);
+
     List<BaseDTO> getPostSaveByUserId(Long userId);
+
+    UserDetailInGroupResponseDTO getUserPageInGroup(UserDetailInGroupRequestDTO userDetailInGroupRequestDTO);
 
 }
