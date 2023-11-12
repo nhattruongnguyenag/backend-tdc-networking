@@ -21,7 +21,7 @@ public class CustomizedMessageRepositoryImpl implements CustomizedMessageReposit
                 .append("\nJOIN c.sender as s")
                 .append("\nJOIN c.receiver as r")
                 .append("\nWHERE (s.id = ?1 AND r.id = ?2)")
-                .append("\nORDER BY m.createdAt ASC").toString();
+                .append("\nORDER BY m.createdAt DESC").toString();
 
         Query query = entityManager.createQuery(sql)
                 .setParameter(1, senderId)

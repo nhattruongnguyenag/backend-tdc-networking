@@ -29,6 +29,8 @@ public interface UserService {
     UserInfoResponseDTO findByEmailAndPassword(String email, String password);
     UserInfoResponseDTO saveOrUpdate(UserDTO userDTO);
 
+    UserInfoResponseDTO findById(Long id);
+
     boolean setIsMessageFocusIn(Long userId);
 
     boolean setIsMessageFocusOut(Long userId);
