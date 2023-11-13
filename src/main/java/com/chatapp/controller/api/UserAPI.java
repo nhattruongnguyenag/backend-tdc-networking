@@ -109,4 +109,6 @@ public class UserAPI {
         ResponseData<List<GroupResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",userService.getGroupByUserId(userId));
         return ResponseEntity.ok(responseData);
     }
+
+    
 }
