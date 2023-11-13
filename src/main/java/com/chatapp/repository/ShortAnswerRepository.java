@@ -10,5 +10,6 @@ import com.chatapp.entity.ShortAnswerEntity;
 @Repository
 public interface ShortAnswerRepository extends JpaRepository<ShortAnswerEntity, Long> {
     ShortAnswerEntity findOneByUser_Id(Long id);
+    ShortAnswerEntity findOneByUser_IdAndQuestion_Id(Long id , Long questionId);
     List<ShortAnswerEntity> findAllByQuestion_Id(Long id);
 }

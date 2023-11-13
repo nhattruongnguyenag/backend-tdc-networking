@@ -10,6 +10,7 @@ import com.chatapp.entity.PostEntity;
 @Repository
 public interface PostRepository extends JpaRepository<PostEntity, Long> {
     PostEntity findOneById(Long id);
+    PostEntity findOneByIdAndUser_Id(Long id , Long userId);
     List<PostEntity> findAllByOrderByUpdatedAtAsc();
     List<PostEntity> findAllByOrderByUpdatedAtDesc();
     List<PostEntity> findAllByGroup_IdOrderByUpdatedAtDesc(Long groupId);

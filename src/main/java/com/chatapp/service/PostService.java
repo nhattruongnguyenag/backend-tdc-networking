@@ -18,6 +18,7 @@ import com.chatapp.dto.request.UserSavePostRequestDTO;
 import com.chatapp.dto.response.CommentResponeseDTO;
 import com.chatapp.dto.response.NormalPostResponseDTO;
 import com.chatapp.dto.response.RecruitmentPostResponseDTO;
+import com.chatapp.dto.response.SurveyPreviewResponseDTO;
 import com.chatapp.dto.response.SurveyResponeDTO;
 import com.chatapp.dto.response.SurveyResultResponseDTO;
 import com.chatapp.dto.response.UserDetailInGroupResponseDTO;
@@ -52,6 +53,7 @@ public interface PostService {
 
     List<SurveyResultResponseDTO> getSurveyResultByPostId(Long postId);
 
+    List<SurveyPreviewResponseDTO> reviewSurveyResultByPostIdAndUserId(Long postId, Long userId);
     // post like
     String likePost(LikeRequestDTO likeRequestDTO);
 

@@ -21,6 +21,7 @@ import com.chatapp.converter.response.RecruitmentPostResponseConverter;
 import com.chatapp.converter.response.StudentInfoResponseConverter;
 import com.chatapp.converter.response.SurveyResponeConverter;
 import com.chatapp.converter.response.SurveyResultResponseConverter;
+import com.chatapp.converter.response.SurveyReviewResponseConverter;
 import com.chatapp.converter.response.UserInfoResponseConverter;
 import com.chatapp.dto.BaseDTO;
 import com.chatapp.dto.request.AllPostByUserAndGroupResponseDTO;
@@ -42,6 +43,7 @@ import com.chatapp.dto.response.NormalPostResponseDTO;
 import com.chatapp.dto.response.PostInfoResponseDTO;
 import com.chatapp.dto.response.RecruitmentPostResponseDTO;
 import com.chatapp.dto.response.StudentInfoResponseDTO;
+import com.chatapp.dto.response.SurveyPreviewResponseDTO;
 import com.chatapp.dto.response.SurveyResponeDTO;
 import com.chatapp.dto.response.SurveyResultResponseDTO;
 import com.chatapp.dto.response.UserDetailInGroupResponseDTO;
@@ -134,6 +136,8 @@ public class PostServiceImpl implements PostService {
     private BusinessInfoResponseConverter businessInfoResponseConverter;
     @Autowired
     private SurveyResultResponseConverter surveyResultResponseConverter;
+    @Autowired
+    private SurveyReviewResponseConverter surveyReviewResponseConverter;
 
     @Autowired
     private NormalPostUpdateOrSaveRequestConverter normalPostUpdateOrSaveRequestConverter;
@@ -435,8 +439,8 @@ public class PostServiceImpl implements PostService {
         for (AnswerRequestDTO answerRequestDTO : surveyAnswerRequestDTO.getAnswers()) {
             QuestionEntity questionEntity = questionRepository.findOneById(answerRequestDTO.getQuestion_id());
             if (questionEntity.getType().equalsIgnoreCase(QuestionType.SHORT.getName())) {
-                if (shortAnswerRepository.findOneByUser_Id(userEntity.getId()) != null) {
-                    ShortAnswerEntity shortAnswerEntity = shortAnswerRepository.findOneByUser_Id(userEntity.getId());
+                if (shortAnswerRepository.findOneByUser_IdAndQuestion_Id(userEntity.getId() , questionEntity.getId()) != null) {
+                    ShortAnswerEntity shortAnswerEntity = shortAnswerRepository.findOneByUser_IdAndQuestion_Id(userEntity.getId() , questionEntity.getId());
                     shortAnswerEntity.setContent(answerRequestDTO.getContent());
                     shortAnswerRepository.save(shortAnswerEntity);
                 } else {
@@ -718,6 +722,20 @@ public class PostServiceImpl implements PostService {
 
         userDetailInGroupResponseDTO.setPosts(posts);
         return userDetailInGroupResponseDTO;
+    }
+
+    @Override
+    public List<SurveyPreviewResponseDTO> reviewSurveyResultByPostIdAndUserId(Long postId, Long userId) {
+        // if(postRepository.findOneByIdAndUser_Id(postId , userId) == null){
+        //     throw new RuntimeException("survey_at_this_post_id_not_exist");
+        // }
+        PostEntity postEntity = postRepository.findOneById(postId);
+        SurveyPostEntity surveyPostEntity = surveyPostRepository.findOneByPost_Id(postEntity.getId());
+        if (postEntity.getType().equals(PostType.SURVEY.getName())) {
+            return surveyReviewResponseConverter.toSurveyReviewDTOs(questionRepository.findAllBySurvey_Id(surveyPostEntity.getId()),userId);
+        } else {
+            throw new RuntimeException("survey_at_this_post_id_not_exist");
+        }
     }
 
 }

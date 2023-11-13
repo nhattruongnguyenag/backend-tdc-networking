@@ -22,6 +22,7 @@ import com.chatapp.dto.request.UserSavePostRequestDTO;
 import com.chatapp.dto.response.CommentResponeseDTO;
 import com.chatapp.dto.response.NormalPostResponseDTO;
 import com.chatapp.dto.response.RecruitmentPostResponseDTO;
+import com.chatapp.dto.response.SurveyPreviewResponseDTO;
 import com.chatapp.dto.response.SurveyResponeDTO;
 import com.chatapp.dto.response.SurveyResultResponseDTO;
 import com.chatapp.dto.response.UserDetailInGroupResponseDTO;
@@ -141,6 +142,13 @@ public class PostAPI {
     ResponseEntity<ResponseData<List<SurveyResultResponseDTO>>> getResultSurveyByPostId(@PathVariable Long postId) {
         ResponseData<List<SurveyResultResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
                 postService.getSurveyResultByPostId(postId));
+        return ResponseEntity.ok(responseData);
+    }
+
+    @GetMapping({ "posts/survey/prev-conduct", "posts/survey/prev-conduct" })
+    ResponseEntity<ResponseData<List<SurveyPreviewResponseDTO>>> reviewSurvey(@RequestParam Long postId , Long userLogin) {
+        ResponseData<List<SurveyPreviewResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
+                postService.reviewSurveyResultByPostIdAndUserId(postId, userLogin));
         return ResponseEntity.ok(responseData);
     }
 
