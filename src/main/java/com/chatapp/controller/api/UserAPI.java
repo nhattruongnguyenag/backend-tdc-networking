@@ -110,8 +110,8 @@ public class UserAPI {
         return ResponseEntity.ok(responseData);
     }
 
-    @PostMapping({ "users/check/email", "users/check/email/" })
-    public ResponseEntity<ResponseData<Long>> checkEmail(@RequestBody String email) {
+    @PostMapping({ "users/check", "users/check" })
+    public ResponseEntity<ResponseData<Long>> checkEmail(@RequestParam String email) {
         ResponseData<Long> responseData = new ResponseData<>(HttpStatus.OK,"success",userService.checkEmailUser(email));
         return ResponseEntity.ok(responseData);
     }
