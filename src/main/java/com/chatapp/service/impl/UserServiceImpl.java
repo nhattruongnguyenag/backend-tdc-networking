@@ -663,4 +663,9 @@ public class UserServiceImpl implements UserService {
         List<GroupResponseDTO> groupResponseDTOs = groupResponseConverter.toDTOGroup(userEntity.getGroups());
         return groupResponseDTOs;
     }
+
+    @Override
+    public Long checkEmailUser(String email) {
+        return userRepository.findOneByEmail(email) != null ? Long.valueOf(0):Long.valueOf(1); 
+    }
 }

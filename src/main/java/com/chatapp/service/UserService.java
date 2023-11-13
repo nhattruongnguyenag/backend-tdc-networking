@@ -29,6 +29,7 @@ public interface UserService {
     List<UserInfoResponseDTO> findAll();
     UserInfoResponseDTO findByEmailAndPassword(String email, String password);
     UserInfoResponseDTO saveOrUpdate(UserDTO userDTO);
+    Long checkEmailUser(String email);
 
     boolean setIsMessageFocusIn(Long userId);
 
