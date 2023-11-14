@@ -82,5 +82,4 @@ public interface PostService {
     List<BaseDTO> getPostSaveByUserId(Long userId);
 
     UserDetailInGroupResponseDTO getUserPageInGroup(UserDetailInGroupRequestDTO userDetailInGroupRequestDTO);
-
 }

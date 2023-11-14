@@ -11,6 +11,7 @@ import java.util.Date;
 @Component
 public class TokenProvider implements Serializable {
     public static final int TOKEN_VALIDITY_IN_MILISECONDS = 3_600_000;
+    public static final int TOKEN__RESET_PASSWORD_TIME = 600_000;
     public static final String JWT_SIGNING_KEY = "com.template";
 
     public String generateToken(String subject) {
@@ -19,6 +20,16 @@ public class TokenProvider implements Serializable {
                 .signWith(SignatureAlgorithm.HS256, JWT_SIGNING_KEY)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + TOKEN_VALIDITY_IN_MILISECONDS))
+                .compact();
+    }
+
+    public String generateResetPasswordToken(Long subject) {
+        String s = String.valueOf(subject);
+        return Jwts.builder()
+                .setSubject(s)
+                .signWith(SignatureAlgorithm.HS256, JWT_SIGNING_KEY)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + TOKEN__RESET_PASSWORD_TIME))
                 .compact();
     }
 
