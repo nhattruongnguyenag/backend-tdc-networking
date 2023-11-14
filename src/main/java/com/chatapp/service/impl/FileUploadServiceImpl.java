@@ -8,10 +8,13 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
@@ -27,14 +30,36 @@ import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
+@PropertySource({"classpath:application.properties", "classpath:application-dev.properties", "classpath:application-pro.properties"})
 public class FileUploadServiceImpl implements FileUploadService {
     @Autowired
     ResourceLoader resourceLoader;
 
+    @Value("${spring.profiles.active}")
+    private String profilesActive;
+
+    @Value("${directory.upload.dev}")
+    private String devUploadDirectory;
+
+    @Value("${directory.upload.pro}")
+    private String proUploadDirectory;
+
+    @Autowired private String uploadDirectory() {
+        String uploadDirectory = "";
+
+        if (profilesActive.equalsIgnoreCase("dev")) {
+            uploadDirectory = devUploadDirectory;
+        } else if (profilesActive.equalsIgnoreCase("pro")){
+            uploadDirectory = proUploadDirectory;
+        }
+
+        return FilenameUtils.separatorsToSystem(uploadDirectory);
+    }
+
     @Override
     public List<String> upload(MultipartFile[] files, String type) throws IOException{
         try {
-            createDirIfNotExist(SystemConstant.FILE_PATH_ORIGIN + type);
+            createDirIfNotExist(uploadDirectory() + type);
 
             List<String> fileNames = new ArrayList<>();
             // read and write the file to the local folder
@@ -44,7 +69,7 @@ public class FileUploadServiceImpl implements FileUploadService {
                     bytes = file.getBytes();
                     String newFileName = EncryptUtils.createMD5(String.valueOf(System.nanoTime()), EncryptUtils.MD5)
                             + "." + FilenameUtils.getExtension(file.getOriginalFilename());
-                    Files.write(Paths.get(SystemConstant.FILE_PATH_ORIGIN + type + newFileName), bytes);
+                    Files.write(Paths.get(uploadDirectory() + type + newFileName), bytes);
                     fileNames.add(newFileName);
                 } catch (IOException e) {
                     throw new DuplicateUsernameException("upload_failed");
@@ -67,14 +92,14 @@ public class FileUploadServiceImpl implements FileUploadService {
     }
 
     @Override
-    public byte[] loadAsResource(String path, String fileName) throws IOException {
-        byte[] image = Files.readAllBytes(Path.of(path + fileName));
+    public byte[] loadAsResource(String fileName) throws IOException {
+        byte[] image = Files.readAllBytes(Path.of(uploadDirectory() + FileType.IMAGE.getName() + fileName));
         return image;
     }
 
     @Override
-    public Resource loadFileAsResource(String path, String fileName) {
-        String filename = path + fileName;
+    public Resource loadFileAsResource(String fileName) {
+        String filename = uploadDirectory() + FileType.FILE.getName() + fileName;
         try {
             return resourceLoader.getResource("file:" + filename);
         } catch (Exception e) {
