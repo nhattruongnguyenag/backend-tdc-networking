@@ -112,7 +112,7 @@ Content-Type: application/json
 
 {
     "type":"thong-thuong",
-    "groupId": 0,
+    "groupId": 1,
     "images":[
         "1aaed1f52741546bdb4affe2e3fcfbc1.png",
         "1aaed1f52741546bdb4affe2e3fcfbc1.png"
@@ -516,3 +516,7 @@ Content-Type: application/json
 {
     "email":"21211tt2356@mail.tdc.edu.vn"
 }
+
+###
+###
+DELETE http://127.0.0.1:8080/api/posts/1 HTTP/1.1
