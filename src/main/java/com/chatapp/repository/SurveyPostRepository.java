@@ -10,5 +10,6 @@ import com.chatapp.entity.SurveyPostEntity;
 @Repository
 public interface SurveyPostRepository extends JpaRepository<SurveyPostEntity, Long> {
     SurveyPostEntity findOneByPost_Id(Long id);
+    SurveyPostEntity findOneById(Long id);
     List<SurveyPostEntity> findAllByTitleContains(String content);
 }
