@@ -1,5 +1,6 @@
 package com.chatapp.service.impl;
 
+import com.chatapp.constant.SystemConstant;
 import com.chatapp.converter.request.BusinessInfoRegisterRequestConverter;
 import com.chatapp.converter.request.BusinessInfoUpdateOrSaveRequestConverter;
 import com.chatapp.converter.request.FacultyInfoRegisterRequestConverter;
@@ -25,7 +26,6 @@ import com.chatapp.dto.request.FacultyInfoRegisterRequestDTO;
 import com.chatapp.dto.request.FacultyInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.StudentInfoRegisterRequestDTO;
 import com.chatapp.dto.request.StudentInfoUpdateOrSaveRequestDTO;
-import com.chatapp.dto.request.UserDetailInGroupRequestDTO;
 import com.chatapp.dto.request.UserFindRequestDTO;
 import com.chatapp.dto.request.UserFollowRequestDTO;
 import com.chatapp.dto.request.UserGetRequestDTO;
@@ -41,6 +41,7 @@ import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.entity.FollowEntity;
 import com.chatapp.entity.GroupEntity;
 import com.chatapp.entity.RoleEntity;
+import com.chatapp.entity.TokenResetPasswordEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.enums.GroupDefault;
 import com.chatapp.enums.Role;
@@ -51,11 +52,16 @@ import com.chatapp.repository.FollowReposittory;
 import com.chatapp.repository.GroupRepository;
 import com.chatapp.repository.RoleRepository;
 import com.chatapp.repository.StudentInfoRepository;
+import com.chatapp.repository.TokenRepository;
 import com.chatapp.repository.UserRepository;
+import com.chatapp.service.EmailService;
 import com.chatapp.service.UserService;
 import com.chatapp.util.TokenProvider;
 
+import jakarta.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -63,6 +69,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -92,6 +99,8 @@ public class UserServiceImpl implements UserService {
     private FollowReposittory followReposittory;
     @Autowired
     private GroupRepository groupRepository;
+    @Autowired
+    private TokenRepository tokenRepository;
 
     @Autowired
     private UserInfoResponseConverter userInfoResponseConverter;
@@ -126,6 +135,9 @@ public class UserServiceImpl implements UserService {
     private BusinessInfoRegisterRequestConverter businessInfoRegisterRequestConverter;
     @Autowired
     private UserFollowRequestConverter userFollowRequestConverter;
+
+    @Autowired
+    private EmailService emailService;
 
     @Override
     public List<UserInfoResponseDTO> findAll() {
@@ -671,5 +683,29 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = userRepository.findOneById(userId);
         List<GroupResponseDTO> groupResponseDTOs = groupResponseConverter.toDTOGroup(userEntity.getGroups());
         return groupResponseDTOs;
+    }
+
+    @Override
+    public Long checkEmailUser(String email) {
+        return userRepository.findOneByEmail(email) != null ? Long.valueOf(0) : Long.valueOf(1);
+    }
+
+    // forgot password
+    @Override
+    public String sendEmail(String email) throws MessagingException, UnsupportedEncodingException{
+        if (userRepository.findOneByEmail(email) == null) {
+            throw new DuplicateUsernameException("this_email_have_not_registered");
+        }
+        UserEntity userEntity = userRepository.findOneByEmail(email);
+        String token = tokenProvider.generateResetPasswordToken(userEntity.getId());
+
+        TokenResetPasswordEntity tokenResetPasswordEntity = new TokenResetPasswordEntity();
+        tokenResetPasswordEntity.setToken(token);
+        tokenResetPasswordEntity.setStatus(Long.valueOf(1));
+        tokenRepository.save(tokenResetPasswordEntity);
+
+        String urlResetPassword = SystemConstant.BACK_END_MAIN_URL + "reset_password" + "?token=" + token;
+        emailService.sendEmail(urlResetPassword , email);
+        return "";
     }
 }
