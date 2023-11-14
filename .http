@@ -10,7 +10,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://127.0.0.1:8080/api/users/token/eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJraG9hZGR0QHRkYy5lZHUudm4iLCJpYXQiOjE2OTkzNjc3NjksImV4cCI6MTY5OTM3MTM2OX0.Rtn8mNxlhhniT_lrvHA8wtQOvFgIk7I8BUSKUXgp_xA HTTP/1.1
+GET http://127.0.0.1:8080/api/users/token/eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjdHlhbXRoYzc2Njc3QGdtYWlsLmNvbSIsImlhdCI6MTY5OTY5NTEzOCwiZXhwIjoxNjk5Njk4NzM4fQ.9X4VxbJUPKKmmsTWsRZXUOaay_MvP8xC3Pr2Ey9Zvys HTTP/1.1
 
 ###
 GET http://127.0.0.1:8080/api/users HTTP/1.1
@@ -47,7 +47,7 @@ Content-Type: application/json
     "password":"abc123",
     "image":"son.png",
     "phone":"56856863",
-    "code":"student_10",
+    "code":"student_11",
     "facultyName":"Khoa Công Nghệ Thông Tin",
     "major":"cntt e",
     "studentCode":"2356"
@@ -72,7 +72,7 @@ POST http://127.0.0.1:8080/api/business/register HTTP/1.1
 Content-Type: application/json
 
 {
-    "email":"ctyamthc@gmail.com",
+    "email":"ctyamthc76677@gmail.com",
     "name":"son",
     "password":"abc123",
     "image":"business.png",
@@ -130,7 +130,7 @@ Content-Type: application/json
 
 {
     "type":"tuyen-dung",
-    "groupId": 1,
+    "groupId": 2,
     "images":[
         "1aaed1f52741546bdb4affe2e3fcfbc1.png",
         "1aaed1f52741546bdb4affe2e3fcfbc1.png"
@@ -163,31 +163,31 @@ Content-Type: application/json
    "questions": [
        {
            "type": "tra-loi-ngan",
-           "title": "Ngôn ngữ lập trình bạn đang sử dụng là gì?",
-           "required": 0
+           "title": "alo",
+           "required": 1
        },
        {
            "type": "tra-loi-ngan",
-           "title": "name?",
+           "title": "age?",
            "required": 0
        },
        {
            "type": "chon-mot-dap-an",
-           "title": "Bạn có đi làm thêm không?",
+           "title": "aloo",
            "required": 1,
            "choices": [
-               "Có",
-               "Không"
+               "no",
+               "yes"
            ]
        },
        {
            "type": "chon-nhieu-dap-an",
-           "title": "Bạn đi làm thêm vào thứ mấy?",
+           "title": "alooo",
            "required": 0,
            "choices": [
-               "Thứ 2",
-               "Thứ 3",
-               "Thứ 4"
+               "Thứ u",
+               "Thứ 3y",
+               "Thứ z4"
            ]
        }
    ]
@@ -289,7 +289,7 @@ Content-Type: application/json
 {
     "userId":1,
     "type":"khoa",
-    "name":"Điện"
+    "name":"Cong"
 }
 
 ###
