@@ -196,7 +196,7 @@ public class PostAPI {
     }
 
     @DeleteMapping({ "posts/{postId}", "posts/{postId}/" })
-    ResponseEntity<ResponseData<?>> deletePost(@RequestParam Long postId) {
+    ResponseEntity<ResponseData<?>> deletePost(@PathVariable Long postId) {
         postService.delete(postId);
         ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK, "success", null);
         return ResponseEntity.ok(responseData);
