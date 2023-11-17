@@ -24,6 +24,7 @@ import com.chatapp.dto.request.BusinessInfoRegisterRequestDTO;
 import com.chatapp.dto.request.BusinessInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.FacultyInfoRegisterRequestDTO;
 import com.chatapp.dto.request.FacultyInfoUpdateOrSaveRequestDTO;
+import com.chatapp.dto.request.PasswordResetRequestDTO;
 import com.chatapp.dto.request.StudentInfoRegisterRequestDTO;
 import com.chatapp.dto.request.StudentInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.UserFindRequestDTO;
@@ -58,10 +59,10 @@ import com.chatapp.service.EmailService;
 import com.chatapp.service.UserService;
 import com.chatapp.util.TokenProvider;
 
+import ch.qos.logback.core.subst.Token;
 import jakarta.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -695,8 +696,64 @@ public class UserServiceImpl implements UserService {
         tokenResetPasswordEntity.setStatus(Long.valueOf(1));
         tokenRepository.save(tokenResetPasswordEntity);
 
-        String urlResetPassword = SystemConstant.BACK_END_MAIN_URL + "reset_password" + "?token=" + token;
+        String urlResetPassword = SystemConstant.BACK_END_MAIN_URL + token;
         emailService.sendEmail(urlResetPassword , email);
         return "";
+    }
+
+    @Override
+    public Long checkToken(String token) throws Exception{
+        Long status = Long.valueOf(0); 
+        checkAllToken();
+        if(tokenRepository.findOneByToken(token) != null){
+            if(tokenRepository.findOneByToken(token).getStatus() == 1){
+                status = Long.valueOf(1);
+                return status;
+            }
+        }
+        return status;
+    }
+
+    public void checkAllToken() throws Exception {
+        for (TokenResetPasswordEntity token : tokenRepository.findAll()) {
+            if(!tokenProvider.isTokenValid(token.getToken())){
+                token.setStatus(Long.valueOf(1));
+                tokenRepository.save(token);
+            }
+            if(!tokenProvider.isTokenValid(token.getToken())){
+                token.setStatus(Long.valueOf(0));
+                tokenRepository.save(token);
+            }
+        }
+    }
+
+    @Override
+    public String resetPassword(PasswordResetRequestDTO passwordResetRequestDTO) throws Exception{
+        checkAllToken();
+        if(tokenRepository.findOneByToken(passwordResetRequestDTO.getToken()) != null){
+            if(tokenRepository.findOneByToken(passwordResetRequestDTO.getToken()).getStatus() == 1){
+                TokenResetPasswordEntity tokenResetPasswordEntity = tokenRepository.findOneByToken(passwordResetRequestDTO.getToken());
+                if(!passwordResetRequestDTO.getPassword().equals(passwordResetRequestDTO.getRepassword())){
+                    throw new DuplicateUsernameException("repassword_not_same_password");
+                }
+                String userId = tokenProvider.extractIdFromToken(passwordResetRequestDTO.getToken());
+                UserEntity userEntity = userRepository.findOneById(Long.valueOf(userId));
+                if(passwordEncoder.matches(passwordResetRequestDTO.getPassword(), userEntity.getPassword())){
+                    throw new DuplicateUsernameException("new_password_not_same_old_password");
+                }
+                String password = passwordEncoder.encode(passwordResetRequestDTO.getPassword());
+                userEntity.setPassword(password);
+                userRepository.save(userEntity);
+                tokenResetPasswordEntity.setStatus(Long.valueOf(0));
+                tokenRepository.save(tokenResetPasswordEntity);
+                return "";
+            }
+            else{
+                throw new DuplicateUsernameException("token_has_expired");
+            }
+        }
+        else{
+            throw new DuplicateUsernameException("token_has_not_exist");
+        }
     }
 }

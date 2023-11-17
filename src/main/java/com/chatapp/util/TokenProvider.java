@@ -1,9 +1,13 @@
 package com.chatapp.util;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.impl.DefaultClaims;
+
 import org.springframework.stereotype.Component;
+
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,6 +17,7 @@ public class TokenProvider implements Serializable {
     public static final int TOKEN_VALIDITY_IN_MILISECONDS = 3_600_000;
     public static final int TOKEN__RESET_PASSWORD_TIME = 600_000;
     public static final String JWT_SIGNING_KEY = "com.template";
+    Boolean tokenExpired = false;
 
     public String generateToken(String subject) {
         return Jwts.builder()
@@ -38,6 +43,11 @@ public class TokenProvider implements Serializable {
         return claims.getSubject();
     }
 
+    public String extractIdFromToken(String token) {
+        final Claims claims = getClaims(token);
+        return claims.getSubject();
+    }
+
     public Date extractExpirationDateFromToken(String token) {
         final Claims claims = getClaims(token);
         return claims.getExpiration();
@@ -54,5 +64,24 @@ public class TokenProvider implements Serializable {
                 .setSigningKey(JWT_SIGNING_KEY)
                 .parseClaimsJws(token)
                 .getBody();
+    }
+
+    public boolean isTokenValid(String token) throws Exception {
+        tryGetToken(token);
+        return tokenExpired;
+    }
+
+    private Claims tryGetToken(String token) throws Exception {
+        try {
+            Claims claims = Jwts.parser().setSigningKey(JWT_SIGNING_KEY)
+                    .parseClaimsJws(token).getBody();
+            tokenExpired = true;
+            return claims;
+        } catch (ExpiredJwtException ex) {
+            DefaultClaims claims = (DefaultClaims) ex.getClaims();
+            return claims;
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
     }
 }

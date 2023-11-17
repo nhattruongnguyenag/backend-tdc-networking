@@ -5,7 +5,8 @@ import com.chatapp.commond.ResponseData;
 import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.BaseDTO;
 import com.chatapp.dto.UserDTO;
-import com.chatapp.dto.request.UserFindRequestDTO;
+import com.chatapp.dto.request.PasswordResetRequestDTO;
+import com.chatapp.dto.request.TokenRequestDTO;
 import com.chatapp.dto.request.UserFollowRequestDTO;
 import com.chatapp.dto.request.UserGetRequestDTO;
 import com.chatapp.dto.request.UserGetResetPasswordRequestDTO;
@@ -124,6 +125,18 @@ public class UserAPI {
     @PostMapping({ "users/get/email/reset", "users/get/email/reset/" })
     public ResponseEntity<ResponseData<String>> checkEmail(@RequestBody UserGetResetPasswordRequestDTO request) throws MessagingException, UnsupportedEncodingException {
         ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK,"success",userService.sendEmail(request.getEmail()));
+        return ResponseEntity.ok(responseData);
+    }
+
+    @PostMapping({ "users/check/token", "users/check/token" })
+    public ResponseEntity<ResponseData<Long>> checkToken(@RequestBody TokenRequestDTO request) throws Exception{
+        ResponseData<Long> responseData = new ResponseData<>(HttpStatus.OK,"success",userService.checkToken(request.getToken()));
+        return ResponseEntity.ok(responseData);
+    }
+
+    @PostMapping({ "users/reset/password", "users/reset/password/" })
+    public ResponseEntity<ResponseData<String>> resetPassword(@RequestBody PasswordResetRequestDTO request) throws Exception{
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK,"success",userService.resetPassword(request));
         return ResponseEntity.ok(responseData);
     }
 }
