@@ -46,15 +46,14 @@ public class UploadAPI {
 
     @GetMapping({ "/images/{name}", "/images/{name}/" })
     public ResponseEntity<byte[]> identificationImage(@PathVariable String name) throws IOException {
-        byte[] image = fileUploadService.loadAsResource(SystemConstant.FILE_PATH_ORIGIN + FileType.IMAGE.getName(),
-                name);
+        byte[] image = fileUploadService.loadAsResource(name);
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
     }
 
     @GetMapping(value = { "/files/{name}", "/files/{name}/" }, produces = "application/pdf")
-    public ResponseEntity<Resource> getFile(@PathVariable String name) {
+    public ResponseEntity<Resource> getFile(@PathVariable("name") String fileName) {
         Resource resource = fileUploadService
-                .loadFileAsResource(SystemConstant.FILE_PATH_ORIGIN + FileType.FILE.getName(), name);
+                .loadFileAsResource(fileName);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.set("Content-Disposition", "attachment");
         return ResponseEntity.ok()

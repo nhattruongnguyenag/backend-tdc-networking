@@ -172,6 +172,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserInfoResponseDTO findById(Long id) {
+        UserEntity userEntity = userRepository.findOneById(id);
+        if (userEntity != null) {
+            return userInfoResponseConverter.toDTO(userEntity);
+        }
+        throw new RuntimeException("user_does_not_exists");
+    }
+
+    @Override
     public UserInfoResponseDTO changeStatus(Long userId, Byte status) {
         UserEntity userEntity = userRepository.findOneById(userId);
         if (userEntity == null) {

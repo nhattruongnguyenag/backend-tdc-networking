@@ -10,6 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface FileUploadService {
     List<String> upload(MultipartFile[] files , String type ) throws IOException;
-    byte[] loadAsResource(String path,String fileName) throws IOException;
-    Resource loadFileAsResource(String path, String fileName); 
+    byte[] loadAsResource(String fileName) throws IOException;
+    Resource loadFileAsResource(String fileName);
 }
