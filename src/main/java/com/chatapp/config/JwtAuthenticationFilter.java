@@ -63,7 +63,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return header.replace("Bearer ", "");
     }
 
-    private boolean isValidToken(String token) {
+    private boolean isValidToken(String token){
         boolean isValidToken = false;
 
         try {
