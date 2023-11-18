@@ -13,6 +13,7 @@ import com.chatapp.dto.request.StudentInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.UserFindRequestDTO;
 import com.chatapp.dto.request.UserFollowRequestDTO;
 import com.chatapp.dto.request.UserGetRequestDTO;
+import com.chatapp.dto.request.UserImageUpdateRequestDTO;
 import com.chatapp.dto.request.UserInfoFindRequestDTO;
 import com.chatapp.dto.request.UserLoginRequestDTO;
 import com.chatapp.dto.response.BusinessInfoResponseDTO;
@@ -88,4 +89,5 @@ public interface UserService {
     String sendEmail(String email) throws MessagingException, UnsupportedEncodingException;
     Long checkToken(String token) throws Exception;
     String resetPassword(PasswordResetRequestDTO passwordResetRequestDTO) throws Exception;
+    String updateAvatar(UserImageUpdateRequestDTO userImageUpdateRequestDTO);
 }
