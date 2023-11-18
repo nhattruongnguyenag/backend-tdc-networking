@@ -1,7 +1,6 @@
 package com.chatapp.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,7 +12,7 @@ import com.chatapp.service.EmailService;
 
 @RestController
 @RequestMapping("/api")
-public class SendMailAPI {
+public class EmailSendAPI {
     @Autowired
     private EmailService emailService;
 
@@ -21,7 +20,7 @@ public class SendMailAPI {
     public ResponseEntity sendMail(@RequestBody EmailSendRequestionDTO emailSendRequestionDTO) {
         try {
             emailService.sendEmail(emailSendRequestionDTO.getTo(), emailSendRequestionDTO.getSubject(),
-                    emailSendRequestionDTO.getText());
+                    emailSendRequestionDTO.getContent());
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
