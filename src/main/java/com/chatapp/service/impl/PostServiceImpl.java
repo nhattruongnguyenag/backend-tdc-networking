@@ -48,6 +48,7 @@ import com.chatapp.dto.response.SurveyResponeDTO;
 import com.chatapp.dto.response.SurveyResultResponseDTO;
 import com.chatapp.dto.response.UserDetailInGroupResponseDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
+import com.chatapp.entity.FollowEntity;
 import com.chatapp.entity.NormalPostEntity;
 import com.chatapp.entity.PostCommentEntity;
 import com.chatapp.entity.PostEntity;
@@ -717,6 +718,18 @@ public class PostServiceImpl implements PostService {
         UserInfoResponseDTO userInfoResponseDTO = userInfoResponseConverter
                 .toDTO(userRepository.findOneById(userDetailInGroupRequestDTO.getUserId()));
         userInfoResponseDTO = this.setUserDetail(userInfoResponseDTO);
+        
+        //set isFollow
+        UserEntity userLogin = userRepository.findOneById(userDetailInGroupRequestDTO.getUserLogin());
+        UserEntity userInPage = userRepository.findOneById(userDetailInGroupRequestDTO.getUserId());
+        userDetailInGroupResponseDTO.setIsFollow(false);
+        for (FollowEntity entity : userLogin.getFollowUsers()) {
+            if(entity.getUserFollow().getId() == userInPage.getId()){
+                userDetailInGroupResponseDTO.setIsFollow(true);
+                break;
+            }
+        }
+
         userDetailInGroupResponseDTO.setUser(userInfoResponseDTO);
         List<BaseDTO> posts = this.getAllPostByUserIdAndGroupCode(allPostByUserAndGroupResponseDTO);
 
