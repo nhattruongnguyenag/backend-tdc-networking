@@ -10,6 +10,7 @@ import com.chatapp.dto.request.TokenRequestDTO;
 import com.chatapp.dto.request.UserFollowRequestDTO;
 import com.chatapp.dto.request.UserGetRequestDTO;
 import com.chatapp.dto.request.UserGetResetPasswordRequestDTO;
+import com.chatapp.dto.request.UserImageUpdateRequestDTO;
 import com.chatapp.dto.request.UserLoginRequestDTO;
 import com.chatapp.dto.response.GroupResponseDTO;
 import com.chatapp.dto.response.UserFollowResponseDTO;
@@ -137,6 +138,12 @@ public class UserAPI {
     @PostMapping({ "users/reset/password", "users/reset/password/" })
     public ResponseEntity<ResponseData<String>> resetPassword(@RequestBody PasswordResetRequestDTO request) throws Exception{
         ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK,"success",userService.resetPassword(request));
+        return ResponseEntity.ok(responseData);
+    }
+
+    @PostMapping({ "users/change/image", "users/change/image/" })
+    public ResponseEntity<ResponseData<String>> updateImage(@RequestBody UserImageUpdateRequestDTO request){
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK,"success",userService.updateAvatar(request));
         return ResponseEntity.ok(responseData);
     }
 }

@@ -30,6 +30,7 @@ import com.chatapp.dto.request.StudentInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.UserFindRequestDTO;
 import com.chatapp.dto.request.UserFollowRequestDTO;
 import com.chatapp.dto.request.UserGetRequestDTO;
+import com.chatapp.dto.request.UserImageUpdateRequestDTO;
 import com.chatapp.dto.request.UserInfoFindRequestDTO;
 import com.chatapp.dto.request.UserLoginRequestDTO;
 import com.chatapp.dto.response.BusinessInfoResponseDTO;
@@ -764,5 +765,18 @@ public class UserServiceImpl implements UserService {
         else{
             throw new DuplicateUsernameException("token_has_not_exist");
         }
+    }
+
+    @Override
+    public String updateAvatar(UserImageUpdateRequestDTO userImageUpdateRequestDTO) {
+        UserEntity entity = userRepository.findOneById(userImageUpdateRequestDTO.getUserId());
+        if(userImageUpdateRequestDTO.getAvatar() != null){
+            entity.setImage(userImageUpdateRequestDTO.getAvatar());
+        }
+        if(userImageUpdateRequestDTO.getBackgroud() != null){
+            entity.setBackground(userImageUpdateRequestDTO.getBackgroud());
+        }
+        userRepository.save(entity);
+        return "";
     }
 }
