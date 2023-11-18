@@ -737,5 +737,4 @@ public class PostServiceImpl implements PostService {
             throw new RuntimeException("survey_at_this_post_id_not_exist");
         }
     }
-
 }

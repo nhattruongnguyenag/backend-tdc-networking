@@ -8,17 +8,22 @@ import com.chatapp.dto.UserDTO;
 import com.chatapp.dto.request.UserFindRequestDTO;
 import com.chatapp.dto.request.UserFollowRequestDTO;
 import com.chatapp.dto.request.UserGetRequestDTO;
+import com.chatapp.dto.request.UserGetResetPasswordRequestDTO;
 import com.chatapp.dto.request.UserLoginRequestDTO;
 import com.chatapp.dto.response.GroupResponseDTO;
 import com.chatapp.dto.response.UserFollowResponseDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.service.UserService;
 import com.chatapp.util.TokenProvider;
+
+import jakarta.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @RestController
@@ -110,5 +115,15 @@ public class UserAPI {
         return ResponseEntity.ok(responseData);
     }
 
-    
+    @PostMapping({ "users/check", "users/check" })
+    public ResponseEntity<ResponseData<Long>> checkEmail(@RequestParam String email) {
+        ResponseData<Long> responseData = new ResponseData<>(HttpStatus.OK,"success",userService.checkEmailUser(email));
+        return ResponseEntity.ok(responseData);
+    }
+
+    @PostMapping({ "users/get/email/reset", "users/get/email/reset/" })
+    public ResponseEntity<ResponseData<String>> checkEmail(@RequestBody UserGetResetPasswordRequestDTO request) throws MessagingException, UnsupportedEncodingException {
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK,"success",userService.sendEmail(request.getEmail()));
+        return ResponseEntity.ok(responseData);
+    }
 }
