@@ -14,7 +14,9 @@ import com.chatapp.dto.request.CommentDeleteRequestDTO;
 import com.chatapp.dto.request.CommentSaveRequestDTO;
 import com.chatapp.dto.request.LikeRequestDTO;
 import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
+import com.chatapp.dto.request.NormalPostUpdateRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
+import com.chatapp.dto.request.RecruitmentPostUpdateRequestDTO;
 import com.chatapp.dto.request.SurveyAnswerRequestDTO;
 import com.chatapp.dto.request.SurveySaveRequestDTO;
 import com.chatapp.dto.request.UserDetailInGroupRequestDTO;
@@ -71,6 +73,14 @@ public class PostAPI {
         return ResponseEntity.created(null).body(responseData);
     }
 
+    @PutMapping({ "posts/normal", "posts/normal/" })
+    ResponseEntity<ResponseData<String>> updateNormalPost(
+            @RequestBody NormalPostUpdateRequestDTO normalPostUpdateRequestDTO) {
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED, "add or update normal post success",
+                postService.updateNormalPost(normalPostUpdateRequestDTO));
+        return ResponseEntity.created(null).body(responseData);
+    }
+
     @GetMapping({ "posts/normal/{postId}", "posts/normal/{postId}/" })
     ResponseEntity<ResponseData<NormalPostResponseDTO>> getNormalByPostId(@PathVariable Long postId) {
         ResponseData<NormalPostResponseDTO> responseData = new ResponseData<>(HttpStatus.OK, "success",
@@ -99,6 +109,14 @@ public class PostAPI {
         ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED,
                 "add or update recruitment post success",
                 postService.recruitmentPostUpdateOrSave(recruitmentPostUpdateOrSageRequestDTO));
+        return ResponseEntity.created(null).body(responseData);
+    }
+
+    @PutMapping({ "posts/recruitment", "posts/recruitment/" })
+    ResponseEntity<ResponseData<String>> updateRecruitmentPost(
+            @RequestBody RecruitmentPostUpdateRequestDTO recruitmentPostUpdateRequestDTO) {
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED, "add or update recruitment post success",
+                postService.updateRecruitmentPost(recruitmentPostUpdateRequestDTO));
         return ResponseEntity.created(null).body(responseData);
     }
 

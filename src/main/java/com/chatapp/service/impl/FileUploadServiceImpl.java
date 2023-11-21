@@ -90,7 +90,7 @@ public class FileUploadServiceImpl implements FileUploadService {
             FileUtils.forceMkdir(directory);
         }
     }
-
+ 
     @Override
     public byte[] loadAsResource(String fileName) throws IOException {
         byte[] image = Files.readAllBytes(Path.of(uploadDirectory() + FileType.IMAGE.getName() + fileName));

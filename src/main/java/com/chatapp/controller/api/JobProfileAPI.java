@@ -36,6 +36,12 @@ public class JobProfileAPI {
         return ResponseEntity.ok(responseData);
     }
 
+    @GetMapping({ "job/user/{userId}", "job/user/{userId}" })
+    public ResponseEntity<ResponseData<List<JobProfileResponseDTO>>> getListJobProfileByUserId(@PathVariable Long userId) {
+        ResponseData<List<JobProfileResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",jobProfileService.getJobprofileByUserId(userId));
+        return ResponseEntity.ok(responseData);
+    }
+
     @GetMapping({ "job/{jobId}", "job/{jobId}/" })
     public ResponseEntity<ResponseData<JobProfileResponseDTO>> getJobProfileDetailByPostIdAndJobId(@PathVariable Long jobId) {
         ResponseData<JobProfileResponseDTO> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",jobProfileService.getJobProfileDetail(jobId));

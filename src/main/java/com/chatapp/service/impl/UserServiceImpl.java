@@ -60,7 +60,6 @@ import com.chatapp.service.EmailService;
 import com.chatapp.service.UserService;
 import com.chatapp.util.TokenProvider;
 
-import ch.qos.logback.core.subst.Token;
 import jakarta.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.chatapp.converter.request.CommentSaveRequestConverter;
 import com.chatapp.converter.request.LikeRequestConverter;
 import com.chatapp.converter.request.NormalPostUpdateOrSaveRequestConverter;
+import com.chatapp.converter.request.NormalPostUpdateRequestConverter;
+import com.chatapp.converter.request.RecruitmentPostUpdateRequestConverter;
 import com.chatapp.converter.request.RecruitmentPosyUpdateOrSaveRequestConverter;
 import com.chatapp.converter.request.SurveySaveRequestConverter;
 import com.chatapp.converter.request.UserSavePostRequestConverter;
@@ -30,8 +32,10 @@ import com.chatapp.dto.request.CommentDeleteRequestDTO;
 import com.chatapp.dto.request.CommentSaveRequestDTO;
 import com.chatapp.dto.request.LikeRequestDTO;
 import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
+import com.chatapp.dto.request.NormalPostUpdateRequestDTO;
 import com.chatapp.dto.request.PostFindRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
+import com.chatapp.dto.request.RecruitmentPostUpdateRequestDTO;
 import com.chatapp.dto.request.SurveyAnswerRequestDTO;
 import com.chatapp.dto.request.SurveySaveRequestDTO;
 import com.chatapp.dto.request.UserDetailInGroupRequestDTO;
@@ -143,7 +147,11 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private NormalPostUpdateOrSaveRequestConverter normalPostUpdateOrSaveRequestConverter;
     @Autowired
+    private NormalPostUpdateRequestConverter normalPostUpdateRequestConverter;
+    @Autowired
     private RecruitmentPosyUpdateOrSaveRequestConverter recruitmentPosyUpdateOrSaveRequestConverter;
+    @Autowired
+    private RecruitmentPostUpdateRequestConverter recruitmentPostUpdateRequestConverter;
     @Autowired
     private SurveySaveRequestConverter surveySaveRequestConverter;
     @Autowired
@@ -336,7 +344,8 @@ public class PostServiceImpl implements PostService {
             List<NormalPostResponseDTO> normalPostResponseDTOs = normalPostResponeConverter
                     .toDTOGroup(normalPostRepository.findAllByContentContains(postFindRequestDTO.getName()));
             for (NormalPostResponseDTO normalPostResponseDTO : normalPostResponseDTOs) {
-                NormalPostEntity normalPostEntity = normalPostRepository.findOneByPost_Id(normalPostResponseDTO.getId());
+                NormalPostEntity normalPostEntity = normalPostRepository
+                        .findOneByPost_Id(normalPostResponseDTO.getId());
                 normalPostResponseDTO.setIsSave(this
                         .checkUserLoginHadSavePost(postRepository.findOneById(normalPostEntity.getPost().getId()),
                                 postFindRequestDTO.getUserLogin()));
@@ -440,8 +449,10 @@ public class PostServiceImpl implements PostService {
         for (AnswerRequestDTO answerRequestDTO : surveyAnswerRequestDTO.getAnswers()) {
             QuestionEntity questionEntity = questionRepository.findOneById(answerRequestDTO.getQuestion_id());
             if (questionEntity.getType().equalsIgnoreCase(QuestionType.SHORT.getName())) {
-                if (shortAnswerRepository.findOneByUser_IdAndQuestion_Id(userEntity.getId() , questionEntity.getId()) != null) {
-                    ShortAnswerEntity shortAnswerEntity = shortAnswerRepository.findOneByUser_IdAndQuestion_Id(userEntity.getId() , questionEntity.getId());
+                if (shortAnswerRepository.findOneByUser_IdAndQuestion_Id(userEntity.getId(),
+                        questionEntity.getId()) != null) {
+                    ShortAnswerEntity shortAnswerEntity = shortAnswerRepository
+                            .findOneByUser_IdAndQuestion_Id(userEntity.getId(), questionEntity.getId());
                     shortAnswerEntity.setContent(answerRequestDTO.getContent());
                     shortAnswerRepository.save(shortAnswerEntity);
                 } else {
@@ -578,7 +589,7 @@ public class PostServiceImpl implements PostService {
             AllPostByUserAndGroupResponseDTO allPostByUserAndGroupResponseDTO) {
         List<PostInfoResponseDTO> responseDTOs = postInfoResponeConverter
                 .toDTOGroup(postRepository.findAllByUser_IdAndGroup_CodeOrderByUpdatedAtDesc(
-                allPostByUserAndGroupResponseDTO.getUserId(), allPostByUserAndGroupResponseDTO.getCode()));
+                        allPostByUserAndGroupResponseDTO.getUserId(), allPostByUserAndGroupResponseDTO.getCode()));
         List<BaseDTO> dtos = toCustomListPost(responseDTOs, allPostByUserAndGroupResponseDTO.getUserLogin());
         return dtos;
     }
@@ -718,13 +729,13 @@ public class PostServiceImpl implements PostService {
         UserInfoResponseDTO userInfoResponseDTO = userInfoResponseConverter
                 .toDTO(userRepository.findOneById(userDetailInGroupRequestDTO.getUserId()));
         userInfoResponseDTO = this.setUserDetail(userInfoResponseDTO);
-        
-        //set isFollow
+
+        // set isFollow
         UserEntity userLogin = userRepository.findOneById(userDetailInGroupRequestDTO.getUserLogin());
         UserEntity userInPage = userRepository.findOneById(userDetailInGroupRequestDTO.getUserId());
         userDetailInGroupResponseDTO.setIsFollow(false);
         for (FollowEntity entity : userLogin.getFollowUsers()) {
-            if(entity.getUserFollow().getId() == userInPage.getId()){
+            if (entity.getUserFollow().getId() == userInPage.getId()) {
                 userDetailInGroupResponseDTO.setIsFollow(true);
                 break;
             }
@@ -740,14 +751,41 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<SurveyPreviewResponseDTO> reviewSurveyResultByPostIdAndUserId(Long postId, Long userId) {
         // if(postRepository.findOneByIdAndUser_Id(postId , userId) == null){
-        //     throw new RuntimeException("survey_at_this_post_id_not_exist");
+        // throw new RuntimeException("survey_at_this_post_id_not_exist");
         // }
         PostEntity postEntity = postRepository.findOneById(postId);
         SurveyPostEntity surveyPostEntity = surveyPostRepository.findOneByPost_Id(postEntity.getId());
         if (postEntity.getType().equals(PostType.SURVEY.getName())) {
-            return surveyReviewResponseConverter.toSurveyReviewDTOs(questionRepository.findAllBySurvey_Id(surveyPostEntity.getId()),userId);
+            return surveyReviewResponseConverter
+                    .toSurveyReviewDTOs(questionRepository.findAllBySurvey_Id(surveyPostEntity.getId()), userId);
         } else {
             throw new RuntimeException("survey_at_this_post_id_not_exist");
         }
+    }
+
+    @Override
+    public String updateNormalPost(NormalPostUpdateRequestDTO normalPostUpdateRequestDTO) {
+        if (postRepository.findOneById(normalPostUpdateRequestDTO.getPostId()) == null) {
+            throw new RuntimeException("this_post_not_exist");
+        }
+        if (normalPostRepository.findOneByPost_Id(normalPostUpdateRequestDTO.getPostId()) == null) {
+            throw new RuntimeException("normal_post_at_this_post_id_not_exist");
+        }
+        NormalPostEntity normalPostEntity = normalPostUpdateRequestConverter.toEntity(normalPostUpdateRequestDTO);
+        normalPostRepository.save(normalPostEntity);
+        return "";
+    }
+
+    @Override
+    public String updateRecruitmentPost(RecruitmentPostUpdateRequestDTO recruitmentPostUpdateRequestDTO) {
+        if (postRepository.findOneById(recruitmentPostUpdateRequestDTO.getPostId()) == null) {
+            throw new RuntimeException("this_post_not_exist");
+        }
+        if (recruitmentPostRepository.findOneByPost_Id(recruitmentPostUpdateRequestDTO.getPostId()) == null) {
+            throw new RuntimeException("recruitment_post_at_this_post_id_not_exist");
+        }
+        RecruitmentPostEntity entity = recruitmentPostUpdateRequestConverter.toEntity(recruitmentPostUpdateRequestDTO);
+        recruitmentPostRepository.save(entity);
+        return "";
     }
 }
