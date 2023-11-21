@@ -8,12 +8,13 @@ import com.chatapp.dto.request.CommentDeleteRequestDTO;
 import com.chatapp.dto.request.CommentSaveRequestDTO;
 import com.chatapp.dto.request.LikeRequestDTO;
 import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
+import com.chatapp.dto.request.NormalPostUpdateRequestDTO;
 import com.chatapp.dto.request.PostFindRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
+import com.chatapp.dto.request.RecruitmentPostUpdateRequestDTO;
 import com.chatapp.dto.request.SurveyAnswerRequestDTO;
 import com.chatapp.dto.request.SurveySaveRequestDTO;
 import com.chatapp.dto.request.UserDetailInGroupRequestDTO;
-import com.chatapp.dto.request.UserGetRequestDTO;
 import com.chatapp.dto.request.UserSavePostRequestDTO;
 import com.chatapp.dto.response.CommentResponeseDTO;
 import com.chatapp.dto.response.NormalPostResponseDTO;
@@ -37,12 +38,16 @@ public interface PostService {
 
     NormalPostResponseDTO getNormalDetailByPostId(Long postId);
 
+    String updateNormalPost(NormalPostUpdateRequestDTO normalPostUpdateRequestDTO);
+
     // recruitment post
     List<RecruitmentPostResponseDTO> findAllRecruitmentPost();
 
     RecruitmentPostResponseDTO getRecruimentDetailByPostId(Long postId, Long userLogin);
 
     String recruitmentPostUpdateOrSave(RecruitmentPostUpdateOrSageRequestDTO recruitmentPostUpdateOrSageRequestDTO);
+
+    String updateRecruitmentPost(RecruitmentPostUpdateRequestDTO recruitmentPostUpdateRequestDTO);
 
     // save survey
     String saveSurvey(SurveySaveRequestDTO saveRequestDTO);

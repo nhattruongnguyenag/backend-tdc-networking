@@ -7,11 +7,14 @@ import org.springframework.stereotype.Service;
 
 import com.chatapp.converter.request.JobApplyProfileRequestConverter;
 import com.chatapp.converter.response.JobProfileResponseConverter;
+import com.chatapp.converter.response.UserInfoResponseConverter;
 import com.chatapp.dto.request.JobApplyProfileRequestDTO;
 import com.chatapp.dto.response.JobProfileResponseDTO;
 import com.chatapp.entity.JobProfileEntity;
 import com.chatapp.entity.PostEntity;
+import com.chatapp.entity.UserEntity;
 import com.chatapp.enums.PostType;
+import com.chatapp.enums.Role;
 import com.chatapp.repository.JobProfileRepository;
 import com.chatapp.repository.PostRepository;
 import com.chatapp.repository.UserRepository;
@@ -25,6 +28,8 @@ public class JobprofileServiceImpl implements JobProfileService {
 
     @Autowired
     JobProfileResponseConverter jobProfileResponseConverter;
+    @Autowired
+    UserInfoResponseConverter userInfoResponseConverter;
 
     @Autowired
     JobProfileRepository jobProfileRepository;
@@ -94,6 +99,23 @@ public class JobprofileServiceImpl implements JobProfileService {
         JobProfileEntity jobProfileEntity = jobApplyProfileRequestConverter.toUpdateEntity(jobApplyProfileRequestDTO);
         jobProfileRepository.save(jobProfileEntity);
         return "";
+    }
+
+    @Override
+    public List<JobProfileResponseDTO> getJobprofileByUserId(Long userId) {
+        if (userRepository.findOneById(userId) == null) {
+            throw new RuntimeException("this_user_does_not_exist");
+        }
+        if (userInfoResponseConverter.toDTO(userRepository.findOneById(userId)).getRoleCodes()
+                .equals(Role.STUDENT.getName())) {
+            UserEntity entity = userRepository.findOneById(userId);
+            List<JobProfileResponseDTO> jobProfileResponseDTOs = jobProfileResponseConverter
+                    .toDTOGroup(entity.getJobProfiles());
+            return jobProfileResponseDTOs;
+        }
+        else{
+            throw new RuntimeException("only_student_can_see_list_job_profile");
+        }
     }
 
 }
