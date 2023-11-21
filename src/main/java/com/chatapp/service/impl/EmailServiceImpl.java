@@ -39,7 +39,7 @@ public class EmailServiceImpl implements EmailService {
         helper.setFrom(SystemConstant.EMAIL_TDC_SOCIAL_NETWORK,"TDCNetwork Support");
         helper.setTo(to);
         helper.setSubject(subject);
-        helper.setText(content);
+        helper.setText(content,true);
         mailSender.send(message);
     }
 }

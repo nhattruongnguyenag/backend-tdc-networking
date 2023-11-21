@@ -5,6 +5,7 @@ import com.chatapp.commond.ResponseData;
 import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.BaseDTO;
 import com.chatapp.dto.UserDTO;
+import com.chatapp.dto.request.EmailRequestDTO;
 import com.chatapp.dto.request.PasswordResetRequestDTO;
 import com.chatapp.dto.request.TokenRequestDTO;
 import com.chatapp.dto.request.UserFollowRequestDTO;
@@ -124,8 +125,14 @@ public class UserAPI {
     }
 
     @PostMapping({ "users/get/email/reset", "users/get/email/reset/" })
-    public ResponseEntity<ResponseData<String>> checkEmail(@RequestBody UserGetResetPasswordRequestDTO request) throws MessagingException, UnsupportedEncodingException {
-        ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK,"success",userService.sendEmail(request.getEmail()));
+    public ResponseEntity<ResponseData<String>> sendEmailResetPassword(@RequestBody UserGetResetPasswordRequestDTO request) throws MessagingException, UnsupportedEncodingException {
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK,"success",userService.sendEmailResetPassword(request.getEmail()));
+        return ResponseEntity.ok(responseData);
+    }
+
+    @PostMapping({ "users/get/email/authen/register", "users/get/email/authen/register/" })
+    public ResponseEntity<ResponseData<String>> sendEmailAuthenRegister(@RequestBody EmailRequestDTO request) throws MessagingException, UnsupportedEncodingException {
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK,"success",userService.sendEmailAuthenticationRegister(request));
         return ResponseEntity.ok(responseData);
     }
 
@@ -138,6 +145,12 @@ public class UserAPI {
     @PostMapping({ "users/reset/password", "users/reset/password/" })
     public ResponseEntity<ResponseData<String>> resetPassword(@RequestBody PasswordResetRequestDTO request) throws Exception{
         ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK,"success",userService.resetPassword(request));
+        return ResponseEntity.ok(responseData);
+    }
+
+    @PostMapping({ "users/authen/register", "users/authen/register/" })
+    public ResponseEntity<ResponseData<String>> authenRegister(@RequestBody TokenRequestDTO request) throws Exception{
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK,"success",userService.authenRegister(request));
         return ResponseEntity.ok(responseData);
     }
 
