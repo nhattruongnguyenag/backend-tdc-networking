@@ -5,11 +5,13 @@ import com.chatapp.dto.BaseDTO;
 import com.chatapp.dto.UserDTO;
 import com.chatapp.dto.request.BusinessInfoRegisterRequestDTO;
 import com.chatapp.dto.request.BusinessInfoUpdateOrSaveRequestDTO;
+import com.chatapp.dto.request.EmailRequestDTO;
 import com.chatapp.dto.request.FacultyInfoRegisterRequestDTO;
 import com.chatapp.dto.request.FacultyInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.PasswordResetRequestDTO;
 import com.chatapp.dto.request.StudentInfoRegisterRequestDTO;
 import com.chatapp.dto.request.StudentInfoUpdateOrSaveRequestDTO;
+import com.chatapp.dto.request.TokenRequestDTO;
 import com.chatapp.dto.request.UserFindRequestDTO;
 import com.chatapp.dto.request.UserFollowRequestDTO;
 import com.chatapp.dto.request.UserGetRequestDTO;
@@ -86,8 +88,11 @@ public interface UserService {
     List<GroupResponseDTO> getGroupByUserId(Long userId);
 
     //forgot password
-    String sendEmail(String email) throws MessagingException, UnsupportedEncodingException;
+    String sendEmailResetPassword(String email) throws MessagingException, UnsupportedEncodingException;
     Long checkToken(String token) throws Exception;
     String resetPassword(PasswordResetRequestDTO passwordResetRequestDTO) throws Exception;
     String updateAvatar(UserImageUpdateRequestDTO userImageUpdateRequestDTO);
+
+    String sendEmailAuthenticationRegister(EmailRequestDTO emailRequestDTO) throws MessagingException, UnsupportedEncodingException;
+    String authenRegister(TokenRequestDTO tokenRequestDTO) throws Exception;
 }
