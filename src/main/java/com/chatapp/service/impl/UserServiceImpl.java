@@ -648,7 +648,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private void setGroupToStudent(UserEntity userEntity) {
-        String falcutyName = userEntity.getStudentInfo().getFacultyName();
+        String falcutyName = userEntity.getStudentInfo().getFaculty().getUser().getName();
         List<GroupEntity> groups = new ArrayList<>();
         groups.add(groupRepository.findOneByCode(GroupDefault.GROUP_TDC.getCodeGroup()));
         groups.add(groupRepository.findOneByCode(GroupDefault.GROUP_KET_NOI_DOANH_NGHIEP.getCodeGroup()));

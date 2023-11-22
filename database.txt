@@ -6,17 +6,17 @@ INSERT INTO `roles`(`code`, `name`) VALUES
 
 INSERT INTO `users`(`is_message_connect`, `is_typing`,`background`, `status`, `code`, `email`, `image`, `name`, `password`) 
 VALUES 
-(0,0,'dien_dien_tu_background.png',0,'khoa_dien_dien_tu','khoaddt@tdc.edu.vn','khoa_dien_dien_tu.png','Khoa điện - Điện tử','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
-(0,0,'cong_nghe_thong_tin_background.png',0,'khoa_cong_nghe_thong_tin','fit@tdc.edu.vn','khoa_cong_nghe_thong_tin.png','Khoa Công Nghệ Thông Tin','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
-(0,0,'cong_nghe_tu_dong_background.png',0,'khoa_cong_nghe_tu_dong','cntd@tdc.edu.vn','khoa_cong_nghe_tu_dong.png','Khoa Công Nghệ Tự Động','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
-(0,0,'co_khi_che_tao_may_background.png',0,'khoa_co_khi_che_tao_may','fme@tdc.edu.vn','khoa_co_khi_che_tao_may.png','Khoa Cơ Khí Chế Tạo Máy','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
-(0,0,'co_khi_oto_background.png',0,'khoa_co_khi_o_to','khoacokhioto@tdc.edu.vn','khoa_co_khi_o_to.png','Khoa Cơ Khí Ô Tô','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
-(0,0,'tai_chinh_ke_toan_background.png',0,'khoa_tai_chinh_ke_toan','khoatckt@tdc.edu.vn','khoa_tai_chinh_ke_toan.png','Khoa Tài Chính - Kế Toán','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
-(0,0,'quan_tri_kinh_doanh_background.png',0,'khoa_quan_tri_kinh_doanh','khoaqtkd@tdc.edu.vn','khoa_quan_tri_kinh_doanh.png','Khoa Quản Trị Kinh Doanh','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
-(0,0,'du_lich_background.png',0,'khoa_du_lich','khoadulich@tdc.edu.vn','khoa_du_lich.png','Khoa Du Lịch','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
-(0,0,'tieng_anh_background.png',0,'khoa_tieng_anh','khoatienganh@tdc.edu.vn','khoa_tieng_anh.png','Khoa Tiếng Anh','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
-(0,0,'tieng_han_background.png',0,'khoa_tieng_han','khoatienghan@tdc.edu.vn','khoa_tieng_han.png','Khoa Tiếng Hàn','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
-(0,0,'bo_mon_tieng_nhat_background.png',0,'khoa_bo_mon_tieng_nhat','bomontiengnhat@tdc.edu.vn','khoa_bo_mon_tieng_nhat.png','Khoa Bộ Môn Tiếng Nhật','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq');
+(0,0,'dien_dien_tu_background.png',1,'khoa_dien_dien_tu','khoaddt@tdc.edu.vn','khoa_dien_dien_tu.png','Khoa điện - Điện tử','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
+(0,0,'cong_nghe_thong_tin_background.png',1,'khoa_cong_nghe_thong_tin','fit@tdc.edu.vn','khoa_cong_nghe_thong_tin.png','Khoa Công Nghệ Thông Tin','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
+(0,0,'cong_nghe_tu_dong_background.png',1,'khoa_cong_nghe_tu_dong','cntd@tdc.edu.vn','khoa_cong_nghe_tu_dong.png','Khoa Công Nghệ Tự Động','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
+(0,0,'co_khi_che_tao_may_background.png',1,'khoa_co_khi_che_tao_may','fme@tdc.edu.vn','khoa_co_khi_che_tao_may.png','Khoa Cơ Khí Chế Tạo Máy','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
+(0,0,'co_khi_oto_background.png',1,'khoa_co_khi_o_to','khoacokhioto@tdc.edu.vn','khoa_co_khi_o_to.png','Khoa Cơ Khí Ô Tô','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
+(0,0,'tai_chinh_ke_toan_background.png',1,'khoa_tai_chinh_ke_toan','khoatckt@tdc.edu.vn','khoa_tai_chinh_ke_toan.png','Khoa Tài Chính - Kế Toán','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
+(0,0,'quan_tri_kinh_doanh_background.png',1,'khoa_quan_tri_kinh_doanh','khoaqtkd@tdc.edu.vn','khoa_quan_tri_kinh_doanh.png','Khoa Quản Trị Kinh Doanh','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
+(0,0,'du_lich_background.png',1,'khoa_du_lich','khoadulich@tdc.edu.vn','khoa_du_lich.png','Khoa Du Lịch','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
+(0,0,'tieng_anh_background.png',1,'khoa_tieng_anh','khoatienganh@tdc.edu.vn','khoa_tieng_anh.png','Khoa Tiếng Anh','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
+(0,0,'tieng_han_background.png',1,'khoa_tieng_han','khoatienghan@tdc.edu.vn','khoa_tieng_han.png','Khoa Tiếng Hàn','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq'),
+(0,0,'bo_mon_tieng_nhat_background.png',1,'khoa_bo_mon_tieng_nhat','bomontiengnhat@tdc.edu.vn','khoa_bo_mon_tieng_nhat.png','Khoa Bộ Môn Tiếng Nhật','$2a$10$KRB5Cv1m5t7fS1AW96iQZu.yWnkob7v/e8VpRB41C3UODn5J4pHeq');
 
 
 INSERT INTO `user_role`(`role_id`, `user_id`) 

@@ -39,6 +39,9 @@ public class PostEntity extends BaseEntity {
     private List<PostCommentEntity> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<PostApprovalLogEntity> logs = new ArrayList<>();
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<PostLikeEntity> likes = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -57,6 +60,14 @@ public class PostEntity extends BaseEntity {
 
     public Byte getStatus() {
         return status;
+    }
+
+    public List<PostApprovalLogEntity> getLogs() {
+        return this.logs;
+    }
+
+    public void setLogs(List<PostApprovalLogEntity> logs) {
+        this.logs = logs;
     }
 
     public void setStatus(Byte status) {

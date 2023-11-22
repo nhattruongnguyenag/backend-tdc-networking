@@ -22,6 +22,9 @@ public class FacultyInfoEntity extends BaseEntity {
     @OneToMany(mappedBy = "faculty", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<MajorEntity> majors = new ArrayList<>();
 
+    @OneToMany(mappedBy = "faculty", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<StudentInfoEntity> studentsInFaculty = new ArrayList<>();
+
     public UserEntity getUser() {
         return user;
     }
@@ -37,4 +40,13 @@ public class FacultyInfoEntity extends BaseEntity {
     public void setMajors(List<MajorEntity> majors) {
         this.majors = majors;
     }
+
+    public List<StudentInfoEntity> getStudentsInFaculty() {
+        return this.studentsInFaculty;
+    }
+
+    public void setStudentsInFaculty(List<StudentInfoEntity> studentsInFaculty) {
+        this.studentsInFaculty = studentsInFaculty;
+    }
+
 }
