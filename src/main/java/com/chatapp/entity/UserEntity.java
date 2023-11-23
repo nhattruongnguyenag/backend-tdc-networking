@@ -72,6 +72,42 @@ public class UserEntity extends BaseEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ShortAnswerEntity> shortAnswers = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<PostCommentEntity> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<PostLikeEntity> postLikes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<NotificationEntity> notifications = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<FollowEntity> followUsers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "follow", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<FollowEntity> followByUsers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<ConversationEntity> receivedConversation = new ArrayList<>();
+
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<ConversationEntity> sentConversation = new ArrayList<>();
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private BusinessesInfoEntity businessesInfos;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private StudentInfoEntity studentInfo;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private FacultyInfoEntity falcutyInfo;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<JobProfileEntity> jobProfiles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<DeviceTokenEntity> deviceTokens = new ArrayList<>();
+
     public Boolean isIsTyping() {
         return this.isTyping;
     }
@@ -111,42 +147,6 @@ public class UserEntity extends BaseEntity {
     public void setGroups(List<GroupEntity> groups) {
         this.groups = groups;
     }
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<PostCommentEntity> comments = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<PostLikeEntity> postLikes = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<NotificationEntity> notifications = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<FollowEntity> followUsers = new ArrayList<>();
-
-    @OneToMany(mappedBy = "follow", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<FollowEntity> followByUsers = new ArrayList<>();
-
-    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<ConversationEntity> receivedConversation = new ArrayList<>();
-
-    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<ConversationEntity> sentConversation = new ArrayList<>();
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private BusinessesInfoEntity businessesInfos;
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private StudentInfoEntity studentInfo;
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private FacultyInfoEntity falcutyInfo;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<JobProfileEntity> jobProfiles = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<DeviceTokenEntity> deviceTokens = new ArrayList<>();
 
     public String getEmail() {
         return email;

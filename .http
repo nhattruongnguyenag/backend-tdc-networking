@@ -584,3 +584,6 @@ Content-Type: application/json
 {
     "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb25udmwuNTYuc3R1ZGVudEBmaXQudGRjLmVkdS52biIsImlhdCI6MTcwMDU4MzY1MywiZXhwIjoxNzAwNTg3MjUzfQ.cp1NOM6VKenjJ6JkS3BUhEzUB4F2hAgHQfXSddyHqJM"
 }
+
+###
+GET http://localhost:8080/api/posts/search?ownerFaculty=khoa_cong_nghe_thong_tin&status=0&group=group_tdc
