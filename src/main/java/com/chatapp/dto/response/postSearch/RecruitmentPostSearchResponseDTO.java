@@ -1,8 +1,9 @@
-package com.chatapp.dto.response;
+package com.chatapp.dto.response.postSearch;
+
 import lombok.Data;
 
 @Data
-public class RecruitmentPostResponseDTO extends PostInfoResponseDTO {
+public class RecruitmentPostSearchResponseDTO extends PostSearchResponseDTO {
     private String title;
     private Long salary;
     private String benefit;

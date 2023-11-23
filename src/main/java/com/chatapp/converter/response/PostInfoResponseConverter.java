@@ -1,7 +1,6 @@
 package com.chatapp.converter.response;
 
 import com.chatapp.converter.abstracts.BaseConverter;
-import com.chatapp.dto.response.GroupResponseDTO;
 import com.chatapp.dto.response.PostInfoResponseDTO;
 import com.chatapp.entity.PostEntity;
 
