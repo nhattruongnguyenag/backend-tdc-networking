@@ -40,4 +40,11 @@ public class PostSocketController {
         postService.userSavePost(userSavePostRequestDTO);
         return postService.getPostSaveByUserId(userSavePostRequestDTO.getUserId());
     }
+
+    @MessageMapping({ "/posts/group/{code}/unsave", "/posts/group/{code}/unsave/" })
+    @SendTo({ "/topic/posts/group/{code}", "/topic/posts/group/{code}/" })
+    public List<BaseDTO> userSavePostInGroupScreen(@RequestBody UserSavePostRequestDTO userSavePostRequestDTO , @DestinationVariable("code") String code) {
+        postService.userSavePost(userSavePostRequestDTO);
+        return postService.findAllByGroupCode(code,userSavePostRequestDTO.getUserId());
+    }
 }

@@ -7,5 +7,5 @@ import com.chatapp.entity.PostApprovalLogEntity;
 
 @Repository
 public interface PostApprovalLogRepository extends JpaRepository<PostApprovalLogEntity, Long> {
-
+    PostApprovalLogEntity findOneByPost_Id(Long postId);
 }

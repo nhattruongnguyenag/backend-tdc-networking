@@ -10,6 +10,7 @@ import com.chatapp.converter.request.CommentSaveRequestConverter;
 import com.chatapp.converter.request.LikeRequestConverter;
 import com.chatapp.converter.request.NormalPostUpdateOrSaveRequestConverter;
 import com.chatapp.converter.request.NormalPostUpdateRequestConverter;
+import com.chatapp.converter.request.PostLogAddRequestConverter;
 import com.chatapp.converter.request.RecruitmentPostUpdateRequestConverter;
 import com.chatapp.converter.request.RecruitmentPosyUpdateOrSaveRequestConverter;
 import com.chatapp.converter.request.SurveySaveRequestConverter;
@@ -55,6 +56,7 @@ import com.chatapp.dto.response.UserDetailInGroupResponseDTO;
 import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.entity.FollowEntity;
 import com.chatapp.entity.NormalPostEntity;
+import com.chatapp.entity.PostApprovalLogEntity;
 import com.chatapp.entity.PostCommentEntity;
 import com.chatapp.entity.PostEntity;
 import com.chatapp.entity.PostLikeEntity;
@@ -69,10 +71,12 @@ import com.chatapp.enums.QuestionType;
 import com.chatapp.enums.Role;
 import com.chatapp.exception.DuplicateUsernameException;
 import com.chatapp.repository.BusinessInfoRepository;
+import com.chatapp.repository.CustomizedPostOptionRepository;
 import com.chatapp.repository.FacultyInfoRepository;
 import com.chatapp.repository.GroupRepository;
 import com.chatapp.repository.JobProfileRepository;
 import com.chatapp.repository.NormalPostRepository;
+import com.chatapp.repository.PostApprovalLogRepository;
 import com.chatapp.repository.PostCommentRepository;
 import com.chatapp.repository.PostLikeRepository;
 import com.chatapp.repository.PostRepository;
@@ -93,6 +97,10 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private PostRepository postRepository;
+    @Autowired
+    private PostApprovalLogRepository postApprovalLogRepository;
+    @Autowired
+    private CustomizedPostOptionRepository customizedPostOptionRepository;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -153,6 +161,8 @@ public class PostServiceImpl implements PostService {
     private RecruitmentPosyUpdateOrSaveRequestConverter recruitmentPosyUpdateOrSaveRequestConverter;
     @Autowired
     private RecruitmentPostUpdateRequestConverter recruitmentPostUpdateRequestConverter;
+    @Autowired
+    private PostLogAddRequestConverter postLogAddRequestConverter;
     @Autowired
     private SurveySaveRequestConverter surveySaveRequestConverter;
     @Autowired
@@ -792,13 +802,32 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public String addPostLog(PostLogRequestDTO postLogRequestDTO) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deletePostLog'");
+        if (postApprovalLogRepository.findOneByPost_Id(postLogRequestDTO.getPostId()) != null) {
+            throw new DuplicateUsernameException("this_post_is");
+        }
+        PostApprovalLogEntity entity = postLogAddRequestConverter.toEntity(postLogRequestDTO);
+        postApprovalLogRepository.save(entity);
+        return "";
     }
 
     @Override
     public String deletePostLog(Long postId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deletePostLog'");
+        if (postApprovalLogRepository.findOneByPost_Id(postId) == null) {
+            throw new DuplicateUsernameException("this_post_approval_log_is_not_exists");
+        }
+        PostApprovalLogEntity entity = postApprovalLogRepository.findOneByPost_Id(postId);
+        postApprovalLogRepository.delete(entity);
+        return "";
+    }
+
+    @Override
+    public List<BaseDTO> getPostOptions(String groupCode, String status, String facultyCode, Long userLogin) {
+        if (groupRepository.findOneByCode(groupCode) == null) {
+            throw new DuplicateUsernameException("group_does_not_exist");
+        }
+        List<PostInfoResponseDTO> responseDTOs = postInfoResponeConverter
+                .toDTOGroup(customizedPostOptionRepository.findByOptions(groupCode, status, facultyCode));
+        List<BaseDTO> dtos = toCustomListPost(responseDTOs, userLogin);
+        return dtos;
     }
 }

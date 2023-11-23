@@ -24,7 +24,7 @@ public class FacultyInfoUpdateOrSaveRequestConverter
         userEntity.setId(dto.getId());
         userEntity.setEmail(dto.getEmail());
         userEntity.setName(dto.getName());
-        userEntity.setCode(dto.getCode());
+        userEntity.setBackground(dto.getBackground());
         userEntity.setPhone(dto.getPhone());
         if (dto.getImage() != null) {
             userEntity.setImage(dto.getImage());

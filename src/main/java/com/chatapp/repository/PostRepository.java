@@ -14,6 +14,7 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
     List<PostEntity> findAllByOrderByUpdatedAtAsc();
     List<PostEntity> findAllByOrderByUpdatedAtDesc();
     List<PostEntity> findAllByGroup_IdOrderByUpdatedAtDesc(Long groupId);
+    List<PostEntity> findAllByGroup_IdAndStatusOrderByUpdatedAtDesc(Long groupId , Long status);
     List<PostEntity> findAllByUser_IdAndGroup_IdOrderByUpdatedAtDesc(Long userId,Long groupId);
     List<PostEntity> findAllByUser_IdAndGroup_CodeOrderByUpdatedAtDesc(Long userId,String code);
     List<PostEntity> findAllByUser_Roles_CodeOrderByUpdatedAtDesc(String code);

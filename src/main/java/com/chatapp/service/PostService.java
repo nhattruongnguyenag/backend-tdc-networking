@@ -92,4 +92,7 @@ public interface PostService {
     //post approval log
     String addPostLog(PostLogRequestDTO postLogRequestDTO);
     String deletePostLog(Long postId);
+
+    //get posts options
+    List<BaseDTO> getPostOptions(String groupCode , String status , String facultyCode , Long userLogin);
 }

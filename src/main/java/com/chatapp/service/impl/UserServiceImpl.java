@@ -416,10 +416,7 @@ public class UserServiceImpl implements UserService {
             FacultyInfoUpdateOrSaveRequestDTO facultyInfoUpdateOrSaveRequestDTO) {
         UserEntity userEntity;
         if (userRepository.findOneByEmail(facultyInfoUpdateOrSaveRequestDTO.getEmail()) != null) {
-            throw new DuplicateUsernameException("user_already_exists");
-        }
-        if (userRepository.findOneByCode(facultyInfoUpdateOrSaveRequestDTO.getCode()) != null) {
-            throw new DuplicateUsernameException("user_code_already_exists");
+            throw new DuplicateUsernameException("email_already_exists");
         }
         if (facultyInfoUpdateOrSaveRequestDTO.getId() != null) {
             userEntity = this.facultyUpdate(facultyInfoUpdateOrSaveRequestDTO);
@@ -482,10 +479,7 @@ public class UserServiceImpl implements UserService {
             BusinessInfoUpdateOrSaveRequestDTO businessInfoUpdateOrSaveRequestDTO) {
         UserEntity userEntity;
         if (userRepository.findOneByEmail(businessInfoUpdateOrSaveRequestDTO.getEmail()) != null) {
-            throw new DuplicateUsernameException("user_already_exists");
-        }
-        if (userRepository.findOneByCode(businessInfoUpdateOrSaveRequestDTO.getCode()) != null) {
-            throw new DuplicateUsernameException("user_code_already_exists");
+            throw new DuplicateUsernameException("email_already_exists");
         }
         if (businessInfoUpdateOrSaveRequestDTO.getId() != null) {
             userEntity = this.businessUpdate(businessInfoUpdateOrSaveRequestDTO);

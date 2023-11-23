@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class StudentInfoRegisterRequestConverter extends BaseConverter<UserEntity, StudentInfoRegisterRequestDTO>{
+public class StudentInfoRegisterRequestConverter extends BaseConverter<UserEntity, StudentInfoRegisterRequestDTO> {
 
     @Autowired
     private FacultyInfoRepository facultyInfoRepository;
@@ -26,6 +26,9 @@ public class StudentInfoRegisterRequestConverter extends BaseConverter<UserEntit
         userEntity.setPassword(dto.getPassword());
         userEntity.setPhone(dto.getPhone());
         userEntity.setCode(dto.getCode());
+        if (dto.getBackground() != null) {
+            userEntity.setBackground(dto.getBackground());
+        }
         if (dto.getImage() != null) {
             userEntity.setImage(dto.getImage());
         }

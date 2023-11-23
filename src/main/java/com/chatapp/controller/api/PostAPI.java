@@ -30,6 +30,7 @@ import com.chatapp.dto.response.SurveyResultResponseDTO;
 import com.chatapp.dto.response.UserDetailInGroupResponseDTO;
 import com.chatapp.enums.PostType;
 import com.chatapp.service.PostService;
+import com.google.firebase.database.annotations.Nullable;
 
 @RestController
 @RequestMapping("/api")
@@ -37,7 +38,7 @@ public class PostAPI {
     @Autowired
     PostService postService;
 
-    @GetMapping({ "posts", "posts/" })
+    @GetMapping({ "posts/all", "posts/all/" })
     public ResponseEntity<ResponseData<List<BaseDTO>>> findAll() {
         ResponseData<List<BaseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success", postService.findAll());
         return ResponseEntity.ok(responseData);
@@ -97,9 +98,9 @@ public class PostAPI {
 
     @GetMapping({ "posts/recruitment", "posts/recruitment" })
     public ResponseEntity<ResponseData<RecruitmentPostResponseDTO>> getRecruimentPostByPostId(
-            @RequestParam Long postId , @RequestParam Long userLogin) {
+            @RequestParam Long postId, @RequestParam Long userLogin) {
         ResponseData<RecruitmentPostResponseDTO> responseData = new ResponseData<>(HttpStatus.OK, "success",
-                postService.getRecruimentDetailByPostId(postId , userLogin));
+                postService.getRecruimentDetailByPostId(postId, userLogin));
         return ResponseEntity.ok(responseData);
     }
 
@@ -115,7 +116,8 @@ public class PostAPI {
     @PutMapping({ "posts/recruitment", "posts/recruitment/" })
     ResponseEntity<ResponseData<String>> updateRecruitmentPost(
             @RequestBody RecruitmentPostUpdateRequestDTO recruitmentPostUpdateRequestDTO) {
-        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED, "add or update recruitment post success",
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED,
+                "add or update recruitment post success",
                 postService.updateRecruitmentPost(recruitmentPostUpdateRequestDTO));
         return ResponseEntity.created(null).body(responseData);
     }
@@ -143,9 +145,10 @@ public class PostAPI {
     }
 
     @GetMapping({ "posts/survey", "posts/survey" })
-    ResponseEntity<ResponseData<SurveyResponeDTO>> getSurveyByPostId(@RequestParam Long postId , @RequestParam Long userLogin) {
+    ResponseEntity<ResponseData<SurveyResponeDTO>> getSurveyByPostId(@RequestParam Long postId,
+            @RequestParam Long userLogin) {
         ResponseData<SurveyResponeDTO> responseData = new ResponseData<>(HttpStatus.OK, "success",
-                postService.getSurveyDetailByPostId(postId ,userLogin));
+                postService.getSurveyDetailByPostId(postId, userLogin));
         return ResponseEntity.ok(responseData);
     }
 
@@ -164,7 +167,8 @@ public class PostAPI {
     }
 
     @GetMapping({ "posts/survey/prev-conduct", "posts/survey/prev-conduct" })
-    ResponseEntity<ResponseData<List<SurveyPreviewResponseDTO>>> reviewSurvey(@RequestParam Long postId , Long userLogin) {
+    ResponseEntity<ResponseData<List<SurveyPreviewResponseDTO>>> reviewSurvey(@RequestParam Long postId,
+            Long userLogin) {
         ResponseData<List<SurveyPreviewResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
                 postService.reviewSurveyResultByPostIdAndUserId(postId, userLogin));
         return ResponseEntity.ok(responseData);
@@ -200,14 +204,16 @@ public class PostAPI {
     }
 
     @GetMapping({ "posts/group", "posts/group/" })
-    public ResponseEntity<ResponseData<List<BaseDTO>>> getByGroupId(@RequestParam String code , @RequestParam Long userLogin) {
+    public ResponseEntity<ResponseData<List<BaseDTO>>> getByGroupId(@RequestParam String code,
+            @RequestParam Long userLogin) {
         ResponseData<List<BaseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
-                postService.findAllByGroupCode(code , userLogin));
+                postService.findAllByGroupCode(code, userLogin));
         return ResponseEntity.ok(responseData);
     }
 
     @PostMapping({ "posts/group/user", "posts/group/user/" })
-    public ResponseEntity<ResponseData<List<BaseDTO>>> getByUserIdAndGroupCode(@RequestBody AllPostByUserAndGroupResponseDTO allPostByUserAndGroupResponseDTO) {
+    public ResponseEntity<ResponseData<List<BaseDTO>>> getByUserIdAndGroupCode(
+            @RequestBody AllPostByUserAndGroupResponseDTO allPostByUserAndGroupResponseDTO) {
         ResponseData<List<BaseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
                 postService.getAllPostByUserIdAndGroupCode(allPostByUserAndGroupResponseDTO));
         return ResponseEntity.ok(responseData);
@@ -221,9 +227,20 @@ public class PostAPI {
     }
 
     @PostMapping({ "posts/group/user/detail", "posts/group/user/detail/" })
-    public ResponseEntity<ResponseData<UserDetailInGroupResponseDTO>> getByUserDetailInGroup(@RequestBody UserDetailInGroupRequestDTO userDetailInGroupRequestDTO) {
+    public ResponseEntity<ResponseData<UserDetailInGroupResponseDTO>> getByUserDetailInGroup(
+            @RequestBody UserDetailInGroupRequestDTO userDetailInGroupRequestDTO) {
         ResponseData<UserDetailInGroupResponseDTO> responseData = new ResponseData<>(HttpStatus.OK, "success",
                 postService.getUserPageInGroup(userDetailInGroupRequestDTO));
+        return ResponseEntity.ok(responseData);
+    }
+
+    @GetMapping({ "posts", "posts/" })
+    public ResponseEntity<ResponseData<List<BaseDTO>>> getPostOption(
+            @RequestParam(name = "group", required = false) String group,
+            @RequestParam(name = "status", required = false) String status,
+            @RequestParam(name = "ownerFaculty", required = false) String ownerFaculty, @RequestParam Long userLogin) {
+        ResponseData<List<BaseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
+                postService.getPostOptions(group, status, ownerFaculty, userLogin));
         return ResponseEntity.ok(responseData);
     }
 }

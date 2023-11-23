@@ -8,8 +8,8 @@ public class BusinessInfoUpdateOrSaveRequestDTO {
     private String email;
     private String name;
     private String image;
+    private String background;
     private String phone;
-    private String code;
     private String representor;
     private String taxCode;
     private String address;

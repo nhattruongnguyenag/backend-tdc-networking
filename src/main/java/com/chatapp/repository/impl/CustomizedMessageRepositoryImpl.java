@@ -30,4 +30,42 @@ public class CustomizedMessageRepositoryImpl implements CustomizedMessageReposit
         return query.getResultList();
     }
 
+    // @Override
+    // public List<MessageEntity> findBySenderOrReceiver(Long senderId, Long receiverId) {
+    //     StringBuilder sql = new StringBuilder("SELECT m FROM MessageEntity m");
+
+
+    //     buildJoinQuery(sql, senderId, receiverId);
+    //     sql.append("\nWHERE 1 = 1")
+    //     buildWhereQuery(sql, senderId, receiverId);
+
+    //     sql.append("\nORDER BY m.createdAt DESC").toString();
+
+    //     Query query = entityManager.createQuery(sql.toString())
+    //             .setParameter(1, senderId)
+    //             .setParameter(2, receiverId);
+
+    //     return query.getResultList();
+    // }
+
+    // private void buildJoinQuery(StringBuilder sql, Long senderId, Long receiverId) {
+    //     if (senderId != null) {
+    //         sql.append("\nJOIN m.conversations as c");
+    //     }
+
+    //     if (receiverId != null) {
+    //         sql.append("\nJOIN c.sender as s");
+    //     }
+    // }
+
+    // private void buildWhereQuery(StringBuilder sql, Long senderId, Long receiverId) {
+    //     if (senderId != null) {
+    //         sql.append("\nAND senderId = " + senderId.toString());
+    //     }
+
+    //     if (receiverId != null) {
+    //         sql.append("\nAND receiverId = " + receiverId.toString());
+    //     }
+    // }
+
 }

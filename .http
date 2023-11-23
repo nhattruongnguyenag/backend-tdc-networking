@@ -2,11 +2,13 @@ POST http://127.0.0.1:8080/api/student HTTP/1.1
 Content-Type: application/json
 
 {
-    "email":"truonghocgioiaghg@gmail.com",
+    "id":12,
+    "email":"abc@gmail.com",
     "name":"son",
-    "facultyName":"Cntt",
-    "major":"Cntt",
-    "studentCode":"21211TT2358"
+    "image":"son.png",
+    "background":"SDGFD.png",
+    "phone":"56856863",
+    "studentCode":"2356656"
 }
 
 ###
@@ -46,6 +48,7 @@ Content-Type: application/json
     "name":"son",
     "password":"abc123",
     "image":"son.png",
+    "background":"SDGFD.png",
     "phone":"56856863",
     "code":"student_13",
     "facultyId":2,
@@ -135,7 +138,7 @@ Content-Type: application/json
         "1aaed1f52741546bdb4affe2e3fcfbc1.png",
         "1aaed1f52741546bdb4affe2e3fcfbc1.png"
     ],
-    "userId": 1,
+    "userId": 12,
     "title":"hello",
     "salary":26326,
     "benefit":"an",
@@ -584,3 +587,71 @@ Content-Type: application/json
 {
     "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb25udmwuNTYuc3R1ZGVudEBmaXQudGRjLmVkdS52biIsImlhdCI6MTcwMDU4MzY1MywiZXhwIjoxNzAwNTg3MjUzfQ.cp1NOM6VKenjJ6JkS3BUhEzUB4F2hAgHQfXSddyHqJM"
 }
+
+###
+GET http://127.0.0.1:8080/api/posts?group=group_tdc&status=0&ownerFaculty=cong_nghe_thong_tin&userLogin=2 HTTP/1.1
+
+###
+GET http://127.0.0.1:8080/api/posts?group=group_tdc&status=0&userLogin=2 HTTP/1.1
+
+###
+GET http://127.0.0.1:8080/api/posts?group=group_tdc&userLogin=2 HTTP/1.1
+
+###
+###
+POST http://127.0.0.1:8080/api/approval/post/log HTTP/1.1
+Content-Type: application/json
+
+{
+    "postId": 3,
+    "content": "18+"
+}
+
+###
+DELETE http://127.0.0.1:8080/api/approval/post/log/delete/3 HTTP/1.1
+
+//update profile
+###
+POST http://127.0.0.1:8080/api/student HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":12,
+    "email":"abc@gmail.com",
+    "name":"son",
+    "image":"son.png", // co the co hoac ko
+    "background":"SDGFD.png", // co the co hoac ko 
+    "phone":"56856863",
+    "studentCode":"2356656"
+}
+
+###
+POST http://127.0.0.1:8080/api/faculty HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":1,
+    "email":"dtt@tdc.edu.vn",
+    "name":"Khoa Điện - Điện Tử",
+    "image":"khoa_dien_dien_tu.png", 
+    "background":"SDGFD.png", 
+    "phone":"435784385"
+}
+
+###
+POST http://127.0.0.1:8080/api/business HTTP/1.1
+Content-Type: application/json
+
+{
+    "id": 13,
+    "email":"ctysonghuong@gmail.com",
+    "name":"song huong",
+    "image":"tienhan.png",
+    "background":"tienhan.png",
+    "representor":"abc",
+    "taxCode":"546657",
+    "address":"thu duc",
+    "activeTime":"21h",
+    "phone": "843789345"
+}
+
