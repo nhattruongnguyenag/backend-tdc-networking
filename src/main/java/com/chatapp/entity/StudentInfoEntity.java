@@ -9,11 +9,13 @@ public class StudentInfoEntity extends BaseEntity {
     @Column(name = "student_code", nullable = false)
     private String studentCode;
 
-    @Column(name = "major", nullable = false)
-    private String major;
+    @ManyToOne
+    @JoinColumn(name = "major_id", nullable = true)
+    private MajorEntity major;
 
-    @Column(name = "faculty_name", nullable = false)
-    private String facultyName;
+    @ManyToOne
+    @JoinColumn(name = "faculty_id", nullable = true)
+    private FacultyInfoEntity faculty;
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -27,27 +29,28 @@ public class StudentInfoEntity extends BaseEntity {
         this.studentCode = studentCode;
     }
 
-    public String getMajor() {
-        return major;
-    }
-
-    public void setMajor(String major) {
-        this.major = major;
-    }
-
-    public String getFacultyName() {
-        return facultyName;
-    }
-
-    public void setFacultyName(String facultyName) {
-        this.facultyName = facultyName;
-    }
-
     public UserEntity getUser() {
         return user;
     }
 
     public void setUser(UserEntity user) {
         this.user = user;
+    }
+
+
+    public MajorEntity getMajor() {
+        return this.major;
+    }
+
+    public void setMajor(MajorEntity major) {
+        this.major = major;
+    }
+
+    public FacultyInfoEntity getFaculty() {
+        return this.faculty;
+    }
+
+    public void setFaculty(FacultyInfoEntity faculty) {
+        this.faculty = faculty;
     }
 }

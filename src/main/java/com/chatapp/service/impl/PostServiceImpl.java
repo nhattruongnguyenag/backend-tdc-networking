@@ -34,6 +34,7 @@ import com.chatapp.dto.request.LikeRequestDTO;
 import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.NormalPostUpdateRequestDTO;
 import com.chatapp.dto.request.PostFindRequestDTO;
+import com.chatapp.dto.request.PostLogRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateRequestDTO;
 import com.chatapp.dto.request.SurveyAnswerRequestDTO;
@@ -787,5 +788,17 @@ public class PostServiceImpl implements PostService {
         RecruitmentPostEntity entity = recruitmentPostUpdateRequestConverter.toEntity(recruitmentPostUpdateRequestDTO);
         recruitmentPostRepository.save(entity);
         return "";
+    }
+
+    @Override
+    public String addPostLog(PostLogRequestDTO postLogRequestDTO) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deletePostLog'");
+    }
+
+    @Override
+    public String deletePostLog(Long postId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deletePostLog'");
     }
 }

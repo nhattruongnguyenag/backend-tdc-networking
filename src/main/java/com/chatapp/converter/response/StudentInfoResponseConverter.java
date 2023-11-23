@@ -45,6 +45,8 @@ public class StudentInfoResponseConverter extends BaseConverter<StudentInfoEntit
             roleCodes += entity.getUser().getRoles().get(i).getCode();
         }
         studentInfoResponeDTO.setRoleCodes(roleCodes);
+        studentInfoResponeDTO.setFacultyName(userEntity.getStudentInfo().getFaculty().getUser().getName());
+        studentInfoResponeDTO.setMajor(userEntity.getStudentInfo().getMajor().getName());
         studentInfoResponeDTO.setFacultyGroupCode(getFacultyGroupCode(userEntity).getCodeGroup());
         studentInfoResponeDTO.setFacultyGroupId(getFacultyGroupCode(userEntity).getIdGroup());
         studentInfoResponeDTO.setFollows(followResponseConverter.toDTOGroup(userEntity.getFollowUsers()));
@@ -52,7 +54,7 @@ public class StudentInfoResponseConverter extends BaseConverter<StudentInfoEntit
     }
 
     private GroupDefault getFacultyGroupCode(UserEntity userEntity) {
-        String falcutyName = userEntity.getStudentInfo().getFacultyName();
+        String falcutyName = userEntity.getStudentInfo().getFaculty().getUser().getName();
         if (falcutyName.equals(GroupDefault.GROUP_DIEN_DIEN_TU.getName())) {
             return GroupDefault.GROUP_DIEN_DIEN_TU;
         } else if (falcutyName.equals(GroupDefault.GROUP_CONG_NGHE_THONG_TIN.getName())) {

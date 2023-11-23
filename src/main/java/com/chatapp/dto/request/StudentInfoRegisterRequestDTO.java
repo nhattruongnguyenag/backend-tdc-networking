@@ -10,7 +10,7 @@ public class StudentInfoRegisterRequestDTO {
     private String image;
     private String phone;
     private String code;
-    private String facultyName;
-    private String major;
+    private Long facultyId;
+    private Long majorId;
     private String studentCode;
 }

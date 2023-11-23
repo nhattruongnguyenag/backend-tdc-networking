@@ -10,6 +10,7 @@ import com.chatapp.dto.request.LikeRequestDTO;
 import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
 import com.chatapp.dto.request.NormalPostUpdateRequestDTO;
 import com.chatapp.dto.request.PostFindRequestDTO;
+import com.chatapp.dto.request.PostLogRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
 import com.chatapp.dto.request.RecruitmentPostUpdateRequestDTO;
 import com.chatapp.dto.request.SurveyAnswerRequestDTO;
@@ -87,4 +88,8 @@ public interface PostService {
     List<BaseDTO> getPostSaveByUserId(Long userId);
 
     UserDetailInGroupResponseDTO getUserPageInGroup(UserDetailInGroupRequestDTO userDetailInGroupRequestDTO);
+
+    //post approval log
+    String addPostLog(PostLogRequestDTO postLogRequestDTO);
+    String deletePostLog(Long postId);
 }

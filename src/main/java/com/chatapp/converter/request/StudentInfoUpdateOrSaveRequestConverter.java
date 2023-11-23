@@ -4,6 +4,8 @@ import com.chatapp.converter.abstracts.BaseConverter;
 import com.chatapp.dto.request.StudentInfoUpdateOrSaveRequestDTO;
 import com.chatapp.entity.StudentInfoEntity;
 import com.chatapp.entity.UserEntity;
+import com.chatapp.repository.FacultyInfoRepository;
+import com.chatapp.repository.MajorRepository;
 import com.chatapp.repository.StudentInfoRepository;
 import com.chatapp.repository.UserRepository;
 
@@ -18,6 +20,12 @@ public class StudentInfoUpdateOrSaveRequestConverter extends BaseConverter<UserE
     @Autowired
     private StudentInfoRepository studentInfoRepository;
 
+    @Autowired
+    private FacultyInfoRepository facultyInfoRepository;
+
+    @Autowired
+    private  MajorRepository majorRepository;
+
     public UserEntity toUpdateEntity(StudentInfoUpdateOrSaveRequestDTO dto){
         UserEntity userEntity = userRepository.findOneById(dto.getId());
         userEntity.setId(dto.getId());
@@ -29,8 +37,8 @@ public class StudentInfoUpdateOrSaveRequestConverter extends BaseConverter<UserE
             userEntity.setImage(dto.getImage());
         }
         StudentInfoEntity studentInfoEntity = studentInfoRepository.findOneByUser_Id(dto.getId());
-        studentInfoEntity.setFacultyName(dto.getFacultyName());
-        studentInfoEntity.setMajor(dto.getMajor());
+        studentInfoEntity.setFaculty(facultyInfoRepository.findOneById(dto.getFacultyId()));
+        studentInfoEntity.setMajor(majorRepository.findOneById(dto.getMajorId()));
         studentInfoEntity.setStudentCode(dto.getStudentCode());
         studentInfoEntity.setUser(userEntity);
         userEntity.setStudentInfo(studentInfoEntity);
@@ -41,8 +49,8 @@ public class StudentInfoUpdateOrSaveRequestConverter extends BaseConverter<UserE
     public UserEntity toEntity(StudentInfoUpdateOrSaveRequestDTO dto) {
         UserEntity userEntity = super.toEntity(dto);
         StudentInfoEntity studentInfoEntity = new StudentInfoEntity();
-        studentInfoEntity.setFacultyName(dto.getFacultyName());
-        studentInfoEntity.setMajor(dto.getMajor());
+        studentInfoEntity.setFaculty(facultyInfoRepository.findOneById(dto.getFacultyId()));
+        studentInfoEntity.setMajor(majorRepository.findOneById(dto.getMajorId()));
         studentInfoEntity.setStudentCode(dto.getStudentCode());
         studentInfoEntity.setUser(userEntity);
         userEntity.setStudentInfo(studentInfoEntity);

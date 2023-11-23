@@ -9,6 +9,9 @@ public class JobProfileEntity extends BaseEntity {
     @Column(name = "cv_url", nullable = false)
     private String cvUrl;
 
+    @Column(name = "status", nullable = false)
+    private String status;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = true)
     private UserEntity user;
