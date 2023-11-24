@@ -9,6 +9,8 @@ import com.chatapp.entity.PostImageEntity;
 import com.chatapp.entity.QuestionEntity;
 import com.chatapp.entity.SurveyPostEntity;
 import com.chatapp.entity.UserEntity;
+import com.chatapp.enums.PostType;
+import com.chatapp.enums.QuestionType;
 import com.chatapp.repository.GroupRepository;
 import com.chatapp.repository.UserRepository;
 
@@ -51,17 +53,20 @@ public class SurveySaveRequestConverter extends BaseConverter<PostEntity, Survey
         List<QuestionRequestDTO> questions = new ArrayList<QuestionRequestDTO>();
         for (QuestionRequestDTO questionDTO : dto.getQuestions()) {
             QuestionRequestDTO questionRequestDTO = new QuestionRequestDTO();
-            if (questionDTO.getChoices() != null) {
+            if (questionDTO.getChoices() != null && questionDTO.getChoices().size() >= 1) {
                 questionRequestDTO.setTitle(questionDTO.getTitle());
                 questionRequestDTO.setType(questionDTO.getType());
                 questionRequestDTO.setRequired(questionDTO.getRequired());
                 questionRequestDTO.setChoices(questionDTO.getChoices());
+                questions.add(questionRequestDTO);
             } else {
-                questionRequestDTO.setTitle(questionDTO.getTitle());
-                questionRequestDTO.setType(questionDTO.getType());
-                questionRequestDTO.setRequired(questionDTO.getRequired());
+                if (questionDTO.getType().equals(QuestionType.SHORT.getName())) {
+                    questionRequestDTO.setTitle(questionDTO.getTitle());
+                    questionRequestDTO.setType(questionDTO.getType());
+                    questionRequestDTO.setRequired(questionDTO.getRequired());
+                    questions.add(questionRequestDTO);
+                }
             }
-            questions.add(questionRequestDTO);
         }
         List<QuestionEntity> questionEntities = questionRequestConverter.toEntityGroup(questions);
         for (QuestionEntity entity : questionEntities) {

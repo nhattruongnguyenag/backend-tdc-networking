@@ -29,6 +29,9 @@ public class UserEntity extends BaseEntity {
     @Column(name = "status", nullable = false)
     private Byte status;
 
+    @Column(name = "active", nullable = false)
+    private Byte active;
+
     @Column(name = "background", nullable = true)
     private String background;
 
@@ -395,5 +398,14 @@ public class UserEntity extends BaseEntity {
     public void setLastActiveAt(Date lastActiveAt) {
         this.lastActiveAt = lastActiveAt;
     }
+    
+    public Byte getActive() {
+        return this.active;
+    }
+
+    public void setActive(Byte active) {
+        this.active = active;
+    }
+
 
 }

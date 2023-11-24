@@ -197,7 +197,7 @@ public class PostServiceImpl implements PostService {
 
     private PostEntity normalPostSave(NormalPostUpdateOrSaveRequestDTO normalPostUpdateOrSaveRequestDTO) {
         PostEntity postEntity = normalPostUpdateOrSaveRequestConverter.toEntity(normalPostUpdateOrSaveRequestDTO);
-        postEntity.setActive((byte) 1);
+        postEntity.setActive((byte) 0);
         postEntity.setStatus((byte) 0);
         return postEntity;
     }
@@ -232,7 +232,7 @@ public class PostServiceImpl implements PostService {
             RecruitmentPostUpdateOrSageRequestDTO recruitmentPostUpdateOrSageRequestDTO) {
         PostEntity postEntity = recruitmentPosyUpdateOrSaveRequestConverter
                 .toEntity(recruitmentPostUpdateOrSageRequestDTO);
-        postEntity.setActive((byte) 1);
+        postEntity.setActive((byte) 0);
         postEntity.setStatus((byte) 0);
         return postEntity;
     }
@@ -253,7 +253,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public String saveSurvey(SurveySaveRequestDTO saveRequestDTO) {
         PostEntity postEntity = surveySaveRequestConverter.toPostEntity(saveRequestDTO);
-        postEntity.setActive((byte) 1);
+        postEntity.setActive((byte) 0);
         postEntity.setStatus((byte) 0);
         postRepository.save(postEntity);
         return "";

@@ -8,6 +8,7 @@ import com.chatapp.entity.UserEntity;
 import com.chatapp.enums.GroupDefault;
 import com.chatapp.repository.GroupRepository;
 import com.chatapp.repository.UserRepository;
+import com.chatapp.util.DateTimeUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,11 @@ public class StudentInfoResponseConverter extends BaseConverter<StudentInfoEntit
         studentInfoResponeDTO.setName(userEntity.getName());
         studentInfoResponeDTO.setPhone(userEntity.getPhone());
         studentInfoResponeDTO.setStatus(userEntity.getStatus());
+        studentInfoResponeDTO.setActive(userEntity.getActive());
         studentInfoResponeDTO.setCode(userEntity.getCode());
+        if (userEntity.getLastActiveAt() != null) {
+            studentInfoResponeDTO.setLastActive(DateTimeUtil.convertToTimestamp(userEntity.getLastActiveAt()));
+        }
         String roleCodes = "";
         for (int i = 0; i < entity.getUser().getRoles().size(); i++) {
             if (i != 0) {
@@ -77,8 +82,7 @@ public class StudentInfoResponseConverter extends BaseConverter<StudentInfoEntit
             return GroupDefault.GROUP_TIENG_HAN;
         } else if (falcutyName.equals(GroupDefault.GROUP_BO_MON_TIENG_NHAT.getName())) {
             return GroupDefault.GROUP_BO_MON_TIENG_NHAT;
-        }
-        else {
+        } else {
             return null;
         }
     }

@@ -5,6 +5,7 @@ import com.chatapp.dto.response.BusinessInfoResponseDTO;
 import com.chatapp.entity.BusinessesInfoEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.repository.UserRepository;
+import com.chatapp.util.DateTimeUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -28,7 +29,12 @@ public class BusinessInfoResponseConverter extends BaseConverter<BusinessesInfoE
         businessInfoResponseDTO.setImage(userEntity.getImage());
         businessInfoResponseDTO.setName(userEntity.getName());
         businessInfoResponseDTO.setStatus(userEntity.getStatus());
+        businessInfoResponseDTO.setActive(userEntity.getActive());
         businessInfoResponseDTO.setCode(userEntity.getCode());
+        if (userEntity.getLastActiveAt() != null) {
+            businessInfoResponseDTO.setLastActive(DateTimeUtil.convertToTimestamp(userEntity.getLastActiveAt()));
+        }
+
         String roleCodes = "";
         for (int i = 0; i < entity.getUser().getRoles().size(); i++) {
             if (i != 0) {

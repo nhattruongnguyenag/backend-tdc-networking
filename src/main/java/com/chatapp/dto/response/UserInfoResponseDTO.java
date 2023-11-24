@@ -14,6 +14,7 @@ public class UserInfoResponseDTO extends BaseDTO {
     private String image;
     private String phone;
     private Byte status;
+    private Byte active;
     private String code;
     private Byte isTyping;
     private Byte isMessageConnect;

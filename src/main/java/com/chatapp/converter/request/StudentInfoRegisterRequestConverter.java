@@ -25,6 +25,8 @@ public class StudentInfoRegisterRequestConverter extends BaseConverter<UserEntit
         userEntity.setName(dto.getName());
         userEntity.setPassword(dto.getPassword());
         userEntity.setPhone(dto.getPhone());
+        userEntity.setStatus((byte)0);
+        userEntity.setActive((byte)0);
         userEntity.setCode(dto.getCode());
         if (dto.getBackground() != null) {
             userEntity.setBackground(dto.getBackground());

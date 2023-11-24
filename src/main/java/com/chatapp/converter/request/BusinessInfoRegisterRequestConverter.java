@@ -22,7 +22,14 @@ public class BusinessInfoRegisterRequestConverter extends BaseConverter<UserEnti
 
     @Override
     public UserEntity toEntity(BusinessInfoRegisterRequestDTO dto) {
-        UserEntity userEntity = super.toEntity(dto);
+        UserEntity userEntity = new UserEntity();
+        userEntity.setEmail(dto.getEmail());
+        userEntity.setName(dto.getName());
+        userEntity.setPassword(dto.getPassword());
+        userEntity.setPhone(dto.getPhone());
+        userEntity.setStatus((byte)0);
+        userEntity.setActive((byte)0);
+        userEntity.setCode(dto.getCode());
         List<GroupEntity> groups = new ArrayList<>();
         groups.add(groupRepository.findOneByCode(GroupDefault.GROUP_KET_NOI_DOANH_NGHIEP.getCodeGroup()));
         userEntity.setGroups(groups);

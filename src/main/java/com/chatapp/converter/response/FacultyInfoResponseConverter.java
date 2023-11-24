@@ -6,6 +6,7 @@ import com.chatapp.entity.FacultyInfoEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.enums.GroupDefault;
 import com.chatapp.repository.UserRepository;
+import com.chatapp.util.DateTimeUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -29,7 +30,11 @@ public class FacultyInfoResponseConverter extends BaseConverter<FacultyInfoEntit
         facultyInfoResponeDTO.setName(userEntity.getName());
         facultyInfoResponeDTO.setPhone(userEntity.getPhone());
         facultyInfoResponeDTO.setStatus(userEntity.getStatus());
+        facultyInfoResponeDTO.setActive(userEntity.getActive());
         facultyInfoResponeDTO.setCode(userEntity.getCode());
+        if (userEntity.getLastActiveAt() != null) {
+            facultyInfoResponeDTO.setLastActive(DateTimeUtil.convertToTimestamp(userEntity.getLastActiveAt()));
+        }
         String roleCodes = "";
         for (int i = 0; i < entity.getUser().getRoles().size(); i++) {
             if (i != 0) {
@@ -68,8 +73,7 @@ public class FacultyInfoResponseConverter extends BaseConverter<FacultyInfoEntit
             return GroupDefault.GROUP_TIENG_HAN;
         } else if (falcutyName.equals(GroupDefault.GROUP_BO_MON_TIENG_NHAT.getName())) {
             return GroupDefault.GROUP_BO_MON_TIENG_NHAT;
-        }
-        else {
+        } else {
             return null;
         }
     }

@@ -61,6 +61,7 @@ import com.chatapp.repository.UserRepository;
 import com.chatapp.service.EmailService;
 import com.chatapp.service.UserService;
 import com.chatapp.util.TokenProvider;
+import com.google.api.client.util.DateTime;
 
 import jakarta.mail.MessagingException;
 
@@ -73,6 +74,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -254,8 +256,11 @@ public class UserServiceImpl implements UserService {
                 new UsernamePasswordAuthenticationToken(
                         userLoginRequest.getEmail(),
                         userLoginRequest.getPassword()));
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        UserEntity entity = userRepository.findOneByEmail(userLoginRequest.getEmail());
+        entity.setLastActiveAt(new Date());
+        entity.setStatus((byte) 1);
+        userRepository.save(entity);
         final String token = tokenProvider.generateToken(authentication.getName());
         return new AuthTokenDTO(token);
     }
@@ -310,7 +315,6 @@ public class UserServiceImpl implements UserService {
         userEntity = studentInfoRegisterRequestConverter.toEntity(studentRegisterDTO);
         setGroupToStudent(userEntity);
         userEntity.setRoles(roles);
-        userEntity.setStatus((byte) 0);
         userRepository.save(userEntity);
 
         // final Authentication authentication = authenticationManager.authenticate(
@@ -383,6 +387,7 @@ public class UserServiceImpl implements UserService {
         userEntity = facultyInfoRegisterRequestConverter.toEntity(facultyInfoRegisterRequestDTO);
         userEntity.setRoles(roles);
         userEntity.setStatus((byte) 0);
+        userEntity.setActive((byte) 0);
         userRepository.save(userEntity);
 
         final String token = tokenProvider.generateToken(facultyInfoRegisterRequestDTO.getEmail());
@@ -451,6 +456,7 @@ public class UserServiceImpl implements UserService {
         userEntity = businessInfoRegisterRequestConverter.toEntity(businessInfoRegisterRequestDTO);
         userEntity.setRoles(roles);
         userEntity.setStatus((byte) 0);
+        userEntity.setActive((byte) 0);
         userRepository.save(userEntity);
 
         final String token = tokenProvider.generateToken(businessInfoRegisterRequestDTO.getEmail());
@@ -802,7 +808,7 @@ public class UserServiceImpl implements UserService {
                         .findOneByToken(tokenRequestDTO.getToken());
                 String email = tokenProvider.extractEmailFromToken(tokenRequestDTO.getToken());
                 UserEntity userEntity = userRepository.findOneByEmail(email);
-                userEntity.setStatus((byte) 1);
+                userEntity.setActive((byte) 1);
                 userRepository.save(userEntity);
                 tokenResetPasswordEntity.setStatus(Long.valueOf(0));
                 tokenRepository.save(tokenResetPasswordEntity);

@@ -12,7 +12,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://127.0.0.1:8080/api/users/token/eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMTIxMXR0MjM1NkBtYWkudGRjLmVkdS52biIsImlhdCI6MTcwMDYyMTUxOCwiZXhwIjoxNzAwNjI1MTE4fQ.ZoBOXsNQa1GbVZRhgZE-9Y011q1dOn6tFi3vHSktsW8 HTTP/1.1
+GET http://127.0.0.1:8080/api/users/token/eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJraG9hZGR0QHRkYy5lZHUudm4iLCJpYXQiOjE3MDA3OTQ3OTcsImV4cCI6MTcwMDc5ODM5N30.SNgkerMegcU2hcbHdPcK4ATmuM_ZyKsbiFTC8EACJ2w HTTP/1.1
 
 ###
 GET http://127.0.0.1:8080/api/users HTTP/1.1
@@ -181,6 +181,14 @@ Content-Type: application/json
            "choices": [
                "no",
                "yes"
+           ]
+       },
+       {
+           "type": "chon-mot-dap-an",
+           "title": "sai",
+           "required": 1,
+           "choices": [
+               
            ]
        },
        {
@@ -471,9 +479,9 @@ POST http://127.0.0.1:8080/api/posts/group/user/detail HTTP/1.1
 Content-Type: application/json
 
 {
-    "userId":12,
+    "userId":1,
     "groupCode":"group_connect_business",
-    "userLogin": 3
+    "userLogin": 1
 }
 
 ###
