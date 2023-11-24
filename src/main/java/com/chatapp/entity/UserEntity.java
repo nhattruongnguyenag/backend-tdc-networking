@@ -388,7 +388,6 @@ public class UserEntity extends BaseEntity {
         this.background = background;
     }
 
-
     public Date getLastActiveAt() {
         return this.lastActiveAt;
     }
