@@ -53,6 +53,10 @@ public class CustomizedPostRepositoryImpl implements CustomizedPostRepository {
         if (isValid(dto.getStatus())) {
             whereQuery.append("\nAND p.status = ").append(dto.getStatus());
         }
+
+        if (isValid(dto.getActive())) {
+            whereQuery.append("\nAND p.active = ").append(dto.getActive());
+        }
     }
 
     private boolean isValid(String str) {

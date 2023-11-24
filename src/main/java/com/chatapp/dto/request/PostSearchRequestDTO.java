@@ -7,4 +7,5 @@ public class PostSearchRequestDTO {
     private String group;
     private String ownerFaculty;
     private String status;
+    private String active;
 }
