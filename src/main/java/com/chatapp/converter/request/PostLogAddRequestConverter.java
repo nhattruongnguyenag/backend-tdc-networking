@@ -18,7 +18,7 @@ public class PostLogAddRequestConverter extends BaseConverter<PostApprovalLogEnt
     public PostApprovalLogEntity toEntity(PostLogRequestDTO dto) {
         PostApprovalLogEntity entity = super.toEntity(dto);
         PostEntity postEntity = postRepository.findOneById(dto.getPostId());
-        postEntity.setStatus((byte)2);
+        postEntity.setActive((byte)2);
         entity.setPost(postEntity);
         return entity;
     }
