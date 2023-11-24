@@ -1,7 +1,11 @@
 package com.chatapp.controller.api;
 
 import java.util.List;
+import java.util.Map;
 
+import com.chatapp.dto.request.*;
+import com.chatapp.dto.response.*;
+import com.chatapp.dto.response.postSearch.PostSearchResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,25 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.chatapp.commond.ResponseData;
 import com.chatapp.dto.BaseDTO;
-import com.chatapp.dto.request.AllPostByUserAndGroupResponseDTO;
-import com.chatapp.dto.request.CommentDeleteRequestDTO;
-import com.chatapp.dto.request.CommentSaveRequestDTO;
-import com.chatapp.dto.request.LikeRequestDTO;
-import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
-import com.chatapp.dto.request.NormalPostUpdateRequestDTO;
-import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
-import com.chatapp.dto.request.RecruitmentPostUpdateRequestDTO;
-import com.chatapp.dto.request.SurveyAnswerRequestDTO;
-import com.chatapp.dto.request.SurveySaveRequestDTO;
-import com.chatapp.dto.request.UserDetailInGroupRequestDTO;
-import com.chatapp.dto.request.UserSavePostRequestDTO;
-import com.chatapp.dto.response.CommentResponeseDTO;
-import com.chatapp.dto.response.NormalPostResponseDTO;
-import com.chatapp.dto.response.RecruitmentPostResponseDTO;
-import com.chatapp.dto.response.SurveyPreviewResponseDTO;
-import com.chatapp.dto.response.SurveyResponeDTO;
-import com.chatapp.dto.response.SurveyResultResponseDTO;
-import com.chatapp.dto.response.UserDetailInGroupResponseDTO;
 import com.chatapp.enums.PostType;
 import com.chatapp.service.PostService;
 import com.google.firebase.database.annotations.Nullable;
@@ -41,6 +26,16 @@ public class PostAPI {
     @GetMapping({ "posts/all", "posts/all/" })
     public ResponseEntity<ResponseData<List<BaseDTO>>> findAll() {
         ResponseData<List<BaseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success", postService.findAll());
+        return ResponseEntity.ok(responseData);
+    }
+
+    @GetMapping({ "posts/search", "posts/search/" })
+    public ResponseEntity<ResponseData<List<PostSearchResponseDTO>>> findPosts(@RequestParam Map<String, String> params) {
+        PostSearchRequestDTO dto = new PostSearchRequestDTO();
+        dto.setGroup(params.get("group"));
+        dto.setOwnerFaculty(params.get("ownerFaculty"));
+        dto.setStatus(params.get("status"));
+        ResponseData<List<PostSearchResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success", postService.findPosts(dto));
         return ResponseEntity.ok(responseData);
     }
 

@@ -3,29 +3,12 @@ package com.chatapp.service;
 import java.util.List;
 
 import com.chatapp.dto.BaseDTO;
-import com.chatapp.dto.request.AllPostByUserAndGroupResponseDTO;
-import com.chatapp.dto.request.CommentDeleteRequestDTO;
-import com.chatapp.dto.request.CommentSaveRequestDTO;
-import com.chatapp.dto.request.LikeRequestDTO;
-import com.chatapp.dto.request.NormalPostUpdateOrSaveRequestDTO;
-import com.chatapp.dto.request.NormalPostUpdateRequestDTO;
-import com.chatapp.dto.request.PostFindRequestDTO;
-import com.chatapp.dto.request.PostLogRequestDTO;
-import com.chatapp.dto.request.RecruitmentPostUpdateOrSageRequestDTO;
-import com.chatapp.dto.request.RecruitmentPostUpdateRequestDTO;
-import com.chatapp.dto.request.SurveyAnswerRequestDTO;
-import com.chatapp.dto.request.SurveySaveRequestDTO;
-import com.chatapp.dto.request.UserDetailInGroupRequestDTO;
-import com.chatapp.dto.request.UserSavePostRequestDTO;
-import com.chatapp.dto.response.CommentResponeseDTO;
-import com.chatapp.dto.response.NormalPostResponseDTO;
-import com.chatapp.dto.response.RecruitmentPostResponseDTO;
-import com.chatapp.dto.response.SurveyPreviewResponseDTO;
-import com.chatapp.dto.response.SurveyResponeDTO;
-import com.chatapp.dto.response.SurveyResultResponseDTO;
-import com.chatapp.dto.response.UserDetailInGroupResponseDTO;
+import com.chatapp.dto.request.*;
+import com.chatapp.dto.response.*;
+import com.chatapp.dto.response.postSearch.PostSearchResponseDTO;
 
 public interface PostService {
+    List<PostSearchResponseDTO> findPosts(PostSearchRequestDTO requestDTO);
     List<BaseDTO> findAll();
 
     List<BaseDTO> findAllByUserId(Long id);
