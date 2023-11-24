@@ -252,6 +252,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public AuthTokenDTO login(UserLoginRequestDTO userLoginRequest) {
+        if(userRepository.findOneByEmail(userLoginRequest.getEmail()).getActive() == 0){
+            throw new DuplicateUsernameException("this_account_have_not_actived");
+        }
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         userLoginRequest.getEmail(),

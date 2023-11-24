@@ -37,7 +37,6 @@ public class StudentInfoResponseConverter extends BaseConverter<StudentInfoEntit
         studentInfoResponeDTO.setName(userEntity.getName());
         studentInfoResponeDTO.setPhone(userEntity.getPhone());
         studentInfoResponeDTO.setStatus(userEntity.getStatus());
-        studentInfoResponeDTO.setActive(userEntity.getActive());
         studentInfoResponeDTO.setCode(userEntity.getCode());
         if (userEntity.getLastActiveAt() != null) {
             studentInfoResponeDTO.setLastActive(DateTimeUtil.convertToTimestamp(userEntity.getLastActiveAt()));

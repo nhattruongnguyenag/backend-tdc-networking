@@ -30,7 +30,6 @@ public class FacultyInfoResponseConverter extends BaseConverter<FacultyInfoEntit
         facultyInfoResponeDTO.setName(userEntity.getName());
         facultyInfoResponeDTO.setPhone(userEntity.getPhone());
         facultyInfoResponeDTO.setStatus(userEntity.getStatus());
-        facultyInfoResponeDTO.setActive(userEntity.getActive());
         facultyInfoResponeDTO.setCode(userEntity.getCode());
         if (userEntity.getLastActiveAt() != null) {
             facultyInfoResponeDTO.setLastActive(DateTimeUtil.convertToTimestamp(userEntity.getLastActiveAt()));
