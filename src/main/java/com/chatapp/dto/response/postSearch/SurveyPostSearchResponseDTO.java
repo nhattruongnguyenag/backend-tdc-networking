@@ -10,5 +10,4 @@ public class SurveyPostSearchResponseDTO extends PostSearchResponseDTO {
     private String title;
     private String description;
     private List<QuestionResponseDTO> questions;
-    private Long isConduct;
 }
