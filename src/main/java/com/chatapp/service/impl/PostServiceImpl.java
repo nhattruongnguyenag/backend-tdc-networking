@@ -51,8 +51,6 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private PostApprovalLogRepository postApprovalLogRepository;
     @Autowired
-    private CustomizedPostOptionRepository customizedPostOptionRepository;
-    @Autowired
     private UserRepository userRepository;
     @Autowired
     private NormalPostRepository normalPostRepository;
@@ -778,16 +776,5 @@ public class PostServiceImpl implements PostService {
         PostApprovalLogEntity entity = postApprovalLogRepository.findOneByPost_Id(postId);
         postApprovalLogRepository.delete(entity);
         return "";
-    }
-
-    @Override
-    public List<BaseDTO> getPostOptions(String groupCode, String status, String facultyCode, Long userLogin) {
-        if (groupRepository.findOneByCode(groupCode) == null) {
-            throw new DuplicateUsernameException("group_does_not_exist");
-        }
-        List<PostInfoResponseDTO> responseDTOs = postInfoResponeConverter
-                .toDTOGroup(customizedPostOptionRepository.findByOptions(groupCode, status, facultyCode));
-        List<BaseDTO> dtos = toCustomListPost(responseDTOs, userLogin);
-        return dtos;
     }
 }

@@ -76,6 +76,5 @@ public interface PostService {
     String addPostLog(PostLogRequestDTO postLogRequestDTO);
     String deletePostLog(Long postId);
 
-    //get posts options
-    List<BaseDTO> getPostOptions(String groupCode , String status , String facultyCode , Long userLogin);
+    
 }

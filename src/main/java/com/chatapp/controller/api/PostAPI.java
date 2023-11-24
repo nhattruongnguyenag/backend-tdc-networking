@@ -228,14 +228,4 @@ public class PostAPI {
                 postService.getUserPageInGroup(userDetailInGroupRequestDTO));
         return ResponseEntity.ok(responseData);
     }
-
-    @GetMapping({ "posts", "posts/" })
-    public ResponseEntity<ResponseData<List<BaseDTO>>> getPostOption(
-            @RequestParam(name = "group", required = false) String group,
-            @RequestParam(name = "status", required = false) String status,
-            @RequestParam(name = "ownerFaculty", required = false) String ownerFaculty, @RequestParam Long userLogin) {
-        ResponseData<List<BaseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
-                postService.getPostOptions(group, status, ownerFaculty, userLogin));
-        return ResponseEntity.ok(responseData);
-    }
 }

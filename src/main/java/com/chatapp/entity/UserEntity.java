@@ -3,6 +3,7 @@ package com.chatapp.entity;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -36,6 +37,9 @@ public class UserEntity extends BaseEntity {
 
     @Column(name = "code", nullable = true, unique = true)
     private String code;
+
+    @Column(name = "lastActiveAt", nullable = true)
+    private Date lastActiveAt;
 
     @Column(name = "is_typing", nullable = true, columnDefinition = "boolean default false")
     private Boolean isTyping = false;
@@ -383,4 +387,14 @@ public class UserEntity extends BaseEntity {
     public void setBackground(String background) {
         this.background = background;
     }
+
+
+    public Date getLastActiveAt() {
+        return this.lastActiveAt;
+    }
+
+    public void setLastActiveAt(Date lastActiveAt) {
+        this.lastActiveAt = lastActiveAt;
+    }
+
 }

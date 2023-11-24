@@ -19,4 +19,5 @@ public class UserInfoResponseDTO extends BaseDTO {
     private Byte isMessageConnect;
     private String roleCodes;
     private List<UserFollowResponseDTO> follows;
+    private String lastActive;
 }
