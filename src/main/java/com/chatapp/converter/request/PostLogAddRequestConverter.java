@@ -3,6 +3,7 @@ package com.chatapp.converter.request;
 import com.chatapp.converter.abstracts.BaseConverter;
 import com.chatapp.dto.request.PostLogRequestDTO;
 import com.chatapp.entity.PostApprovalLogEntity;
+import com.chatapp.entity.PostEntity;
 import com.chatapp.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,9 @@ public class PostLogAddRequestConverter extends BaseConverter<PostApprovalLogEnt
     @Override
     public PostApprovalLogEntity toEntity(PostLogRequestDTO dto) {
         PostApprovalLogEntity entity = super.toEntity(dto);
-        entity.setPost(postRepository.findOneById(dto.getPostId()));
+        PostEntity postEntity = postRepository.findOneById(dto.getPostId());
+        postEntity.setStatus((byte)3);
+        entity.setPost(postEntity);
         return entity;
     }
 }
