@@ -35,6 +35,7 @@ public class PostAPI {
         dto.setGroup(params.get("group"));
         dto.setOwnerFaculty(params.get("ownerFaculty"));
         dto.setStatus(params.get("status"));
+        dto.setActive(params.get("active"));
         ResponseData<List<PostSearchResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success", postService.findPosts(dto));
         return ResponseEntity.ok(responseData);
     }
