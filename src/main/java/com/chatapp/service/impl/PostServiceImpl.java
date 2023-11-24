@@ -777,4 +777,15 @@ public class PostServiceImpl implements PostService {
         postApprovalLogRepository.delete(entity);
         return "";
     }
+
+    @Override
+    public String acceptPost(Long postId) {
+        if (postRepository.findOneById(postId) == null) {
+            throw new DuplicateUsernameException("this_post_is_not_exists");
+        }
+        PostEntity entity = postRepository.findOneById(postId);
+        entity.setActive((byte)1);
+        postRepository.save(entity);
+        return "";
+    }
 }

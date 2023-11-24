@@ -228,4 +228,12 @@ public class PostAPI {
                 postService.getUserPageInGroup(userDetailInGroupRequestDTO));
         return ResponseEntity.ok(responseData);
     }
+
+    @PostMapping({ "posts/acceptance", "posts/acceptance" })
+    public ResponseEntity<ResponseData<?>> acceptPost(
+            @RequestBody PostGetRequestDTO postGetRequestDTO) {
+        ResponseData<?> responseData = new ResponseData<>(HttpStatus.CREATED, "success",
+                postService.acceptPost(postGetRequestDTO.getPostId()));
+        return ResponseEntity.created(null).body(responseData);
+    }
 }

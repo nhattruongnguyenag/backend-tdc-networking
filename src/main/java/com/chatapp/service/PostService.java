@@ -76,5 +76,5 @@ public interface PostService {
     String addPostLog(PostLogRequestDTO postLogRequestDTO);
     String deletePostLog(Long postId);
 
-    
+    String acceptPost(Long postId);
 }
