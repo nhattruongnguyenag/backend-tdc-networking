@@ -29,7 +29,6 @@ public class BusinessInfoResponseConverter extends BaseConverter<BusinessesInfoE
         businessInfoResponseDTO.setImage(userEntity.getImage());
         businessInfoResponseDTO.setName(userEntity.getName());
         businessInfoResponseDTO.setStatus(userEntity.getStatus());
-        businessInfoResponseDTO.setActive(userEntity.getActive());
         businessInfoResponseDTO.setCode(userEntity.getCode());
         if (userEntity.getLastActiveAt() != null) {
             businessInfoResponseDTO.setLastActive(DateTimeUtil.convertToTimestamp(userEntity.getLastActiveAt()));
