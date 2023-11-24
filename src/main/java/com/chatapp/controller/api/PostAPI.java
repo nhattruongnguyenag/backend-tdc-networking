@@ -36,6 +36,7 @@ public class PostAPI {
         dto.setOwnerFaculty(params.get("ownerFaculty"));
         dto.setStatus(params.get("status"));
         dto.setActive(params.get("active"));
+        dto.setUserId(params.get("userId"));
         ResponseData<List<PostSearchResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success", postService.findPosts(dto));
         return ResponseEntity.ok(responseData);
     }
@@ -54,7 +55,6 @@ public class PostAPI {
         return ResponseEntity.ok(responseData);
     }
 
-    // normalPost api
     @GetMapping({ "posts/normal", "posts/normal/" })
     public ResponseEntity<ResponseData<List<NormalPostResponseDTO>>> findAllNormalPosts() {
         ResponseData<List<NormalPostResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
@@ -230,7 +230,7 @@ public class PostAPI {
         return ResponseEntity.ok(responseData);
     }
 
-    @PostMapping({ "posts/acceptance", "posts/acceptance" })
+    @PostMapping({ "posts/acceptance", "posts/acceptance/" })
     public ResponseEntity<ResponseData<?>> acceptPost(
             @RequestBody PostGetRequestDTO postGetRequestDTO) {
         ResponseData<?> responseData = new ResponseData<>(HttpStatus.CREATED, "success",

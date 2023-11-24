@@ -46,6 +46,7 @@ public class PostSearchResponseConverter extends BaseConverter<PostEntity, PostS
 
         UserInfoResponseDTO userInfoResponseDTO = userInfoResponseConverter.toDTO(entity.getUser());
 
+        postInfoResponeDTO.setId(entity.getId());
         postInfoResponeDTO.setUser(userInfoResponseDTO);
         postInfoResponeDTO.setGroup(entity.getGroup() != null ? groupResponseConverter.toDTO(entity.getGroup()) : null);
         postInfoResponeDTO.setLikes(userPostLikeConverter.toDTOGroup(entity.getLikes()));
@@ -70,14 +71,14 @@ public class PostSearchResponseConverter extends BaseConverter<PostEntity, PostS
     private static NormalPostSearchResponseDTO getNormalPostResponseDTO(PostEntity entity, PostSearchResponseDTO postSearchResponeDTO) {
         NormalPostSearchResponseDTO normalPostResponseDTO = new NormalPostSearchResponseDTO();
         BeanUtils.copyProperties(postSearchResponeDTO, normalPostResponseDTO);
-        BeanUtils.copyProperties(entity.getNormalPost(), normalPostResponseDTO);
+        BeanUtils.copyProperties(entity.getNormalPost(), normalPostResponseDTO, "id");
         return normalPostResponseDTO;
     }
 
     private SurveyPostSearchResponseDTO getSurveyResponeDTO(PostEntity entity, PostSearchResponseDTO postSearchResponseDTO) {
         SurveyPostSearchResponseDTO surveyResponeDTO = new SurveyPostSearchResponseDTO();
         BeanUtils.copyProperties(postSearchResponseDTO, surveyResponeDTO);
-        BeanUtils.copyProperties(entity.getSurveyPost(), surveyResponeDTO);
+        BeanUtils.copyProperties(entity.getSurveyPost(), surveyResponeDTO, "id");
         surveyResponeDTO.setQuestions(getQuestionResponseDTOGroup(entity));
         return surveyResponeDTO;
     }
@@ -85,7 +86,7 @@ public class PostSearchResponseConverter extends BaseConverter<PostEntity, PostS
     private static RecruitmentPostSearchResponseDTO getRecruitmentPostResponseDTO(PostEntity entity, PostSearchResponseDTO postInfoResponeDTO) {
         RecruitmentPostSearchResponseDTO recruitmentPostResponseDTO = new RecruitmentPostSearchResponseDTO();
         BeanUtils.copyProperties(postInfoResponeDTO, recruitmentPostResponseDTO);
-        BeanUtils.copyProperties(entity.getRecruitmentPost(), recruitmentPostResponseDTO);
+        BeanUtils.copyProperties(entity.getRecruitmentPost(), recruitmentPostResponseDTO, "id");
         recruitmentPostResponseDTO.setExpiration(DateTimeUtil.convertToTimestamp(entity.getRecruitmentPost().getExpiration()));
         return recruitmentPostResponseDTO;
     }

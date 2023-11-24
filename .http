@@ -558,7 +558,7 @@ PUT http://127.0.0.1:8080/api/posts/normal HTTP/1.1
 Content-Type: application/json
 
 {
-    "postId": 5,
+    "postId": 1,
     "content": "dfsdfsdfhjkldfs"
 }
 
@@ -594,6 +594,24 @@ Content-Type: application/json
 
 {
     "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb25udmwuNTYuc3R1ZGVudEBmaXQudGRjLmVkdS52biIsImlhdCI6MTcwMDU4MzY1MywiZXhwIjoxNzAwNTg3MjUzfQ.cp1NOM6VKenjJ6JkS3BUhEzUB4F2hAgHQfXSddyHqJM"
+}
+
+
+###
+POST http://localhost:8080/api/approval/post/log
+Content-Type: application/json
+
+{
+    "postId": 1,
+    "content": "1111111111111"
+}
+
+###
+POST http://localhost:8080/api/posts/acceptance
+Content-Type: application/json
+
+{
+    "postId": 2
 }
 
 ###
