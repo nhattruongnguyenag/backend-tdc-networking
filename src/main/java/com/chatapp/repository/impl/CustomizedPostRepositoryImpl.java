@@ -35,7 +35,7 @@ public class CustomizedPostRepositoryImpl implements CustomizedPostRepository {
     }
 
     private void buildJoinQuery(PostSearchRequestDTO dto, StringBuilder joinQuery, StringBuilder whereQuery) {
-        if (dto.getOwnerFaculty() != null) {
+        if (isValid(dto.getOwnerFaculty())) {
             joinQuery.append("\nJOIN p.user as u");
             joinQuery.append("\nJOIN u.studentInfo as st");
             joinQuery.append("\nJOIN st.faculty as facultyInfo");
@@ -43,15 +43,19 @@ public class CustomizedPostRepositoryImpl implements CustomizedPostRepository {
             whereQuery.append("\nAND f.code LIKE ").append("'%").append(dto.getOwnerFaculty()).append("%'");
         }
 
-        if (dto.getGroup() != null) {
+        if (isValid(dto.getGroup())) {
             joinQuery.append("\nJOIN p.group as g");
             whereQuery.append("\nAND g.code LIKE ").append("'%").append(dto.getGroup()).append("%'");
         }
     }
 
     private void buildWhereQuery(PostSearchRequestDTO dto, StringBuilder whereQuery) {
-        if (dto.getStatus() != null) {
+        if (isValid(dto.getStatus())) {
             whereQuery.append("\nAND p.status = ").append(dto.getStatus());
         }
+    }
+
+    private boolean isValid(String str) {
+        return str != null && !str.isBlank();
     }
 }
