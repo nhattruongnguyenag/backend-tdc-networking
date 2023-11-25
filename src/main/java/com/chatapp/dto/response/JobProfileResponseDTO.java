@@ -13,4 +13,5 @@ public class JobProfileResponseDTO {
     private String createdAt;
     private String companyAvatar;
     private String cvUrl;
+    private String status;
 }

@@ -100,9 +100,14 @@ public class JobprofileServiceImpl implements JobProfileService {
     public boolean updateJobProfile(JobProfileUpdateRequestDTO jobProfileUpdateRequest) {
         JobProfileEntity jobProfileEntity = jobProfileRepository.findOneById(jobProfileUpdateRequest.getProfileId());
         if (jobProfileEntity != null) {
-            jobProfileEntity.setCvUrl(jobProfileUpdateRequest.getCvUrl());
-            jobProfileRepository.save(jobProfileEntity);
-            return true;
+            if (jobProfileUpdateRequest.getCvUrl() != null) {
+                jobProfileEntity.setCvUrl(jobProfileUpdateRequest.getCvUrl());
+            }
+
+            if (jobProfileUpdateRequest.getStatus() != null) {
+                jobProfileEntity.setStatus(jobProfileUpdateRequest.getStatus());
+            }
+            return jobProfileRepository.save(jobProfileEntity) != null;
         }
         return false;
     }

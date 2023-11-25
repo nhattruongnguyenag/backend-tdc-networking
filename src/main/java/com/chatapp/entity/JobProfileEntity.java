@@ -43,4 +43,12 @@ public class JobProfileEntity extends BaseEntity {
     public void setPost(PostEntity post) {
         this.post = post;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }
