@@ -481,10 +481,10 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/api/users/token/eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZGMuZWR1LnZuIiwiaWF0IjoxNzAwODQzOTc3LCJleHAiOjE3MDA4NDc1Nzd9.wTW5qLX_AY97xINCfnGNV_ElxC3jfN3IjRnbrM0MXv4 HTTP/1.1
+GET http://localhost:8080/api/users/token/eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMTIxMXR0MDA0MkBtYWlsLnRkYy5lZHUudm4iLCJpYXQiOjE3MDA4NDQzNDgsImV4cCI6MTcwMDg0Nzk0OH0.ry4qkLMKCliDhYExjAeLlxrxkOYN5gAwrVCQT_YwFnU HTTP/1.1
 
 ###
-GET http://69.197.134.101:8080/api/users/token/eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZGMuZWR1LnZuIiwiaWF0IjoxNzAwODQzMzk1LCJleHAiOjE3MDA4NDY5OTV9.EcuXR4WSlAQerb9FcTy-dbm8iRVxTZ0PaerQyyCbT4o HTTP/1.1
+GET http://69.197.134.101:8080/api/users/token/eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZGMuZWR1LnZuIiwiaWF0IjoxNzAwODQ0NDE5LCJleHAiOjE3MDA4NDgwMTl9.cbjgebO-u2r6V2B5cwhpsj1AJUPQPj1dX4PAmHlsuR4 HTTP/1.1
 
 ###
 ###

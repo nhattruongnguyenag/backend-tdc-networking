@@ -1,5 +1,7 @@
 package com.chatapp.controller.api;
 
+import com.chatapp.commond.MessageResponseData;
+import com.chatapp.dto.response.PostRejectLogDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,17 @@ import com.chatapp.service.PostService;
 public class LogAPI {
     @Autowired
     PostService postService;
+
+    @GetMapping({"approval/log/post/{postId}"})
+    ResponseEntity<?> getRejectLogByPostId(@PathVariable("postId") Long postId) {
+        PostRejectLogDTO dto = postService.findRejectLogByPostId(postId);
+        ResponseEntity responseEntity = new ResponseEntity(new MessageResponseData(HttpStatus.NOT_FOUND, "not_found"), HttpStatus.NOT_FOUND);
+        if (dto != null) {
+            responseEntity = new ResponseEntity(new ResponseData<>(HttpStatus.OK, "success", dto), HttpStatus.OK);
+        }
+
+        return responseEntity;
+    }
 
     @PostMapping({ "approval/post/log", "approval/post/log/" })
     ResponseEntity<ResponseData<?>> postApprovalLog(@RequestBody PostLogRequestDTO postLogRequestDTO) {

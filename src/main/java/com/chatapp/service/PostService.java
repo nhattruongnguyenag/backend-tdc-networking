@@ -77,4 +77,7 @@ public interface PostService {
     String deletePostLog(Long postId);
 
     String acceptPost(Long postId);
+
+    PostRejectLogDTO findRejectLogByPostId(Long postId);
+
 }
