@@ -31,7 +31,7 @@ public class JobApplyProfileRequestConverter extends BaseConverter<JobProfileEnt
     @Override
     public JobProfileEntity toEntity(JobApplyProfileRequestDTO dto) {
         if (userInfoResponseConverter.toDTO(userRepository.findOneById(dto.getUser_id())).getRoleCodes()
-                .equals(Role.STUDENT.getName())) {
+                .contains(Role.STUDENT.getName())) {
             JobProfileEntity jobProfileEntity = super.toEntity(dto);
             jobProfileEntity.setPost(postRepository.findOneById(dto.getPost_id()));
             jobProfileEntity.setUser(userRepository.findOneById(dto.getUser_id()));
@@ -44,7 +44,7 @@ public class JobApplyProfileRequestConverter extends BaseConverter<JobProfileEnt
 
     public JobProfileEntity toUpdateEntity(JobApplyProfileRequestDTO dto) {
         if (userInfoResponseConverter.toDTO(userRepository.findOneById(dto.getUser_id())).getRoleCodes()
-                .equals(Role.STUDENT.getName())) {
+                .contains(Role.STUDENT.getName())) {
             JobProfileEntity jobProfileEntity = jobProfileRepository.findOneByPost_IdAndUser_Id(dto.getPost_id(),
                     dto.getUser_id());
             jobProfileEntity.setCvUrl(dto.getCv_url());

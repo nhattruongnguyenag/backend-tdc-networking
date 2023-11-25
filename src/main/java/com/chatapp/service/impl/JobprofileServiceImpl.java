@@ -2,6 +2,7 @@ package com.chatapp.service.impl;
 
 import java.util.List;
 
+import com.chatapp.dto.request.JobProfileUpdateRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,6 @@ import com.chatapp.service.JobProfileService;
 
 @Service
 public class JobprofileServiceImpl implements JobProfileService {
-
     @Autowired
     JobApplyProfileRequestConverter jobApplyProfileRequestConverter;
 
@@ -43,13 +43,16 @@ public class JobprofileServiceImpl implements JobProfileService {
         if (postRepository.findOneById(jobApplyProfileRequestDTO.getPost_id()) == null) {
             throw new RuntimeException("this_post_does_not_exist");
         }
+
         PostEntity postEntity = postRepository.findOneById(jobApplyProfileRequestDTO.getPost_id());
         if (!postEntity.getType().equals(PostType.RECRUIMENT.getName())) {
             throw new RuntimeException("this_post_is_not_a_recruitment");
         }
+
         if (userRepository.findOneById(jobApplyProfileRequestDTO.getUser_id()) == null) {
             throw new RuntimeException("user_is_not_exist");
         }
+
         if (jobProfileRepository.findOneByPost_IdAndUser_Id(jobApplyProfileRequestDTO.getPost_id(),
                 jobApplyProfileRequestDTO.getUser_id()) != null) {
             JobProfileEntity jobProfileEntity = jobApplyProfileRequestConverter
@@ -85,20 +88,23 @@ public class JobprofileServiceImpl implements JobProfileService {
     }
 
     @Override
-    public String updateJobProfile(JobApplyProfileRequestDTO jobApplyProfileRequestDTO) {
-        if (postRepository.findOneById(jobApplyProfileRequestDTO.getPost_id()) == null) {
-            throw new RuntimeException("this_post_does_not_exist");
+    public boolean deleteById(Long profileId) {
+        if (jobProfileRepository.findOneById(profileId) != null) {
+            jobProfileRepository.deleteById(profileId);
+            return true;
         }
-        PostEntity postEntity = postRepository.findOneById(jobApplyProfileRequestDTO.getPost_id());
-        if (!postEntity.getType().equals(PostType.RECRUIMENT.getName())) {
-            throw new RuntimeException("this_post_is_not_a_recruitment");
+        return false;
+    }
+
+    @Override
+    public boolean updateJobProfile(JobProfileUpdateRequestDTO jobProfileUpdateRequest) {
+        JobProfileEntity jobProfileEntity = jobProfileRepository.findOneById(jobProfileUpdateRequest.getProfileId());
+        if (jobProfileEntity != null) {
+            jobProfileEntity.setCvUrl(jobProfileUpdateRequest.getCvUrl());
+            jobProfileRepository.save(jobProfileEntity);
+            return true;
         }
-        if (userRepository.findOneById(jobApplyProfileRequestDTO.getUser_id()) == null) {
-            throw new RuntimeException("user_is_not_exist");
-        }
-        JobProfileEntity jobProfileEntity = jobApplyProfileRequestConverter.toUpdateEntity(jobApplyProfileRequestDTO);
-        jobProfileRepository.save(jobProfileEntity);
-        return "";
+        return false;
     }
 
     @Override
@@ -107,7 +113,7 @@ public class JobprofileServiceImpl implements JobProfileService {
             throw new RuntimeException("this_user_does_not_exist");
         }
         if (userInfoResponseConverter.toDTO(userRepository.findOneById(userId)).getRoleCodes()
-                .equals(Role.STUDENT.getName())) {
+                .contains(Role.STUDENT.getName())) {
             UserEntity entity = userRepository.findOneById(userId);
             List<JobProfileResponseDTO> jobProfileResponseDTOs = jobProfileResponseConverter
                     .toDTOGroup(entity.getJobProfiles());
@@ -117,5 +123,4 @@ public class JobprofileServiceImpl implements JobProfileService {
             throw new RuntimeException("only_student_can_see_list_job_profile");
         }
     }
-
 }

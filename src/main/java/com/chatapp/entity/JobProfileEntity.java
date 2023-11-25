@@ -10,7 +10,7 @@ public class JobProfileEntity extends BaseEntity {
     private String cvUrl;
 
     @Column(name = "status", nullable = false)
-    private String status;
+    private String status = "received";
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = true)
