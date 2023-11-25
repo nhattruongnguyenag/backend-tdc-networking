@@ -88,7 +88,7 @@ public interface UserService {
     List<GroupResponseDTO> getGroupByUserId(Long userId);
 
     //forgot password
-    String sendEmailResetPassword(String email) throws MessagingException, UnsupportedEncodingException;
+    String sendEmailResetPassword(EmailRequestDTO emailRequestDTO) throws MessagingException, UnsupportedEncodingException;
     Long checkToken(String token) throws Exception;
     String resetPassword(PasswordResetRequestDTO passwordResetRequestDTO) throws Exception;
     String updateAvatar(UserImageUpdateRequestDTO userImageUpdateRequestDTO);

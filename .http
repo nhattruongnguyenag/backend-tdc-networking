@@ -521,11 +521,13 @@ Content-Type: application/json
 POST http://127.0.0.1:8080/api/users/check?email=khoaddt@tdc.edu.vn HTTP/1.1
 
 ###
-POST http://34.125.226.160:8080/api/users/get/email/reset HTTP/1.1
+POST http://127.0.0.1:8080/api/users/get/email/reset HTTP/1.1
 Content-Type: application/json
 
 {
-    "email":"21211tt2356@mail.tdc.edu.vn"
+    "to":"21211tt2356@mail.tdc.edu.vn",
+    "subject":"Reset mat khau",
+    "content":""
 }
 
 
@@ -583,7 +585,7 @@ POST http://127.0.0.1:8080/api/users/get/email/authen/register HTTP/1.1
 Content-Type: application/json
 
 {
-    "to":"sonnvl.56.student@fit.tdc.edu.vn",
+    "to":"21211tt2356@mail.tdc.edu.vn",
     "subject":"Xác Thực Tài Khoản",
     "content":""
 }

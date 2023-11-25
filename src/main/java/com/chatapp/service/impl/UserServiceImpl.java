@@ -704,11 +704,11 @@ public class UserServiceImpl implements UserService {
 
     // forgot password
     @Override
-    public String sendEmailResetPassword(String email) throws MessagingException, UnsupportedEncodingException {
-        if (userRepository.findOneByEmail(email) == null) {
+    public String sendEmailResetPassword(EmailRequestDTO emailRequestDTO) throws MessagingException, UnsupportedEncodingException {
+        if (userRepository.findOneByEmail(emailRequestDTO.getTo()) == null) {
             throw new DuplicateUsernameException("this_email_have_not_registered");
         }
-        UserEntity userEntity = userRepository.findOneByEmail(email);
+        UserEntity userEntity = userRepository.findOneByEmail(emailRequestDTO.getTo());
         String token = tokenProvider.generateResetPasswordToken(userEntity.getId());
 
         TokenResetPasswordEntity tokenResetPasswordEntity = new TokenResetPasswordEntity();
@@ -717,7 +717,8 @@ public class UserServiceImpl implements UserService {
         tokenRepository.save(tokenResetPasswordEntity);
 
         String urlResetPassword = SystemConstant.RESET_PASSWORD_URL + token;
-        emailService.sendEmail(urlResetPassword, email);
+        emailService.sendEmail(emailRequestDTO.getTo(), emailRequestDTO.getSubject(),
+                SystemConstant.EMAIL_RESET_TEXT(urlResetPassword, emailRequestDTO.getTo()));
         return "";
     }
 
