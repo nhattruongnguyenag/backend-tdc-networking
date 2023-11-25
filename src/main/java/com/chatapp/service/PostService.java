@@ -2,6 +2,7 @@ package com.chatapp.service;
 
 import java.util.List;
 
+import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.BaseDTO;
 import com.chatapp.dto.request.*;
 import com.chatapp.dto.response.*;

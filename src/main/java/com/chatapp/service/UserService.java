@@ -57,20 +57,20 @@ public interface UserService {
     //student service
     AuthTokenDTO studentRegister(StudentInfoRegisterRequestDTO studentRegisterDTO);
     List<StudentInfoResponseDTO> findAllStudentInfo();
-    UserInfoResponseDTO studentUpdateOrSave(StudentInfoUpdateOrSaveRequestDTO studentInfoUpdateOrSaveRequestDTO);
+    AuthTokenDTO studentUpdateOrSave(StudentInfoUpdateOrSaveRequestDTO studentInfoUpdateOrSaveRequestDTO);
     StudentInfoResponseDTO getStudentDetailByUserId(Long userId);
 
     //faculty service
     List<FacultyInfoResponseDTO> findAllFacultyInfo();
     AuthTokenDTO facultyRegister(FacultyInfoRegisterRequestDTO facultyInfoRegisterRequestDTO);
     List<AuthTokenDTO> facultiesRegister(List<FacultyInfoRegisterRequestDTO> facultyInfoRegisterRequestDTOs);
-    UserInfoResponseDTO facultyUpdateOrSave(FacultyInfoUpdateOrSaveRequestDTO facultyInfoUpdateOrSaveRequestDTO);
+    AuthTokenDTO facultyUpdateOrSave(FacultyInfoUpdateOrSaveRequestDTO facultyInfoUpdateOrSaveRequestDTO);
     FacultyInfoResponseDTO getFacultyDetailByUserId(Long userId);
 
     //business
     List<BusinessInfoResponseDTO> findAllBusinessInfo();
     AuthTokenDTO businessRegister(BusinessInfoRegisterRequestDTO businessInfoRegisterRequestDTO);
-    UserInfoResponseDTO businessUpdateOrSave(BusinessInfoUpdateOrSaveRequestDTO businessInfoUpdateOrSaveRequestDTO);
+    AuthTokenDTO businessUpdateOrSave(BusinessInfoUpdateOrSaveRequestDTO businessInfoUpdateOrSaveRequestDTO);
     BusinessInfoResponseDTO getBusinessDetailByUserId(Long userId);
 
     //find

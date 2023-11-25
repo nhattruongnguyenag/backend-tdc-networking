@@ -353,7 +353,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserInfoResponseDTO studentUpdateOrSave(
+    public AuthTokenDTO studentUpdateOrSave(
             StudentInfoUpdateOrSaveRequestDTO studentInfoUpdateOrSaveRequestDTO) {
         UserEntity userEntity;
         if (userRepository.findOneByEmail(studentInfoUpdateOrSaveRequestDTO.getEmail()) != null) {
@@ -367,7 +367,9 @@ public class UserServiceImpl implements UserService {
         } else {
             userEntity = this.studentSave(studentInfoUpdateOrSaveRequestDTO);
         }
-        return userInfoResponseConverter.toDTO(userRepository.save(userEntity));
+        userRepository.save(userEntity);
+        final String token = tokenProvider.generateToken(studentInfoUpdateOrSaveRequestDTO.getEmail());
+        return new AuthTokenDTO(token);
     }
 
     // facultyInfo service
@@ -420,7 +422,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserInfoResponseDTO facultyUpdateOrSave(
+    public AuthTokenDTO facultyUpdateOrSave(
             FacultyInfoUpdateOrSaveRequestDTO facultyInfoUpdateOrSaveRequestDTO) {
         UserEntity userEntity;
         if (userRepository.findOneByEmail(facultyInfoUpdateOrSaveRequestDTO.getEmail()) != null) {
@@ -431,7 +433,9 @@ public class UserServiceImpl implements UserService {
         } else {
             userEntity = this.facultySave(facultyInfoUpdateOrSaveRequestDTO);
         }
-        return userInfoResponseConverter.toDTO(userRepository.save(userEntity));
+         userRepository.save(userEntity);
+        final String token = tokenProvider.generateToken(facultyInfoUpdateOrSaveRequestDTO.getEmail());
+        return new AuthTokenDTO(token);
     }
 
     // business service
@@ -484,7 +488,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserInfoResponseDTO businessUpdateOrSave(
+    public AuthTokenDTO businessUpdateOrSave(
             BusinessInfoUpdateOrSaveRequestDTO businessInfoUpdateOrSaveRequestDTO) {
         UserEntity userEntity;
         if (userRepository.findOneByEmail(businessInfoUpdateOrSaveRequestDTO.getEmail()) != null) {
@@ -495,7 +499,9 @@ public class UserServiceImpl implements UserService {
         } else {
             userEntity = this.businessSave(businessInfoUpdateOrSaveRequestDTO);
         }
-        return userInfoResponseConverter.toDTO(userRepository.save(userEntity));
+        userRepository.save(userEntity);
+        final String token = tokenProvider.generateToken(businessInfoUpdateOrSaveRequestDTO.getEmail());
+        return new AuthTokenDTO(token);
     }
 
     @Override

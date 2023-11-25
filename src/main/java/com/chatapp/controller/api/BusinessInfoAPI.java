@@ -36,9 +36,9 @@ public class BusinessInfoAPI {
     }
 
     @PostMapping({ "business", "business/" })
-    ResponseEntity<ResponseData<UserInfoResponseDTO>> updateOrSave(
+    ResponseEntity<ResponseData<AuthTokenDTO>> updateOrSave(
             @RequestBody BusinessInfoUpdateOrSaveRequestDTO businessInfoUpdateOrSaveRequestDTO) {
-        ResponseData<UserInfoResponseDTO> responseData = new ResponseData<>(HttpStatus.CREATED, "add or update success",
+        ResponseData<AuthTokenDTO> responseData = new ResponseData<>(HttpStatus.CREATED, "add or update success",
                 userService.businessUpdateOrSave(businessInfoUpdateOrSaveRequestDTO));
         return ResponseEntity.created(null).body(responseData);
     }
