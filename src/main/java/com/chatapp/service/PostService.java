@@ -78,4 +78,5 @@ public interface PostService {
     String deletePostLog(Long postId);
 
     String acceptPost(Long postId);
+    String updateSurvey(SurveyUpdateRequestDTO surveyUpdateRequestDTO);
 }

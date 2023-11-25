@@ -655,3 +655,40 @@ Content-Type: application/json
     "activeTime":"21h",
     "phone": "843789345"
 }
+
+###
+PUT http://127.0.0.1:8080/api/posts/survey/update HTTP/1.1
+Content-Type: application/json
+
+{
+   "id": 6,
+  "title": "hdhdhd",
+  "description": "483574583",
+  "questions": [
+      {
+          "id": 13,
+          "title": "alo",
+          "required": 1
+      },
+      {
+          "id": 14,
+          "title": "age?",
+          "required": 0
+      },
+      {
+          "id": 16,
+          "title": "aloo",
+          "required": 1,
+          "choices": [
+              {
+                  "id": 1,
+                  "content": "yes"
+              },
+              {
+                  "id": 2,
+                  "content": "no"
+              }
+          ]
+      }
+  ]
+}

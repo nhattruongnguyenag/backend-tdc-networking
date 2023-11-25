@@ -20,6 +20,7 @@ import com.chatapp.converter.request.PostLogAddRequestConverter;
 import com.chatapp.converter.request.RecruitmentPostUpdateRequestConverter;
 import com.chatapp.converter.request.RecruitmentPosyUpdateOrSaveRequestConverter;
 import com.chatapp.converter.request.SurveySaveRequestConverter;
+import com.chatapp.converter.request.SurveyUpdateRequestConverter;
 import com.chatapp.converter.request.UserSavePostRequestConverter;
 import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.BaseDTO;
@@ -115,6 +116,8 @@ public class PostServiceImpl implements PostService {
     private PostLogAddRequestConverter postLogAddRequestConverter;
     @Autowired
     private SurveySaveRequestConverter surveySaveRequestConverter;
+    @Autowired
+    private SurveyUpdateRequestConverter surveyUpdateRequestConverter;
     @Autowired
     private LikeRequestConverter likeRequestConverter;
     @Autowired
@@ -791,6 +794,13 @@ public class PostServiceImpl implements PostService {
         PostEntity entity = postRepository.findOneById(postId);
         entity.setActive((byte) 1);
         postRepository.save(entity);
+        return "";
+    }
+
+    @Override
+    public String updateSurvey(SurveyUpdateRequestDTO surveyUpdateRequestDTO) {
+        PostEntity postEntity = surveyUpdateRequestConverter.toEntity(surveyUpdateRequestDTO);
+        postRepository.save(postEntity);
         return "";
     }
 }
