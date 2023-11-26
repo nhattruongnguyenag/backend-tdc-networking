@@ -595,7 +595,7 @@ POST http://127.0.0.1:8080/api/users/authen/register HTTP/1.1
 Content-Type: application/json
 
 {
-    "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb25udmwuNTYuc3R1ZGVudEBmaXQudGRjLmVkdS52biIsImlhdCI6MTcwMDU4MzY1MywiZXhwIjoxNzAwNTg3MjUzfQ.cp1NOM6VKenjJ6JkS3BUhEzUB4F2hAgHQfXSddyHqJM"
+    "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMTIxMXR0MjM1NkBtYWlsLnRkYy5lZHUudm4iLCJpYXQiOjE3MDEwMDA4NTEsImV4cCI6MTcwMTAwNDQ1MX0.-Oqd9JjWJJIYvfBmi0VMgj4BmGstkUUVb478VM1rlZk"
 }
 
 ###
