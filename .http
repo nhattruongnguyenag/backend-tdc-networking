@@ -698,6 +698,7 @@ Content-Type: application/json
           ]
       }
   ]
+}
 
 POST http://localhost:8080/api/approval/post/log
 Content-Type: application/json
