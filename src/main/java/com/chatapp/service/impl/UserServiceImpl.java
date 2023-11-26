@@ -252,7 +252,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public AuthTokenDTO login(UserLoginRequestDTO userLoginRequest) {
-        if(userRepository.findOneByEmail(userLoginRequest.getEmail()).getActive() == 0){
+        if (userRepository.findOneByEmail(userLoginRequest.getEmail()).getActive() == 0) {
             throw new DuplicateUsernameException("this_account_have_not_actived");
         }
         final Authentication authentication = authenticationManager.authenticate(
@@ -356,7 +356,9 @@ public class UserServiceImpl implements UserService {
     public AuthTokenDTO studentUpdateOrSave(
             StudentInfoUpdateOrSaveRequestDTO studentInfoUpdateOrSaveRequestDTO) {
         UserEntity userEntity;
-        if (userRepository.findOneByEmail(studentInfoUpdateOrSaveRequestDTO.getEmail()) != null) {
+        if (userRepository.findOneByEmail(studentInfoUpdateOrSaveRequestDTO.getEmail()) != null
+                && !userRepository.findOneByEmail(studentInfoUpdateOrSaveRequestDTO.getEmail())
+                        .getEmail().equals(studentInfoUpdateOrSaveRequestDTO.getEmail())) {
             throw new DuplicateUsernameException("user_already_exists");
         }
         if (userRepository.findOneByCode(studentInfoUpdateOrSaveRequestDTO.getCode()) != null) {
@@ -425,7 +427,9 @@ public class UserServiceImpl implements UserService {
     public AuthTokenDTO facultyUpdateOrSave(
             FacultyInfoUpdateOrSaveRequestDTO facultyInfoUpdateOrSaveRequestDTO) {
         UserEntity userEntity;
-        if (userRepository.findOneByEmail(facultyInfoUpdateOrSaveRequestDTO.getEmail()) != null) {
+        if (userRepository.findOneByEmail(facultyInfoUpdateOrSaveRequestDTO.getEmail()) != null
+                && !userRepository.findOneByEmail(facultyInfoUpdateOrSaveRequestDTO.getEmail())
+                        .getEmail().equals(facultyInfoUpdateOrSaveRequestDTO.getEmail())) {
             throw new DuplicateUsernameException("email_already_exists");
         }
         if (facultyInfoUpdateOrSaveRequestDTO.getId() != null) {
@@ -433,7 +437,7 @@ public class UserServiceImpl implements UserService {
         } else {
             userEntity = this.facultySave(facultyInfoUpdateOrSaveRequestDTO);
         }
-         userRepository.save(userEntity);
+        userRepository.save(userEntity);
         final String token = tokenProvider.generateToken(facultyInfoUpdateOrSaveRequestDTO.getEmail());
         return new AuthTokenDTO(token);
     }
@@ -491,7 +495,9 @@ public class UserServiceImpl implements UserService {
     public AuthTokenDTO businessUpdateOrSave(
             BusinessInfoUpdateOrSaveRequestDTO businessInfoUpdateOrSaveRequestDTO) {
         UserEntity userEntity;
-        if (userRepository.findOneByEmail(businessInfoUpdateOrSaveRequestDTO.getEmail()) != null) {
+        if (userRepository.findOneByEmail(businessInfoUpdateOrSaveRequestDTO.getEmail()) != null
+                && !userRepository.findOneByEmail(businessInfoUpdateOrSaveRequestDTO.getEmail())
+                        .getEmail().equals(businessInfoUpdateOrSaveRequestDTO.getEmail())) {
             throw new DuplicateUsernameException("email_already_exists");
         }
         if (businessInfoUpdateOrSaveRequestDTO.getId() != null) {
@@ -704,7 +710,8 @@ public class UserServiceImpl implements UserService {
 
     // forgot password
     @Override
-    public String sendEmailResetPassword(EmailRequestDTO emailRequestDTO) throws MessagingException, UnsupportedEncodingException {
+    public String sendEmailResetPassword(EmailRequestDTO emailRequestDTO)
+            throws MessagingException, UnsupportedEncodingException {
         if (userRepository.findOneByEmail(emailRequestDTO.getTo()) == null) {
             throw new DuplicateUsernameException("this_email_have_not_registered");
         }
