@@ -10,7 +10,7 @@ public class JobProfileEntity extends BaseEntity {
     private String cvUrl;
 
     @Column(name = "status", nullable = false)
-    private String status;
+    private String status = "received";
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = true)
@@ -42,5 +42,13 @@ public class JobProfileEntity extends BaseEntity {
 
     public void setPost(PostEntity post) {
         this.post = post;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

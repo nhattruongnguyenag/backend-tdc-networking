@@ -17,9 +17,11 @@ public class JobProfileResponseConverter extends BaseConverter<JobProfileEntity,
 
     @Override
     public JobProfileResponseDTO toDTO(JobProfileEntity entity) {
-        JobProfileResponseDTO jobProfileResponseDTO = super.toDTO(entity);
-        jobProfileResponseDTO.setUser(userInfoResponseConverter.toDTO(entity.getUser()));
-        jobProfileResponseDTO.setPost(postInfoResponseConverter.toDTO(entity.getPost()));
-        return jobProfileResponseDTO;
+        JobProfileResponseDTO dto = super.toDTO(entity);
+        dto.setJobTitle(entity.getPost().getRecruitmentPost().getTitle());
+        dto.setCvUrl(entity.getCvUrl());
+        dto.setCompanyAvatar(entity.getPost().getUser().getImage());
+        dto.setCompanyName(entity.getPost().getUser().getName());
+        return dto;
     }
 }

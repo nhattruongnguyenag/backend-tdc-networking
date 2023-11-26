@@ -22,5 +22,4 @@ public class PostSearchResponseDTO {
     private List<ImageResponseDTO> images;
     private List<CommentResponeseDTO> comment;
     private Long commentQuantity;
-    private Long isSave;
 }

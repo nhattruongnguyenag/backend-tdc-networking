@@ -109,6 +109,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserInfoResponseConverter userInfoResponseConverter;
+
     @Autowired
     private StudentInfoResponseConverter studentInfoResponeConverter;
     @Autowired
@@ -270,9 +271,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public BaseDTO getUserFromToken(String token) {
-        BaseDTO dto = null;
         String email = tokenProvider.extractEmailFromToken(token);
         UserEntity userEntity = userRepository.findOneByEmail(email);
+        BaseDTO dto = userInfoResponseConverter.toDTO(userEntity);
         if (studentInfoRepository.findOneByUser_Id(userEntity.getId()) != null) {
             StudentInfoResponseDTO studentInfoResponeDTO = studentInfoResponeConverter
                     .toDTO(studentInfoRepository.findOneByUser_Id(userEntity.getId()));

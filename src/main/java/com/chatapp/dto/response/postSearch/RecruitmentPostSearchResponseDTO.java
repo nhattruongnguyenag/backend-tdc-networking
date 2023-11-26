@@ -12,5 +12,4 @@ public class RecruitmentPostSearchResponseDTO extends PostSearchResponseDTO {
     private String expiration;
     private String location;
     private String requirement;
-    private Long isApplyJob;
 }

@@ -8,4 +8,5 @@ public class PostSearchRequestDTO {
     private String ownerFaculty;
     private String status;
     private String active;
+    private String userId;
 }

@@ -43,6 +43,14 @@ public class CustomizedPostRepositoryImpl implements CustomizedPostRepository {
             whereQuery.append("\nAND f.code LIKE ").append("'%").append(dto.getOwnerFaculty()).append("%'");
         }
 
+        if (isValid(dto.getUserId()) && !isValid(dto.getOwnerFaculty())) {
+            joinQuery.append("\nJOIN p.user as u");
+        }
+
+        if (isValid(dto.getUserId())) {
+            whereQuery.append("\nAND u.id = ").append(dto.getUserId());
+        }
+
         if (isValid(dto.getGroup())) {
             joinQuery.append("\nJOIN p.group as g");
             whereQuery.append("\nAND g.code LIKE ").append("'%").append(dto.getGroup()).append("%'");

@@ -2,6 +2,8 @@ package com.chatapp.controller.api;
 
 import java.util.List;
 
+import com.chatapp.commond.MessageResponseData;
+import com.chatapp.dto.request.JobProfileUpdateRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +26,13 @@ public class JobProfileAPI {
         return ResponseEntity.created(null).body(responseData);
     }
 
-    @PostMapping({ "job/update", "job/update/" })
-    public ResponseEntity<ResponseData<String>> updateJobProfile(@RequestBody JobApplyProfileRequestDTO jobApplyProfileRequestDTO) {
-        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED, "sucesss",jobProfileService.updateJobProfile(jobApplyProfileRequestDTO));
-        return ResponseEntity.created(null).body(responseData);
+    @PutMapping({ "job/update", "job/update/" })
+    public ResponseEntity<MessageResponseData> updateJobProfile(@RequestBody JobProfileUpdateRequestDTO jobProfileUpdateRequestDTO) {
+        boolean isSuccess = jobProfileService.updateJobProfile(jobProfileUpdateRequestDTO);
+        if (isSuccess) {
+            return ResponseEntity.created(null).body(new MessageResponseData(HttpStatus.CREATED, "update_success"));
+        }
+        return ResponseEntity.badRequest().body(new MessageResponseData(HttpStatus.BAD_REQUEST, "job_profile_not_exists"));
     }
 
     @GetMapping({ "job/post/{postId}", "job/post/{postId}" })
@@ -46,5 +51,14 @@ public class JobProfileAPI {
     public ResponseEntity<ResponseData<JobProfileResponseDTO>> getJobProfileDetailByPostIdAndJobId(@PathVariable Long jobId) {
         ResponseData<JobProfileResponseDTO> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",jobProfileService.getJobProfileDetail(jobId));
         return ResponseEntity.ok(responseData);
+    }
+
+    @DeleteMapping({"job/profile/{profileId}"})
+    public ResponseEntity<MessageResponseData> removeJobProfile(@PathVariable("profileId") Long profileId) {
+        boolean isSuccess = jobProfileService.deleteById(profileId);
+        if (isSuccess) {
+            return ResponseEntity.ok(new MessageResponseData(HttpStatus.OK, "success"));
+        }
+        return new ResponseEntity<>(new MessageResponseData(HttpStatus.BAD_REQUEST, "job_profile_not_exists"), HttpStatus.BAD_GATEWAY);
     }
 }

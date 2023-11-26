@@ -103,7 +103,8 @@ public class PostServiceImpl implements PostService {
     private SurveyResultResponseConverter surveyResultResponseConverter;
     @Autowired
     private SurveyReviewResponseConverter surveyReviewResponseConverter;
-
+    @Autowired
+    private PostRejectLogConverter postRejectLogConverter;
     @Autowired
     private NormalPostUpdateOrSaveRequestConverter normalPostUpdateOrSaveRequestConverter;
     @Autowired
@@ -802,5 +803,14 @@ public class PostServiceImpl implements PostService {
         PostEntity postEntity = surveyUpdateRequestConverter.toEntity(surveyUpdateRequestDTO);
         postRepository.save(postEntity);
         return "";
+    }
+
+    @Override
+    public PostRejectLogDTO findRejectLogByPostId(Long postId) {
+        try {
+            return postRejectLogConverter.toDTO(postApprovalLogRepository.findOneByPost_Id(postId));
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

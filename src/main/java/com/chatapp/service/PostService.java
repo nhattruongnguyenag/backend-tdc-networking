@@ -79,4 +79,6 @@ public interface PostService {
 
     String acceptPost(Long postId);
     String updateSurvey(SurveyUpdateRequestDTO surveyUpdateRequestDTO);
+
+    PostRejectLogDTO findRejectLogByPostId(Long postId);
 }
