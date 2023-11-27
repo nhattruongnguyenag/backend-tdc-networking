@@ -1,12 +1,8 @@
 package com.chatapp.controller.api;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.util.List;
-import java.util.Map;
-
 import com.chatapp.commond.MessageResponseData;
-import com.chatapp.dto.request.*;
+import com.chatapp.commond.ResponseData;
+import com.chatapp.dto.BaseDTO;
 import com.chatapp.dto.request.post.AllPostByUserAndGroupResponseDTO;
 import com.chatapp.dto.request.post.PostGetRequestDTO;
 import com.chatapp.dto.request.post.PostSearchRequestDTO;
@@ -22,7 +18,6 @@ import com.chatapp.dto.request.post.survey.SurveyUpdateRequestDTO;
 import com.chatapp.dto.request.user.UserDetailInGroupRequestDTO;
 import com.chatapp.dto.request.user.like.LikeRequestDTO;
 import com.chatapp.dto.request.user.post_save.UserSavePostRequestDTO;
-import com.chatapp.dto.response.*;
 import com.chatapp.dto.response.post.PostSearchResponseDTO;
 import com.chatapp.dto.response.post.comment.CommentResponeseDTO;
 import com.chatapp.dto.response.post.normal.NormalPostResponseDTO;
@@ -34,20 +29,17 @@ import com.chatapp.dto.response.post.survey.SurveyPreviewResponseDTO;
 import com.chatapp.dto.response.post.survey.SurveyResponeDTO;
 import com.chatapp.dto.response.post.survey.SurveyResultResponseDTO;
 import com.chatapp.dto.response.user.UserDetailInGroupResponseDTO;
+import com.chatapp.enums.PostType;
+import com.chatapp.service.PostService;
 import com.chatapp.util.CommonUtils;
-import org.checkerframework.checker.units.qual.A;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.chatapp.commond.ResponseData;
-import com.chatapp.dto.BaseDTO;
-import com.chatapp.enums.PostType;
-import com.chatapp.service.PostService;
-import com.google.firebase.database.annotations.Nullable;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")

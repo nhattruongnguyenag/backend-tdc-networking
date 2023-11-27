@@ -1,9 +1,15 @@
 package com.chatapp.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.chatapp.converter.response.*;
+import com.chatapp.converter.request.post.comment.CommentSaveRequestConverter;
+import com.chatapp.converter.request.post.log.PostLogAddRequestConverter;
+import com.chatapp.converter.request.post.normal.NormalPostUpdateOrSaveRequestConverter;
+import com.chatapp.converter.request.post.normal.NormalPostUpdateRequestConverter;
+import com.chatapp.converter.request.post.recruitment.RecruitmentPostUpdateRequestConverter;
+import com.chatapp.converter.request.post.recruitment.RecruitmentPosyUpdateOrSaveRequestConverter;
+import com.chatapp.converter.request.post.survey.SurveySaveRequestConverter;
+import com.chatapp.converter.request.post.survey.SurveyUpdateRequestConverter;
+import com.chatapp.converter.request.user.like.LikeRequestConverter;
+import com.chatapp.converter.request.user.post_save.UserSavePostRequestConverter;
 import com.chatapp.converter.response.post.PostInfoResponseConverter;
 import com.chatapp.converter.response.post.PostSearchResponseConverter;
 import com.chatapp.converter.response.post.comment.CommentResponseConverter;
@@ -18,7 +24,7 @@ import com.chatapp.converter.response.user.UserInfoResponseConverter;
 import com.chatapp.converter.response.user.business.BusinessInfoResponseConverter;
 import com.chatapp.converter.response.user.faculty.FacultyInfoResponseConverter;
 import com.chatapp.converter.response.user.student.StudentInfoResponseConverter;
-import com.chatapp.dto.request.*;
+import com.chatapp.dto.BaseDTO;
 import com.chatapp.dto.request.post.AllPostByUserAndGroupResponseDTO;
 import com.chatapp.dto.request.post.PostFindRequestDTO;
 import com.chatapp.dto.request.post.PostSearchRequestDTO;
@@ -36,7 +42,6 @@ import com.chatapp.dto.request.post.survey.SurveyUpdateRequestDTO;
 import com.chatapp.dto.request.user.UserDetailInGroupRequestDTO;
 import com.chatapp.dto.request.user.like.LikeRequestDTO;
 import com.chatapp.dto.request.user.post_save.UserSavePostRequestDTO;
-import com.chatapp.dto.response.*;
 import com.chatapp.dto.response.post.PostInfoResponseDTO;
 import com.chatapp.dto.response.post.PostSearchResponseDTO;
 import com.chatapp.dto.response.post.comment.CommentResponeseDTO;
@@ -52,41 +57,20 @@ import com.chatapp.dto.response.user.UserInfoResponseDTO;
 import com.chatapp.dto.response.user.business.BusinessInfoResponseDTO;
 import com.chatapp.dto.response.user.faculty.FacultyInfoResponseDTO;
 import com.chatapp.dto.response.user.student.StudentInfoResponseDTO;
-import com.chatapp.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.chatapp.converter.request.post.comment.CommentSaveRequestConverter;
-import com.chatapp.converter.request.post.log.PostLogAddRequestConverter;
-import com.chatapp.converter.request.post.normal.NormalPostUpdateOrSaveRequestConverter;
-import com.chatapp.converter.request.post.normal.NormalPostUpdateRequestConverter;
-import com.chatapp.converter.request.post.recruitment.RecruitmentPostUpdateRequestConverter;
-import com.chatapp.converter.request.post.recruitment.RecruitmentPosyUpdateOrSaveRequestConverter;
-import com.chatapp.converter.request.post.survey.SurveySaveRequestConverter;
-import com.chatapp.converter.request.post.survey.SurveyUpdateRequestConverter;
-import com.chatapp.converter.request.user.like.LikeRequestConverter;
-import com.chatapp.converter.request.user.post_save.UserSavePostRequestConverter;
-import com.chatapp.dto.BaseDTO;
-import com.chatapp.entity.FollowEntity;
-import com.chatapp.entity.NormalPostEntity;
-import com.chatapp.entity.PostApprovalLogEntity;
-import com.chatapp.entity.PostCommentEntity;
-import com.chatapp.entity.PostEntity;
-import com.chatapp.entity.PostLikeEntity;
-import com.chatapp.entity.QuestionEntity;
-import com.chatapp.entity.RecruitmentPostEntity;
-import com.chatapp.entity.ShortAnswerEntity;
-import com.chatapp.entity.SurveyPostEntity;
-import com.chatapp.entity.UserEntity;
-import com.chatapp.entity.VoteAnswerEntity;
+import com.chatapp.entity.*;
 import com.chatapp.enums.PostType;
 import com.chatapp.enums.QuestionType;
 import com.chatapp.enums.Role;
 import com.chatapp.exception.DuplicateUsernameException;
+import com.chatapp.repository.*;
 import com.chatapp.service.PostService;
 import com.chatapp.util.TokenProvider;
-
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
