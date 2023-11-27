@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.chatapp.converter.response.*;
 import com.chatapp.converter.response.post.PostSearchResponseConverter;
+import com.chatapp.dto.*;
 import com.chatapp.dto.request.*;
 import com.chatapp.dto.response.*;
 import com.chatapp.dto.response.postSearch.PostSearchResponseDTO;
@@ -22,8 +23,6 @@ import com.chatapp.converter.request.RecruitmentPosyUpdateOrSaveRequestConverter
 import com.chatapp.converter.request.SurveySaveRequestConverter;
 import com.chatapp.converter.request.SurveyUpdateRequestConverter;
 import com.chatapp.converter.request.UserSavePostRequestConverter;
-import com.chatapp.dto.AuthTokenDTO;
-import com.chatapp.dto.BaseDTO;
 import com.chatapp.entity.FollowEntity;
 import com.chatapp.entity.NormalPostEntity;
 import com.chatapp.entity.PostApprovalLogEntity;
@@ -48,7 +47,6 @@ import jakarta.transaction.Transactional;
 @Service
 @Transactional
 public class PostServiceImpl implements PostService {
-
     @Autowired
     private PostRepository postRepository;
     @Autowired
@@ -132,6 +130,78 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     TokenProvider tokenProvider;
+
+    @Override
+    public boolean updateSurvey(SurveyDTO surveyDTO) {
+        PostEntity postEntity = postRepository.findOneById(surveyDTO.getPostId());
+        SurveyPostEntity surveyPostEntity = postEntity.getSurveyPost();
+        if (surveyDTO.getTitle() != null) {
+            surveyPostEntity.setTitle(surveyDTO.getTitle());
+        }
+
+        if (surveyDTO.getDescription() != null) {
+            surveyPostEntity.setDescription(surveyDTO.getDescription());
+        }
+
+        int questionIndex = 0;
+        final int QUESTION_ENTITY_LENGTH = surveyDTO.getQuestions().size();
+
+        while (questionIndex < surveyDTO.getQuestions().size()) {
+            QuestionDTO questionDTO = surveyDTO.getQuestions().get(questionIndex);
+            if (questionIndex < QUESTION_ENTITY_LENGTH) {
+                QuestionEntity questionEntity = surveyPostEntity.getQuestions().get(questionIndex);
+
+                if (questionDTO.getTitle() != null) {
+                    questionEntity.setTitle(questionDTO.getTitle());
+                }
+
+                int choiceIndex = 0;
+                final int CHOICE_ENTITY_LENGTH = questionEntity.getVoteAnswers().size();
+
+                while (choiceIndex < questionDTO.getChoices().size()) {
+                    ChoiceDTO choiceDTO = questionDTO.getChoices().get(choiceIndex);
+                    if (choiceIndex < CHOICE_ENTITY_LENGTH) {
+                        questionEntity.getVoteAnswers().get(choiceIndex).setContent(choiceDTO.getContent());
+                    } else {
+                        VoteAnswerEntity voteAnswerEntity = new VoteAnswerEntity();
+                        voteAnswerEntity.setContent(choiceDTO.getContent());
+                    }
+                    choiceIndex++;
+                }
+
+                while (choiceIndex < questionEntity.getVoteAnswers().size()) {
+                    questionEntity.getVoteAnswers().remove(choiceIndex);
+                }
+            } else {
+                QuestionEntity questionEntity = new QuestionEntity();
+                questionEntity.setTitle(questionDTO.getTitle());
+                questionEntity.setType(questionDTO.getType());
+                questionEntity.setRequired(questionDTO.getRequired());
+
+                for (ChoiceDTO choiceDTO : questionDTO.getChoices()) {
+                    VoteAnswerEntity voteAnswerEntity = new VoteAnswerEntity();
+                    voteAnswerEntity.setContent(choiceDTO.getContent());
+                    questionEntity.getVoteAnswers().add(voteAnswerEntity);
+                }
+
+                surveyPostEntity.getQuestions().add(questionEntity);
+            }
+
+            questionIndex++;
+        }
+
+        while (questionIndex < QUESTION_ENTITY_LENGTH) {
+            surveyPostEntity.getQuestions().remove(questionIndex);
+        }
+
+        try {
+           return postRepository.save(postEntity) != null
+        } catch (Exception ex) {
+            return false;
+        }
+
+        return false;
+    }
 
     @Override
     public List<PostSearchResponseDTO> findPosts(PostSearchRequestDTO requestDTO) {
