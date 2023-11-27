@@ -8,9 +8,9 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 
-import com.chatapp.dto.request.CommentDeleteRequestDTO;
-import com.chatapp.dto.request.CommentSaveRequestDTO;
-import com.chatapp.dto.response.CommentResponeseDTO;
+import com.chatapp.dto.request.post.comment.CommentDeleteRequestDTO;
+import com.chatapp.dto.request.post.comment.CommentSaveRequestDTO;
+import com.chatapp.dto.response.post.comment.CommentResponeseDTO;
 import com.chatapp.service.PostService;
 
 @RestController

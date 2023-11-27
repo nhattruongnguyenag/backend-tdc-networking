@@ -1,7 +1,7 @@
 package com.chatapp.controller.socket;
 
 import com.chatapp.constant.UserStatus;
-import com.chatapp.dto.response.ConversationResponseDTO;
+import com.chatapp.dto.response.conversation.ConversationResponseDTO;
 import com.chatapp.service.ConversationService;
 import com.chatapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

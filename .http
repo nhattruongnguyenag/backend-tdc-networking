@@ -174,8 +174,12 @@ Content-Type: application/json
            "title": "aloo",
            "required": 1,
            "choices": [
-               "no",
-               "yes"
+               {
+                "content":"no"
+               },
+               {
+                "content":"yes"
+               }
            ]
        },
        {
@@ -191,9 +195,15 @@ Content-Type: application/json
            "title": "alooo",
            "required": 0,
            "choices": [
-               "Thứ u",
-               "Thứ 3y",
-               "Thứ z4"
+               {
+                "content":"1"
+               },
+               {
+                "content":"2"
+               },
+               {
+                "content":"3"
+               }
            ]
        }
    ]
@@ -713,7 +723,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/api/posts/search?ownerFaculty=khoa_cong_nghe_thong_tin&status=0&group=group_tdc
+GET http://localhost:8080/api/posts/search?ownerFaculty=khoa_cong_nghe_thong_tin&status=0&group=group_connect_business&userLogin=2
 
 ###
 GET http://localhost:8080/api/job/user/12

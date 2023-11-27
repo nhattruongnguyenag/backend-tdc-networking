@@ -1,6 +1,6 @@
 package com.chatapp.service;
 
-import com.chatapp.dto.request.DeviceTokenRequestDTO;
+import com.chatapp.dto.request.token.DeviceTokenRequestDTO;
 
 public interface DeviceTokenService {
     boolean saveUserDeviceToken(DeviceTokenRequestDTO requestDTO);

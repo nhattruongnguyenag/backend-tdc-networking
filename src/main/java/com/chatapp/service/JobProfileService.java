@@ -2,9 +2,9 @@ package com.chatapp.service;
 
 import java.util.List;
 
-import com.chatapp.dto.request.JobApplyProfileRequestDTO;
-import com.chatapp.dto.request.JobProfileUpdateRequestDTO;
-import com.chatapp.dto.response.JobProfileResponseDTO;
+import com.chatapp.dto.request.job_profile.JobApplyProfileRequestDTO;
+import com.chatapp.dto.request.job_profile.JobProfileUpdateRequestDTO;
+import com.chatapp.dto.response.job_profile.JobProfileResponseDTO;
 
 public interface JobProfileService {
     String applyJobProfile(JobApplyProfileRequestDTO jobApplyProfileRequestDTO);

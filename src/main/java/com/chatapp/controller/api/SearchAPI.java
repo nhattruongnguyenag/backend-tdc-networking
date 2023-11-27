@@ -2,9 +2,9 @@ package com.chatapp.controller.api;
 
 import com.chatapp.commond.ResponseData;
 import com.chatapp.dto.BaseDTO;
-import com.chatapp.dto.request.PostFindRequestDTO;
-import com.chatapp.dto.request.UserInfoFindRequestDTO;
-import com.chatapp.dto.response.UserFindResponseDTO;
+import com.chatapp.dto.request.post.PostFindRequestDTO;
+import com.chatapp.dto.request.user.UserInfoFindRequestDTO;
+import com.chatapp.dto.response.user.UserFindResponseDTO;
 import com.chatapp.service.PostService;
 import com.chatapp.service.UserService;
 

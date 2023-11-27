@@ -40,7 +40,6 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	implementation 'com.google.firebase:firebase-admin:9.2.0'
 	implementation 'commons-beanutils:commons-beanutils:1.9.4'
-
 }
 
 tasks.named('test') {

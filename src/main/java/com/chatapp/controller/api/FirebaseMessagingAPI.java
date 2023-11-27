@@ -2,8 +2,8 @@ package com.chatapp.controller.api;
 
 import com.chatapp.commond.MessageResponseData;
 import com.chatapp.commond.ResponseData;
-import com.chatapp.converter.request.FCMNotificationRequestDTO;
-import com.chatapp.dto.request.PushNotificationRequestDTO;
+import com.chatapp.converter.request.fcmn.FCMNotificationRequestDTO;
+import com.chatapp.dto.request.notification.PushNotificationRequestDTO;
 import com.chatapp.service.FirebaseMessagingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

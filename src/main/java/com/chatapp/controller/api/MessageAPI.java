@@ -1,8 +1,8 @@
 package com.chatapp.controller.api;
 
-import com.chatapp.dto.request.MessageRequestDTO;
-import com.chatapp.dto.response.ConversationResponseDTO;
-import com.chatapp.dto.response.MessageResponseDTO;
+import com.chatapp.dto.request.message.MessageRequestDTO;
+import com.chatapp.dto.response.conversation.ConversationResponseDTO;
+import com.chatapp.dto.response.message.MessageResponseDTO;
 import com.chatapp.repository.MessageRepository;
 import com.chatapp.service.ConversationService;
 import com.chatapp.service.MessageService;

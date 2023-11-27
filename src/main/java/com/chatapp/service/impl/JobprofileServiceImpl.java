@@ -2,15 +2,16 @@ package com.chatapp.service.impl;
 
 import java.util.List;
 
-import com.chatapp.dto.request.JobProfileUpdateRequestDTO;
+import com.chatapp.dto.request.job_profile.JobApplyProfileRequestDTO;
+import com.chatapp.dto.request.job_profile.JobProfileUpdateRequestDTO;
+import com.chatapp.dto.response.job_profile.JobProfileResponseDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.chatapp.converter.request.JobApplyProfileRequestConverter;
-import com.chatapp.converter.response.JobProfileResponseConverter;
-import com.chatapp.converter.response.UserInfoResponseConverter;
-import com.chatapp.dto.request.JobApplyProfileRequestDTO;
-import com.chatapp.dto.response.JobProfileResponseDTO;
+import com.chatapp.converter.request.job_profile.JobApplyProfileRequestConverter;
+import com.chatapp.converter.response.job_profile.JobProfileResponseConverter;
+import com.chatapp.converter.response.user.UserInfoResponseConverter;
 import com.chatapp.entity.JobProfileEntity;
 import com.chatapp.entity.PostEntity;
 import com.chatapp.entity.UserEntity;

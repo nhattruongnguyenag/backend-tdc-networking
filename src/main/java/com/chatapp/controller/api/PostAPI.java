@@ -7,9 +7,33 @@ import java.util.Map;
 
 import com.chatapp.commond.MessageResponseData;
 import com.chatapp.dto.request.*;
+import com.chatapp.dto.request.post.AllPostByUserAndGroupResponseDTO;
+import com.chatapp.dto.request.post.PostGetRequestDTO;
+import com.chatapp.dto.request.post.PostSearchRequestDTO;
+import com.chatapp.dto.request.post.comment.CommentDeleteRequestDTO;
+import com.chatapp.dto.request.post.comment.CommentSaveRequestDTO;
+import com.chatapp.dto.request.post.normal.NormalPostUpdateOrSaveRequestDTO;
+import com.chatapp.dto.request.post.normal.NormalPostUpdateRequestDTO;
+import com.chatapp.dto.request.post.recruitment.RecruitmentPostUpdateOrSageRequestDTO;
+import com.chatapp.dto.request.post.recruitment.RecruitmentPostUpdateRequestDTO;
+import com.chatapp.dto.request.post.survey.SurveyAnswerRequestDTO;
+import com.chatapp.dto.request.post.survey.SurveySaveRequestDTO;
+import com.chatapp.dto.request.post.survey.SurveyUpdateRequestDTO;
+import com.chatapp.dto.request.user.UserDetailInGroupRequestDTO;
+import com.chatapp.dto.request.user.like.LikeRequestDTO;
+import com.chatapp.dto.request.user.post_save.UserSavePostRequestDTO;
 import com.chatapp.dto.response.*;
-import com.chatapp.dto.response.postSearch.PostSearchResponseDTO;
-import com.chatapp.dto.response.postSearch.RecruitmentPostSearchResponseDTO;
+import com.chatapp.dto.response.post.PostSearchResponseDTO;
+import com.chatapp.dto.response.post.comment.CommentResponeseDTO;
+import com.chatapp.dto.response.post.normal.NormalPostResponseDTO;
+import com.chatapp.dto.response.post.recruitment.RecruitmentPostResponseDTO;
+import com.chatapp.dto.response.post.recruitment.RecruitmentPostSaveDTO;
+import com.chatapp.dto.response.post.recruitment.RecruitmentPostSearchResponseDTO;
+import com.chatapp.dto.response.post.survey.SurveyDTO;
+import com.chatapp.dto.response.post.survey.SurveyPreviewResponseDTO;
+import com.chatapp.dto.response.post.survey.SurveyResponeDTO;
+import com.chatapp.dto.response.post.survey.SurveyResultResponseDTO;
+import com.chatapp.dto.response.user.UserDetailInGroupResponseDTO;
 import com.chatapp.util.CommonUtils;
 import org.checkerframework.checker.units.qual.A;
 import org.modelmapper.ModelMapper;
@@ -266,8 +290,8 @@ public class PostAPI {
     }
 
     @GetMapping({ "posts/survey/{postId}/update", "posts/survey/{postId}/update/" })
-    public ResponseEntity<ResponseData<SurveyResponeDTO>> getSurveyByPostId(@PathVariable Long postId) {
-        ResponseData<SurveyResponeDTO> responseData = new ResponseData<>(HttpStatus.OK, "success",
+    public ResponseEntity<ResponseData<SurveyDTO>> getSurveyByPostId(@PathVariable Long postId) {
+        ResponseData<SurveyDTO> responseData = new ResponseData<>(HttpStatus.OK, "success",
                 postService.getSurveyByPostId(postId));
         return ResponseEntity.ok(responseData);
     }

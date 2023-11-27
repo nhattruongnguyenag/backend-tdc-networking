@@ -1,14 +1,15 @@
 package com.chatapp.controller.api;
 
 import com.chatapp.commond.MessageResponseData;
-import com.chatapp.dto.response.PostRejectLogDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.chatapp.commond.ResponseData;
-import com.chatapp.dto.request.PostLogRequestDTO;
+import com.chatapp.dto.request.post.log.PostLogRequestDTO;
+import com.chatapp.dto.response.post.log.PostRejectLogDTO;
 import com.chatapp.service.PostService;
 
 @RestController

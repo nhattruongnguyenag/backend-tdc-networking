@@ -1,6 +1,6 @@
 package com.chatapp.service.impl;
 
-import com.chatapp.dto.request.DeviceTokenRequestDTO;
+import com.chatapp.dto.request.token.DeviceTokenRequestDTO;
 import com.chatapp.entity.DeviceTokenEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.repository.DeviceTokenRepository;

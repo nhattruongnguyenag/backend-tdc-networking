@@ -1,13 +1,27 @@
 package com.chatapp.entity;
 
-import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "posts")
 public class PostEntity extends BaseEntity {
+
+    @Transient
+    private Long userLogin;
 
     @Column(name = "status", nullable = false)
     private Byte status;
@@ -57,7 +71,6 @@ public class PostEntity extends BaseEntity {
     @JoinTable(name = "post_topic", joinColumns = @JoinColumn(name = "post_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "topic_id", nullable = false))
     private List<TopicEntity> topics = new ArrayList<>();
 
-
     public Byte getStatus() {
         return status;
     }
@@ -84,6 +97,14 @@ public class PostEntity extends BaseEntity {
 
     public List<TopicEntity> getTopics() {
         return this.topics;
+    }
+
+    public Long getUserLogin() {
+        return this.userLogin;
+    }
+
+    public void setUserLogin(Long userLogin) {
+        this.userLogin = userLogin;
     }
 
     public void setTopics(List<TopicEntity> topics) {

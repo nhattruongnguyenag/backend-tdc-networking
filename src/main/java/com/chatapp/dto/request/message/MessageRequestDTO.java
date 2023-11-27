@@ -1,0 +1,13 @@
+package com.chatapp.dto.request.message;
+
+import com.chatapp.dto.BaseDTO;
+import lombok.Data;
+
+@Data
+public class MessageRequestDTO extends BaseDTO {
+    private String content;
+    private String type;
+    private Long senderId;
+    private Long receiverId;
+    private Byte status;
+}

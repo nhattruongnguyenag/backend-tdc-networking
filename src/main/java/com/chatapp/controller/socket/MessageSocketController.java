@@ -1,7 +1,7 @@
 package com.chatapp.controller.socket;
 
-import com.chatapp.dto.request.MessageRequestDTO;
-import com.chatapp.dto.response.MessageResponseDTO;
+import com.chatapp.dto.request.message.MessageRequestDTO;
+import com.chatapp.dto.response.message.MessageResponseDTO;
 import com.chatapp.service.FirebaseMessagingService;
 import com.chatapp.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
