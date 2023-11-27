@@ -12,7 +12,6 @@ import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.request.StudentInfoRegisterRequestDTO;
 import com.chatapp.dto.request.StudentInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.response.StudentInfoResponseDTO;
-import com.chatapp.dto.response.UserInfoResponseDTO;
 import com.chatapp.service.UserService;
 
 @RestController
@@ -34,8 +33,8 @@ public class StudentInfoAPI {
     }
 
     @PostMapping({ "student", "student/" })
-    ResponseEntity<ResponseData<UserInfoResponseDTO>> updateOrSave(@RequestBody StudentInfoUpdateOrSaveRequestDTO studentInfoUpdateOrSaveRequestDTO) {
-        ResponseData<UserInfoResponseDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"add or update student success",userService.studentUpdateOrSave(studentInfoUpdateOrSaveRequestDTO));
+    ResponseEntity<ResponseData<AuthTokenDTO>> updateOrSave(@RequestBody StudentInfoUpdateOrSaveRequestDTO studentInfoUpdateOrSaveRequestDTO) {
+        ResponseData<AuthTokenDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"add or update student success",userService.studentUpdateOrSave(studentInfoUpdateOrSaveRequestDTO));
         return ResponseEntity.created(null).body(responseData);
     }
 

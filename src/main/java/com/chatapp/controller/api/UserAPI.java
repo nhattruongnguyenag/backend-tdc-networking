@@ -125,8 +125,8 @@ public class UserAPI {
     }
 
     @PostMapping({ "users/get/email/reset", "users/get/email/reset/" })
-    public ResponseEntity<ResponseData<String>> sendEmailResetPassword(@RequestBody UserGetResetPasswordRequestDTO request) throws MessagingException, UnsupportedEncodingException {
-        ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK,"success",userService.sendEmailResetPassword(request.getEmail()));
+    public ResponseEntity<ResponseData<String>> sendEmailResetPassword(@RequestBody EmailRequestDTO request) throws MessagingException, UnsupportedEncodingException {
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK,"success",userService.sendEmailResetPassword(request));
         return ResponseEntity.ok(responseData);
     }
 

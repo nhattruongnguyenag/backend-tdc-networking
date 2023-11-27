@@ -20,7 +20,9 @@ import com.chatapp.converter.request.PostLogAddRequestConverter;
 import com.chatapp.converter.request.RecruitmentPostUpdateRequestConverter;
 import com.chatapp.converter.request.RecruitmentPosyUpdateOrSaveRequestConverter;
 import com.chatapp.converter.request.SurveySaveRequestConverter;
+import com.chatapp.converter.request.SurveyUpdateRequestConverter;
 import com.chatapp.converter.request.UserSavePostRequestConverter;
+import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.BaseDTO;
 import com.chatapp.entity.FollowEntity;
 import com.chatapp.entity.NormalPostEntity;
@@ -39,6 +41,7 @@ import com.chatapp.enums.QuestionType;
 import com.chatapp.enums.Role;
 import com.chatapp.exception.DuplicateUsernameException;
 import com.chatapp.service.PostService;
+import com.chatapp.util.TokenProvider;
 
 import jakarta.transaction.Transactional;
 
@@ -115,6 +118,8 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private SurveySaveRequestConverter surveySaveRequestConverter;
     @Autowired
+    private SurveyUpdateRequestConverter surveyUpdateRequestConverter;
+    @Autowired
     private LikeRequestConverter likeRequestConverter;
     @Autowired
     private CommentSaveRequestConverter commentSaveRequestConverter;
@@ -124,6 +129,9 @@ public class PostServiceImpl implements PostService {
     private CustomizedPostRepository customizedPostRepository;
     @Autowired
     private PostSearchResponseConverter postSearchResponseConverter;
+
+    @Autowired
+    TokenProvider tokenProvider;
 
     @Override
     public List<PostSearchResponseDTO> findPosts(PostSearchRequestDTO requestDTO) {
@@ -785,8 +793,15 @@ public class PostServiceImpl implements PostService {
             throw new DuplicateUsernameException("this_post_is_not_exists");
         }
         PostEntity entity = postRepository.findOneById(postId);
-        entity.setActive((byte)1);
+        entity.setActive((byte) 1);
         postRepository.save(entity);
+        return "";
+    }
+
+    @Override
+    public String updateSurvey(SurveyUpdateRequestDTO surveyUpdateRequestDTO) {
+        PostEntity postEntity = surveyUpdateRequestConverter.toEntity(surveyUpdateRequestDTO);
+        postRepository.save(postEntity);
         return "";
     }
 

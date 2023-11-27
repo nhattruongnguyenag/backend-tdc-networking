@@ -2,6 +2,7 @@ package com.chatapp.service;
 
 import java.util.List;
 
+import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.BaseDTO;
 import com.chatapp.dto.request.*;
 import com.chatapp.dto.response.*;
@@ -77,7 +78,7 @@ public interface PostService {
     String deletePostLog(Long postId);
 
     String acceptPost(Long postId);
+    String updateSurvey(SurveyUpdateRequestDTO surveyUpdateRequestDTO);
 
     PostRejectLogDTO findRejectLogByPostId(Long postId);
-
 }

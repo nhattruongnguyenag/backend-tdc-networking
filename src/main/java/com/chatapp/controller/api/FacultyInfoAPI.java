@@ -34,8 +34,8 @@ public class FacultyInfoAPI {
     }
 
     @PostMapping({ "faculty", "faculty/" })
-    ResponseEntity<ResponseData<UserInfoResponseDTO>> updateOrSave(@RequestBody FacultyInfoUpdateOrSaveRequestDTO facultyInfoUpdateOrSaveRequestDTO) {
-        ResponseData<UserInfoResponseDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"add or update success",userService.facultyUpdateOrSave(facultyInfoUpdateOrSaveRequestDTO));
+    ResponseEntity<ResponseData<AuthTokenDTO>> updateOrSave(@RequestBody FacultyInfoUpdateOrSaveRequestDTO facultyInfoUpdateOrSaveRequestDTO) {
+        ResponseData<AuthTokenDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"add or update success",userService.facultyUpdateOrSave(facultyInfoUpdateOrSaveRequestDTO));
         return ResponseEntity.created(null).body(responseData);
     }
 

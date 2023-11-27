@@ -21,17 +21,6 @@ public class EmailServiceImpl implements EmailService {
 	@Autowired
 	private JavaMailSender mailSender;
 
-	@Override
-	public void sendEmail(String urlReset , String email) throws MessagingException, UnsupportedEncodingException {
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");
-        helper.setFrom(SystemConstant.EMAIL_TDC_SOCIAL_NETWORK,"TDCNetwork Support");
-        helper.setTo(email);
-        helper.setSubject("Password Reset Request");
-        helper.setText(SystemConstant.EMAIL_RESET_TEXT(urlReset , email),true);
-		mailSender.send(message);
-	}
-
     @Override
     public void sendEmail(String to, String subject, String content) throws MessagingException, UnsupportedEncodingException {
         MimeMessage message = mailSender.createMimeMessage();

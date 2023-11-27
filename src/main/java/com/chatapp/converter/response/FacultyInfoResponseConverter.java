@@ -5,6 +5,7 @@ import com.chatapp.dto.response.FacultyInfoResponseDTO;
 import com.chatapp.entity.FacultyInfoEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.enums.GroupDefault;
+import com.chatapp.repository.FacultyInfoRepository;
 import com.chatapp.repository.UserRepository;
 import com.chatapp.util.DateTimeUtil;
 
@@ -16,6 +17,8 @@ public class FacultyInfoResponseConverter extends BaseConverter<FacultyInfoEntit
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private FacultyInfoRepository facultyInfoRepository;
 
     @Autowired
     private FollowResponseConverter followResponseConverter;
@@ -42,8 +45,10 @@ public class FacultyInfoResponseConverter extends BaseConverter<FacultyInfoEntit
             roleCodes += entity.getUser().getRoles().get(i).getCode();
         }
         facultyInfoResponeDTO.setRoleCodes(roleCodes);
-        facultyInfoResponeDTO.setFacultyGroupCode(getFacultyGroupCode(userEntity).getCodeGroup());
-        facultyInfoResponeDTO.setFacultyGroupId(getFacultyGroupCode(userEntity).getIdGroup());
+        if (facultyInfoRepository.findOneByUser_Id(userEntity.getId()).getMajors().size() > 0) {
+            facultyInfoResponeDTO.setFacultyGroupCode(getFacultyGroupCode(userEntity).getCodeGroup());
+            facultyInfoResponeDTO.setFacultyGroupId(getFacultyGroupCode(userEntity).getIdGroup());
+        }
         facultyInfoResponeDTO.setFollows(followResponseConverter.toDTOGroup(userEntity.getFollowUsers()));
         return facultyInfoResponeDTO;
     }
