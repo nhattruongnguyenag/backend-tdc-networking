@@ -2,13 +2,14 @@ package com.chatapp.service;
 
 import java.util.List;
 
-import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.BaseDTO;
+import com.chatapp.dto.SurveyDTO;
 import com.chatapp.dto.request.*;
 import com.chatapp.dto.response.*;
 import com.chatapp.dto.response.postSearch.PostSearchResponseDTO;
 
 public interface PostService {
+    boolean updateSurvey(SurveyDTO surveyDTO);
     List<PostSearchResponseDTO> findPosts(PostSearchRequestDTO requestDTO);
     List<BaseDTO> findAll();
 

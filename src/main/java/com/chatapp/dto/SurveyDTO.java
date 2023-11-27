@@ -5,7 +5,8 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class SurveyDTO extends BaseDTO {
+public class SurveyDTO {
+    private Long postId;
     private String title;
     private String description;
     private List<QuestionDTO> questions;

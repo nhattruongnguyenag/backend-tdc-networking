@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.chatapp.commond.MessageResponseData;
+import com.chatapp.dto.SurveyDTO;
 import com.chatapp.dto.request.*;
 import com.chatapp.dto.response.*;
 import com.chatapp.dto.response.postSearch.PostSearchResponseDTO;
@@ -136,6 +137,16 @@ public class PostAPI {
                 "add or update recruitment post success",
                 postService.updateRecruitmentPost(recruitmentPostUpdateRequestDTO));
         return ResponseEntity.created(null).body(responseData);
+    }
+
+    @PutMapping({"posts/survey", "posts/survey/"})
+    ResponseEntity<MessageResponseData> updateSurveyPost(@RequestBody SurveyDTO surveyDTO) {
+        boolean isSuccess = postService.updateSurvey(surveyDTO);
+        if (isSuccess) {
+            return ResponseEntity.ok(new MessageResponseData(HttpStatus.OK, "survey_update_success"));
+        }
+
+        return ResponseEntity.badRequest().body(new MessageResponseData(HttpStatus.BAD_REQUEST, "survey_update_failed"));
     }
 
     @GetMapping({ "posts/recruitment/user/{userId}", "posts/recruitment/user/{userId}/" })
