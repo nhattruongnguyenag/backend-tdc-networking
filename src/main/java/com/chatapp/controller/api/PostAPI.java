@@ -244,4 +244,11 @@ public class PostAPI {
                 postService.acceptPost(postGetRequestDTO.getPostId()));
         return ResponseEntity.created(null).body(responseData);
     }
+
+    @GetMapping({ "posts/survey/{postId}/update", "posts/survey/{postId}/update/" })
+    public ResponseEntity<ResponseData<SurveyResponeDTO>> getSurveyByPostId(@PathVariable Long postId) {
+        ResponseData<SurveyResponeDTO> responseData = new ResponseData<>(HttpStatus.OK, "success",
+                postService.getSurveyByPostId(postId));
+        return ResponseEntity.ok(responseData);
+    }
 }

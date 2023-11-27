@@ -813,4 +813,12 @@ public class PostServiceImpl implements PostService {
             return null;
         }
     }
+
+    @Override
+    public SurveyResponeDTO getSurveyByPostId(Long postId) {
+        SurveyResponeDTO surveyResponeDTO = surveyResponeConverter.toDTO(surveyPostRepository.findOneByPost_Id(postId));
+        return surveyResponeDTO;
+    }
+
+    
 }

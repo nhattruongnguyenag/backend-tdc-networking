@@ -44,6 +44,8 @@ public interface PostService {
     List<SurveyResultResponseDTO> getSurveyResultByPostId(Long postId);
 
     List<SurveyPreviewResponseDTO> reviewSurveyResultByPostIdAndUserId(Long postId, Long userId);
+
+    SurveyResponeDTO getSurveyByPostId(Long postId);
     // post like
     String likePost(LikeRequestDTO likeRequestDTO);
 
