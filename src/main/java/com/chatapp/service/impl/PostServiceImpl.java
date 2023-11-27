@@ -48,10 +48,7 @@ import com.chatapp.dto.response.post.comment.CommentResponeseDTO;
 import com.chatapp.dto.response.post.log.PostRejectLogDTO;
 import com.chatapp.dto.response.post.normal.NormalPostResponseDTO;
 import com.chatapp.dto.response.post.recruitment.RecruitmentPostResponseDTO;
-import com.chatapp.dto.response.post.survey.SurveyDTO;
-import com.chatapp.dto.response.post.survey.SurveyPreviewResponseDTO;
-import com.chatapp.dto.response.post.survey.SurveyResponeDTO;
-import com.chatapp.dto.response.post.survey.SurveyResultResponseDTO;
+import com.chatapp.dto.response.post.survey.*;
 import com.chatapp.dto.response.user.UserDetailInGroupResponseDTO;
 import com.chatapp.dto.response.user.UserInfoResponseDTO;
 import com.chatapp.dto.response.user.business.BusinessInfoResponseDTO;
@@ -70,6 +67,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -167,6 +165,7 @@ public class PostServiceImpl implements PostService {
         SurveyPostEntity surveyPostEntity = postEntity.getSurveyPost();
 
         postEntity.setActive((byte) 0);
+        postEntity.setUpdatedAt(new Date());
 
         if (surveyDTO.getTitle() != null) {
             surveyPostEntity.setTitle(surveyDTO.getTitle());
