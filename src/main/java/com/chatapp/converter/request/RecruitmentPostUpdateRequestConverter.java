@@ -19,7 +19,7 @@ public class RecruitmentPostUpdateRequestConverter extends BaseConverter<Recruit
 
     @Override
     public RecruitmentPostEntity toEntity(RecruitmentPostUpdateRequestDTO dto) {
-        RecruitmentPostEntity entity = recruitmentPostRepository.findOneByPost_Id(dto.getPostId());
+        RecruitmentPostEntity entity = recruitmentPostRepository.findOneByPost_Id(dto.getId());
         entity.setTitle(dto.getTitle());
         entity.setExpiration(Timestamp.valueOf(dto.getExpiration()));
         entity.setSalary(dto.getSalary());

@@ -65,9 +65,17 @@ public class CustomizedPostRepositoryImpl implements CustomizedPostRepository {
         if (isValid(dto.getActive())) {
             whereQuery.append("\nAND p.active = ").append(dto.getActive());
         }
+
+        if (isValid(dto.getPostId())) {
+            whereQuery.append("\nAND p.id = ").append(dto.getPostId());
+        }
+
+        if (isValid(dto.getType())) {
+            whereQuery.append("\nAND p.type LIKE ").append("'%").append(dto.getType()).append("%'");
+        }
     }
 
-    private boolean isValid(String str) {
-        return str != null && !str.isBlank();
+    private boolean isValid(Object str) {
+        return str != null;
     }
 }

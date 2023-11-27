@@ -1,11 +1,19 @@
 package com.chatapp.controller.api;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 
+import com.chatapp.commond.MessageResponseData;
 import com.chatapp.dto.request.*;
 import com.chatapp.dto.response.*;
 import com.chatapp.dto.response.postSearch.PostSearchResponseDTO;
+import com.chatapp.dto.response.postSearch.RecruitmentPostSearchResponseDTO;
+import com.chatapp.util.CommonUtils;
+import org.checkerframework.checker.units.qual.A;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +29,10 @@ import com.google.firebase.database.annotations.Nullable;
 @RequestMapping("/api")
 public class PostAPI {
     @Autowired
-    PostService postService;
+    private PostService postService;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @GetMapping({ "posts/all", "posts/all/" })
     public ResponseEntity<ResponseData<List<BaseDTO>>> findAll() {
@@ -30,13 +41,8 @@ public class PostAPI {
     }
 
     @GetMapping({ "posts/search", "posts/search/" })
-    public ResponseEntity<ResponseData<List<PostSearchResponseDTO>>> findPosts(@RequestParam Map<String, String> params) {
-        PostSearchRequestDTO dto = new PostSearchRequestDTO();
-        dto.setGroup(params.get("group"));
-        dto.setOwnerFaculty(params.get("ownerFaculty"));
-        dto.setStatus(params.get("status"));
-        dto.setActive(params.get("active"));
-        dto.setUserId(params.get("userId"));
+    public ResponseEntity<ResponseData<List<PostSearchResponseDTO>>> findPosts(@RequestParam Map<String, Object> params) {
+        PostSearchRequestDTO dto = CommonUtils.mapToObject(params, PostSearchRequestDTO.class);
         ResponseData<List<PostSearchResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success", postService.findPosts(dto));
         return ResponseEntity.ok(responseData);
     }
@@ -98,6 +104,20 @@ public class PostAPI {
         ResponseData<RecruitmentPostResponseDTO> responseData = new ResponseData<>(HttpStatus.OK, "success",
                 postService.getRecruimentDetailByPostId(postId, userLogin));
         return ResponseEntity.ok(responseData);
+    }
+
+    @GetMapping({ "posts/recruitment/{postId}/update", "posts/recruitment/{postId}/update/" })
+    public ResponseEntity<?> getRecruitmentPostUpdate(@PathVariable("postId") Long id) {
+        PostSearchRequestDTO postSearchRequestDTO = new PostSearchRequestDTO();
+        postSearchRequestDTO.setPostId(id);
+
+        List<PostSearchResponseDTO> responseDTOs = postService.findPosts(postSearchRequestDTO);
+        if (responseDTOs.size() > 0) {
+            RecruitmentPostSearchResponseDTO recruitmentPostSearchResponseDTO = (RecruitmentPostSearchResponseDTO) responseDTOs.get(0);
+            RecruitmentPostSaveDTO recruitmentPostSaveDTO = modelMapper.map(recruitmentPostSearchResponseDTO, RecruitmentPostSaveDTO.class);
+            return ResponseEntity.ok(recruitmentPostSaveDTO);
+        }
+        return ResponseEntity.badRequest().body(new MessageResponseData(HttpStatus.BAD_REQUEST, "not_found"));
     }
 
     @PostMapping({ "posts/recruitment", "posts/recruitment/" })
