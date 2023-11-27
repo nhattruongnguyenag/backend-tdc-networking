@@ -756,10 +756,10 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public String updateRecruitmentPost(RecruitmentPostUpdateRequestDTO recruitmentPostUpdateRequestDTO) {
-        if (postRepository.findOneById(recruitmentPostUpdateRequestDTO.getPostId()) == null) {
+        if (postRepository.findOneById(recruitmentPostUpdateRequestDTO.getId()) == null) {
             throw new RuntimeException("this_post_not_exist");
         }
-        if (recruitmentPostRepository.findOneByPost_Id(recruitmentPostUpdateRequestDTO.getPostId()) == null) {
+        if (recruitmentPostRepository.findOneByPost_Id(recruitmentPostUpdateRequestDTO.getId()) == null) {
             throw new RuntimeException("recruitment_post_at_this_post_id_not_exist");
         }
         RecruitmentPostEntity entity = recruitmentPostUpdateRequestConverter.toEntity(recruitmentPostUpdateRequestDTO);

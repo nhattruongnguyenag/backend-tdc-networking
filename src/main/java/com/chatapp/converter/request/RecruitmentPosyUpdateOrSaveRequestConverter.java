@@ -62,14 +62,16 @@ public class RecruitmentPosyUpdateOrSaveRequestConverter
         GroupEntity groupEntity = groupRepository.findOneById(dto.getGroupId());
         postEntity.setGroup(groupEntity);
         postEntity.setUser(userEntity);
-        List<PostImageEntity> postImageEntityList = new ArrayList<>();
-        for (String image : dto.getImages()) {
-            PostImageEntity postImageEntity = new PostImageEntity();
-            postImageEntity.setPost(postEntity);
-            postImageEntity.setUri(image);
-            postImageEntityList.add(postImageEntity);
+        if (dto.getImages() != null) {
+            List<PostImageEntity> postImageEntityList = new ArrayList<>();
+            for (String image : dto.getImages()) {
+                PostImageEntity postImageEntity = new PostImageEntity();
+                postImageEntity.setPost(postEntity);
+                postImageEntity.setUri(image);
+                postImageEntityList.add(postImageEntity);
+            }
+            postEntity.setImages(postImageEntityList);
         }
-        postEntity.setImages(postImageEntityList);
         RecruitmentPostEntity recruitmentPostEntity = new RecruitmentPostEntity();
         recruitmentPostEntity.setTitle(dto.getTitle());
         recruitmentPostEntity.setSalary(dto.getSalary());

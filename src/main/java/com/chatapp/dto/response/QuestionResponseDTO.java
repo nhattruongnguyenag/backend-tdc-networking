@@ -7,7 +7,7 @@ import com.chatapp.dto.BaseDTO;
 import lombok.Data;
 
 @Data
-public class QuestionResponseDTO extends BaseDTO{
+public class QuestionResponseDTO extends BaseDTO {
     private String title;
     private String type;
     private Long required;

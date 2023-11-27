@@ -6,7 +6,9 @@ import lombok.Data;
 public class PostSearchRequestDTO {
     private String group;
     private String ownerFaculty;
-    private String status;
-    private String active;
-    private String userId;
+    private Integer status;
+    private Integer active;
+    private Integer userId;
+    private Long postId;
+    private String type;
 }

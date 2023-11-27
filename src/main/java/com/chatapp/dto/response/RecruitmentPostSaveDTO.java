@@ -1,9 +1,11 @@
-package com.chatapp.dto.request;
+package com.chatapp.dto.response;
 
+import com.chatapp.dto.BaseDTO;
+import com.mysql.cj.log.Log;
 import lombok.Data;
 
 @Data
-public class RecruitmentPostUpdateRequestDTO {
+public class RecruitmentPostSaveDTO {
     private Long id;
     private String title;
     private Long salary;
@@ -13,4 +15,5 @@ public class RecruitmentPostUpdateRequestDTO {
     private String expiration;
     private String location;
     private String requirement;
+    private String updatedAt;
 }
