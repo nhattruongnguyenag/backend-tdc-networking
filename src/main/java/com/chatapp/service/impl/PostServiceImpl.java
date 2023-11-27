@@ -135,6 +135,9 @@ public class PostServiceImpl implements PostService {
     public boolean updateSurvey(SurveyDTO surveyDTO) {
         PostEntity postEntity = postRepository.findOneById(surveyDTO.getPostId());
         SurveyPostEntity surveyPostEntity = postEntity.getSurveyPost();
+
+        postEntity.setActive((byte) 0);
+
         if (surveyDTO.getTitle() != null) {
             surveyPostEntity.setTitle(surveyDTO.getTitle());
         }
@@ -144,7 +147,7 @@ public class PostServiceImpl implements PostService {
         }
 
         int questionIndex = 0;
-        final int QUESTION_ENTITY_LENGTH = surveyDTO.getQuestions().size();
+        final int QUESTION_ENTITY_LENGTH = surveyPostEntity.getQuestions().size();
 
         while (questionIndex < surveyDTO.getQuestions().size()) {
             QuestionDTO questionDTO = surveyDTO.getQuestions().get(questionIndex);
@@ -154,6 +157,8 @@ public class PostServiceImpl implements PostService {
                 if (questionDTO.getTitle() != null) {
                     questionEntity.setTitle(questionDTO.getTitle());
                 }
+
+                questionEntity.setRequired(questionDTO.getRequired());
 
                 int choiceIndex = 0;
                 final int CHOICE_ENTITY_LENGTH = questionEntity.getVoteAnswers().size();
@@ -165,22 +170,27 @@ public class PostServiceImpl implements PostService {
                     } else {
                         VoteAnswerEntity voteAnswerEntity = new VoteAnswerEntity();
                         voteAnswerEntity.setContent(choiceDTO.getContent());
+                        voteAnswerEntity.setQuestion(questionEntity);
+                        questionEntity.getVoteAnswers().add(voteAnswerEntity);
                     }
                     choiceIndex++;
                 }
 
                 while (choiceIndex < questionEntity.getVoteAnswers().size()) {
                     questionEntity.getVoteAnswers().remove(choiceIndex);
+                    choiceIndex++;
                 }
             } else {
                 QuestionEntity questionEntity = new QuestionEntity();
                 questionEntity.setTitle(questionDTO.getTitle());
                 questionEntity.setType(questionDTO.getType());
                 questionEntity.setRequired(questionDTO.getRequired());
+                questionEntity.setSurvey(surveyPostEntity);
 
                 for (ChoiceDTO choiceDTO : questionDTO.getChoices()) {
                     VoteAnswerEntity voteAnswerEntity = new VoteAnswerEntity();
                     voteAnswerEntity.setContent(choiceDTO.getContent());
+                    voteAnswerEntity.setQuestion(questionEntity);
                     questionEntity.getVoteAnswers().add(voteAnswerEntity);
                 }
 
@@ -192,15 +202,14 @@ public class PostServiceImpl implements PostService {
 
         while (questionIndex < QUESTION_ENTITY_LENGTH) {
             surveyPostEntity.getQuestions().remove(questionIndex);
+            questionIndex++;
         }
 
         try {
-           return postRepository.save(postEntity) != null
+           return postRepository.save(postEntity) != null;
         } catch (Exception ex) {
             return false;
         }
-
-        return false;
     }
 
     @Override
