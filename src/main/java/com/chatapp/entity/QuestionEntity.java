@@ -16,7 +16,7 @@ public class QuestionEntity extends BaseEntity {
     private String type;
 
     @Column(name = "required", nullable = false)
-    private String required;
+    private Byte required;
     
     @ManyToOne
     @JoinColumn(name = "survey_id", nullable = false)
@@ -68,12 +68,11 @@ public class QuestionEntity extends BaseEntity {
         this.voteAnswers = voteAnswers;
     }
 
-    public String getRequired() {
-        return this.required;
+    public Byte getRequired() {
+        return required;
     }
 
-    public void setRequired(String required) {
+    public void setRequired(Byte required) {
         this.required = required;
     }
-
 }

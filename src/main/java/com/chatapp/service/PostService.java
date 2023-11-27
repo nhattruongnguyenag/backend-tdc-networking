@@ -31,6 +31,7 @@ import com.chatapp.dto.response.user.UserDetailInGroupResponseDTO;
 import java.util.List;
 
 public interface PostService {
+    boolean updateSurvey(SurveyDTO surveyDTO);
     List<PostSearchResponseDTO> findPosts(PostSearchRequestDTO requestDTO);
     List<BaseDTO> findAll();
 

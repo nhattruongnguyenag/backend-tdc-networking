@@ -154,6 +154,16 @@ public class PostAPI {
         return ResponseEntity.created(null).body(responseData);
     }
 
+    @PutMapping({"posts/survey", "posts/survey/"})
+    ResponseEntity<MessageResponseData> updateSurveyPost(@RequestBody SurveyDTO surveyDTO) {
+        boolean isSuccess = postService.updateSurvey(surveyDTO);
+        if (isSuccess) {
+            return ResponseEntity.ok(new MessageResponseData(HttpStatus.OK, "survey_update_success"));
+        }
+
+        return ResponseEntity.badRequest().body(new MessageResponseData(HttpStatus.BAD_REQUEST, "survey_update_failed"));
+    }
+
     @GetMapping({ "posts/recruitment/user/{userId}", "posts/recruitment/user/{userId}/" })
     ResponseEntity<ResponseData<List<BaseDTO>>> getRecruitmentPostsByUserId(@PathVariable Long userId) {
         ResponseData<List<BaseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",

@@ -14,7 +14,7 @@ public class VoteAnswerEntity extends BaseEntity {
     private String content;
 
     @Column(name = "count_vote", nullable = false)
-    private Integer countVote;
+    private Integer countVote = 0;
 
     @ManyToOne
     @JoinColumn(name = "question_id", nullable = false)

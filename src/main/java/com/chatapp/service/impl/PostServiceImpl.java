@@ -75,7 +75,6 @@ import java.util.List;
 @Service
 @Transactional
 public class PostServiceImpl implements PostService {
-
     @Autowired
     private PostRepository postRepository;
     @Autowired
@@ -161,6 +160,87 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     TokenProvider tokenProvider;
+
+    @Override
+    public boolean updateSurvey(SurveyDTO surveyDTO) {
+        PostEntity postEntity = postRepository.findOneById(surveyDTO.getPostId());
+        SurveyPostEntity surveyPostEntity = postEntity.getSurveyPost();
+
+        postEntity.setActive((byte) 0);
+
+        if (surveyDTO.getTitle() != null) {
+            surveyPostEntity.setTitle(surveyDTO.getTitle());
+        }
+
+        if (surveyDTO.getDescription() != null) {
+            surveyPostEntity.setDescription(surveyDTO.getDescription());
+        }
+
+        int questionIndex = 0;
+        final int QUESTION_ENTITY_LENGTH = surveyPostEntity.getQuestions().size();
+
+        while (questionIndex < surveyDTO.getQuestions().size()) {
+            QuestionDTO questionDTO = surveyDTO.getQuestions().get(questionIndex);
+            if (questionIndex < QUESTION_ENTITY_LENGTH) {
+                QuestionEntity questionEntity = surveyPostEntity.getQuestions().get(questionIndex);
+
+                if (questionDTO.getTitle() != null) {
+                    questionEntity.setTitle(questionDTO.getTitle());
+                }
+
+                questionEntity.setRequired(questionDTO.getRequired());
+
+                int choiceIndex = 0;
+                final int CHOICE_ENTITY_LENGTH = questionEntity.getVoteAnswers().size();
+
+                while (choiceIndex < questionDTO.getChoices().size()) {
+                    ChoiceDTO choiceDTO = questionDTO.getChoices().get(choiceIndex);
+                    if (choiceIndex < CHOICE_ENTITY_LENGTH) {
+                        questionEntity.getVoteAnswers().get(choiceIndex).setContent(choiceDTO.getContent());
+                    } else {
+                        VoteAnswerEntity voteAnswerEntity = new VoteAnswerEntity();
+                        voteAnswerEntity.setContent(choiceDTO.getContent());
+                        voteAnswerEntity.setQuestion(questionEntity);
+                        questionEntity.getVoteAnswers().add(voteAnswerEntity);
+                    }
+                    choiceIndex++;
+                }
+
+                while (choiceIndex < questionEntity.getVoteAnswers().size()) {
+                    questionEntity.getVoteAnswers().remove(choiceIndex);
+                    choiceIndex++;
+                }
+            } else {
+                QuestionEntity questionEntity = new QuestionEntity();
+                questionEntity.setTitle(questionDTO.getTitle());
+                questionEntity.setType(questionDTO.getType());
+                questionEntity.setRequired(questionDTO.getRequired());
+                questionEntity.setSurvey(surveyPostEntity);
+
+                for (ChoiceDTO choiceDTO : questionDTO.getChoices()) {
+                    VoteAnswerEntity voteAnswerEntity = new VoteAnswerEntity();
+                    voteAnswerEntity.setContent(choiceDTO.getContent());
+                    voteAnswerEntity.setQuestion(questionEntity);
+                    questionEntity.getVoteAnswers().add(voteAnswerEntity);
+                }
+
+                surveyPostEntity.getQuestions().add(questionEntity);
+            }
+
+            questionIndex++;
+        }
+
+        while (questionIndex < QUESTION_ENTITY_LENGTH) {
+            surveyPostEntity.getQuestions().remove(questionIndex);
+            questionIndex++;
+        }
+
+        try {
+           return postRepository.save(postEntity) != null;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
 
     @Override
     public List<PostSearchResponseDTO> findPosts(PostSearchRequestDTO requestDTO) {
