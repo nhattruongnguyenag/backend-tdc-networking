@@ -1,48 +1,74 @@
 package com.chatapp.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.chatapp.converter.response.*;
+import com.chatapp.converter.request.post.comment.CommentSaveRequestConverter;
+import com.chatapp.converter.request.post.log.PostLogAddRequestConverter;
+import com.chatapp.converter.request.post.normal.NormalPostUpdateOrSaveRequestConverter;
+import com.chatapp.converter.request.post.normal.NormalPostUpdateRequestConverter;
+import com.chatapp.converter.request.post.recruitment.RecruitmentPostUpdateRequestConverter;
+import com.chatapp.converter.request.post.recruitment.RecruitmentPosyUpdateOrSaveRequestConverter;
+import com.chatapp.converter.request.post.survey.SurveySaveRequestConverter;
+import com.chatapp.converter.request.post.survey.SurveyUpdateRequestConverter;
+import com.chatapp.converter.request.user.like.LikeRequestConverter;
+import com.chatapp.converter.request.user.post_save.UserSavePostRequestConverter;
+import com.chatapp.converter.response.post.PostInfoResponseConverter;
 import com.chatapp.converter.response.post.PostSearchResponseConverter;
-import com.chatapp.dto.*;
-import com.chatapp.dto.request.*;
-import com.chatapp.dto.response.*;
-import com.chatapp.dto.response.postSearch.PostSearchResponseDTO;
-import com.chatapp.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.chatapp.converter.request.CommentSaveRequestConverter;
-import com.chatapp.converter.request.LikeRequestConverter;
-import com.chatapp.converter.request.NormalPostUpdateOrSaveRequestConverter;
-import com.chatapp.converter.request.NormalPostUpdateRequestConverter;
-import com.chatapp.converter.request.PostLogAddRequestConverter;
-import com.chatapp.converter.request.RecruitmentPostUpdateRequestConverter;
-import com.chatapp.converter.request.RecruitmentPosyUpdateOrSaveRequestConverter;
-import com.chatapp.converter.request.SurveySaveRequestConverter;
-import com.chatapp.converter.request.SurveyUpdateRequestConverter;
-import com.chatapp.converter.request.UserSavePostRequestConverter;
-import com.chatapp.entity.FollowEntity;
-import com.chatapp.entity.NormalPostEntity;
-import com.chatapp.entity.PostApprovalLogEntity;
-import com.chatapp.entity.PostCommentEntity;
-import com.chatapp.entity.PostEntity;
-import com.chatapp.entity.PostLikeEntity;
-import com.chatapp.entity.QuestionEntity;
-import com.chatapp.entity.RecruitmentPostEntity;
-import com.chatapp.entity.ShortAnswerEntity;
-import com.chatapp.entity.SurveyPostEntity;
-import com.chatapp.entity.UserEntity;
-import com.chatapp.entity.VoteAnswerEntity;
+import com.chatapp.converter.response.post.comment.CommentResponseConverter;
+import com.chatapp.converter.response.post.log.PostRejectLogConverter;
+import com.chatapp.converter.response.post.normal.NormalPostResponseConverter;
+import com.chatapp.converter.response.post.recruitment.RecruitmentPostResponseConverter;
+import com.chatapp.converter.response.post.survey.SurveyConverter;
+import com.chatapp.converter.response.post.survey.SurveyResponeConverter;
+import com.chatapp.converter.response.post.survey.SurveyResultResponseConverter;
+import com.chatapp.converter.response.post.survey.SurveyReviewResponseConverter;
+import com.chatapp.converter.response.user.UserInfoResponseConverter;
+import com.chatapp.converter.response.user.business.BusinessInfoResponseConverter;
+import com.chatapp.converter.response.user.faculty.FacultyInfoResponseConverter;
+import com.chatapp.converter.response.user.student.StudentInfoResponseConverter;
+import com.chatapp.dto.BaseDTO;
+import com.chatapp.dto.request.post.AllPostByUserAndGroupResponseDTO;
+import com.chatapp.dto.request.post.PostFindRequestDTO;
+import com.chatapp.dto.request.post.PostSearchRequestDTO;
+import com.chatapp.dto.request.post.comment.CommentDeleteRequestDTO;
+import com.chatapp.dto.request.post.comment.CommentSaveRequestDTO;
+import com.chatapp.dto.request.post.log.PostLogRequestDTO;
+import com.chatapp.dto.request.post.normal.NormalPostUpdateOrSaveRequestDTO;
+import com.chatapp.dto.request.post.normal.NormalPostUpdateRequestDTO;
+import com.chatapp.dto.request.post.recruitment.RecruitmentPostUpdateOrSageRequestDTO;
+import com.chatapp.dto.request.post.recruitment.RecruitmentPostUpdateRequestDTO;
+import com.chatapp.dto.request.post.survey.AnswerRequestDTO;
+import com.chatapp.dto.request.post.survey.SurveyAnswerRequestDTO;
+import com.chatapp.dto.request.post.survey.SurveySaveRequestDTO;
+import com.chatapp.dto.request.post.survey.SurveyUpdateRequestDTO;
+import com.chatapp.dto.request.user.UserDetailInGroupRequestDTO;
+import com.chatapp.dto.request.user.like.LikeRequestDTO;
+import com.chatapp.dto.request.user.post_save.UserSavePostRequestDTO;
+import com.chatapp.dto.response.post.PostInfoResponseDTO;
+import com.chatapp.dto.response.post.PostSearchResponseDTO;
+import com.chatapp.dto.response.post.comment.CommentResponeseDTO;
+import com.chatapp.dto.response.post.log.PostRejectLogDTO;
+import com.chatapp.dto.response.post.normal.NormalPostResponseDTO;
+import com.chatapp.dto.response.post.recruitment.RecruitmentPostResponseDTO;
+import com.chatapp.dto.response.post.survey.*;
+import com.chatapp.dto.response.user.UserDetailInGroupResponseDTO;
+import com.chatapp.dto.response.user.UserInfoResponseDTO;
+import com.chatapp.dto.response.user.business.BusinessInfoResponseDTO;
+import com.chatapp.dto.response.user.faculty.FacultyInfoResponseDTO;
+import com.chatapp.dto.response.user.student.StudentInfoResponseDTO;
+import com.chatapp.entity.*;
 import com.chatapp.enums.PostType;
 import com.chatapp.enums.QuestionType;
 import com.chatapp.enums.Role;
 import com.chatapp.exception.DuplicateUsernameException;
+import com.chatapp.repository.*;
 import com.chatapp.service.PostService;
 import com.chatapp.util.TokenProvider;
-
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Service
 @Transactional
@@ -104,6 +130,8 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private PostRejectLogConverter postRejectLogConverter;
     @Autowired
+    private SurveyConverter surveyConverter;
+    @Autowired
     private NormalPostUpdateOrSaveRequestConverter normalPostUpdateOrSaveRequestConverter;
     @Autowired
     private NormalPostUpdateRequestConverter normalPostUpdateRequestConverter;
@@ -137,6 +165,7 @@ public class PostServiceImpl implements PostService {
         SurveyPostEntity surveyPostEntity = postEntity.getSurveyPost();
 
         postEntity.setActive((byte) 0);
+        postEntity.setUpdatedAt(new Date());
 
         if (surveyDTO.getTitle() != null) {
             surveyPostEntity.setTitle(surveyDTO.getTitle());
@@ -215,6 +244,9 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<PostSearchResponseDTO> findPosts(PostSearchRequestDTO requestDTO) {
         List<PostEntity> postEntities = customizedPostRepository.findPosts(requestDTO);
+        for (PostEntity postEntity : postEntities) {
+            postEntity.setUserLogin(requestDTO.getUserLogin());
+        }
         return postSearchResponseConverter.toDTOGroup(postEntities);
     }
 
@@ -270,6 +302,7 @@ public class PostServiceImpl implements PostService {
         }
         return dtos;
     }
+
 
     // normal post
     @Override
@@ -892,4 +925,12 @@ public class PostServiceImpl implements PostService {
             return null;
         }
     }
+
+    @Override
+    public SurveyDTO getSurveyByPostId(Long postId) {
+        SurveyDTO surveyDTO = surveyConverter.toDTO(surveyPostRepository.findOneByPost_Id(postId));
+        return surveyDTO;
+    }
+
+    
 }

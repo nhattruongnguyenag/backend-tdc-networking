@@ -2,12 +2,12 @@ package com.chatapp.service;
 
 import java.util.List;
 
-import com.chatapp.converter.request.NotificationChangeAllStatusByUserIdRequest;
-import com.chatapp.dto.request.NotificationByUserRequestDTO;
-import com.chatapp.dto.request.NotificationChangeStatusRequestDTO;
-import com.chatapp.dto.request.NotificationDeleteRequestDTO;
-import com.chatapp.dto.request.NotificationSaveRequestDTO;
-import com.chatapp.dto.response.NotificationResponseDTO;
+import com.chatapp.converter.request.notification.NotificationChangeAllStatusByUserIdRequest;
+import com.chatapp.dto.request.notification.NotificationByUserRequestDTO;
+import com.chatapp.dto.request.notification.NotificationChangeStatusRequestDTO;
+import com.chatapp.dto.request.notification.NotificationDeleteRequestDTO;
+import com.chatapp.dto.request.notification.NotificationSaveRequestDTO;
+import com.chatapp.dto.response.notification.NotificationResponseDTO;
 
 public interface NotificationService {
     List<NotificationResponseDTO> findAll();

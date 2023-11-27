@@ -1,7 +1,7 @@
 package com.chatapp.service;
 
-import com.chatapp.dto.request.MessageRequestDTO;
-import com.chatapp.dto.response.MessageResponseDTO;
+import com.chatapp.dto.request.message.MessageRequestDTO;
+import com.chatapp.dto.response.message.MessageResponseDTO;
 
 import java.util.List;
 

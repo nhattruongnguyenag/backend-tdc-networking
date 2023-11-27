@@ -1,7 +1,7 @@
 package com.chatapp.service.impl;
 
-import com.chatapp.converter.response.ConversationResponseConverter;
-import com.chatapp.dto.response.ConversationResponseDTO;
+import com.chatapp.converter.response.conversation.ConversationResponseConverter;
+import com.chatapp.dto.response.conversation.ConversationResponseDTO;
 import com.chatapp.repository.ConversationRepository;
 import com.chatapp.repository.CustomizedConversationRepository;
 import com.chatapp.service.ConversationService;

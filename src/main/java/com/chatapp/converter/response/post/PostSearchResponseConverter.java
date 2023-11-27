@@ -1,13 +1,20 @@
 package com.chatapp.converter.response.post;
 
-import com.chatapp.converter.UserPostLikeConverter;
 import com.chatapp.converter.abstracts.BaseConverter;
-import com.chatapp.converter.response.*;
-import com.chatapp.dto.response.*;
-import com.chatapp.dto.response.postSearch.NormalPostSearchResponseDTO;
-import com.chatapp.dto.response.postSearch.PostSearchResponseDTO;
-import com.chatapp.dto.response.postSearch.RecruitmentPostSearchResponseDTO;
-import com.chatapp.dto.response.postSearch.SurveyPostSearchResponseDTO;
+import com.chatapp.converter.response.group.GroupResponseConverter;
+import com.chatapp.converter.response.post.comment.CommentResponseConverter;
+import com.chatapp.converter.response.post.survey.QuestionResponeConverter;
+import com.chatapp.converter.response.user.UserInfoResponseConverter;
+import com.chatapp.converter.response.user.like.UserPostLikeConverter;
+import com.chatapp.converter.service.PostCheckParam;
+import com.chatapp.dto.response.image.ImageResponseDTO;
+import com.chatapp.dto.response.post.PostSearchResponseDTO;
+import com.chatapp.dto.response.post.comment.CommentResponeseDTO;
+import com.chatapp.dto.response.post.normal.NormalPostSearchResponseDTO;
+import com.chatapp.dto.response.post.recruitment.RecruitmentPostSearchResponseDTO;
+import com.chatapp.dto.response.post.survey.QuestionResponseDTO;
+import com.chatapp.dto.response.post.survey.SurveyPostSearchResponseDTO;
+import com.chatapp.dto.response.user.UserInfoResponseDTO;
 import com.chatapp.entity.PostEntity;
 import com.chatapp.entity.QuestionEntity;
 import com.chatapp.enums.PostType;
@@ -22,14 +29,12 @@ import java.util.stream.Collectors;
 
 @Component
 public class PostSearchResponseConverter extends BaseConverter<PostEntity, PostSearchResponseDTO> {
+
     @Autowired
     private UserInfoResponseConverter userInfoResponseConverter;
 
     @Autowired
     private GroupResponseConverter groupResponseConverter;
-
-    @Autowired
-    private RecruitmentPostResponseConverter recruitmentPostResponseConverter;
 
     @Autowired
     private CommentResponseConverter commentResponseConverter;
@@ -39,6 +44,9 @@ public class PostSearchResponseConverter extends BaseConverter<PostEntity, PostS
 
     @Autowired
     private QuestionResponeConverter questionResponeConverter;
+
+    @Autowired
+    private PostCheckParam postCheckParam;
 
     @Override
     public PostSearchResponseDTO toDTO(PostEntity entity) {
@@ -68,7 +76,7 @@ public class PostSearchResponseConverter extends BaseConverter<PostEntity, PostS
         return getNormalPostResponseDTO(entity, postInfoResponeDTO);
     }
 
-    private static NormalPostSearchResponseDTO getNormalPostResponseDTO(PostEntity entity, PostSearchResponseDTO postSearchResponeDTO) {
+    private NormalPostSearchResponseDTO getNormalPostResponseDTO(PostEntity entity, PostSearchResponseDTO postSearchResponeDTO) {
         NormalPostSearchResponseDTO normalPostResponseDTO = new NormalPostSearchResponseDTO();
         BeanUtils.copyProperties(postSearchResponeDTO, normalPostResponseDTO);
         BeanUtils.copyProperties(entity.getNormalPost(), normalPostResponseDTO, "id");
@@ -80,14 +88,20 @@ public class PostSearchResponseConverter extends BaseConverter<PostEntity, PostS
         BeanUtils.copyProperties(postSearchResponseDTO, surveyResponeDTO);
         BeanUtils.copyProperties(entity.getSurveyPost(), surveyResponeDTO, "id");
         surveyResponeDTO.setQuestions(getQuestionResponseDTOGroup(entity));
+        if(entity.getUserLogin() != null){
+            surveyResponeDTO.setIsConduct(postCheckParam.checkUserLoginHadConducted(entity.getSurveyPost(), entity.getUserLogin()));
+        }
         return surveyResponeDTO;
     }
 
-    private static RecruitmentPostSearchResponseDTO getRecruitmentPostResponseDTO(PostEntity entity, PostSearchResponseDTO postInfoResponeDTO) {
+    private RecruitmentPostSearchResponseDTO getRecruitmentPostResponseDTO(PostEntity entity, PostSearchResponseDTO postInfoResponeDTO) {
         RecruitmentPostSearchResponseDTO recruitmentPostResponseDTO = new RecruitmentPostSearchResponseDTO();
         BeanUtils.copyProperties(postInfoResponeDTO, recruitmentPostResponseDTO);
         BeanUtils.copyProperties(entity.getRecruitmentPost(), recruitmentPostResponseDTO, "id");
         recruitmentPostResponseDTO.setExpiration(DateTimeUtil.convertToTimestamp(entity.getRecruitmentPost().getExpiration()));
+        if(entity.getUserLogin() != null){
+            recruitmentPostResponseDTO.setIsApplyJob(postCheckParam.checkUserLoginHadApplied(entity.getRecruitmentPost(), entity.getUserLogin()));
+        }
         return recruitmentPostResponseDTO;
     }
 
@@ -97,7 +111,7 @@ public class PostSearchResponseConverter extends BaseConverter<PostEntity, PostS
         }).collect(Collectors.toList());
     }
 
-    private static List<ImageResponseDTO> getImageResponseDTOGroup(PostEntity postEntity) {
+    private List<ImageResponseDTO> getImageResponseDTOGroup(PostEntity postEntity) {
         return postEntity.getImages().stream().map(imageEntity -> {
             ImageResponseDTO imageResponseDTO = new ImageResponseDTO();
             imageResponseDTO.setId(imageEntity.getId());

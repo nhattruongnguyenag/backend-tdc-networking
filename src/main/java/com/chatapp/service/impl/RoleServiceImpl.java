@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.chatapp.converter.response.RoleResponseConverter;
-import com.chatapp.dto.response.RoleResponseDTO;
+import com.chatapp.converter.response.role.RoleResponseConverter;
+import com.chatapp.dto.response.role.RoleResponseDTO;
 import com.chatapp.repository.RoleRepository;
 import com.chatapp.service.RoleService;
 import org.springframework.stereotype.Service;

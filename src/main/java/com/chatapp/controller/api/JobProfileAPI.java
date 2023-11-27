@@ -3,15 +3,16 @@ package com.chatapp.controller.api;
 import java.util.List;
 
 import com.chatapp.commond.MessageResponseData;
-import com.chatapp.dto.request.JobProfileUpdateRequestDTO;
+import com.chatapp.dto.request.job_profile.JobApplyProfileRequestDTO;
+import com.chatapp.dto.request.job_profile.JobProfileUpdateRequestDTO;
+import com.chatapp.dto.response.job_profile.JobProfileResponseDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.chatapp.commond.ResponseData;
-import com.chatapp.dto.request.JobApplyProfileRequestDTO;
-import com.chatapp.dto.response.JobProfileResponseDTO;
 import com.chatapp.service.JobProfileService;
 
 @RestController

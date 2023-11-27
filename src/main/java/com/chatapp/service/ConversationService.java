@@ -1,8 +1,8 @@
 package com.chatapp.service;
 
-import com.chatapp.dto.response.ConversationResponseDTO;
-
 import java.util.List;
+
+import com.chatapp.dto.response.conversation.ConversationResponseDTO;
 
 public interface ConversationService {
     List<ConversationResponseDTO> findBySenderAndReceiver(long senderId, long receiverId);

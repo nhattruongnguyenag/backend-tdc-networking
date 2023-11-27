@@ -1,6 +1,6 @@
 package com.chatapp.service.impl;
 
-import com.chatapp.dto.request.PushNotificationRequestDTO;
+import com.chatapp.dto.request.notification.PushNotificationRequestDTO;
 import com.chatapp.entity.DeviceTokenEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.repository.UserRepository;

@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import com.chatapp.commond.ResponseData;
 import com.chatapp.dto.AuthTokenDTO;
-import com.chatapp.dto.request.StudentInfoRegisterRequestDTO;
-import com.chatapp.dto.request.StudentInfoUpdateOrSaveRequestDTO;
-import com.chatapp.dto.response.StudentInfoResponseDTO;
+import com.chatapp.dto.request.user.student.StudentInfoRegisterRequestDTO;
+import com.chatapp.dto.request.user.student.StudentInfoUpdateOrSaveRequestDTO;
+import com.chatapp.dto.response.user.student.StudentInfoResponseDTO;
 import com.chatapp.service.UserService;
 
 @RestController

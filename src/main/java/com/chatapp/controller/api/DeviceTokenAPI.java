@@ -1,7 +1,7 @@
 package com.chatapp.controller.api;
 
 import com.chatapp.commond.MessageResponseData;
-import com.chatapp.dto.request.DeviceTokenRequestDTO;
+import com.chatapp.dto.request.token.DeviceTokenRequestDTO;
 import com.chatapp.service.DeviceTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,10 +1,10 @@
 package com.chatapp.service.impl;
 
 import com.chatapp.constant.MessageStatus;
-import com.chatapp.converter.request.MessageRequestConverter;
-import com.chatapp.converter.response.MessageResponseConverter;
-import com.chatapp.dto.request.MessageRequestDTO;
-import com.chatapp.dto.response.MessageResponseDTO;
+import com.chatapp.converter.request.message.MessageRequestConverter;
+import com.chatapp.converter.response.message.MessageResponseConverter;
+import com.chatapp.dto.request.message.MessageRequestDTO;
+import com.chatapp.dto.response.message.MessageResponseDTO;
 import com.chatapp.entity.ConversationEntity;
 import com.chatapp.entity.MessageEntity;
 import com.chatapp.entity.UserEntity;

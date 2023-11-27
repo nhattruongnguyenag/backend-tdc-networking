@@ -2,16 +2,16 @@ package com.chatapp.service.impl;
 
 import java.util.List;
 
-import com.chatapp.converter.request.NotificationChangeAllStatusByUserIdRequest;
-import com.chatapp.converter.request.NotificationChangeStatusRequestConverter;
-import com.chatapp.converter.request.NotificationDeleteRequestConverter;
-import com.chatapp.converter.request.NotificationSaveRequestConverter;
-import com.chatapp.converter.response.NotificationResponseConverter;
-import com.chatapp.dto.request.NotificationByUserRequestDTO;
-import com.chatapp.dto.request.NotificationChangeStatusRequestDTO;
-import com.chatapp.dto.request.NotificationDeleteRequestDTO;
-import com.chatapp.dto.request.NotificationSaveRequestDTO;
-import com.chatapp.dto.response.NotificationResponseDTO;
+import com.chatapp.converter.request.notification.NotificationChangeAllStatusByUserIdRequest;
+import com.chatapp.converter.request.notification.NotificationChangeStatusRequestConverter;
+import com.chatapp.converter.request.notification.NotificationDeleteRequestConverter;
+import com.chatapp.converter.request.notification.NotificationSaveRequestConverter;
+import com.chatapp.converter.response.notification.NotificationResponseConverter;
+import com.chatapp.dto.request.notification.NotificationByUserRequestDTO;
+import com.chatapp.dto.request.notification.NotificationChangeStatusRequestDTO;
+import com.chatapp.dto.request.notification.NotificationDeleteRequestDTO;
+import com.chatapp.dto.request.notification.NotificationSaveRequestDTO;
+import com.chatapp.dto.response.notification.NotificationResponseDTO;
 import com.chatapp.entity.NotificationEntity;
 import com.chatapp.exception.DuplicateUsernameException;
 import com.chatapp.repository.NotificationRepository;

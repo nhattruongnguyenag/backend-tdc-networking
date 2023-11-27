@@ -8,9 +8,9 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.chatapp.dto.request.UserFollowRequestDTO;
-import com.chatapp.dto.request.UserInfoFindRequestDTO;
-import com.chatapp.dto.response.UserFindResponseDTO;
+import com.chatapp.dto.request.user.UserInfoFindRequestDTO;
+import com.chatapp.dto.request.user.follow.UserFollowRequestDTO;
+import com.chatapp.dto.response.user.UserFindResponseDTO;
 import com.chatapp.service.UserService;
 
 @RestController

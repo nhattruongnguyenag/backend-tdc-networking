@@ -1,6 +1,6 @@
 package com.chatapp.repository.impl;
 
-import com.chatapp.dto.request.PostSearchRequestDTO;
+import com.chatapp.dto.request.post.PostSearchRequestDTO;
 import com.chatapp.entity.PostEntity;
 import com.chatapp.repository.CustomizedPostRepository;
 import jakarta.persistence.EntityManager;

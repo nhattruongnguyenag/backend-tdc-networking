@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.chatapp.commond.ResponseData;
 import com.chatapp.dto.BaseDTO;
-import com.chatapp.dto.request.LikeRequestDTO;
-import com.chatapp.dto.request.UserSavePostRequestDTO;
+import com.chatapp.dto.request.user.like.LikeRequestDTO;
+import com.chatapp.dto.request.user.post_save.UserSavePostRequestDTO;
 import com.chatapp.service.PostService;
 
 @RestController
