@@ -3,6 +3,13 @@ package com.chatapp.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.chatapp.converter.request.post.comment.*;
+import com.chatapp.converter.request.post.log.*;
+import com.chatapp.converter.request.post.normal.*;
+import com.chatapp.converter.request.post.recruitment.*;
+import com.chatapp.converter.request.post.survey.*;
+import com.chatapp.converter.request.user.like.*;
+import com.chatapp.converter.request.user.post_save.*;
 import com.chatapp.converter.response.post.PostInfoResponseConverter;
 import com.chatapp.converter.response.post.PostSearchResponseConverter;
 import com.chatapp.converter.response.post.comment.CommentResponseConverter;
@@ -17,6 +24,7 @@ import com.chatapp.converter.response.user.UserInfoResponseConverter;
 import com.chatapp.converter.response.user.business.BusinessInfoResponseConverter;
 import com.chatapp.converter.response.user.faculty.FacultyInfoResponseConverter;
 import com.chatapp.converter.response.user.student.StudentInfoResponseConverter;
+import com.chatapp.dto.BaseDTO;
 import com.chatapp.dto.request.post.AllPostByUserAndGroupResponseDTO;
 import com.chatapp.dto.request.post.PostFindRequestDTO;
 import com.chatapp.dto.request.post.PostSearchRequestDTO;
@@ -51,6 +59,7 @@ import com.chatapp.enums.PostType;
 import com.chatapp.enums.QuestionType;
 import com.chatapp.enums.Role;
 import com.chatapp.exception.DuplicateUsernameException;
+import com.chatapp.repository.*;
 import com.chatapp.service.PostService;
 import com.chatapp.util.TokenProvider;
 
@@ -58,9 +67,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
