@@ -69,6 +69,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -175,69 +176,109 @@ public class PostServiceImpl implements PostService {
             surveyPostEntity.setDescription(surveyDTO.getDescription());
         }
 
+
+        List<QuestionDTO> questionUpdateDTOs = surveyDTO.getQuestions().stream().filter(question -> question.getId() != null).collect(Collectors.toList());
+        List<QuestionDTO> questionAddNewDTOs = surveyDTO.getQuestions().stream().filter(question -> question.getId() == null).collect(Collectors.toList());
+
+        processUpdateOldQuestion(questionUpdateDTOs, surveyPostEntity);
+
+        processDeleteRedundantQuestions(surveyPostEntity, questionUpdateDTOs);
+
+        processAddNewQuestion(questionAddNewDTOs, surveyPostEntity);
+
+        try {
+            return postRepository.save(postEntity) != null;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    private static void processUpdateOldQuestion(List<QuestionDTO> questionUpdateDTOs, SurveyPostEntity surveyPostEntity) {
         int questionIndex = 0;
         final int QUESTION_ENTITY_LENGTH = surveyPostEntity.getQuestions().size();
 
-        while (questionIndex < surveyDTO.getQuestions().size()) {
-            QuestionDTO questionDTO = surveyDTO.getQuestions().get(questionIndex);
+        while (questionIndex < questionUpdateDTOs.size()) {
+            QuestionDTO questionDTO = questionUpdateDTOs.get(questionIndex);
             if (questionIndex < QUESTION_ENTITY_LENGTH) {
-                QuestionEntity questionEntity = surveyPostEntity.getQuestions().get(questionIndex);
+                QuestionEntity questionEntity = surveyPostEntity.getQuestions().stream().filter(item -> item.getId().equals(questionDTO.getId()))
+                        .findFirst().orElse(null);
 
-                if (questionDTO.getTitle() != null) {
-                    questionEntity.setTitle(questionDTO.getTitle());
-                }
+                if (questionEntity != null) {
+                    if (questionDTO.getTitle() != null) {
+                        questionEntity.setTitle(questionDTO.getTitle());
+                    }
 
-                questionEntity.setRequired(questionDTO.getRequired());
+                    questionEntity.setRequired(questionDTO.getRequired());
 
-                int choiceIndex = 0;
-                final int CHOICE_ENTITY_LENGTH = questionEntity.getVoteAnswers().size();
+                    int choiceIndex = 0;
+                    final int CHOICE_ENTITY_LENGTH = questionEntity.getVoteAnswers().size();
 
-                while (choiceIndex < questionDTO.getChoices().size()) {
-                    ChoiceDTO choiceDTO = questionDTO.getChoices().get(choiceIndex);
-                    if (choiceIndex < CHOICE_ENTITY_LENGTH) {
-                        questionEntity.getVoteAnswers().get(choiceIndex).setContent(choiceDTO.getContent());
-                    } else {
+                    List<ChoiceDTO> choiceUpdateDTOs = questionDTO.getChoices().stream().filter(choice -> choice.getId() != null).collect(Collectors.toList());
+                    List<ChoiceDTO> choiceAddNewDTOs = questionDTO.getChoices().stream().filter(choice -> choice.getId() == null).collect(Collectors.toList());
+
+                    while (choiceIndex < choiceUpdateDTOs.size()) {
+                        ChoiceDTO choiceDTO = choiceUpdateDTOs.get(choiceIndex);
+                        if (choiceIndex < CHOICE_ENTITY_LENGTH) {
+                            VoteAnswerEntity choiceEntity = questionEntity.getVoteAnswers().stream().filter(choice -> choice.getId().equals(choiceDTO.getId())).findFirst().orElse(null);
+                            if (choiceEntity != null) {
+                                choiceEntity.setContent(choiceDTO.getContent());
+                            }
+                        }
+                        choiceIndex++;
+                    }
+
+                    choiceIndex = 0;
+                    while (choiceIndex < questionEntity.getVoteAnswers().size()) {
+                        VoteAnswerEntity choiceEntity = questionEntity.getVoteAnswers().get(choiceIndex);
+                        ChoiceDTO choiceDTO = choiceUpdateDTOs.stream().filter(item -> item.getId().equals(choiceEntity.getId())).findFirst().orElse(null);
+                        if (choiceDTO == null) {
+                            questionEntity.getVoteAnswers().remove(choiceIndex);
+                            choiceIndex--;
+                        }
+                        choiceIndex++;
+                    }
+
+                    for (ChoiceDTO choiceDTO: choiceAddNewDTOs) {
                         VoteAnswerEntity voteAnswerEntity = new VoteAnswerEntity();
                         voteAnswerEntity.setContent(choiceDTO.getContent());
                         voteAnswerEntity.setQuestion(questionEntity);
                         questionEntity.getVoteAnswers().add(voteAnswerEntity);
                     }
-                    choiceIndex++;
                 }
+            }
+            questionIndex++;
+        }
+    }
 
-                while (choiceIndex < questionEntity.getVoteAnswers().size()) {
-                    questionEntity.getVoteAnswers().remove(choiceIndex);
-                    choiceIndex++;
-                }
-            } else {
-                QuestionEntity questionEntity = new QuestionEntity();
-                questionEntity.setTitle(questionDTO.getTitle());
-                questionEntity.setType(questionDTO.getType());
-                questionEntity.setRequired(questionDTO.getRequired());
-                questionEntity.setSurvey(surveyPostEntity);
+    private static void processAddNewQuestion(List<QuestionDTO> questionAddNewDTOs, SurveyPostEntity surveyPostEntity) {
+        for (QuestionDTO questionDTO : questionAddNewDTOs) {
+            QuestionEntity questionEntity = new QuestionEntity();
+            questionEntity.setTitle(questionDTO.getTitle());
+            questionEntity.setType(questionDTO.getType());
+            questionEntity.setRequired(questionDTO.getRequired());
+            questionEntity.setSurvey(surveyPostEntity);
 
-                for (ChoiceDTO choiceDTO : questionDTO.getChoices()) {
-                    VoteAnswerEntity voteAnswerEntity = new VoteAnswerEntity();
-                    voteAnswerEntity.setContent(choiceDTO.getContent());
-                    voteAnswerEntity.setQuestion(questionEntity);
-                    questionEntity.getVoteAnswers().add(voteAnswerEntity);
-                }
-
-                surveyPostEntity.getQuestions().add(questionEntity);
+            for (ChoiceDTO choiceDTO : questionDTO.getChoices()) {
+                VoteAnswerEntity voteAnswerEntity = new VoteAnswerEntity();
+                voteAnswerEntity.setContent(choiceDTO.getContent());
+                voteAnswerEntity.setQuestion(questionEntity);
+                questionEntity.getVoteAnswers().add(voteAnswerEntity);
             }
 
-            questionIndex++;
+            surveyPostEntity.getQuestions().add(questionEntity);
         }
+    }
 
-        while (questionIndex < QUESTION_ENTITY_LENGTH) {
-            surveyPostEntity.getQuestions().remove(questionIndex);
+    private static void processDeleteRedundantQuestions(SurveyPostEntity surveyPostEntity, List<QuestionDTO> questionUpdateDTOs) {
+        int questionIndex = 0;
+        while (questionIndex <  surveyPostEntity.getQuestions().size()) {
+            QuestionEntity questionEntity = surveyPostEntity.getQuestions().get(questionIndex);
+            QuestionDTO questionDTO = questionUpdateDTOs.stream().filter(item -> item.getId().equals(questionEntity.getId())).findFirst().orElse(null);
+            if (questionDTO == null) {
+                surveyPostEntity.getQuestions().remove(questionIndex);
+                questionIndex--;
+            }
             questionIndex++;
-        }
-
-        try {
-           return postRepository.save(postEntity) != null;
-        } catch (Exception ex) {
-            return false;
         }
     }
 
@@ -932,5 +973,5 @@ public class PostServiceImpl implements PostService {
         return surveyDTO;
     }
 
-    
+
 }
