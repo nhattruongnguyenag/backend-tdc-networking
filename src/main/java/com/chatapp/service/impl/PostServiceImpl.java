@@ -790,5 +790,11 @@ public class PostServiceImpl implements PostService {
         return surveyDTO;
     }
 
+    @Override
+    public boolean updateSurvey(SurveyDTO surveyDTO) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updateSurvey'");
+    }
+
     
 }
