@@ -17,7 +17,7 @@ public class EmailSendAPI {
     private EmailService emailService;
 
     @PostMapping({ "/mail", "/mail/" })
-    public ResponseEntity sendMail(@RequestBody EmailSendRequestionDTO emailSendRequestionDTO) {
+    public ResponseEntity<?> sendMail(@RequestBody EmailSendRequestionDTO emailSendRequestionDTO) {
         try {
             emailService.sendEmail(emailSendRequestionDTO.getTo(), emailSendRequestionDTO.getSubject(),
                     emailSendRequestionDTO.getContent());

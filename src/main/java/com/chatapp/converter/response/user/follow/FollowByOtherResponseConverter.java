@@ -6,7 +6,6 @@ import com.chatapp.entity.FollowEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.repository.UserRepository;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

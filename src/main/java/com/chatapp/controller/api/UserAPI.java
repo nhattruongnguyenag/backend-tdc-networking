@@ -11,7 +11,6 @@ import com.chatapp.dto.request.user.UserGetRequestDTO;
 import com.chatapp.dto.request.user.UserLoginRequestDTO;
 import com.chatapp.dto.request.user.follow.UserFollowRequestDTO;
 import com.chatapp.dto.request.user.image.UserImageUpdateRequestDTO;
-import com.chatapp.dto.request.user.password.UserGetResetPasswordRequestDTO;
 import com.chatapp.dto.response.group.GroupResponseDTO;
 import com.chatapp.dto.response.user.UserDTO;
 import com.chatapp.dto.response.user.UserInfoResponseDTO;
@@ -87,7 +86,7 @@ public class UserAPI {
     }
 
     @DeleteMapping({ "users/{id}", "users/{id}/" })
-    public ResponseEntity delete(@PathVariable("id") Long id) {
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         userService.delete(id);
         return ResponseEntity.ok().build();
     }

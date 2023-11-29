@@ -1,21 +1,13 @@
 package com.chatapp.converter.response.job_profile;
 
 import com.chatapp.converter.abstracts.BaseConverter;
-import com.chatapp.converter.response.post.PostInfoResponseConverter;
-import com.chatapp.converter.response.user.UserInfoResponseConverter;
 import com.chatapp.dto.response.job_profile.JobProfileResponseDTO;
 import com.chatapp.entity.JobProfileEntity;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class JobProfileResponseConverter extends BaseConverter<JobProfileEntity,JobProfileResponseDTO>{
-
-    @Autowired
-    private UserInfoResponseConverter userInfoResponseConverter;
-     @Autowired
-    private PostInfoResponseConverter postInfoResponseConverter;
 
     @Override
     public JobProfileResponseDTO toDTO(JobProfileEntity entity) {

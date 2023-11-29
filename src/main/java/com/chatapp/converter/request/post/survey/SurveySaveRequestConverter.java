@@ -9,7 +9,6 @@ import com.chatapp.entity.PostImageEntity;
 import com.chatapp.entity.QuestionEntity;
 import com.chatapp.entity.SurveyPostEntity;
 import com.chatapp.entity.UserEntity;
-import com.chatapp.enums.PostType;
 import com.chatapp.enums.QuestionType;
 import com.chatapp.repository.GroupRepository;
 import com.chatapp.repository.UserRepository;

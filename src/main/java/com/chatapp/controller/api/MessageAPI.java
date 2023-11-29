@@ -3,10 +3,8 @@ package com.chatapp.controller.api;
 import com.chatapp.dto.request.message.MessageRequestDTO;
 import com.chatapp.dto.response.conversation.ConversationResponseDTO;
 import com.chatapp.dto.response.message.MessageResponseDTO;
-import com.chatapp.repository.MessageRepository;
 import com.chatapp.service.ConversationService;
 import com.chatapp.service.MessageService;
-import com.chatapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +19,7 @@ public class MessageAPI {
     private MessageService messageService;
     @Autowired
     private ConversationService conversationService;
-    @Autowired
-    private UserService userService;
+
 
     @GetMapping("/conversations/{senderId}/{receiverId}")
     List<ConversationResponseDTO> conversation(@PathVariable("senderId") Long senderId, @PathVariable("receiverId") Long receiverId) {
@@ -47,8 +44,7 @@ public class MessageAPI {
         return conversationService.findBySender(userId);
     }
 
-    @Autowired
-    private MessageRepository messageRepository;
+
     @GetMapping("/messages/{conversationId}")
     List<MessageResponseDTO> messageEntities(@PathVariable("conversationId") Long conversationId) {
         return messageService.findByConversations_Id(conversationId);
@@ -60,7 +56,7 @@ public class MessageAPI {
     }
 
     @DeleteMapping("/messages/{id}")
-    ResponseEntity delete(@PathVariable("id") Long id) {
+    ResponseEntity<?> delete(@PathVariable("id") Long id) {
         messageService.delete(id);
         return ResponseEntity.ok().build();
     }

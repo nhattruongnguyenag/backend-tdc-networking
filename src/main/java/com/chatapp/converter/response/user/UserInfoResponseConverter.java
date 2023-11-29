@@ -3,9 +3,6 @@ package com.chatapp.converter.response.user;
 import com.chatapp.converter.abstracts.BaseConverter;
 import com.chatapp.converter.response.user.follow.FollowResponseConverter;
 import com.chatapp.dto.response.user.UserInfoResponseDTO;
-import com.chatapp.dto.response.user.business.BusinessInfoResponseDTO;
-import com.chatapp.dto.response.user.faculty.FacultyInfoResponseDTO;
-import com.chatapp.dto.response.user.student.StudentInfoResponseDTO;
 import com.chatapp.entity.UserEntity;
 
 import org.springframework.beans.factory.annotation.Autowired;

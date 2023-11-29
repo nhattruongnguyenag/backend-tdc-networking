@@ -8,7 +8,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
@@ -20,7 +19,6 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.chatapp.constant.SystemConstant;
 import com.chatapp.enums.FileType;
 import com.chatapp.exception.DuplicateUsernameException;
 import com.chatapp.service.FileUploadService;

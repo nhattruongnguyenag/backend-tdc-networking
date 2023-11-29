@@ -1,7 +1,5 @@
 package com.chatapp.dto.response.job_profile;
 
-import com.chatapp.dto.BaseDTO;
-import com.chatapp.dto.response.post.PostSearchResponseDTO;
 
 import lombok.Data;
 

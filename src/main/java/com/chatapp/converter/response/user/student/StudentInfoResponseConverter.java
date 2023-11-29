@@ -3,7 +3,6 @@ package com.chatapp.converter.response.user.student;
 import com.chatapp.converter.abstracts.BaseConverter;
 import com.chatapp.converter.response.user.follow.FollowResponseConverter;
 import com.chatapp.dto.response.user.student.StudentInfoResponseDTO;
-import com.chatapp.entity.GroupEntity;
 import com.chatapp.entity.StudentInfoEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.enums.GroupDefault;
@@ -11,8 +10,6 @@ import com.chatapp.repository.GroupRepository;
 import com.chatapp.repository.UserRepository;
 import com.chatapp.util.DateTimeUtil;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

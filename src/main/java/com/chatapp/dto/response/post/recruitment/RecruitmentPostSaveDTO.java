@@ -1,7 +1,5 @@
 package com.chatapp.dto.response.post.recruitment;
 
-import com.chatapp.dto.BaseDTO;
-import com.mysql.cj.log.Log;
 import lombok.Data;
 
 @Data

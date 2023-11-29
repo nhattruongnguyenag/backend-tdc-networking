@@ -1,7 +1,6 @@
 package com.chatapp.controller.api;
 
 import com.chatapp.commond.ResponseData;
-import com.chatapp.dto.BaseDTO;
 import com.chatapp.dto.request.post.PostFindRequestDTO;
 import com.chatapp.dto.request.user.UserInfoFindRequestDTO;
 import com.chatapp.dto.response.post.PostSearchResponseDTO;

@@ -20,13 +20,13 @@ public class FirebaseMessagingAPI {
     private FirebaseMessagingService firebaseMessagingService;
 
     @PostMapping("/notification/token")
-    public ResponseEntity sendTokenNotification(@RequestBody PushNotificationRequestDTO request) {
+    public ResponseEntity<ResponseData<?>> sendTokenNotification(@RequestBody PushNotificationRequestDTO request) {
         boolean isSuccess = firebaseMessagingService.sendNotificationToToken(request);
         if (isSuccess) {
-            ResponseData responseData = new ResponseData<>(HttpStatus.OK, "push notification has been sent", null);
+            ResponseData<?> responseData = new ResponseData<>(HttpStatus.OK, "push notification has been sent", null);
             return ResponseEntity.ok(responseData);
         } else {
-            ResponseData responseData = new ResponseData<>(HttpStatus.BAD_REQUEST, "fail to send push notification", null);
+            ResponseData<?> responseData = new ResponseData<>(HttpStatus.BAD_REQUEST, "fail to send push notification", null);
             return new ResponseEntity(responseData, HttpStatus.BAD_REQUEST);
         }
     }

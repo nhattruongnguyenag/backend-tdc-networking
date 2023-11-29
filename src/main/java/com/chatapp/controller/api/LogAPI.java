@@ -21,7 +21,7 @@ public class LogAPI {
     @GetMapping({"approval/log/post/{postId}"})
     ResponseEntity<?> getRejectLogByPostId(@PathVariable("postId") Long postId) {
         PostRejectLogDTO dto = postService.findRejectLogByPostId(postId);
-        ResponseEntity responseEntity = new ResponseEntity(new MessageResponseData(HttpStatus.NOT_FOUND, "not_found"), HttpStatus.NOT_FOUND);
+        ResponseEntity<?> responseEntity = new ResponseEntity(new MessageResponseData(HttpStatus.NOT_FOUND, "not_found"), HttpStatus.NOT_FOUND);
         if (dto != null) {
             responseEntity = new ResponseEntity(new ResponseData<>(HttpStatus.OK, "success", dto), HttpStatus.OK);
         }

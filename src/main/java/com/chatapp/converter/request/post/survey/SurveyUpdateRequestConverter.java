@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.chatapp.converter.abstracts.BaseConverter;
-import com.chatapp.dto.request.post.survey.QuestionRequestDTO;
 import com.chatapp.dto.request.post.survey.SurveyUpdateRequestDTO;
 import com.chatapp.entity.PostEntity;
 import com.chatapp.entity.QuestionEntity;

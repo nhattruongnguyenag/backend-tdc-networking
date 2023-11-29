@@ -12,7 +12,6 @@ import com.chatapp.commond.ResponseData;
 import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.request.user.faculty.FacultyInfoRegisterRequestDTO;
 import com.chatapp.dto.request.user.faculty.FacultyInfoUpdateOrSaveRequestDTO;
-import com.chatapp.dto.response.user.UserInfoResponseDTO;
 import com.chatapp.dto.response.user.faculty.FacultyInfoResponseDTO;
 import com.chatapp.service.UserService;
 

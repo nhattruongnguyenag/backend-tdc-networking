@@ -6,7 +6,6 @@ import com.chatapp.dto.response.post.survey.SurveyResultResponseDTO;
 import com.chatapp.dto.response.post.survey.TextResultResponseDTO;
 import com.chatapp.dto.response.post.survey.VoteResultResponseDTO;
 import com.chatapp.entity.QuestionEntity;
-import com.chatapp.entity.SurveyPostEntity;
 import com.chatapp.entity.VoteAnswerEntity;
 import com.chatapp.enums.QuestionType;
 import com.chatapp.repository.ShortAnswerRepository;

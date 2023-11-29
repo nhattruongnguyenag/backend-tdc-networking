@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.chatapp.commond.ResponseData;
-import com.chatapp.constant.SystemConstant;
 import com.chatapp.enums.FileType;
 import com.chatapp.service.FileUploadService;
 

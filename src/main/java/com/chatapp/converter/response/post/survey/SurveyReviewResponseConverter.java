@@ -1,13 +1,11 @@
 package com.chatapp.converter.response.post.survey;
 
 import com.chatapp.entity.QuestionEntity;
-import com.chatapp.entity.SurveyPostEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.entity.VoteAnswerEntity;
 import com.chatapp.enums.QuestionType;
 import com.chatapp.repository.ShortAnswerRepository;
 import com.chatapp.repository.UserRepository;
-import com.chatapp.repository.VoteAnswerRepository;
 import com.chatapp.converter.abstracts.BaseConverter;
 import com.chatapp.dto.response.post.survey.SurveyPreviewResponseDTO;
 import com.chatapp.dto.response.post.survey.TextPreviewResponseDTO;

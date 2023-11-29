@@ -61,7 +61,6 @@ import com.chatapp.repository.UserRepository;
 import com.chatapp.service.EmailService;
 import com.chatapp.service.UserService;
 import com.chatapp.util.TokenProvider;
-import com.google.api.client.util.DateTime;
 
 import jakarta.mail.MessagingException;
 
@@ -74,7 +73,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

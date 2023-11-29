@@ -3,7 +3,6 @@ package com.chatapp.converter.request.job_profile;
 import com.chatapp.converter.abstracts.BaseConverter;
 import com.chatapp.converter.response.user.UserInfoResponseConverter;
 import com.chatapp.dto.request.job_profile.JobApplyProfileRequestDTO;
-import com.chatapp.dto.response.user.UserInfoResponseDTO;
 import com.chatapp.entity.JobProfileEntity;
 import com.chatapp.enums.Role;
 import com.chatapp.repository.JobProfileRepository;
