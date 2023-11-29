@@ -2,10 +2,6 @@ package com.chatapp.dto.response.post;
 
 import java.util.List;
 
-import com.chatapp.dto.BaseDTO;
-
-
-import com.chatapp.dto.response.*;
 import com.chatapp.dto.response.group.GroupResponseDTO;
 import com.chatapp.dto.response.image.ImageResponseDTO;
 import com.chatapp.dto.response.post.comment.CommentResponeseDTO;

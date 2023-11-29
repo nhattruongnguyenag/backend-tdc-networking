@@ -133,6 +133,4 @@ public class PostSearchResponseConverter extends BaseConverter<PostEntity, PostS
         }
         return questionResponseDTOs;
     }
-
-    
 }
