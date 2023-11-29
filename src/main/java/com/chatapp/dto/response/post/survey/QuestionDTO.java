@@ -2,6 +2,7 @@ package com.chatapp.dto.response.post.survey;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.chatapp.dto.BaseDTO;
@@ -11,5 +12,5 @@ public class QuestionDTO extends BaseDTO {
     private String type;
     private String title;
     private Byte required;
-    private List<ChoiceDTO> choices;
+    private List<ChoiceDTO> choices = new ArrayList<>();
 }
