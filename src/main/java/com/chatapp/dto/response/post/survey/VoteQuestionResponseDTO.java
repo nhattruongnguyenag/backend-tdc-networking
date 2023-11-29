@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class VoteQuestionResponseDTO {
-    private Long voteQuestionId;
+    private Long id;
     private String content;
 }

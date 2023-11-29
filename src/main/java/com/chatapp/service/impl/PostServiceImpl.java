@@ -40,42 +40,13 @@ import com.chatapp.dto.response.post.comment.CommentResponeseDTO;
 import com.chatapp.dto.response.post.log.PostRejectLogDTO;
 import com.chatapp.dto.response.post.normal.NormalPostResponseDTO;
 import com.chatapp.dto.response.post.recruitment.RecruitmentPostResponseDTO;
-import com.chatapp.dto.response.post.survey.SurveyDTO;
-import com.chatapp.dto.response.post.survey.SurveyPreviewResponseDTO;
-import com.chatapp.dto.response.post.survey.SurveyResponeDTO;
-import com.chatapp.dto.response.post.survey.SurveyResultResponseDTO;
+import com.chatapp.dto.response.post.survey.*;
 import com.chatapp.dto.response.user.UserDetailInGroupResponseDTO;
 import com.chatapp.dto.response.user.UserInfoResponseDTO;
 import com.chatapp.dto.response.user.business.BusinessInfoResponseDTO;
 import com.chatapp.dto.response.user.faculty.FacultyInfoResponseDTO;
 import com.chatapp.dto.response.user.student.StudentInfoResponseDTO;
-import com.chatapp.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.chatapp.converter.request.post.comment.CommentSaveRequestConverter;
-import com.chatapp.converter.request.post.log.PostLogAddRequestConverter;
-import com.chatapp.converter.request.post.normal.NormalPostUpdateOrSaveRequestConverter;
-import com.chatapp.converter.request.post.normal.NormalPostUpdateRequestConverter;
-import com.chatapp.converter.request.post.recruitment.RecruitmentPostUpdateRequestConverter;
-import com.chatapp.converter.request.post.recruitment.RecruitmentPosyUpdateOrSaveRequestConverter;
-import com.chatapp.converter.request.post.survey.SurveySaveRequestConverter;
-import com.chatapp.converter.request.post.survey.SurveyUpdateRequestConverter;
-import com.chatapp.converter.request.user.like.LikeRequestConverter;
-import com.chatapp.converter.request.user.post_save.UserSavePostRequestConverter;
-import com.chatapp.dto.BaseDTO;
-import com.chatapp.entity.FollowEntity;
-import com.chatapp.entity.NormalPostEntity;
-import com.chatapp.entity.PostApprovalLogEntity;
-import com.chatapp.entity.PostCommentEntity;
-import com.chatapp.entity.PostEntity;
-import com.chatapp.entity.PostLikeEntity;
-import com.chatapp.entity.QuestionEntity;
-import com.chatapp.entity.RecruitmentPostEntity;
-import com.chatapp.entity.ShortAnswerEntity;
-import com.chatapp.entity.SurveyPostEntity;
-import com.chatapp.entity.UserEntity;
-import com.chatapp.entity.VoteAnswerEntity;
+import com.chatapp.entity.*;
 import com.chatapp.enums.PostType;
 import com.chatapp.enums.QuestionType;
 import com.chatapp.enums.Role;
@@ -84,6 +55,13 @@ import com.chatapp.service.PostService;
 import com.chatapp.util.TokenProvider;
 
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -174,6 +152,128 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     TokenProvider tokenProvider;
+
+    @Override
+    public boolean updateSurvey(SurveyDTO surveyDTO) {
+        PostEntity postEntity = postRepository.findOneById(surveyDTO.getPostId());
+        SurveyPostEntity surveyPostEntity = postEntity.getSurveyPost();
+
+        postEntity.setActive((byte) 0);
+        postEntity.setUpdatedAt(new Date());
+
+        if (surveyDTO.getTitle() != null) {
+            surveyPostEntity.setTitle(surveyDTO.getTitle());
+        }
+
+        if (surveyDTO.getDescription() != null) {
+            surveyPostEntity.setDescription(surveyDTO.getDescription());
+        }
+
+
+        List<QuestionDTO> questionUpdateDTOs = surveyDTO.getQuestions().stream().filter(question -> question.getId() != null).collect(Collectors.toList());
+        List<QuestionDTO> questionAddNewDTOs = surveyDTO.getQuestions().stream().filter(question -> question.getId() == null).collect(Collectors.toList());
+
+        processUpdateOldQuestion(questionUpdateDTOs, surveyPostEntity);
+
+        processDeleteRedundantQuestions(surveyPostEntity, questionUpdateDTOs);
+
+        processAddNewQuestion(questionAddNewDTOs, surveyPostEntity);
+
+        try {
+            return postRepository.save(postEntity) != null;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    private static void processUpdateOldQuestion(List<QuestionDTO> questionUpdateDTOs, SurveyPostEntity surveyPostEntity) {
+        int questionIndex = 0;
+        final int QUESTION_ENTITY_LENGTH = surveyPostEntity.getQuestions().size();
+
+        while (questionIndex < questionUpdateDTOs.size()) {
+            QuestionDTO questionDTO = questionUpdateDTOs.get(questionIndex);
+            if (questionIndex < QUESTION_ENTITY_LENGTH) {
+                QuestionEntity questionEntity = surveyPostEntity.getQuestions().stream().filter(item -> item.getId().equals(questionDTO.getId()))
+                        .findFirst().orElse(null);
+
+                if (questionEntity != null) {
+                    if (questionDTO.getTitle() != null) {
+                        questionEntity.setTitle(questionDTO.getTitle());
+                    }
+
+                    questionEntity.setRequired(questionDTO.getRequired());
+
+                    int choiceIndex = 0;
+                    final int CHOICE_ENTITY_LENGTH = questionEntity.getVoteAnswers().size();
+
+                    List<ChoiceDTO> choiceUpdateDTOs = questionDTO.getChoices().stream().filter(choice -> choice.getId() != null).collect(Collectors.toList());
+                    List<ChoiceDTO> choiceAddNewDTOs = questionDTO.getChoices().stream().filter(choice -> choice.getId() == null).collect(Collectors.toList());
+
+                    while (choiceIndex < choiceUpdateDTOs.size()) {
+                        ChoiceDTO choiceDTO = choiceUpdateDTOs.get(choiceIndex);
+                        if (choiceIndex < CHOICE_ENTITY_LENGTH) {
+                            VoteAnswerEntity choiceEntity = questionEntity.getVoteAnswers().stream().filter(choice -> choice.getId().equals(choiceDTO.getId())).findFirst().orElse(null);
+                            if (choiceEntity != null) {
+                                choiceEntity.setContent(choiceDTO.getContent());
+                            }
+                        }
+                        choiceIndex++;
+                    }
+
+                    choiceIndex = 0;
+                    while (choiceIndex < questionEntity.getVoteAnswers().size()) {
+                        VoteAnswerEntity choiceEntity = questionEntity.getVoteAnswers().get(choiceIndex);
+                        ChoiceDTO choiceDTO = choiceUpdateDTOs.stream().filter(item -> item.getId().equals(choiceEntity.getId())).findFirst().orElse(null);
+                        if (choiceDTO == null) {
+                            questionEntity.getVoteAnswers().remove(choiceIndex);
+                            choiceIndex--;
+                        }
+                        choiceIndex++;
+                    }
+
+                    for (ChoiceDTO choiceDTO: choiceAddNewDTOs) {
+                        VoteAnswerEntity voteAnswerEntity = new VoteAnswerEntity();
+                        voteAnswerEntity.setContent(choiceDTO.getContent());
+                        voteAnswerEntity.setQuestion(questionEntity);
+                        questionEntity.getVoteAnswers().add(voteAnswerEntity);
+                    }
+                }
+            }
+            questionIndex++;
+        }
+    }
+
+    private static void processAddNewQuestion(List<QuestionDTO> questionAddNewDTOs, SurveyPostEntity surveyPostEntity) {
+        for (QuestionDTO questionDTO : questionAddNewDTOs) {
+            QuestionEntity questionEntity = new QuestionEntity();
+            questionEntity.setTitle(questionDTO.getTitle());
+            questionEntity.setType(questionDTO.getType());
+            questionEntity.setRequired(questionDTO.getRequired());
+            questionEntity.setSurvey(surveyPostEntity);
+
+            for (ChoiceDTO choiceDTO : questionDTO.getChoices()) {
+                VoteAnswerEntity voteAnswerEntity = new VoteAnswerEntity();
+                voteAnswerEntity.setContent(choiceDTO.getContent());
+                voteAnswerEntity.setQuestion(questionEntity);
+                questionEntity.getVoteAnswers().add(voteAnswerEntity);
+            }
+
+            surveyPostEntity.getQuestions().add(questionEntity);
+        }
+    }
+
+    private static void processDeleteRedundantQuestions(SurveyPostEntity surveyPostEntity, List<QuestionDTO> questionUpdateDTOs) {
+        int questionIndex = 0;
+        while (questionIndex <  surveyPostEntity.getQuestions().size()) {
+            QuestionEntity questionEntity = surveyPostEntity.getQuestions().get(questionIndex);
+            QuestionDTO questionDTO = questionUpdateDTOs.stream().filter(item -> item.getId().equals(questionEntity.getId())).findFirst().orElse(null);
+            if (questionDTO == null) {
+                surveyPostEntity.getQuestions().remove(questionIndex);
+                questionIndex--;
+            }
+            questionIndex++;
+        }
+    }
 
     @Override
     public List<PostSearchResponseDTO> findPosts(PostSearchRequestDTO requestDTO) {
@@ -790,11 +890,5 @@ public class PostServiceImpl implements PostService {
         return surveyDTO;
     }
 
-    @Override
-    public boolean updateSurvey(SurveyDTO surveyDTO) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateSurvey'");
-    }
 
-    
 }

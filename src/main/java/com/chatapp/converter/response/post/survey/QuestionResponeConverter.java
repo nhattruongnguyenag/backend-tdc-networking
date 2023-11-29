@@ -4,7 +4,6 @@ import com.chatapp.converter.abstracts.BaseConverter;
 import com.chatapp.dto.response.post.survey.QuestionResponseDTO;
 import com.chatapp.dto.response.post.survey.VoteQuestionResponseDTO;
 import com.chatapp.entity.QuestionEntity;
-import com.chatapp.entity.ShortAnswerEntity;
 import com.chatapp.entity.VoteAnswerEntity;
 import com.chatapp.enums.QuestionType;
 
@@ -22,7 +21,7 @@ public class QuestionResponeConverter extends BaseConverter<QuestionEntity, Ques
         if (entity.getType().equals(QuestionType.MULTIPLE.getName()) || entity.getType().equals(QuestionType.ONE.getName())) {
             for (VoteAnswerEntity voteAnswerEntity : entity.getVoteAnswers()) {
                 VoteQuestionResponseDTO voteQuestionResponseDTO = new VoteQuestionResponseDTO();
-                voteQuestionResponseDTO.setVoteQuestionId(voteAnswerEntity.getId());
+                voteQuestionResponseDTO.setId(voteAnswerEntity.getId());
                 voteQuestionResponseDTO.setContent(voteAnswerEntity.getContent());
                 choices.add(voteQuestionResponseDTO);
             }
