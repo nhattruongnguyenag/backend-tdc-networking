@@ -302,7 +302,7 @@ public class UserServiceImpl implements UserService {
 
     // studentInfo service
     @Override
-    public AuthTokenDTO studentRegister(StudentInfoRegisterRequestDTO studentRegisterDTO) {
+    public AuthTokenDTO studentRegister(StudentInfoRegisterRequestDTO studentRegisterDTO) throws MessagingException, UnsupportedEncodingException {
         UserEntity userEntity;
         RoleEntity roleEntity = roleRepository.findOneByCode(Role.STUDENT.getName());
         List<RoleEntity> roles = new ArrayList<RoleEntity>();
@@ -328,6 +328,11 @@ public class UserServiceImpl implements UserService {
 
         // SecurityContextHolder.getContext().setAuthentication(authentication);
         final String token = tokenProvider.generateToken(studentRegisterDTO.getEmail());
+        EmailRequestDTO emailRequestDTO = new EmailRequestDTO();
+        emailRequestDTO.setTo(studentRegisterDTO.getEmail());
+        emailRequestDTO.setSubject(studentRegisterDTO.getSubject());
+        emailRequestDTO.setContent(studentRegisterDTO.getContent());
+        sendEmailAuthenticationRegister(emailRequestDTO);
         return new AuthTokenDTO(token);
     }
 
@@ -377,7 +382,7 @@ public class UserServiceImpl implements UserService {
 
     // facultyInfo service
     @Override
-    public AuthTokenDTO facultyRegister(FacultyInfoRegisterRequestDTO facultyInfoRegisterRequestDTO) {
+    public AuthTokenDTO facultyRegister(FacultyInfoRegisterRequestDTO facultyInfoRegisterRequestDTO) throws MessagingException, UnsupportedEncodingException{
         UserEntity userEntity;
         RoleEntity roleEntity = roleRepository.findOneByCode(Role.FACULTY.getName());
         List<RoleEntity> roles = new ArrayList<RoleEntity>();
@@ -399,6 +404,11 @@ public class UserServiceImpl implements UserService {
         userRepository.save(userEntity);
 
         final String token = tokenProvider.generateToken(facultyInfoRegisterRequestDTO.getEmail());
+        EmailRequestDTO emailRequestDTO = new EmailRequestDTO();
+        emailRequestDTO.setTo(facultyInfoRegisterRequestDTO.getEmail());
+        emailRequestDTO.setSubject(facultyInfoRegisterRequestDTO.getSubject());
+        emailRequestDTO.setContent(facultyInfoRegisterRequestDTO.getContent());
+        sendEmailAuthenticationRegister(emailRequestDTO);
         return new AuthTokenDTO(token);
     }
 
@@ -450,7 +460,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public AuthTokenDTO businessRegister(BusinessInfoRegisterRequestDTO businessInfoRegisterRequestDTO) {
+    public AuthTokenDTO businessRegister(BusinessInfoRegisterRequestDTO businessInfoRegisterRequestDTO) throws MessagingException, UnsupportedEncodingException{
         UserEntity userEntity;
         RoleEntity roleEntity = roleRepository.findOneByCode(Role.BUSINESS.getName());
         List<RoleEntity> roles = new ArrayList<RoleEntity>();
@@ -472,6 +482,11 @@ public class UserServiceImpl implements UserService {
         userRepository.save(userEntity);
 
         final String token = tokenProvider.generateToken(businessInfoRegisterRequestDTO.getEmail());
+        EmailRequestDTO emailRequestDTO = new EmailRequestDTO();
+        emailRequestDTO.setTo(businessInfoRegisterRequestDTO.getEmail());
+        emailRequestDTO.setSubject(businessInfoRegisterRequestDTO.getSubject());
+        emailRequestDTO.setContent(businessInfoRegisterRequestDTO.getContent());
+        sendEmailAuthenticationRegister(emailRequestDTO);
         return new AuthTokenDTO(token);
     }
 
@@ -535,17 +550,7 @@ public class UserServiceImpl implements UserService {
         }
         return userFindResponseDTOs;
     }
-
-    @Override
-    public List<AuthTokenDTO> facultiesRegister(List<FacultyInfoRegisterRequestDTO> facultyInfoRegisterRequestDTOs) {
-        List<AuthTokenDTO> tokenDTOs = new ArrayList<AuthTokenDTO>();
-        for (FacultyInfoRegisterRequestDTO facultyInfoRegisterRequestDTO : facultyInfoRegisterRequestDTOs) {
-            AuthTokenDTO token = this.facultyRegister(facultyInfoRegisterRequestDTO);
-            tokenDTOs.add(token);
-        }
-        return tokenDTOs;
-    }
-
+    
     @Override
     public String follow(UserFollowRequestDTO userFollowRequestDTO) {
         if (userRepository.findById(userFollowRequestDTO.getUserId()) == null) {

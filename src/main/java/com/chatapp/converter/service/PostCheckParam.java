@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.chatapp.entity.PostEntity;
 import com.chatapp.entity.QuestionEntity;
 import com.chatapp.entity.RecruitmentPostEntity;
 import com.chatapp.entity.SurveyPostEntity;
@@ -57,5 +58,13 @@ public class PostCheckParam {
             isApplied = Long.valueOf(1);
         }
         return isApplied;
+    }
+
+    public Long checkUserLoginHadSavePost(PostEntity postEntity, Long userLogin) {
+        Long isSave = Long.valueOf(0);
+        if (userRepository.findOneById(userLogin).getPostSave().contains(postEntity)) {
+            isSave = Long.valueOf(1);
+        }
+        return isSave;
     }
 }

@@ -10,4 +10,6 @@ public class FacultyInfoRegisterRequestDTO {
     private String image;
     private String phone;
     private String code;
+    private String subject;
+    private String content;
 }

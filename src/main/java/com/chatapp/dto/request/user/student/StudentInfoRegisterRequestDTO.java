@@ -14,4 +14,6 @@ public class StudentInfoRegisterRequestDTO {
     private Long facultyId;
     private Long majorId;
     private String studentCode;
+    private String subject;
+    private String content;
 }

@@ -1,5 +1,6 @@
 package com.chatapp.controller.api;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import com.chatapp.dto.request.user.business.BusinessInfoUpdateOrSaveRequestDTO;
 import com.chatapp.dto.response.user.UserInfoResponseDTO;
 import com.chatapp.dto.response.user.business.BusinessInfoResponseDTO;
 import com.chatapp.service.UserService;
+
+import jakarta.mail.MessagingException;
 
 @RestController
 @RequestMapping("/api")
@@ -45,7 +48,7 @@ public class BusinessInfoAPI {
 
     @PostMapping({ "business/register", "business/register/" })
     ResponseEntity<ResponseData<AuthTokenDTO>> businessRegister(
-            @RequestBody BusinessInfoRegisterRequestDTO businessInfoRegisterRequestDTO) {
+            @RequestBody BusinessInfoRegisterRequestDTO businessInfoRegisterRequestDTO) throws MessagingException, UnsupportedEncodingException{
         ResponseData<AuthTokenDTO> responseData = new ResponseData<>(HttpStatus.CREATED, "register success",
                 userService.businessRegister(businessInfoRegisterRequestDTO));
         return ResponseEntity.created(null).body(responseData);

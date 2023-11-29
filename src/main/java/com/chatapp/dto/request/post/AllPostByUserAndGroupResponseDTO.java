@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class AllPostByUserAndGroupResponseDTO {
     Long userLogin;
-    Long userId;
+    Integer userId;
     String code;
 }

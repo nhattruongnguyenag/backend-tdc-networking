@@ -2,6 +2,7 @@ package com.chatapp.repository.impl;
 
 import com.chatapp.dto.request.post.PostSearchRequestDTO;
 import com.chatapp.entity.PostEntity;
+import com.chatapp.enums.PostType;
 import com.chatapp.repository.CustomizedPostRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -54,6 +55,21 @@ public class CustomizedPostRepositoryImpl implements CustomizedPostRepository {
         if (isValid(dto.getGroup())) {
             joinQuery.append("\nJOIN p.group as g");
             whereQuery.append("\nAND g.code LIKE ").append("'%").append(dto.getGroup()).append("%'");
+        }
+
+        if(isValid(dto.getSearch())){
+            if(dto.getType().equals(PostType.NORMAL.getName())){
+                joinQuery.append("\nJOIN p.normalPost as normal");
+                whereQuery.append("\nAND normal.content LIKE ").append("'%").append(dto.getSearch()).append("%'");
+            }
+            if(dto.getType().equals(PostType.SURVEY.getName())){
+                joinQuery.append("\nJOIN p.surveyPost as survey");
+                whereQuery.append("\nAND survey.title LIKE ").append("'%").append(dto.getSearch()).append("%'");
+            }
+            if(dto.getType().equals(PostType.RECRUIMENT.getName())){
+                joinQuery.append("\nJOIN p.recruitmentPost as recruitment");
+                whereQuery.append("\nAND recruitment.title LIKE ").append("'%").append(dto.getSearch()).append("%'");
+            }
         }
     }
 

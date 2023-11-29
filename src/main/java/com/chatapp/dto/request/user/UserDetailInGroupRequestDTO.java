@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class UserDetailInGroupRequestDTO {
-    private Long userId;
+    private Integer userId;
     private String groupCode;
     private Long userLogin;
 }

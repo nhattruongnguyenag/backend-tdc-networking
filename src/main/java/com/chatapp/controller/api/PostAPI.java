@@ -251,17 +251,17 @@ public class PostAPI {
     }
 
     @GetMapping({ "posts/group", "posts/group/" })
-    public ResponseEntity<ResponseData<List<BaseDTO>>> getByGroupId(@RequestParam String code,
+    public ResponseEntity<ResponseData<List<PostSearchResponseDTO>>> getByGroupId(@RequestParam String code,
             @RequestParam Long userLogin) {
-        ResponseData<List<BaseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
+        ResponseData<List<PostSearchResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
                 postService.findAllByGroupCode(code, userLogin));
         return ResponseEntity.ok(responseData);
     }
 
     @PostMapping({ "posts/group/user", "posts/group/user/" })
-    public ResponseEntity<ResponseData<List<BaseDTO>>> getByUserIdAndGroupCode(
+    public ResponseEntity<ResponseData<List<PostSearchResponseDTO>>> getByUserIdAndGroupCode(
             @RequestBody AllPostByUserAndGroupResponseDTO allPostByUserAndGroupResponseDTO) {
-        ResponseData<List<BaseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
+        ResponseData<List<PostSearchResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
                 postService.getAllPostByUserIdAndGroupCode(allPostByUserAndGroupResponseDTO));
         return ResponseEntity.ok(responseData);
     }

@@ -12,4 +12,5 @@ public class PostSearchRequestDTO {
     private Long postId;
     private String type;
     private Long userLogin;
+    private String search;
 }

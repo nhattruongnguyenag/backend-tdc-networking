@@ -80,6 +80,9 @@ public class PostSearchResponseConverter extends BaseConverter<PostEntity, PostS
         NormalPostSearchResponseDTO normalPostResponseDTO = new NormalPostSearchResponseDTO();
         BeanUtils.copyProperties(postSearchResponeDTO, normalPostResponseDTO);
         BeanUtils.copyProperties(entity.getNormalPost(), normalPostResponseDTO, "id");
+        if(entity.getUserLogin() != null){
+            normalPostResponseDTO.setIsSave(postCheckParam.checkUserLoginHadSavePost(entity, entity.getUserLogin()));
+        }
         return normalPostResponseDTO;
     }
 
@@ -89,6 +92,7 @@ public class PostSearchResponseConverter extends BaseConverter<PostEntity, PostS
         BeanUtils.copyProperties(entity.getSurveyPost(), surveyResponeDTO, "id");
         surveyResponeDTO.setQuestions(getQuestionResponseDTOGroup(entity));
         if(entity.getUserLogin() != null){
+            surveyResponeDTO.setIsSave(postCheckParam.checkUserLoginHadSavePost(entity, entity.getUserLogin()));
             surveyResponeDTO.setIsConduct(postCheckParam.checkUserLoginHadConducted(entity.getSurveyPost(), entity.getUserLogin()));
         }
         return surveyResponeDTO;
@@ -100,6 +104,7 @@ public class PostSearchResponseConverter extends BaseConverter<PostEntity, PostS
         BeanUtils.copyProperties(entity.getRecruitmentPost(), recruitmentPostResponseDTO, "id");
         recruitmentPostResponseDTO.setExpiration(DateTimeUtil.convertToTimestamp(entity.getRecruitmentPost().getExpiration()));
         if(entity.getUserLogin() != null){
+            recruitmentPostResponseDTO.setIsSave(postCheckParam.checkUserLoginHadSavePost(entity, entity.getUserLogin()));
             recruitmentPostResponseDTO.setIsApplyJob(postCheckParam.checkUserLoginHadApplied(entity.getRecruitmentPost(), entity.getUserLogin()));
         }
         return recruitmentPostResponseDTO;

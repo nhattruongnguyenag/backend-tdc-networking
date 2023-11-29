@@ -55,21 +55,20 @@ public interface UserService {
     UserInfoResponseDTO getUserById(UserGetRequestDTO userGetRequestDTO);
 
     //student service
-    AuthTokenDTO studentRegister(StudentInfoRegisterRequestDTO studentRegisterDTO);
+    AuthTokenDTO studentRegister(StudentInfoRegisterRequestDTO studentRegisterDTO) throws MessagingException, UnsupportedEncodingException;
     List<StudentInfoResponseDTO> findAllStudentInfo();
     AuthTokenDTO studentUpdateOrSave(StudentInfoUpdateOrSaveRequestDTO studentInfoUpdateOrSaveRequestDTO);
     StudentInfoResponseDTO getStudentDetailByUserId(Long userId);
 
     //faculty service
     List<FacultyInfoResponseDTO> findAllFacultyInfo();
-    AuthTokenDTO facultyRegister(FacultyInfoRegisterRequestDTO facultyInfoRegisterRequestDTO);
-    List<AuthTokenDTO> facultiesRegister(List<FacultyInfoRegisterRequestDTO> facultyInfoRegisterRequestDTOs);
+    AuthTokenDTO facultyRegister(FacultyInfoRegisterRequestDTO facultyInfoRegisterRequestDTO) throws MessagingException, UnsupportedEncodingException;
     AuthTokenDTO facultyUpdateOrSave(FacultyInfoUpdateOrSaveRequestDTO facultyInfoUpdateOrSaveRequestDTO);
     FacultyInfoResponseDTO getFacultyDetailByUserId(Long userId);
 
     //business
     List<BusinessInfoResponseDTO> findAllBusinessInfo();
-    AuthTokenDTO businessRegister(BusinessInfoRegisterRequestDTO businessInfoRegisterRequestDTO);
+    AuthTokenDTO businessRegister(BusinessInfoRegisterRequestDTO businessInfoRegisterRequestDTO) throws MessagingException, UnsupportedEncodingException;
     AuthTokenDTO businessUpdateOrSave(BusinessInfoUpdateOrSaveRequestDTO businessInfoUpdateOrSaveRequestDTO);
     BusinessInfoResponseDTO getBusinessDetailByUserId(Long userId);
 

@@ -80,23 +80,23 @@ public interface PostService {
     String deleteComment(CommentDeleteRequestDTO commentDeleteRequestDTO);
 
     // find
-    List<BaseDTO> findPostByName(PostFindRequestDTO postFindRequestDTO);
+    List<PostSearchResponseDTO> findPostByName(PostFindRequestDTO postFindRequestDTO);
 
     // find comments
     List<CommentResponeseDTO> findCommentByPostId(Long postId);
 
     List<BaseDTO> findAllByRoleCode(String code);
 
-    List<BaseDTO> findAllByGroupCode(String groupCode, Long userLogin);
+    List<PostSearchResponseDTO> findAllByGroupCode(String groupCode, Long userLogin);
 
     List<BaseDTO> getAllPostByUserIdAndType(Long userId, String type);
 
-    List<BaseDTO> getAllPostByUserIdAndGroupCode(AllPostByUserAndGroupResponseDTO allPostByUserAndGroupResponseDTO);
+    List<PostSearchResponseDTO> getAllPostByUserIdAndGroupCode(AllPostByUserAndGroupResponseDTO allPostByUserAndGroupResponseDTO);
 
     // user save post
     String userSavePost(UserSavePostRequestDTO userSavePostRequestDTO);
 
-    List<BaseDTO> getPostSaveByUserId(Long userId);
+    List<PostSearchResponseDTO> getPostSaveByUserId(Long userId);
 
     UserDetailInGroupResponseDTO getUserPageInGroup(UserDetailInGroupRequestDTO userDetailInGroupRequestDTO);
 

@@ -14,4 +14,6 @@ public class BusinessInfoRegisterRequestDTO {
     private String taxCode;
     private String address;
     private String activeTime;
+    private String subject;
+    private String content;
 }

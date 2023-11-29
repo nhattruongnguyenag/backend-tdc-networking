@@ -314,8 +314,8 @@ Content-Type: application/json
 
 {
     "userLogin":3,
-    "type":"tuyen-dung",
-    "name":"asd"
+    "type":"khao-sat",
+    "name":""
 }
 
 ###
