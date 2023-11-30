@@ -794,8 +794,8 @@ public class UserServiceImpl implements UserService {
         if (userImageUpdateRequestDTO.getAvatar() != null) {
             entity.setImage(userImageUpdateRequestDTO.getAvatar());
         }
-        if (userImageUpdateRequestDTO.getBackgroud() != null) {
-            entity.setBackground(userImageUpdateRequestDTO.getBackgroud());
+        if (userImageUpdateRequestDTO.getBackground() != null) {
+            entity.setBackground(userImageUpdateRequestDTO.getBackground());
         }
         userRepository.save(entity);
         return "";

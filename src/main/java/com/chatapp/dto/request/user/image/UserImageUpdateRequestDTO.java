@@ -6,5 +6,5 @@ import lombok.Data;
 public class UserImageUpdateRequestDTO {
     private Long userId;
     private String avatar;
-    private String backgroud;
+    private String background;
 }
