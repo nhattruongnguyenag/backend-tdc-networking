@@ -176,9 +176,10 @@ public class PostServiceImpl implements PostService {
             surveyPostEntity.setDescription(surveyDTO.getDescription());
         }
 
-
-        List<QuestionDTO> questionUpdateDTOs = surveyDTO.getQuestions().stream().filter(question -> question.getId() != null).collect(Collectors.toList());
-        List<QuestionDTO> questionAddNewDTOs = surveyDTO.getQuestions().stream().filter(question -> question.getId() == null).collect(Collectors.toList());
+        List<QuestionDTO> questionUpdateDTOs = surveyDTO.getQuestions().stream()
+                .filter(question -> question.getId() != null).collect(Collectors.toList());
+        List<QuestionDTO> questionAddNewDTOs = surveyDTO.getQuestions().stream()
+                .filter(question -> question.getId() == null).collect(Collectors.toList());
 
         processUpdateOldQuestion(questionUpdateDTOs, surveyPostEntity);
 
@@ -193,14 +194,16 @@ public class PostServiceImpl implements PostService {
         }
     }
 
-    private static void processUpdateOldQuestion(List<QuestionDTO> questionUpdateDTOs, SurveyPostEntity surveyPostEntity) {
+    private static void processUpdateOldQuestion(List<QuestionDTO> questionUpdateDTOs,
+            SurveyPostEntity surveyPostEntity) {
         int questionIndex = 0;
         final int QUESTION_ENTITY_LENGTH = surveyPostEntity.getQuestions().size();
 
         while (questionIndex < questionUpdateDTOs.size()) {
             QuestionDTO questionDTO = questionUpdateDTOs.get(questionIndex);
             if (questionIndex < QUESTION_ENTITY_LENGTH) {
-                QuestionEntity questionEntity = surveyPostEntity.getQuestions().stream().filter(item -> item.getId().equals(questionDTO.getId()))
+                QuestionEntity questionEntity = surveyPostEntity.getQuestions().stream()
+                        .filter(item -> item.getId().equals(questionDTO.getId()))
                         .findFirst().orElse(null);
 
                 if (questionEntity != null) {
@@ -213,13 +216,17 @@ public class PostServiceImpl implements PostService {
                     int choiceIndex = 0;
                     final int CHOICE_ENTITY_LENGTH = questionEntity.getVoteAnswers().size();
 
-                    List<ChoiceDTO> choiceUpdateDTOs = questionDTO.getChoices().stream().filter(choice -> choice.getId() != null).collect(Collectors.toList());
-                    List<ChoiceDTO> choiceAddNewDTOs = questionDTO.getChoices().stream().filter(choice -> choice.getId() == null).collect(Collectors.toList());
+                    List<ChoiceDTO> choiceUpdateDTOs = questionDTO.getChoices().stream()
+                            .filter(choice -> choice.getId() != null).collect(Collectors.toList());
+                    List<ChoiceDTO> choiceAddNewDTOs = questionDTO.getChoices().stream()
+                            .filter(choice -> choice.getId() == null).collect(Collectors.toList());
 
                     while (choiceIndex < choiceUpdateDTOs.size()) {
                         ChoiceDTO choiceDTO = choiceUpdateDTOs.get(choiceIndex);
                         if (choiceIndex < CHOICE_ENTITY_LENGTH) {
-                            VoteAnswerEntity choiceEntity = questionEntity.getVoteAnswers().stream().filter(choice -> choice.getId().equals(choiceDTO.getId())).findFirst().orElse(null);
+                            VoteAnswerEntity choiceEntity = questionEntity.getVoteAnswers().stream()
+                                    .filter(choice -> choice.getId().equals(choiceDTO.getId())).findFirst()
+                                    .orElse(null);
                             if (choiceEntity != null) {
                                 choiceEntity.setContent(choiceDTO.getContent());
                             }
@@ -230,7 +237,8 @@ public class PostServiceImpl implements PostService {
                     choiceIndex = 0;
                     while (choiceIndex < questionEntity.getVoteAnswers().size()) {
                         VoteAnswerEntity choiceEntity = questionEntity.getVoteAnswers().get(choiceIndex);
-                        ChoiceDTO choiceDTO = choiceUpdateDTOs.stream().filter(item -> item.getId().equals(choiceEntity.getId())).findFirst().orElse(null);
+                        ChoiceDTO choiceDTO = choiceUpdateDTOs.stream()
+                                .filter(item -> item.getId().equals(choiceEntity.getId())).findFirst().orElse(null);
                         if (choiceDTO == null) {
                             questionEntity.getVoteAnswers().remove(choiceIndex);
                             choiceIndex--;
@@ -238,7 +246,7 @@ public class PostServiceImpl implements PostService {
                         choiceIndex++;
                     }
 
-                    for (ChoiceDTO choiceDTO: choiceAddNewDTOs) {
+                    for (ChoiceDTO choiceDTO : choiceAddNewDTOs) {
                         VoteAnswerEntity voteAnswerEntity = new VoteAnswerEntity();
                         voteAnswerEntity.setContent(choiceDTO.getContent());
                         voteAnswerEntity.setQuestion(questionEntity);
@@ -269,11 +277,13 @@ public class PostServiceImpl implements PostService {
         }
     }
 
-    private static void processDeleteRedundantQuestions(SurveyPostEntity surveyPostEntity, List<QuestionDTO> questionUpdateDTOs) {
+    private static void processDeleteRedundantQuestions(SurveyPostEntity surveyPostEntity,
+            List<QuestionDTO> questionUpdateDTOs) {
         int questionIndex = 0;
-        while (questionIndex <  surveyPostEntity.getQuestions().size()) {
+        while (questionIndex < surveyPostEntity.getQuestions().size()) {
             QuestionEntity questionEntity = surveyPostEntity.getQuestions().get(questionIndex);
-            QuestionDTO questionDTO = questionUpdateDTOs.stream().filter(item -> item.getId().equals(questionEntity.getId())).findFirst().orElse(null);
+            QuestionDTO questionDTO = questionUpdateDTOs.stream()
+                    .filter(item -> item.getId().equals(questionEntity.getId())).findFirst().orElse(null);
             if (questionDTO == null) {
                 surveyPostEntity.getQuestions().remove(questionIndex);
                 questionIndex--;
@@ -339,7 +349,6 @@ public class PostServiceImpl implements PostService {
         }
         return dtos;
     }
-
 
     // normal post
     @Override
@@ -591,7 +600,7 @@ public class PostServiceImpl implements PostService {
         return toCustomListPost(requestDTO);
     }
 
-    private List<PostSearchResponseDTO> toCustomListPost(PostSearchRequestDTO requestDTO){
+    private List<PostSearchResponseDTO> toCustomListPost(PostSearchRequestDTO requestDTO) {
         List<PostEntity> postEntities = customizedPostRepository.findPosts(requestDTO);
         for (PostEntity postEntity : postEntities) {
             postEntity.setUserLogin(requestDTO.getUserLogin());
@@ -774,11 +783,6 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public UserDetailInGroupResponseDTO getUserPageInGroup(UserDetailInGroupRequestDTO userDetailInGroupRequestDTO) {
-        AllPostByUserAndGroupResponseDTO allPostByUserAndGroupResponseDTO = new AllPostByUserAndGroupResponseDTO();
-        allPostByUserAndGroupResponseDTO.setUserId(userDetailInGroupRequestDTO.getUserId());
-        allPostByUserAndGroupResponseDTO.setCode(userDetailInGroupRequestDTO.getGroupCode());
-        allPostByUserAndGroupResponseDTO.setUserLogin(userDetailInGroupRequestDTO.getUserLogin());
-
         UserDetailInGroupResponseDTO userDetailInGroupResponseDTO = new UserDetailInGroupResponseDTO();
 
         UserInfoResponseDTO userInfoResponseDTO = userInfoResponseConverter
@@ -797,7 +801,16 @@ public class PostServiceImpl implements PostService {
         }
 
         userDetailInGroupResponseDTO.setUser(userInfoResponseDTO);
-        List<PostSearchResponseDTO> posts = this.getAllPostByUserIdAndGroupCode(allPostByUserAndGroupResponseDTO);
+
+        List<PostSearchResponseDTO> posts = null;
+
+        if (userDetailInGroupRequestDTO.getGroupCode() != null) {
+            AllPostByUserAndGroupResponseDTO allPostByUserAndGroupResponseDTO = new AllPostByUserAndGroupResponseDTO();
+            allPostByUserAndGroupResponseDTO.setUserId(userDetailInGroupRequestDTO.getUserId());
+            allPostByUserAndGroupResponseDTO.setCode(userDetailInGroupRequestDTO.getGroupCode());
+            allPostByUserAndGroupResponseDTO.setUserLogin(userDetailInGroupRequestDTO.getUserLogin());
+            posts = this.getAllPostByUserIdAndGroupCode(allPostByUserAndGroupResponseDTO);
+        }
 
         userDetailInGroupResponseDTO.setPosts(posts);
         return userDetailInGroupResponseDTO;
@@ -896,6 +909,4 @@ public class PostServiceImpl implements PostService {
         SurveyDTO surveyDTO = surveyConverter.toDTO(surveyPostRepository.findOneByPost_Id(postId));
         return surveyDTO;
     }
-
-
 }

@@ -13,6 +13,7 @@ public class UserInfoResponseDTO extends BaseDTO {
     private String email;
     private String name;
     private String image;
+    private String background;
     private String phone;
     private Byte status;
     private String code;
