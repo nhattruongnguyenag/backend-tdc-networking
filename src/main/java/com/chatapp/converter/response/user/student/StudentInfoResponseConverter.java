@@ -57,7 +57,7 @@ public class StudentInfoResponseConverter extends BaseConverter<StudentInfoEntit
     }
 
     private GroupDefault getFacultyGroupCode(UserEntity userEntity) {
-        String falcutyName = userEntity.getStudentInfo().getFaculty().getUser().getName();
+        String falcutyName = userEntity.getStudentInfo().getFaculty().getUser().getCode();
         if (falcutyName.equals(GroupDefault.GROUP_DIEN_DIEN_TU.getName())) {
             return GroupDefault.GROUP_DIEN_DIEN_TU;
         } else if (falcutyName.equals(GroupDefault.GROUP_CONG_NGHE_THONG_TIN.getName())) {
