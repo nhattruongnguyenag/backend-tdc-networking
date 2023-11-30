@@ -2,15 +2,17 @@ package com.chatapp.service.impl;
 
 import java.util.List;
 
+import com.chatapp.converter.response.job_profile.JobProfilePendingResponseConverter;
 import com.chatapp.dto.request.job_profile.JobApplyProfileRequestDTO;
 import com.chatapp.dto.request.job_profile.JobProfileUpdateRequestDTO;
-import com.chatapp.dto.response.job_profile.JobProfileResponseDTO;
+import com.chatapp.dto.response.job_profile.JobProfileManageResponseDTO;
+import com.chatapp.dto.response.job_profile.JobProfilePendingResponseDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.chatapp.converter.request.job_profile.JobApplyProfileRequestConverter;
-import com.chatapp.converter.response.job_profile.JobProfileResponseConverter;
+import com.chatapp.converter.response.job_profile.JobProfileManageResponseConverter;
 import com.chatapp.converter.response.user.UserInfoResponseConverter;
 import com.chatapp.entity.JobProfileEntity;
 import com.chatapp.entity.PostEntity;
@@ -26,9 +28,10 @@ import com.chatapp.service.JobProfileService;
 public class JobprofileServiceImpl implements JobProfileService {
     @Autowired
     JobApplyProfileRequestConverter jobApplyProfileRequestConverter;
-
     @Autowired
-    JobProfileResponseConverter jobProfileResponseConverter;
+    private JobProfilePendingResponseConverter jobProfileManageResponseConverter;
+    @Autowired
+    JobProfileManageResponseConverter jobProfileResponseConverter;
     @Autowired
     UserInfoResponseConverter userInfoResponseConverter;
 
@@ -68,7 +71,7 @@ public class JobprofileServiceImpl implements JobProfileService {
     }
 
     @Override
-    public List<JobProfileResponseDTO> getJobprofileByPostId(Long postId) {
+    public List<JobProfileManageResponseDTO> getJobprofileByPostId(Long postId) {
         if (postRepository.findOneById(postId) == null) {
             throw new RuntimeException("this_post_does_not_exist");
         }
@@ -76,14 +79,13 @@ public class JobprofileServiceImpl implements JobProfileService {
         if (!postEntity.getType().equals(PostType.RECRUIMENT.getName())) {
             throw new RuntimeException("this_post_is_not_a_recruitment");
         }
-        List<JobProfileResponseDTO> jobProfileResponseDTOs = jobProfileResponseConverter
-                .toDTOGroup(jobProfileRepository.findAllByPost_Id(postId));
+        List<JobProfileManageResponseDTO> jobProfileResponseDTOs = jobProfileManageResponseConverter.toDTOGroup(jobProfileRepository.findAllByPost_Id(postId));
         return jobProfileResponseDTOs;
     }
 
     @Override
-    public JobProfileResponseDTO getJobProfileDetail(Long jobId) {
-        JobProfileResponseDTO jobProfileResponseDTO = jobProfileResponseConverter
+    public JobProfilePendingResponseDTO getJobProfileDetail(Long jobId) {
+        JobProfilePendingResponseDTO jobProfileResponseDTO = jobProfileResponseConverter
                 .toDTO(jobProfileRepository.findOneById(jobId));
         return jobProfileResponseDTO;
     }
@@ -114,14 +116,14 @@ public class JobprofileServiceImpl implements JobProfileService {
     }
 
     @Override
-    public List<JobProfileResponseDTO> getJobprofileByUserId(Long userId) {
+    public List<JobProfilePendingResponseDTO> getJobprofileByUserId(Long userId) {
         if (userRepository.findOneById(userId) == null) {
             throw new RuntimeException("this_user_does_not_exist");
         }
         if (userInfoResponseConverter.toDTO(userRepository.findOneById(userId)).getRoleCodes()
                 .contains(Role.STUDENT.getName())) {
             UserEntity entity = userRepository.findOneById(userId);
-            List<JobProfileResponseDTO> jobProfileResponseDTOs = jobProfileResponseConverter
+            List<JobProfilePendingResponseDTO> jobProfileResponseDTOs = jobProfileResponseConverter
                     .toDTOGroup(entity.getJobProfiles());
             return jobProfileResponseDTOs;
         }

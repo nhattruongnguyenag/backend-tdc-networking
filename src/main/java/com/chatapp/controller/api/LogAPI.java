@@ -18,6 +18,11 @@ public class LogAPI {
     @Autowired
     PostService postService;
 
+    @GetMapping("test")
+    public String test() {
+        return "TEST";
+    }
+
     @GetMapping({"approval/log/post/{postId}"})
     ResponseEntity<?> getRejectLogByPostId(@PathVariable("postId") Long postId) {
         PostRejectLogDTO dto = postService.findRejectLogByPostId(postId);
