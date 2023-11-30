@@ -5,7 +5,8 @@ import java.util.List;
 import com.chatapp.commond.MessageResponseData;
 import com.chatapp.dto.request.job_profile.JobApplyProfileRequestDTO;
 import com.chatapp.dto.request.job_profile.JobProfileUpdateRequestDTO;
-import com.chatapp.dto.response.job_profile.JobProfileResponseDTO;
+import com.chatapp.dto.response.job_profile.JobProfileManageResponseDTO;
+import com.chatapp.dto.response.job_profile.JobProfilePendingResponseDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,20 +38,20 @@ public class JobProfileAPI {
     }
 
     @GetMapping({ "job/post/{postId}", "job/post/{postId}" })
-    public ResponseEntity<ResponseData<List<JobProfileResponseDTO>>> getListJobProfileByPostId(@PathVariable Long postId) {
-        ResponseData<List<JobProfileResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",jobProfileService.getJobprofileByPostId(postId));
+    public ResponseEntity<ResponseData<List<JobProfileManageResponseDTO>>> getListJobProfileByPostId(@PathVariable Long postId) {
+        ResponseData<List<JobProfileManageResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",jobProfileService.getJobprofileByPostId(postId));
         return ResponseEntity.ok(responseData);
     }
 
     @GetMapping({ "job/user/{userId}", "job/user/{userId}" })
-    public ResponseEntity<ResponseData<List<JobProfileResponseDTO>>> getListJobProfileByUserId(@PathVariable Long userId) {
-        ResponseData<List<JobProfileResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",jobProfileService.getJobprofileByUserId(userId));
+    public ResponseEntity<ResponseData<List<JobProfilePendingResponseDTO>>> getListJobProfileByUserId(@PathVariable Long userId) {
+        ResponseData<List<JobProfilePendingResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",jobProfileService.getJobprofileByUserId(userId));
         return ResponseEntity.ok(responseData);
     }
 
     @GetMapping({ "job/{jobId}", "job/{jobId}/" })
-    public ResponseEntity<ResponseData<JobProfileResponseDTO>> getJobProfileDetailByPostIdAndJobId(@PathVariable Long jobId) {
-        ResponseData<JobProfileResponseDTO> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",jobProfileService.getJobProfileDetail(jobId));
+    public ResponseEntity<ResponseData<JobProfilePendingResponseDTO>> getJobProfileDetailByPostIdAndJobId(@PathVariable Long jobId) {
+        ResponseData<JobProfilePendingResponseDTO> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",jobProfileService.getJobProfileDetail(jobId));
         return ResponseEntity.ok(responseData);
     }
 
