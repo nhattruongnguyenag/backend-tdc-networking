@@ -1,6 +1,5 @@
 package com.chatapp.converter.response.post.survey;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +17,12 @@ public class QuestionConverter extends BaseConverter<QuestionEntity, QuestionDTO
     @Override
     public QuestionDTO toDTO(QuestionEntity entity) {
         QuestionDTO questionDTO = super.toDTO(entity);
-        if(entity.getType().equals(QuestionType.MULTIPLE.getName()) || entity.getType().equals(QuestionType.ONE.getName())){
+        if (entity.getRequired() == 48) {
+            questionDTO.setRequired((byte) 0);
+        }
+
+        if (entity.getType().equals(QuestionType.MULTIPLE.getName())
+                || entity.getType().equals(QuestionType.ONE.getName())) {
             questionDTO.setChoices(choiceConverter.toDTOGroup(entity.getVoteAnswers()));
         }
         return questionDTO;

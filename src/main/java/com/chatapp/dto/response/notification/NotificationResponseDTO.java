@@ -9,5 +9,6 @@ import lombok.Data;
 public class NotificationResponseDTO extends BaseDTO{
     private String content;
     private String status;
+    private String type;
     private UserInfoResponseDTO user;
 }

@@ -1,5 +1,7 @@
 package com.chatapp.dto.request.post.recruitment;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -13,4 +15,5 @@ public class RecruitmentPostUpdateRequestDTO {
     private String expiration;
     private String location;
     private String requirement;
+    private List<String> images;
 }

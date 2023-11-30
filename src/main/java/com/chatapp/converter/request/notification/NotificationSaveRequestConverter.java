@@ -18,6 +18,7 @@ public class NotificationSaveRequestConverter extends BaseConverter<Notification
         notificationEntity.setContent(dto.getContent());
         notificationEntity.setUser(userRepository.findOneById(dto.getUserId()));
         notificationEntity.setContent(dto.getContent());
+        notificationEntity.setType(dto.getType());
         notificationEntity.setStatus((byte)0);
         return notificationEntity;
     }

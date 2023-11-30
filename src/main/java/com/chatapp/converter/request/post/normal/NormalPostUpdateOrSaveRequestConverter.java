@@ -9,6 +9,7 @@ import com.chatapp.entity.PostImageEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.repository.GroupRepository;
 import com.chatapp.repository.NormalPostRepository;
+import com.chatapp.repository.PostImageRepository;
 import com.chatapp.repository.PostRepository;
 import com.chatapp.repository.UserRepository;
 

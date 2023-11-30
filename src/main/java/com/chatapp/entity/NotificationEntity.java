@@ -13,6 +13,9 @@ public class NotificationEntity extends BaseEntity {
     @Column(name = "status", nullable = false)
     private Byte status;
 
+    @Column(name = "type", nullable = false)
+    private String type;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
@@ -40,4 +43,14 @@ public class NotificationEntity extends BaseEntity {
     public void setUser(UserEntity user) {
         this.user = user;
     }
+
+
+    public String getType() {
+        return this.type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
 }
