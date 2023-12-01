@@ -34,7 +34,7 @@ public class PostCheckParam {
         Long isConducted = Long.valueOf(0);
         for (QuestionEntity questionEntity : surveyPostEntity.getQuestions()) {
             if (questionEntity.getType().equals(QuestionType.SHORT.getName())) {
-                if (shortAnswerRepository.findOneByUser_Id(userLogin) != null) {
+                if (shortAnswerRepository.findOneByUser_IdAndQuestion_Id(userLogin,questionEntity.getId()) != null) {
                     isConducted = Long.valueOf(1);
                     return isConducted;
                 }

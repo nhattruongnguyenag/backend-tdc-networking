@@ -532,7 +532,28 @@ public class PostServiceImpl implements PostService {
     @Override
     public String answerSurvey(SurveyAnswerRequestDTO surveyAnswerRequestDTO) {
         UserEntity userEntity = userRepository.findOneById(surveyAnswerRequestDTO.getUser_id());
-        List<VoteAnswerEntity> voteAnswers = new ArrayList<>();
+        List<VoteAnswerEntity> voteAnswers = userEntity.getVoteAnswers();
+
+        //get all vote answers of survey post
+        SurveyPostEntity surveyPostEntity = surveyPostRepository.findOneByPost_Id(surveyAnswerRequestDTO.getPost_id());
+        List<QuestionEntity> questions = surveyPostEntity.getQuestions();
+        List<Long> oldVoteAnswerIds = new ArrayList<Long>();
+        for (QuestionEntity questionEntity : questions) {
+            if (!questionEntity.getType().equalsIgnoreCase(QuestionType.SHORT.getName())){
+                for(VoteAnswerEntity voteAnswerEntity : questionEntity.getVoteAnswers()){
+                    oldVoteAnswerIds.add(voteAnswerEntity.getId());
+                }
+            }
+        }
+
+        //check if vote answer of user has anyone in all vote answers of survey post, delete them
+        for (Long id : oldVoteAnswerIds) {
+            VoteAnswerEntity voteAnswerEntity = voteAnswerRepository.findOneById(id);
+            if(voteAnswers.contains(voteAnswerEntity)){
+                voteAnswers.remove(voteAnswerEntity);
+            }
+        }
+
         // check if user already conducted the survey
         if (userRepository.findOneById(surveyAnswerRequestDTO.getUser_id()).getVoteAnswers().size() != 0) {
             List<VoteAnswerEntity> voteAnswerEntities = userRepository.findOneById(surveyAnswerRequestDTO.getUser_id())
@@ -565,7 +586,9 @@ public class PostServiceImpl implements PostService {
                     VoteAnswerEntity voteAnswerEntity = voteAnswerRepository.findOneById(voteAnswerId);
                     Integer newCount = voteAnswerEntity.getCountVote() + 1;
                     voteAnswerEntity.setCountVote(newCount);
-                    voteAnswers.add(voteAnswerEntity);
+                    if (!voteAnswers.contains(voteAnswerEntity)) {
+                        voteAnswers.add(voteAnswerEntity);
+                    }
                 }
                 userEntity.setVoteAnswers(voteAnswers);
                 userRepository.save(userEntity);
@@ -725,7 +748,7 @@ public class PostServiceImpl implements PostService {
         Long isConducted = Long.valueOf(0);
         for (QuestionEntity questionEntity : surveyPostEntity.getQuestions()) {
             if (questionEntity.getType().equals(QuestionType.SHORT.getName())) {
-                if (shortAnswerRepository.findOneByUser_Id(userLogin) != null) {
+                if (shortAnswerRepository.findOneByUser_IdAndQuestion_Id(userLogin,questionEntity.getId()) != null) {
                     isConducted = Long.valueOf(1);
                     return isConducted;
                 }
