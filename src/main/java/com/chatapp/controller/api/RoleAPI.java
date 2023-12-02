@@ -14,6 +14,9 @@ public class RoleAPI {
     @Autowired
     RoleService roleService;
 
+    //////////////////
+    //Get
+    //////////////////
     @GetMapping({ "roles", "roles/" })
     public List<RoleResponseDTO> findAll() {
         return roleService.findAll();

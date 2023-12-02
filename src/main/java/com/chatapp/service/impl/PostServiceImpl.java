@@ -531,25 +531,32 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public String answerSurvey(SurveyAnswerRequestDTO surveyAnswerRequestDTO) {
+        if (postRepository.findOneById(surveyAnswerRequestDTO.getPost_id()) == null) {
+            throw new RuntimeException("this_post_not_exist");
+        }
+        if (surveyPostRepository.findOneByPost_Id(surveyAnswerRequestDTO.getPost_id()) == null) {
+            throw new RuntimeException("survey_post_at_this_post_id_not_exist");
+        }
         UserEntity userEntity = userRepository.findOneById(surveyAnswerRequestDTO.getUser_id());
         List<VoteAnswerEntity> voteAnswers = userEntity.getVoteAnswers();
 
-        //get all vote answers of survey post
+        // get all vote answers of survey post
         SurveyPostEntity surveyPostEntity = surveyPostRepository.findOneByPost_Id(surveyAnswerRequestDTO.getPost_id());
         List<QuestionEntity> questions = surveyPostEntity.getQuestions();
         List<Long> oldVoteAnswerIds = new ArrayList<Long>();
         for (QuestionEntity questionEntity : questions) {
-            if (!questionEntity.getType().equalsIgnoreCase(QuestionType.SHORT.getName())){
-                for(VoteAnswerEntity voteAnswerEntity : questionEntity.getVoteAnswers()){
+            if (!questionEntity.getType().equalsIgnoreCase(QuestionType.SHORT.getName())) {
+                for (VoteAnswerEntity voteAnswerEntity : questionEntity.getVoteAnswers()) {
                     oldVoteAnswerIds.add(voteAnswerEntity.getId());
                 }
             }
         }
 
-        //check if vote answer of user has anyone in all vote answers of survey post, delete them
+        // check if vote answer of user has anyone in all vote answers of survey post,
+        // delete them
         for (Long id : oldVoteAnswerIds) {
             VoteAnswerEntity voteAnswerEntity = voteAnswerRepository.findOneById(id);
-            if(voteAnswers.contains(voteAnswerEntity)){
+            if (voteAnswers.contains(voteAnswerEntity)) {
                 voteAnswers.remove(voteAnswerEntity);
             }
         }
@@ -748,7 +755,7 @@ public class PostServiceImpl implements PostService {
         Long isConducted = Long.valueOf(0);
         for (QuestionEntity questionEntity : surveyPostEntity.getQuestions()) {
             if (questionEntity.getType().equals(QuestionType.SHORT.getName())) {
-                if (shortAnswerRepository.findOneByUser_IdAndQuestion_Id(userLogin,questionEntity.getId()) != null) {
+                if (shortAnswerRepository.findOneByUser_IdAndQuestion_Id(userLogin, questionEntity.getId()) != null) {
                     isConducted = Long.valueOf(1);
                     return isConducted;
                 }

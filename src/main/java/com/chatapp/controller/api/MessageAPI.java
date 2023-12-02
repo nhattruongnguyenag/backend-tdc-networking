@@ -20,7 +20,9 @@ public class MessageAPI {
     @Autowired
     private ConversationService conversationService;
 
-
+    //////////////////
+    //Get
+    //////////////////
     @GetMapping("/conversations/{senderId}/{receiverId}")
     List<ConversationResponseDTO> conversation(@PathVariable("senderId") Long senderId, @PathVariable("receiverId") Long receiverId) {
         List<ConversationResponseDTO> conversationResponses = new ArrayList<>();
@@ -44,17 +46,24 @@ public class MessageAPI {
         return conversationService.findBySender(userId);
     }
 
-
     @GetMapping("/messages/{conversationId}")
     List<MessageResponseDTO> messageEntities(@PathVariable("conversationId") Long conversationId) {
         return messageService.findByConversations_Id(conversationId);
     }
 
+
+    //////////////////
+    //Post
+    //////////////////
     @PostMapping("/messages")
     MessageResponseDTO save(@RequestBody MessageRequestDTO messageRequestDTO) {
         return messageService.save(messageRequestDTO);
     }
+    
 
+    //////////////////
+    //Delete
+    //////////////////
     @DeleteMapping("/messages/{id}")
     ResponseEntity<?> delete(@PathVariable("id") Long id) {
         messageService.delete(id);

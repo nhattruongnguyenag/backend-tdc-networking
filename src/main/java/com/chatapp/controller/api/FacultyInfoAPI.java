@@ -23,6 +23,9 @@ public class FacultyInfoAPI {
     @Autowired
     private UserService userService;
     
+    //////////////////
+    //Get
+    //////////////////
     @GetMapping({ "faculty", "faculty/" })
     public ResponseEntity<ResponseData<List<FacultyInfoResponseDTO>>> findAll() {
         ResponseData<List<FacultyInfoResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK,"success",userService.findAllFacultyInfo());
@@ -35,6 +38,9 @@ public class FacultyInfoAPI {
         return ResponseEntity.ok(responseData);
     }
 
+    //////////////////
+    //Post
+    //////////////////
     @PostMapping({ "faculty", "faculty/" })
     ResponseEntity<ResponseData<AuthTokenDTO>> updateOrSave(@RequestBody FacultyInfoUpdateOrSaveRequestDTO facultyInfoUpdateOrSaveRequestDTO) {
         ResponseData<AuthTokenDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"add or update success",userService.facultyUpdateOrSave(facultyInfoUpdateOrSaveRequestDTO));

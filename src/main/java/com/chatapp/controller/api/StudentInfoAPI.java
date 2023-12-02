@@ -22,7 +22,10 @@ import jakarta.mail.MessagingException;
 public class StudentInfoAPI {
     @Autowired
     private UserService userService;
-    
+
+    //////////////////
+    //Get
+    //////////////////
     @GetMapping({ "student", "student/" })
     public ResponseEntity<ResponseData<List<StudentInfoResponseDTO>>> findAll() {
         ResponseData<List<StudentInfoResponseDTO>> responseData = new ResponseData<List<StudentInfoResponseDTO>>(HttpStatus.OK, "success", userService.findAllStudentInfo());
@@ -35,6 +38,9 @@ public class StudentInfoAPI {
         return ResponseEntity.ok(responseData);
     }
 
+    //////////////////
+    //Post
+    //////////////////
     @PostMapping({ "student", "student/" })
     ResponseEntity<ResponseData<AuthTokenDTO>> updateOrSave(@RequestBody StudentInfoUpdateOrSaveRequestDTO studentInfoUpdateOrSaveRequestDTO) {
         ResponseData<AuthTokenDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"add or update student success",userService.studentUpdateOrSave(studentInfoUpdateOrSaveRequestDTO));

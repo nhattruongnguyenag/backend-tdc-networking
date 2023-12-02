@@ -19,6 +19,9 @@ public class FirebaseMessagingAPI {
     @Autowired
     private FirebaseMessagingService firebaseMessagingService;
 
+    //////////////////
+    //Post
+    //////////////////
     @PostMapping("/notification/token")
     public ResponseEntity<ResponseData<?>> sendTokenNotification(@RequestBody PushNotificationRequestDTO request) {
         boolean isSuccess = firebaseMessagingService.sendNotificationToToken(request);

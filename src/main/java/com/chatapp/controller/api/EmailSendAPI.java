@@ -16,6 +16,9 @@ public class EmailSendAPI {
     @Autowired
     private EmailService emailService;
 
+    //////////////////
+    //Post
+    //////////////////
     @PostMapping({ "/mail", "/mail/" })
     public ResponseEntity<?> sendMail(@RequestBody EmailSendRequestionDTO emailSendRequestionDTO) {
         try {

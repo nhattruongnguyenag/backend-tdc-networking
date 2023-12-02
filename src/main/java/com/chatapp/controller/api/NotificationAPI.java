@@ -22,15 +22,12 @@ public class NotificationAPI {
     @Autowired
     private NotificationService notificationService;
 
+    //////////////////
+    //Get
+    //////////////////
     @GetMapping({"notifications", "notifications/"})
     public ResponseEntity<ResponseData<List<NotificationResponseDTO>>> findAll() {
         ResponseData<List<NotificationResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",notificationService.findAll());
-        return ResponseEntity.ok(responseData);
-    }
-
-    @PostMapping({"notifications/user", "notifications/user/"})
-    public ResponseEntity<ResponseData<List<NotificationResponseDTO>>> findByUserId(@RequestBody NotificationByUserRequestDTO notificationByUserRequestDTO) {
-        ResponseData<List<NotificationResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",notificationService.findById(notificationByUserRequestDTO));
         return ResponseEntity.ok(responseData);
     }
 
@@ -40,18 +37,33 @@ public class NotificationAPI {
         return ResponseEntity.ok(responseData);
     }
 
+    //////////////////
+    //Post
+    //////////////////
+    @PostMapping({"notifications/user", "notifications/user/"})
+    public ResponseEntity<ResponseData<List<NotificationResponseDTO>>> findByUserId(@RequestBody NotificationByUserRequestDTO notificationByUserRequestDTO) {
+        ResponseData<List<NotificationResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",notificationService.findById(notificationByUserRequestDTO));
+        return ResponseEntity.ok(responseData);
+    }
+
     @PostMapping({ "notifications", "notifications/" })
     ResponseEntity<ResponseData<NotificationResponseDTO>> updateOrSave(@RequestBody NotificationSaveRequestDTO notificationSaveRequestDTO) {
         ResponseData<NotificationResponseDTO> responseData = new ResponseData<>(HttpStatus.CREATED,"success",notificationService.save(notificationSaveRequestDTO));
         return ResponseEntity.created(null).body(responseData);
     }
 
+    //////////////////
+    //Delete
+    //////////////////
     @DeleteMapping({ "notifications", "notifications/" })
     ResponseEntity<ResponseData<String>> delete(@RequestBody NotificationDeleteRequestDTO notificationDeleteRequestDTO) {
         ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED,"success",notificationService.delete(notificationDeleteRequestDTO));
         return ResponseEntity.ok(responseData);
     }
 
+    //////////////////
+    //Put
+    //////////////////
     @PutMapping({ "notifications/changeStatus", "notifications/changeStatus/" })
     ResponseEntity<ResponseData<NotificationResponseDTO>> changeStatus(@RequestBody NotificationChangeStatusRequestDTO notificationChangeStatusRequestDTO) {
         ResponseData<NotificationResponseDTO> responseData = new ResponseData<>(HttpStatus.OK,"success",notificationService.changeStatus(notificationChangeStatusRequestDTO));
