@@ -23,7 +23,7 @@ public class LogAPI {
     //////////////////
     @GetMapping("test")
     public String test() {
-        return "TEST CI/CD SUCESS";
+        return "TEST CI/CD SUCESSFully";
     }
 
     @GetMapping({"approval/log/post/{postId}"})
