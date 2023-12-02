@@ -50,6 +50,11 @@ public class PostAPI {
     @Autowired
     private ModelMapper modelMapper;
 
+    @GetMapping({ "test", "test/" })
+    public String findAll() {
+        return "test";
+    }
+
     //////////////////
     // Get
     //////////////////
