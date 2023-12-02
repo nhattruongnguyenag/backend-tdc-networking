@@ -22,12 +22,18 @@ public class JobProfileAPI {
     @Autowired
     JobProfileService jobProfileService;
 
+    //////////////////
+    //Post
+    //////////////////
     @PostMapping({ "job/apply", "job/apply/" })
     public ResponseEntity<ResponseData<String>> applyJobProfile(@RequestBody JobApplyProfileRequestDTO jobApplyProfileRequestDTO) {
         ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED, "sucesss",jobProfileService.applyJobProfile(jobApplyProfileRequestDTO));
         return ResponseEntity.created(null).body(responseData);
     }
 
+    //////////////////
+    //Put
+    //////////////////
     @PutMapping({ "job/update", "job/update/" })
     public ResponseEntity<MessageResponseData> updateJobProfile(@RequestBody JobProfileUpdateRequestDTO jobProfileUpdateRequestDTO) {
         boolean isSuccess = jobProfileService.updateJobProfile(jobProfileUpdateRequestDTO);
@@ -37,6 +43,9 @@ public class JobProfileAPI {
         return ResponseEntity.badRequest().body(new MessageResponseData(HttpStatus.BAD_REQUEST, "job_profile_not_exists"));
     }
 
+    //////////////////
+    //Get
+    //////////////////
     @GetMapping({ "job/post/{postId}", "job/post/{postId}" })
     public ResponseEntity<ResponseData<List<JobProfileManageResponseDTO>>> getListJobProfileByPostId(@PathVariable Long postId) {
         ResponseData<List<JobProfileManageResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",jobProfileService.getJobprofileByPostId(postId));
@@ -55,6 +64,9 @@ public class JobProfileAPI {
         return ResponseEntity.ok(responseData);
     }
 
+    //////////////////
+    //Delete
+    //////////////////
     @DeleteMapping({"job/profile/{profileId}"})
     public ResponseEntity<MessageResponseData> removeJobProfile(@PathVariable("profileId") Long profileId) {
         boolean isSuccess = jobProfileService.deleteById(profileId);

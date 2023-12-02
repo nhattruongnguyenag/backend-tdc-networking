@@ -37,6 +37,9 @@ public class UserAPI {
     @Autowired
     private TokenProvider tokenProvider;
 
+    //////////////////
+    //Get
+    //////////////////
     @GetMapping({ "users", "users/" })
     public ResponseEntity<ResponseData<List<UserInfoResponseDTO>>> findAll() {
         ResponseData<List<UserInfoResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",userService.findAll());
@@ -54,6 +57,15 @@ public class UserAPI {
         return userService.getUserByEmail(email);
     }
 
+    @GetMapping({ "users/{userId}/group", "users/{userId}/group/" })
+    public ResponseEntity<ResponseData<List<GroupResponseDTO>>> getGroupByUserId(@PathVariable Long userId) {
+        ResponseData<List<GroupResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",userService.getGroupByUserId(userId));
+        return ResponseEntity.ok(responseData);
+    }
+
+    //////////////////
+    //Post
+    //////////////////
     @PostMapping({ "login", "login/" })
     ResponseEntity<?> login(@RequestBody UserLoginRequestDTO userDTORequest) {
         ResponseData<AuthTokenDTO> responseData = new ResponseData<>(HttpStatus.OK, "login_success", userService.login(userDTORequest));
@@ -67,30 +79,6 @@ public class UserAPI {
         return new AuthTokenDTO(token);
     }
 
-    @PutMapping("users/message/focus")
-    public ResponseEntity<MessageResponseData> updateUserFocusMessageFocusIn(@RequestBody UserDTO userDTO) {
-        boolean isSuccess = userService.setIsMessageFocusIn(userDTO.getId());
-        if (isSuccess) {
-            return new ResponseEntity<>(new MessageResponseData(HttpStatus.CREATED, "update_user_messages_focus_in_success"), HttpStatus.CREATED);
-        }
-        return new ResponseEntity<>(new MessageResponseData(HttpStatus.BAD_REQUEST, "fail_to_update_user_messages_focus_in"), HttpStatus.BAD_REQUEST);
-    }
-
-    @PutMapping("users/message/exit")
-    public ResponseEntity<MessageResponseData> updateUserFocusMessageFocusOut(@RequestBody UserDTO userDTO) {
-        boolean isSuccess = userService.setIsMessageFocusOut(userDTO.getId());
-        if (isSuccess) {
-            return new ResponseEntity<>(new MessageResponseData(HttpStatus.CREATED, "update_user_messages_exit_success"), HttpStatus.CREATED);
-        }
-        return new ResponseEntity<>(new MessageResponseData(HttpStatus.BAD_REQUEST, "update_user_messages_exit_failed"), HttpStatus.BAD_REQUEST);
-    }
-
-    @DeleteMapping({ "users/{id}", "users/{id}/" })
-    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
-        userService.delete(id);
-        return ResponseEntity.ok().build();
-    }
-
     @PostMapping({ "users/follow", "users/follow" })
     public ResponseEntity<ResponseData<String>> save(@RequestBody UserFollowRequestDTO userFollowRequestDTO) {
         userService.follow(userFollowRequestDTO);
@@ -98,7 +86,6 @@ public class UserAPI {
         return ResponseEntity.ok(responseData);
     }
 
-    
     @PostMapping({ "users/follow/me", "users/follow/me/" })
     public ResponseEntity<ResponseData<List<UserFollowResponseDTO>>> getFollowsByUserId(@RequestBody UserGetRequestDTO userGetRequestDTO) {
         ResponseData<List<UserFollowResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",userService.getFollowsByUserId(userGetRequestDTO));
@@ -108,12 +95,6 @@ public class UserAPI {
     @PostMapping({ "users/follow/other", "users/follow/other/" })
     public ResponseEntity<ResponseData<List<UserFollowResponseDTO>>> getOtherFollowByUserId(@RequestBody UserGetRequestDTO userGetRequestDTO) {
         ResponseData<List<UserFollowResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",userService.getOtherPeopleFollowByUserId(userGetRequestDTO));
-        return ResponseEntity.ok(responseData);
-    }
-
-    @GetMapping({ "users/{userId}/group", "users/{userId}/group/" })
-    public ResponseEntity<ResponseData<List<GroupResponseDTO>>> getGroupByUserId(@PathVariable Long userId) {
-        ResponseData<List<GroupResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",userService.getGroupByUserId(userId));
         return ResponseEntity.ok(responseData);
     }
 
@@ -157,5 +138,35 @@ public class UserAPI {
     public ResponseEntity<ResponseData<String>> updateImage(@RequestBody UserImageUpdateRequestDTO request){
         ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK,"success",userService.updateAvatar(request));
         return ResponseEntity.ok(responseData);
+    }
+
+    //////////////////
+    //Put
+    //////////////////
+    @PutMapping("users/message/focus")
+    public ResponseEntity<MessageResponseData> updateUserFocusMessageFocusIn(@RequestBody UserDTO userDTO) {
+        boolean isSuccess = userService.setIsMessageFocusIn(userDTO.getId());
+        if (isSuccess) {
+            return new ResponseEntity<>(new MessageResponseData(HttpStatus.CREATED, "update_user_messages_focus_in_success"), HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(new MessageResponseData(HttpStatus.BAD_REQUEST, "fail_to_update_user_messages_focus_in"), HttpStatus.BAD_REQUEST);
+    }
+
+    @PutMapping("users/message/exit")
+    public ResponseEntity<MessageResponseData> updateUserFocusMessageFocusOut(@RequestBody UserDTO userDTO) {
+        boolean isSuccess = userService.setIsMessageFocusOut(userDTO.getId());
+        if (isSuccess) {
+            return new ResponseEntity<>(new MessageResponseData(HttpStatus.CREATED, "update_user_messages_exit_success"), HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(new MessageResponseData(HttpStatus.BAD_REQUEST, "update_user_messages_exit_failed"), HttpStatus.BAD_REQUEST);
+    }
+
+    //////////////////
+    //Delete
+    //////////////////
+    @DeleteMapping({ "users/{id}", "users/{id}/" })
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+        userService.delete(id);
+        return ResponseEntity.ok().build();
     }
 }

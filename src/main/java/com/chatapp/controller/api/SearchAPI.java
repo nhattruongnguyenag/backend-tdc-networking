@@ -26,6 +26,10 @@ public class SearchAPI {
     @Autowired
     private PostService postService;
 
+    //////////////////
+    //Post
+    //////////////////
+
     @PostMapping({ "find/user", "find/user/" })
     ResponseEntity<ResponseData<List<UserFindResponseDTO>>> findUser(@RequestBody UserInfoFindRequestDTO userInfoFindRequestDTO) {
         ResponseData<List<UserFindResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK,"success",userService.findUserByName(userInfoFindRequestDTO));

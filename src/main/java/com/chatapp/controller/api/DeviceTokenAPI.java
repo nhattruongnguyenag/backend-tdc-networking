@@ -14,6 +14,9 @@ public class DeviceTokenAPI {
     @Autowired
     private DeviceTokenService deviceTokenService;
 
+    //////////////////
+    //Post
+    //////////////////
     @PostMapping("/device-token")
     public ResponseEntity<MessageResponseData> updateDeviceToken(@RequestBody DeviceTokenRequestDTO requestDTO) {
         boolean isSuccess = deviceTokenService.saveUserDeviceToken(requestDTO);
@@ -23,6 +26,9 @@ public class DeviceTokenAPI {
         return new ResponseEntity<>(new MessageResponseData(HttpStatus.BAD_REQUEST, "failed_to_save_token"), HttpStatus.BAD_REQUEST);
     }
 
+    //////////////////
+    //Delete
+    //////////////////
     @DeleteMapping("/device-token")
     public ResponseEntity<MessageResponseData> deleteDeviceToken(@RequestBody DeviceTokenRequestDTO requestDTO) {
         boolean isSuccess = deviceTokenService.deleteUserDeviceToken(requestDTO);

@@ -50,6 +50,9 @@ public class PostAPI {
     @Autowired
     private ModelMapper modelMapper;
 
+    //////////////////
+    // Get
+    //////////////////
     @GetMapping({ "posts/all", "posts/all/" })
     public ResponseEntity<ResponseData<List<BaseDTO>>> findAll() {
         ResponseData<List<BaseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success", postService.findAll());
@@ -57,17 +60,12 @@ public class PostAPI {
     }
 
     @GetMapping({ "posts/search", "posts/search/" })
-    public ResponseEntity<ResponseData<List<PostSearchResponseDTO>>> findPosts(@RequestParam Map<String, Object> params) {
+    public ResponseEntity<ResponseData<List<PostSearchResponseDTO>>> findPosts(
+            @RequestParam Map<String, Object> params) {
         PostSearchRequestDTO dto = CommonUtils.mapToObject(params, PostSearchRequestDTO.class);
-        ResponseData<List<PostSearchResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success", postService.findPosts(dto));
+        ResponseData<List<PostSearchResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
+                postService.findPosts(dto));
         return ResponseEntity.ok(responseData);
-    }
-
-    @PostMapping({ "posts/user/save", "posts/user/save/" })
-    ResponseEntity<ResponseData<?>> userSavePost(@RequestBody UserSavePostRequestDTO userSavePostRequestDTO) {
-        ResponseData<?> responseData = new ResponseData<>(HttpStatus.CREATED, "success",
-                postService.userSavePost(userSavePostRequestDTO));
-        return ResponseEntity.created(null).body(responseData);
     }
 
     @GetMapping({ "posts/user/save/{userId}", "posts/user/save/{userId}/" })
@@ -82,22 +80,6 @@ public class PostAPI {
         ResponseData<List<NormalPostResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
                 postService.findAllNormalPost());
         return ResponseEntity.ok(responseData);
-    }
-
-    @PostMapping({ "posts/normal", "posts/normal/" })
-    ResponseEntity<ResponseData<String>> updateOrSave(
-            @RequestBody NormalPostUpdateOrSaveRequestDTO normalPostUpdateOrSaveRequestDTO) {
-        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED, "add or update normal post success",
-                postService.normalPostUpdateOrSave(normalPostUpdateOrSaveRequestDTO));
-        return ResponseEntity.created(null).body(responseData);
-    }
-
-    @PutMapping({ "posts/normal", "posts/normal/" })
-    ResponseEntity<ResponseData<String>> updateNormalPost(
-            @RequestBody NormalPostUpdateRequestDTO normalPostUpdateRequestDTO) {
-        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED, "add or update normal post success",
-                postService.updateNormalPost(normalPostUpdateRequestDTO));
-        return ResponseEntity.created(null).body(responseData);
     }
 
     @GetMapping({ "posts/normal/{postId}", "posts/normal/{postId}/" })
@@ -129,39 +111,13 @@ public class PostAPI {
 
         List<PostSearchResponseDTO> responseDTOs = postService.findPosts(postSearchRequestDTO);
         if (responseDTOs.size() > 0) {
-            RecruitmentPostSearchResponseDTO recruitmentPostSearchResponseDTO = (RecruitmentPostSearchResponseDTO) responseDTOs.get(0);
-            RecruitmentPostSaveDTO recruitmentPostSaveDTO = modelMapper.map(recruitmentPostSearchResponseDTO, RecruitmentPostSaveDTO.class);
+            RecruitmentPostSearchResponseDTO recruitmentPostSearchResponseDTO = (RecruitmentPostSearchResponseDTO) responseDTOs
+                    .get(0);
+            RecruitmentPostSaveDTO recruitmentPostSaveDTO = modelMapper.map(recruitmentPostSearchResponseDTO,
+                    RecruitmentPostSaveDTO.class);
             return ResponseEntity.ok(recruitmentPostSaveDTO);
         }
         return ResponseEntity.badRequest().body(new MessageResponseData(HttpStatus.BAD_REQUEST, "not_found"));
-    }
-
-    @PostMapping({ "posts/recruitment", "posts/recruitment/" })
-    ResponseEntity<ResponseData<String>> updateOrSave(
-            @RequestBody RecruitmentPostUpdateOrSageRequestDTO recruitmentPostUpdateOrSageRequestDTO) {
-        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED,
-                "add or update recruitment post success",
-                postService.recruitmentPostUpdateOrSave(recruitmentPostUpdateOrSageRequestDTO));
-        return ResponseEntity.created(null).body(responseData);
-    }
-
-    @PutMapping({ "posts/recruitment", "posts/recruitment/" })
-    ResponseEntity<ResponseData<String>> updateRecruitmentPost(
-            @RequestBody RecruitmentPostUpdateRequestDTO recruitmentPostUpdateRequestDTO) {
-        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED,
-                "add or update recruitment post success",
-                postService.updateRecruitmentPost(recruitmentPostUpdateRequestDTO));
-        return ResponseEntity.created(null).body(responseData);
-    }
-
-    @PutMapping({"posts/survey", "posts/survey/"})
-    ResponseEntity<MessageResponseData> updateSurveyPost(@RequestBody SurveyDTO surveyDTO) {
-        boolean isSuccess = postService.updateSurvey(surveyDTO);
-        if (isSuccess) {
-            return ResponseEntity.ok(new MessageResponseData(HttpStatus.OK, "survey_update_success"));
-        }
-
-        return ResponseEntity.badRequest().body(new MessageResponseData(HttpStatus.BAD_REQUEST, "survey_update_failed"));
     }
 
     @GetMapping({ "posts/recruitment/user/{userId}", "posts/recruitment/user/{userId}/" })
@@ -169,28 +125,6 @@ public class PostAPI {
         ResponseData<List<BaseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
                 postService.getAllPostByUserIdAndType(userId, PostType.RECRUIMENT.getName()));
         return ResponseEntity.ok(responseData);
-    }
-
-    // survey api
-    @PostMapping({ "posts/survey", "posts/survey/" })
-    ResponseEntity<ResponseData<?>> surveySave(@RequestBody SurveySaveRequestDTO surveySaveRequestDTO) {
-        postService.saveSurvey(surveySaveRequestDTO);
-        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED, "success", null);
-        return ResponseEntity.created(null).body(responseData);
-    }
-
-    @PutMapping({ "posts/survey/update", "posts/survey/update/" })
-    ResponseEntity<ResponseData<?>> surveyUpdate(@RequestBody SurveyUpdateRequestDTO surveyUpdateRequestDTO) {
-        postService.updateSurvey(surveyUpdateRequestDTO);
-        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED, "success", null);
-        return ResponseEntity.created(null).body(responseData);
-    }
-
-    @PostMapping({ "posts/survey/conduct", "posts/survey/conduct/" })
-    ResponseEntity<ResponseData<?>> surveyAnswer(@RequestBody SurveyAnswerRequestDTO surveyAnswerRequestDTO) {
-        postService.answerSurvey(surveyAnswerRequestDTO);
-        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED, "success", null);
-        return ResponseEntity.created(null).body(responseData);
     }
 
     @GetMapping({ "posts/survey", "posts/survey" })
@@ -223,28 +157,6 @@ public class PostAPI {
         return ResponseEntity.ok(responseData);
     }
 
-    // other api
-    @PostMapping({ "posts/like", "posts/like/" })
-    ResponseEntity<ResponseData<?>> like(@RequestBody LikeRequestDTO likeRequestDTO) {
-        postService.likePost(likeRequestDTO);
-        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED, "success", null);
-        return ResponseEntity.created(null).body(responseData);
-    }
-
-    @PostMapping({ "posts/comment", "posts/comment/" })
-    ResponseEntity<ResponseData<?>> comment(@RequestBody CommentSaveRequestDTO commentSaveRequestDTO) {
-        postService.commentPost(commentSaveRequestDTO);
-        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED, "success", null);
-        return ResponseEntity.created(null).body(responseData);
-    }
-
-    @DeleteMapping({ "posts/comment/delete", "posts/comment/delete/" })
-    ResponseEntity<ResponseData<?>> deleteComment(@RequestBody CommentDeleteRequestDTO commentDeleteRequestDTO) {
-        postService.deleteComment(commentDeleteRequestDTO);
-        ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK, "success", null);
-        return ResponseEntity.ok(responseData);
-    }
-
     @GetMapping({ "posts/{id}/comments", "posts/{id}/comments/" })
     public ResponseEntity<ResponseData<List<CommentResponeseDTO>>> getComments(@PathVariable Long id) {
         ResponseData<List<CommentResponeseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
@@ -260,18 +172,73 @@ public class PostAPI {
         return ResponseEntity.ok(responseData);
     }
 
+    @GetMapping({ "posts/survey/{postId}/update", "posts/survey/{postId}/update/" })
+    public ResponseEntity<ResponseData<SurveyDTO>> getSurveyByPostId(@PathVariable Long postId) {
+        ResponseData<SurveyDTO> responseData = new ResponseData<>(HttpStatus.OK, "success",
+                postService.getSurveyByPostId(postId));
+        return ResponseEntity.ok(responseData);
+    }
+
+    //////////////////
+    // Post
+    //////////////////
+    @PostMapping({ "posts/normal", "posts/normal/" })
+    ResponseEntity<ResponseData<String>> updateOrSave(
+            @RequestBody NormalPostUpdateOrSaveRequestDTO normalPostUpdateOrSaveRequestDTO) {
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED, "add or update normal post success",
+                postService.normalPostUpdateOrSave(normalPostUpdateOrSaveRequestDTO));
+        return ResponseEntity.created(null).body(responseData);
+    }
+
+    @PostMapping({ "posts/user/save", "posts/user/save/" })
+    ResponseEntity<ResponseData<?>> userSavePost(@RequestBody UserSavePostRequestDTO userSavePostRequestDTO) {
+        ResponseData<?> responseData = new ResponseData<>(HttpStatus.CREATED, "success",
+                postService.userSavePost(userSavePostRequestDTO));
+        return ResponseEntity.created(null).body(responseData);
+    }
+
+    @PostMapping({ "posts/recruitment", "posts/recruitment/" })
+    ResponseEntity<ResponseData<String>> updateOrSave(
+            @RequestBody RecruitmentPostUpdateOrSageRequestDTO recruitmentPostUpdateOrSageRequestDTO) {
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED,
+                "add or update recruitment post success",
+                postService.recruitmentPostUpdateOrSave(recruitmentPostUpdateOrSageRequestDTO));
+        return ResponseEntity.created(null).body(responseData);
+    }
+
+    @PostMapping({ "posts/survey", "posts/survey/" })
+    ResponseEntity<ResponseData<?>> surveySave(@RequestBody SurveySaveRequestDTO surveySaveRequestDTO) {
+        postService.saveSurvey(surveySaveRequestDTO);
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED, "success", null);
+        return ResponseEntity.created(null).body(responseData);
+    }
+
+    @PostMapping({ "posts/survey/conduct", "posts/survey/conduct/" })
+    ResponseEntity<ResponseData<?>> surveyAnswer(@RequestBody SurveyAnswerRequestDTO surveyAnswerRequestDTO) {
+        postService.answerSurvey(surveyAnswerRequestDTO);
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED, "success", null);
+        return ResponseEntity.created(null).body(responseData);
+    }
+
+    @PostMapping({ "posts/like", "posts/like/" })
+    ResponseEntity<ResponseData<?>> like(@RequestBody LikeRequestDTO likeRequestDTO) {
+        postService.likePost(likeRequestDTO);
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED, "success", null);
+        return ResponseEntity.created(null).body(responseData);
+    }
+
+    @PostMapping({ "posts/comment", "posts/comment/" })
+    ResponseEntity<ResponseData<?>> comment(@RequestBody CommentSaveRequestDTO commentSaveRequestDTO) {
+        postService.commentPost(commentSaveRequestDTO);
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED, "success", null);
+        return ResponseEntity.created(null).body(responseData);
+    }
+
     @PostMapping({ "posts/group/user", "posts/group/user/" })
     public ResponseEntity<ResponseData<List<PostSearchResponseDTO>>> getByUserIdAndGroupCode(
             @RequestBody AllPostByUserAndGroupResponseDTO allPostByUserAndGroupResponseDTO) {
         ResponseData<List<PostSearchResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
                 postService.getAllPostByUserIdAndGroupCode(allPostByUserAndGroupResponseDTO));
-        return ResponseEntity.ok(responseData);
-    }
-
-    @DeleteMapping({ "posts/{postId}", "posts/{postId}/" })
-    ResponseEntity<ResponseData<?>> deletePost(@PathVariable Long postId) {
-        postService.delete(postId);
-        ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK, "success", null);
         return ResponseEntity.ok(responseData);
     }
 
@@ -291,10 +258,58 @@ public class PostAPI {
         return ResponseEntity.created(null).body(responseData);
     }
 
-    @GetMapping({ "posts/survey/{postId}/update", "posts/survey/{postId}/update/" })
-    public ResponseEntity<ResponseData<SurveyDTO>> getSurveyByPostId(@PathVariable Long postId) {
-        ResponseData<SurveyDTO> responseData = new ResponseData<>(HttpStatus.OK, "success",
-                postService.getSurveyByPostId(postId));
+    //////////////////
+    // Put
+    //////////////////
+    @PutMapping({ "posts/normal", "posts/normal/" })
+    ResponseEntity<ResponseData<String>> updateNormalPost(
+            @RequestBody NormalPostUpdateRequestDTO normalPostUpdateRequestDTO) {
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED, "add or update normal post success",
+                postService.updateNormalPost(normalPostUpdateRequestDTO));
+        return ResponseEntity.created(null).body(responseData);
+    }
+
+    @PutMapping({ "posts/recruitment", "posts/recruitment/" })
+    ResponseEntity<ResponseData<String>> updateRecruitmentPost(
+            @RequestBody RecruitmentPostUpdateRequestDTO recruitmentPostUpdateRequestDTO) {
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED,
+                "add or update recruitment post success",
+                postService.updateRecruitmentPost(recruitmentPostUpdateRequestDTO));
+        return ResponseEntity.created(null).body(responseData);
+    }
+
+    @PutMapping({ "posts/survey", "posts/survey/" })
+    ResponseEntity<MessageResponseData> updateSurveyPost(@RequestBody SurveyDTO surveyDTO) {
+        boolean isSuccess = postService.updateSurvey(surveyDTO);
+        if (isSuccess) {
+            return ResponseEntity.ok(new MessageResponseData(HttpStatus.OK, "survey_update_success"));
+        }
+
+        return ResponseEntity.badRequest()
+                .body(new MessageResponseData(HttpStatus.BAD_REQUEST, "survey_update_failed"));
+    }
+
+    @PutMapping({ "posts/survey/update", "posts/survey/update/" })
+    ResponseEntity<ResponseData<?>> surveyUpdate(@RequestBody SurveyUpdateRequestDTO surveyUpdateRequestDTO) {
+        postService.updateSurvey(surveyUpdateRequestDTO);
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED, "success", null);
+        return ResponseEntity.created(null).body(responseData);
+    }
+
+    //////////////////
+    //Delete
+    //////////////////
+    @DeleteMapping({ "posts/comment/delete", "posts/comment/delete/" })
+    ResponseEntity<ResponseData<?>> deleteComment(@RequestBody CommentDeleteRequestDTO commentDeleteRequestDTO) {
+        postService.deleteComment(commentDeleteRequestDTO);
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK, "success", null);
         return ResponseEntity.ok(responseData);
     }
+
+    @DeleteMapping({ "posts/{postId}", "posts/{postId}/" })
+    ResponseEntity<ResponseData<?>> deletePost(@PathVariable Long postId) {
+        postService.delete(postId);
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK, "success", null);
+        return ResponseEntity.ok(responseData);
+    } 
 }

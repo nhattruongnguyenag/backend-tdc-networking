@@ -18,6 +18,9 @@ public class LogAPI {
     @Autowired
     PostService postService;
 
+    //////////////////
+    //Get
+    //////////////////
     @GetMapping("test")
     public String test() {
         return "TEST";
@@ -34,6 +37,9 @@ public class LogAPI {
         return responseEntity;
     }
 
+    //////////////////
+    //Post
+    //////////////////
     @PostMapping({ "approval/post/log", "approval/post/log/" })
     ResponseEntity<ResponseData<?>> postApprovalLog(@RequestBody PostLogRequestDTO postLogRequestDTO) {
         ResponseData<?> responseData = new ResponseData<>(HttpStatus.CREATED, "success",
@@ -41,6 +47,9 @@ public class LogAPI {
         return ResponseEntity.created(null).body(responseData);
     }
 
+    //////////////////
+    //Delete
+    //////////////////
     @DeleteMapping({ "approval/post/log/delete/{postId}", "approval/post/log/delete/{postId}/" })
     ResponseEntity<ResponseData<?>> deletePostApprovalLog(@PathVariable Long postId) {
         ResponseData<?> responseData = new ResponseData<>(HttpStatus.OK, "success",

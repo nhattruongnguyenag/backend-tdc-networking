@@ -32,11 +32,18 @@ public class PostSocketController {
         return postService.findAllByGroupCode(code,likeRequestDTO.getUserId());
     }
 
-    @MessageMapping({ "/posts/user/unsave", "/posts/user/unsave/" })
-    @SendTo({ "/topic/posts/save/page", "/topic/posts/save/page/" })
+    @MessageMapping({ "/posts/save/user/unsave", "/posts/save/user/unsave/" })
+    @SendTo({ "/topic/posts/save", "/topic/posts/save/" })
     public List<PostSearchResponseDTO> userSavePost(@RequestBody UserSavePostRequestDTO userSavePostRequestDTO) {
         postService.userSavePost(userSavePostRequestDTO);
         return postService.getPostSaveByUserId(userSavePostRequestDTO.getUserId());
+    }
+
+    @MessageMapping({ "/posts/save/user/like", "/posts/save/user/like/" })
+    @SendTo({ "/topic/posts/save", "/topic/posts/save" })
+    public List<PostSearchResponseDTO> userLikePost(@RequestBody LikeRequestDTO likeRequestDTO) {
+        postService.likePost(likeRequestDTO);
+        return postService.getPostSaveByUserId(likeRequestDTO.getUserId());
     }
 
     @MessageMapping({ "/posts/group/{code}/unsave", "/posts/group/{code}/unsave/" })

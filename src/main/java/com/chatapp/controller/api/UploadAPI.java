@@ -27,6 +27,9 @@ public class UploadAPI {
     @Autowired
     ResourceLoader resourceLoader;
 
+    //////////////////
+    //Post
+    //////////////////
     @PostMapping({ "/upload/images", "upload/images/" })
     public ResponseEntity<ResponseData<List<String>>> uploadImages(@RequestParam("files") MultipartFile[] files)
             throws IOException {
@@ -43,6 +46,9 @@ public class UploadAPI {
         return ResponseEntity.ok(responseData);
     }
 
+    //////////////////
+    //Get
+    //////////////////
     @GetMapping({ "/images/{name}", "/images/{name}/" })
     public ResponseEntity<byte[]> identificationImage(@PathVariable String name) throws IOException {
         byte[] image = fileUploadService.loadAsResource(name);

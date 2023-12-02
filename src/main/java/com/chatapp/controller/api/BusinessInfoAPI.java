@@ -23,6 +23,9 @@ public class BusinessInfoAPI {
     @Autowired
     private UserService userService;
 
+    //////////////////
+    //Get
+    //////////////////
     @GetMapping({ "business", "business/" })
     public ResponseEntity<ResponseData<List<BusinessInfoResponseDTO>>> findAll() {
         ResponseData<List<BusinessInfoResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
@@ -37,6 +40,9 @@ public class BusinessInfoAPI {
         return ResponseEntity.ok(responseData);
     }
 
+    //////////////////
+    //Post
+    //////////////////
     @PostMapping({ "business", "business/" })
     ResponseEntity<ResponseData<AuthTokenDTO>> updateOrSave(
             @RequestBody BusinessInfoUpdateOrSaveRequestDTO businessInfoUpdateOrSaveRequestDTO) {
