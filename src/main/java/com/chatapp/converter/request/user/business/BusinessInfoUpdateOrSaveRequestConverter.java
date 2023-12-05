@@ -23,11 +23,13 @@ public class BusinessInfoUpdateOrSaveRequestConverter
         UserEntity userEntity = userRepository.findOneById(dto.getId());
         userEntity.setId(dto.getId());
         userEntity.setEmail(dto.getEmail());
-        userEntity.setBackground(dto.getBackground());
         userEntity.setName(dto.getName());
         userEntity.setPhone(dto.getPhone());
         if (dto.getImage() != null) {
             userEntity.setImage(dto.getImage());
+        }
+        if (dto.getBackground() != null) {
+            userEntity.setBackground(dto.getBackground());
         }
         BusinessesInfoEntity businessesInfoEntity = businessInfoRepository.findOneByUser_Id(dto.getId());
         businessesInfoEntity.setRepresentor(dto.getRepresentor());

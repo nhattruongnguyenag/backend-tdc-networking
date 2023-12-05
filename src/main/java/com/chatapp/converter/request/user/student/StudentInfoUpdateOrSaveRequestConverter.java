@@ -35,6 +35,9 @@ public class StudentInfoUpdateOrSaveRequestConverter extends BaseConverter<UserE
         if (dto.getImage() != null) {
             userEntity.setImage(dto.getImage());
         }
+        if (dto.getBackground() != null) {
+            userEntity.setBackground(dto.getBackground());
+        }
         StudentInfoEntity studentInfoEntity = studentInfoRepository.findOneByUser_Id(dto.getId());
         studentInfoEntity.setStudentCode(dto.getStudentCode());
         studentInfoEntity.setUser(userEntity);
