@@ -24,10 +24,12 @@ public class FacultyInfoUpdateOrSaveRequestConverter
         userEntity.setId(dto.getId());
         userEntity.setEmail(dto.getEmail());
         userEntity.setName(dto.getName());
-        userEntity.setBackground(dto.getBackground());
         userEntity.setPhone(dto.getPhone());
         if (dto.getImage() != null) {
             userEntity.setImage(dto.getImage());
+        }
+        if (dto.getBackground() != null) {
+            userEntity.setBackground(dto.getBackground());
         }
         FacultyInfoEntity facultyInfoEntity = facultyInfoRepository.findOneByUser_Id(dto.getId());
         facultyInfoEntity.setUser(userEntity);
