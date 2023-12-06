@@ -59,10 +59,12 @@ public class PostAPI {
     }
 
     @GetMapping({ "posts/search", "posts/search/" })
-    public ResponseEntity<List<PostSearchResponseDTO>> findPosts(
+    public ResponseEntity<ResponseData<List<PostSearchResponseDTO>>> findPosts(
             @RequestParam Map<String, Object> params) {
         PostSearchRequestDTO dto = CommonUtils.mapToObject(params, PostSearchRequestDTO.class);
-        return ResponseEntity.ok(postService.findPosts(dto));
+        ResponseData<List<PostSearchResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "success",
+                postService.findPosts(dto));
+        return ResponseEntity.ok(responseData);
     }
 
     @GetMapping({ "posts/user/save/{userId}", "posts/user/save/{userId}/" })
