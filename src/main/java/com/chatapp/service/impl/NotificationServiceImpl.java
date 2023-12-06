@@ -108,4 +108,18 @@ public class NotificationServiceImpl implements NotificationService {
     public List<NotificationResponseDTO> findByContent(String content) {
         return notificationResponseConverter.toDTOGroup(notificationRepository.findByContentContains(content));
     }
+
+    @Override
+    public void addNotification(String content, String type, Long userId, String data) {
+        NotificationSaveRequestDTO notificationSaveRequestDTO = new NotificationSaveRequestDTO();
+        notificationSaveRequestDTO.setContent(content);
+        notificationSaveRequestDTO.setType(type);
+        notificationSaveRequestDTO.setUserId(userId);
+        notificationSaveRequestDTO.setData(data);
+        if (userRepository.findOneById(notificationSaveRequestDTO.getUserId()) == null) {
+            throw new DuplicateUsernameException("user_not_exists");
+        }
+        NotificationEntity entity = notificationSaveRequestConverter.toEntity(notificationSaveRequestDTO);
+        notificationRepository.save(entity);
+    }
 }
