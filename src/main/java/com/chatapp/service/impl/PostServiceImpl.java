@@ -55,11 +55,13 @@ import com.chatapp.dto.response.user.business.BusinessInfoResponseDTO;
 import com.chatapp.dto.response.user.faculty.FacultyInfoResponseDTO;
 import com.chatapp.dto.response.user.student.StudentInfoResponseDTO;
 import com.chatapp.entity.*;
+import com.chatapp.enums.Notification;
 import com.chatapp.enums.PostType;
 import com.chatapp.enums.QuestionType;
 import com.chatapp.enums.Role;
 import com.chatapp.exception.DuplicateUsernameException;
 import com.chatapp.repository.*;
+import com.chatapp.service.NotificationService;
 import com.chatapp.service.PostService;
 import com.chatapp.util.TokenProvider;
 
@@ -76,6 +78,8 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private PostRepository postRepository;
+    @Autowired
+    private NotificationService notificationService;
     @Autowired
     private PostApprovalLogRepository postApprovalLogRepository;
     @Autowired
@@ -423,6 +427,13 @@ public class PostServiceImpl implements PostService {
         postEntity.setActive((byte) 0);
         postEntity.setStatus((byte) 0);
         postRepository.save(postEntity);
+        if (postEntity.getUser().getBusinessesInfos() != null) {
+            for (StudentInfoEntity studentInfoEntity : studentInfoRepository.findAll()) {
+                notificationService.addNotification(Notification.CREATE_SURVEY.getValue(),
+                        Notification.CREATE_SURVEY.getValue(), studentInfoEntity.getUser().getId(),
+                        "id:" + postEntity.getId());
+            }
+        }
         return "";
     }
 
