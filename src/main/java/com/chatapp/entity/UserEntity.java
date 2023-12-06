@@ -8,6 +8,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
+
 @Entity
 @Table(name = "users")
 public class UserEntity extends BaseEntity {
@@ -75,6 +77,9 @@ public class UserEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<PostEntity> posts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<OptionUserEntity> options = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ShortAnswerEntity> shortAnswers = new ArrayList<>();
@@ -407,5 +412,12 @@ public class UserEntity extends BaseEntity {
         this.active = active;
     }
 
+    public List<OptionUserEntity> getOptions() {
+        return this.options;
+    }
+
+    public void setOptions(List<OptionUserEntity> options) {
+        this.options = options;
+    }
 
 }

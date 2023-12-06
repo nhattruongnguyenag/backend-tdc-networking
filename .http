@@ -790,3 +790,12 @@ GET http://localhost:8080/api/posts/survey/6/update HTTP/1.1
 
 ###
 GET http://69.197.134.101:8080/api/job/post/2
+
+###
+POST http://localhost:8080/api/option
+Content-Type: application/json
+
+{
+    "userId": 1,
+    "value": "ja"
+}
