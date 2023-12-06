@@ -39,17 +39,17 @@ Content-Type: application/json
 GET http://127.0.0.1:8080/api/business HTTP/1.1
 
 ###
-POST http://69.197.134.101:8080/api/student/register HTTP/1.1
+POST http://127.0.0.1:8080/api/student/register HTTP/1.1
 Content-Type: application/json
 
 {
-    "email":"sonthu3333@gmail.com",
+    "email":"abc@gmail.com",
     "name":"son",
     "password":"abc123",
     "image":"son.png",
     "background":"SDGFD.png",
     "phone":"56856863",
-    "code":"gh",
+    "code":"st",
     "facultyId":2,
     "majorId":1,
     "studentCode":"2356656",
@@ -151,7 +151,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://69.197.134.101:8080/api/posts/survey HTTP/1.1
+POST http://127.0.0.1:8080/api/posts/survey HTTP/1.1
 Content-Type: application/json
 
 {
@@ -159,7 +159,7 @@ Content-Type: application/json
    "title": "toi la nha phat trien",
    "description": "dhhdd",
    "groupId": 2,
-   "userId": 1,
+   "userId": 14,
    "questions": [
        {
            "type": "tra-loi-ngan",
