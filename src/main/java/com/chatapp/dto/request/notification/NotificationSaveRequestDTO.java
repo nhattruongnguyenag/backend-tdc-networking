@@ -7,4 +7,5 @@ public class NotificationSaveRequestDTO {
     private Long userId;
     private String content;
     private String type;
+    private String data;
 }
