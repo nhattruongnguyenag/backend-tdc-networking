@@ -29,7 +29,15 @@ public class CustomizedPostRepositoryImpl implements CustomizedPostRepository {
         finalQuery.append(joinQuery);
         finalQuery.append("\nWHERE 1 = 1");
         finalQuery.append(whereQuery);
-        finalQuery.append("\nORDER BY p.updatedAt DESC");
+        finalQuery.append("\nORDER BY p.updatedAt DESC ");
+
+        if (isValid(dto.getLimit())) {
+            finalQuery.append("LIMIT ").append(dto.getLimit());
+        }
+
+        if (isValid(dto.getOffset())) {
+            finalQuery.append("OFFSET ").append(dto.getOffset());
+        }
 
         Query query = entityManager.createQuery(finalQuery.toString(), PostEntity.class);
         return query.getResultList();

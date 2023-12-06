@@ -13,4 +13,6 @@ public class PostSearchRequestDTO {
     private String type;
     private Long userLogin;
     private String search;
+    private String limit;
+    private String offset;
 }
