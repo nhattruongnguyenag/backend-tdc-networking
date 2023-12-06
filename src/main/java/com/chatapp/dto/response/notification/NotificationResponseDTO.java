@@ -10,5 +10,6 @@ public class NotificationResponseDTO extends BaseDTO{
     private String content;
     private String status;
     private String type;
+    private String data;
     private UserInfoResponseDTO user;
 }
