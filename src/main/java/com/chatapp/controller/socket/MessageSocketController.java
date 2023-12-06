@@ -20,8 +20,8 @@ public class MessageSocketController {
     @Autowired
     private FirebaseMessagingService firebaseMessagingService;
 
-    @MessageMapping({"/messages/{senderId}/{receiverId}", "/messages/{receiverId}/{senderId}"})
-    @SendTo({"/topic/messages/{senderId}/{receiverId}", "/topic/messages/{receiverId}/{senderId}"})
+    @MessageMapping({"/messages/{senderId}/{receiverId}", "/messages/{receiverId}/{senderId}/"})
+    @SendTo({"/topic/messages/{senderId}/{receiverId}", "/topic/messages/{receiverId}/{senderId}/"})
     public List<MessageResponseDTO> saveMessage(@RequestBody MessageRequestDTO messageRequestDTO) {
         messageService.save(messageRequestDTO);
         firebaseMessagingService.sendNotificationToUser(messageRequestDTO.getReceiverId(), messageRequestDTO.getContent());
@@ -29,8 +29,8 @@ public class MessageSocketController {
         return messageService.findBySenderAndReceiver(messageRequestDTO.getSenderId(), messageRequestDTO.getReceiverId());
     }
 
-    @MessageMapping({"/messages/{senderId}/{receiverId}/listen", "/messages/{receiverId}/{senderId}/listen"})
-    @SendTo({"/topic/messages/{senderId}/{receiverId}", "/topic/messages/{receiverId}/{senderId}"})
+    @MessageMapping({"/messages/{senderId}/{receiverId}/listen", "/messages/{receiverId}/{senderId}/listen/"})
+    @SendTo({"/topic/messages/{senderId}/{receiverId}", "/topic/messages/{receiverId}/{senderId}/"})
     public List<MessageResponseDTO> getMessages(@DestinationVariable("senderId") Long senderId, @DestinationVariable("receiverId") Long receiverId) {
         messageService.updateMessagesToReadState(senderId, receiverId);
         return messageService.findBySenderAndReceiver(senderId, receiverId);
