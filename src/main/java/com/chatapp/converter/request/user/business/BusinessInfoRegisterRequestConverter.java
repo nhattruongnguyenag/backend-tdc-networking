@@ -25,6 +25,9 @@ public class BusinessInfoRegisterRequestConverter extends BaseConverter<UserEnti
         UserEntity userEntity = new UserEntity();
         userEntity.setEmail(dto.getEmail());
         userEntity.setName(dto.getName());
+        if(dto.getImage() != null){
+            userEntity.setImage(dto.getImage());
+        }
         userEntity.setPassword(dto.getPassword());
         userEntity.setPhone(dto.getPhone());
         userEntity.setStatus((byte)0);
