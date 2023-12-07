@@ -43,13 +43,13 @@ POST http://127.0.0.1:8080/api/student/register HTTP/1.1
 Content-Type: application/json
 
 {
-    "email":"abc@gmail.com",
+    "email":"abchhgh@gmail.com",
     "name":"son",
     "password":"abc123",
     "image":"son.png",
     "background":"SDGFD.png",
     "phone":"56856863",
-    "code":"st",
+    "code":"s89",
     "facultyId":2,
     "majorId":1,
     "studentCode":"2356656",
@@ -78,12 +78,12 @@ POST http://127.0.0.1:8080/api/business/register HTTP/1.1
 Content-Type: application/json
 
 {
-    "email":"ctyamthc76677@gmail.com",
+    "email":"ctyamthc7667dlkd7@gmail.com",
     "name":"son",
     "password":"abc123",
     "image":"business.png",
     "phone":"56856867",
-    "code":"food_cty",
+    "code":"ghhhh",
     "representor":"gg",
     "taxCode":"546657",
     "address":"hai ba trung",
