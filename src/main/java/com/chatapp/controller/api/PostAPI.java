@@ -49,7 +49,6 @@ public class PostAPI {
 
     @Autowired
     private ModelMapper modelMapper;
-
     //////////////////
     // Get
     //////////////////

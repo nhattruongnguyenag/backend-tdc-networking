@@ -23,16 +23,21 @@ public class ConversationResponseConverter extends BaseConverter<ConversationEnt
         conversationResponseDTO.setSender(userInfoResponseConverter.toDTO(conversationEntity.getSender()));
         conversationResponseDTO.setReceiver(userInfoResponseConverter.toDTO(conversationEntity.getReceiver()));
         int lastMessageIndex = conversationEntity.getMessages().size() - 1;
-        MessageEntity lastMessage = conversationEntity.getMessages().get(lastMessageIndex);
-        conversationResponseDTO.setLastMessageContent(lastMessage.getContent());
-        conversationResponseDTO.setLastMessageSentAt(lastMessage.getCreatedAt());
+
+
+        if (lastMessageIndex != -1) {
+            MessageEntity lastMessage = conversationEntity.getMessages().get(lastMessageIndex);
+            conversationResponseDTO.setLastMessageContent(lastMessage.getContent());
+            conversationResponseDTO.setLastMessageSentAt(lastMessage.getCreatedAt());
+            conversationResponseDTO.setLastMessageType(lastMessage.getType());
+        }
+
         long countMessagesNotSeen = conversationEntity.getMessages().stream().filter(messageEntity ->
                     messageEntity.getStatus() == MessageStatus.NOT_SEEN
                             && messageEntity.getSender().getId() == conversationEntity.getReceiver().getId()
                             && messageEntity.getReceiver().getId() == conversationEntity.getSender().getId()
         ).collect(Collectors.toList()).size();
         conversationResponseDTO.setCountNewMessage(countMessagesNotSeen);
-        conversationResponseDTO.setLastMessageType(lastMessage.getType());
         return conversationResponseDTO;
     }
 }

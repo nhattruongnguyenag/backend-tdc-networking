@@ -23,19 +23,6 @@ public class MessageAPI {
     //////////////////
     //Get
     //////////////////
-    @GetMapping("/conversations/{senderId}/{receiverId}")
-    List<ConversationResponseDTO> conversation(@PathVariable("senderId") Long senderId, @PathVariable("receiverId") Long receiverId) {
-        List<ConversationResponseDTO> conversationResponses = new ArrayList<>();
-        conversationResponses = conversationService.findBySenderAndReceiver(senderId, receiverId);
-
-        if (conversationResponses == null) {
-            ConversationResponseDTO conversationResponseDTO = new ConversationResponseDTO();
-//            conversationResponseDTO.setSender(userSer);
-        }
-
-        return null;
-    }
-
     @GetMapping("/messages/{senderId}/{receiverId}")
     List<MessageResponseDTO> findMessagesBySenderOrReceiver(@PathVariable("senderId") Long senderId, @PathVariable("receiverId") Long receiverId) {
         return messageService.findBySenderAndReceiver(senderId, receiverId);
