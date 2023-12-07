@@ -212,7 +212,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://127.0.0.1:8080/api/notifications HTTP/1.1
+GET http://69.197.134.101:8080/api/notifications HTTP/1.1
 
 ###
 POST http://127.0.0.1:8080/api/notifications/user HTTP/1.1
@@ -654,7 +654,7 @@ Content-Type: application/json
 
 
 ###
-GET http://localhost:8080/api/posts/search?ownerFaculty=khoa_cong_nghe_thong_tin&status=0&group=group_tdc
+GET http://localhost:8080/api/posts/search?ownerFaculty=khoa_cong_nghe_thong_tin&status=0&group=group_tdc&userLogin=2
 
 ###
 DELETE http://127.0.0.1:8080/api/approval/post/log/delete/3 HTTP/1.1
