@@ -666,7 +666,7 @@ Content-Type: application/json
 
 {
     "id":12,
-    "email":"duilethi@gmail.com",
+    "email":"sonthu3333@gmail.com",
     "name":"son",
     "image":"son.png",
     "background":"SDGFD.png",
@@ -692,7 +692,7 @@ POST http://127.0.0.1:8080/api/business HTTP/1.1
 Content-Type: application/json
 
 {
-    "id": 13,
+    "id": 14,
     "email":"ctysonghuong@gmail.com",
     "name":"song huong",
     "image":"tienhan.png",
