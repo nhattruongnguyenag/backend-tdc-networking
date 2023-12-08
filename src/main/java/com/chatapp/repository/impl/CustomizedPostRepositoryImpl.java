@@ -54,8 +54,9 @@ public class CustomizedPostRepositoryImpl implements CustomizedPostRepository {
 
         if (isValid(dto.getFaculty())) {
             joinQuery.append("\nJOIN p.user as us");
-            joinQuery.append("\nJOIN us.faculty as ft");
-            whereQuery.append("\nAND ft.code LIKE ").append("'%").append(dto.getFaculty()).append("%'");
+            joinQuery.append("\nJOIN us.falcutyInfo as ft");
+            joinQuery.append("\nJOIN ft.user as ftu");
+            whereQuery.append("\nAND ftu.code LIKE ").append("'%").append(dto.getFaculty()).append("%'");
         }
 
         if (isValid(dto.getUserId()) && !isValid(dto.getOwnerFaculty())) {
@@ -69,6 +70,9 @@ public class CustomizedPostRepositoryImpl implements CustomizedPostRepository {
         if (isValid(dto.getGroup())) {
             joinQuery.append("\nJOIN p.group as g");
             whereQuery.append("\nAND g.code LIKE ").append("'%").append(dto.getGroup()).append("%'");
+        }
+        else{
+            whereQuery.append("\nAND p.group = " + null);
         }
 
         if(isValid(dto.getSearch())){
