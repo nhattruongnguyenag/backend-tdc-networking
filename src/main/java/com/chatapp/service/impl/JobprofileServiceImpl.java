@@ -17,12 +17,14 @@ import com.chatapp.converter.response.user.UserInfoResponseConverter;
 import com.chatapp.entity.JobProfileEntity;
 import com.chatapp.entity.PostEntity;
 import com.chatapp.entity.UserEntity;
+import com.chatapp.enums.Notification;
 import com.chatapp.enums.PostType;
 import com.chatapp.enums.Role;
 import com.chatapp.repository.JobProfileRepository;
 import com.chatapp.repository.PostRepository;
 import com.chatapp.repository.UserRepository;
 import com.chatapp.service.JobProfileService;
+import com.chatapp.service.NotificationService;
 
 @Service
 public class JobprofileServiceImpl implements JobProfileService {
@@ -34,6 +36,8 @@ public class JobprofileServiceImpl implements JobProfileService {
     JobProfileManageResponseConverter jobProfileResponseConverter;
     @Autowired
     UserInfoResponseConverter userInfoResponseConverter;
+    @Autowired
+    private NotificationService notificationService;
 
     @Autowired
     JobProfileRepository jobProfileRepository;
@@ -57,17 +61,22 @@ public class JobprofileServiceImpl implements JobProfileService {
             throw new RuntimeException("user_is_not_exist");
         }
 
+        JobProfileEntity jobProfileEntity = null;
+
         if (jobProfileRepository.findOneByPost_IdAndUser_Id(jobApplyProfileRequestDTO.getPost_id(),
                 jobApplyProfileRequestDTO.getUser_id()) != null) {
-            JobProfileEntity jobProfileEntity = jobApplyProfileRequestConverter
+            jobProfileEntity = jobApplyProfileRequestConverter
                     .toUpdateEntity(jobApplyProfileRequestDTO);
             jobProfileRepository.save(jobProfileEntity);
-            return "";
         } else {
-            JobProfileEntity jobProfileEntity = jobApplyProfileRequestConverter.toEntity(jobApplyProfileRequestDTO);
+            jobProfileEntity = jobApplyProfileRequestConverter.toEntity(jobApplyProfileRequestDTO);
             jobProfileRepository.save(jobProfileEntity);
-            return "";
+
         }
+        notificationService.addNotification(Notification.USER_APPLY_JOB.getValue(),
+                Notification.USER_APPLY_JOB.getValue(), jobApplyProfileRequestDTO.getUser_id(),
+                "jobId: " + jobProfileEntity.getId());
+        return "";
     }
 
     @Override
@@ -79,7 +88,8 @@ public class JobprofileServiceImpl implements JobProfileService {
         if (!postEntity.getType().equals(PostType.RECRUIMENT.getName())) {
             throw new RuntimeException("this_post_is_not_a_recruitment");
         }
-        List<JobProfileManageResponseDTO> jobProfileResponseDTOs = jobProfileManageResponseConverter.toDTOGroup(jobProfileRepository.findAllByPost_Id(postId));
+        List<JobProfileManageResponseDTO> jobProfileResponseDTOs = jobProfileManageResponseConverter
+                .toDTOGroup(jobProfileRepository.findAllByPost_Id(postId));
         return jobProfileResponseDTOs;
     }
 
@@ -126,8 +136,7 @@ public class JobprofileServiceImpl implements JobProfileService {
             List<JobProfilePendingResponseDTO> jobProfileResponseDTOs = jobProfileResponseConverter
                     .toDTOGroup(entity.getJobProfiles());
             return jobProfileResponseDTOs;
-        }
-        else{
+        } else {
             throw new RuntimeException("only_student_can_see_list_job_profile");
         }
     }

@@ -288,13 +288,6 @@ public class PostAPI {
                 .body(new MessageResponseData(HttpStatus.BAD_REQUEST, "survey_update_failed"));
     }
 
-    @PutMapping({ "posts/survey/update", "posts/survey/update/" })
-    ResponseEntity<ResponseData<?>> surveyUpdate(@RequestBody SurveyUpdateRequestDTO surveyUpdateRequestDTO) {
-        postService.updateSurvey(surveyUpdateRequestDTO);
-        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED, "success", null);
-        return ResponseEntity.created(null).body(responseData);
-    }
-
     //////////////////
     //Delete
     //////////////////
