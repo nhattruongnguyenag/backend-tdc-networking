@@ -16,7 +16,7 @@ public class NotificationEntity extends BaseEntity {
     @Column(name = "type", nullable = false)
     private String type;
 
-    @Column(name = "data", nullable = false)
+    @Column(name = "data", nullable = true)
     private String data;
 
     @ManyToOne

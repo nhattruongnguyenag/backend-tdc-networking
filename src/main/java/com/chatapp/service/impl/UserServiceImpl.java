@@ -48,6 +48,7 @@ import com.chatapp.entity.RoleEntity;
 import com.chatapp.entity.TokenResetPasswordEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.enums.GroupDefault;
+import com.chatapp.enums.Notification;
 import com.chatapp.enums.Role;
 import com.chatapp.exception.DuplicateUsernameException;
 import com.chatapp.repository.BusinessInfoRepository;
@@ -59,6 +60,7 @@ import com.chatapp.repository.StudentInfoRepository;
 import com.chatapp.repository.TokenRepository;
 import com.chatapp.repository.UserRepository;
 import com.chatapp.service.EmailService;
+import com.chatapp.service.NotificationService;
 import com.chatapp.service.UserService;
 import com.chatapp.util.TokenProvider;
 
@@ -87,6 +89,8 @@ public class UserServiceImpl implements UserService {
     TokenProvider tokenProvider;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private NotificationService notificationService;
 
     @Autowired
     private UserRepository userRepository;
@@ -300,7 +304,8 @@ public class UserServiceImpl implements UserService {
 
     // studentInfo service
     @Override
-    public AuthTokenDTO studentRegister(StudentInfoRegisterRequestDTO studentRegisterDTO) throws MessagingException, UnsupportedEncodingException {
+    public AuthTokenDTO studentRegister(StudentInfoRegisterRequestDTO studentRegisterDTO)
+            throws MessagingException, UnsupportedEncodingException {
         UserEntity userEntity;
         RoleEntity roleEntity = roleRepository.findOneByCode(Role.STUDENT.getName());
         List<RoleEntity> roles = new ArrayList<RoleEntity>();
@@ -331,6 +336,9 @@ public class UserServiceImpl implements UserService {
         emailRequestDTO.setSubject(studentRegisterDTO.getSubject());
         emailRequestDTO.setContent(studentRegisterDTO.getContent());
         sendEmailAuthenticationRegister(emailRequestDTO);
+        notificationService.addNotification(Notification.REGISTER_SUCCESS.getValue(),
+                Notification.REGISTER_SUCCESS.getValue(), userEntity.getId(),
+                null);
         return new AuthTokenDTO(token);
     }
 
@@ -342,6 +350,9 @@ public class UserServiceImpl implements UserService {
     private UserEntity studentUpdate(StudentInfoUpdateOrSaveRequestDTO studentInfoUpdateOrSaveRequestDTO) {
         UserEntity userEntity;
         userEntity = studentInfoUpdateOrSaveRequestConverter.toUpdateEntity(studentInfoUpdateOrSaveRequestDTO);
+        notificationService.addNotification(Notification.USER_UPDATE.getValue(),
+                Notification.USER_UPDATE.getValue(), userEntity.getId(),
+                null);
         return userEntity;
     }
 
@@ -380,7 +391,8 @@ public class UserServiceImpl implements UserService {
 
     // facultyInfo service
     @Override
-    public AuthTokenDTO facultyRegister(FacultyInfoRegisterRequestDTO facultyInfoRegisterRequestDTO) throws MessagingException, UnsupportedEncodingException{
+    public AuthTokenDTO facultyRegister(FacultyInfoRegisterRequestDTO facultyInfoRegisterRequestDTO)
+            throws MessagingException, UnsupportedEncodingException {
         UserEntity userEntity;
         RoleEntity roleEntity = roleRepository.findOneByCode(Role.FACULTY.getName());
         List<RoleEntity> roles = new ArrayList<RoleEntity>();
@@ -418,6 +430,9 @@ public class UserServiceImpl implements UserService {
     private UserEntity facultyUpdate(FacultyInfoUpdateOrSaveRequestDTO facultyInfoUpdateOrSaveRequestDTO) {
         UserEntity userEntity;
         userEntity = facultyInfoUpdateOrSaveRequestConverter.toUpdateEntity(facultyInfoUpdateOrSaveRequestDTO);
+        notificationService.addNotification(Notification.USER_UPDATE.getValue(),
+                Notification.USER_UPDATE.getValue(), userEntity.getId(),
+                null);
         return userEntity;
     }
 
@@ -458,7 +473,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public AuthTokenDTO businessRegister(BusinessInfoRegisterRequestDTO businessInfoRegisterRequestDTO) throws MessagingException, UnsupportedEncodingException{
+    public AuthTokenDTO businessRegister(BusinessInfoRegisterRequestDTO businessInfoRegisterRequestDTO)
+            throws MessagingException, UnsupportedEncodingException {
         UserEntity userEntity;
         RoleEntity roleEntity = roleRepository.findOneByCode(Role.BUSINESS.getName());
         List<RoleEntity> roles = new ArrayList<RoleEntity>();
@@ -485,12 +501,18 @@ public class UserServiceImpl implements UserService {
         emailRequestDTO.setSubject(businessInfoRegisterRequestDTO.getSubject());
         emailRequestDTO.setContent(businessInfoRegisterRequestDTO.getContent());
         sendEmailAuthenticationRegister(emailRequestDTO);
+        notificationService.addNotification(Notification.REGISTER_SUCCESS.getValue(),
+                Notification.REGISTER_SUCCESS.getValue(), userEntity.getId(),
+                null);
         return new AuthTokenDTO(token);
     }
 
     private UserEntity businessUpdate(BusinessInfoUpdateOrSaveRequestDTO businessInfoUpdateOrSaveRequestDTO) {
         UserEntity userEntity;
         userEntity = businessInfoUpdateOrSaveRequestConverter.toUpdateEntity(businessInfoUpdateOrSaveRequestDTO);
+        notificationService.addNotification(Notification.USER_UPDATE.getValue(),
+                Notification.USER_UPDATE.getValue(), userEntity.getId(),
+                null);
         return userEntity;
     }
 
@@ -548,7 +570,7 @@ public class UserServiceImpl implements UserService {
         }
         return userFindResponseDTOs;
     }
-    
+
     @Override
     public String follow(UserFollowRequestDTO userFollowRequestDTO) {
         if (userRepository.findById(userFollowRequestDTO.getUserId()) == null) {
@@ -566,6 +588,9 @@ public class UserServiceImpl implements UserService {
             FollowEntity followEntity = userFollowRequestConverter.toEntity(userFollowRequestDTO);
             followReposittory.save(followEntity);
         }
+        notificationService.addNotification(Notification.USER_FOLLOW.getValue(),
+                Notification.USER_FOLLOW.getValue(), userFollowRequestDTO.getUserFollowId(),
+                null);
         return "";
     }
 
@@ -779,6 +804,9 @@ public class UserServiceImpl implements UserService {
                 userRepository.save(userEntity);
                 tokenResetPasswordEntity.setStatus(Long.valueOf(0));
                 tokenRepository.save(tokenResetPasswordEntity);
+                notificationService.addNotification(Notification.CHANGE_PASSWORD_SUCCESS.getValue(),
+                        Notification.CHANGE_PASSWORD_SUCCESS.getValue(), userEntity.getId(),
+                        null);
                 return "";
             } else {
                 throw new DuplicateUsernameException("token_has_expired");
@@ -797,6 +825,9 @@ public class UserServiceImpl implements UserService {
         if (userImageUpdateRequestDTO.getBackground() != null) {
             entity.setBackground(userImageUpdateRequestDTO.getBackground());
         }
+        notificationService.addNotification(Notification.USER_UPDATE_AVATAR.getValue(),
+                        Notification.USER_UPDATE_AVATAR.getValue(), entity.getId(),
+                        null);
         userRepository.save(entity);
         return "";
     }
