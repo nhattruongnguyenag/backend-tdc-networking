@@ -27,13 +27,13 @@ public class MessageSocketController {
         messageService.save(messageRequestDTO);
         firebaseMessagingService.sendNotificationToUser(messageRequestDTO.getReceiverId(), messageRequestDTO.getContent());
         messageService.updateMessagesToReadState(messageRequestDTO.getSenderId(), messageRequestDTO.getReceiverId());
-        return messageService.findBySenderAndReceiver(messageRequestDTO.getSenderId(), messageRequestDTO.getReceiverId(), new Pagination(1));
+        return messageService.findBySenderAndReceiver(messageRequestDTO.getSenderId(), messageRequestDTO.getReceiverId(), new Pagination(1, 0));
     }
 
     @MessageMapping({"/messages/{senderId}/{receiverId}/listen", "/messages/{receiverId}/{senderId}/listen/"})
     @SendTo({"/topic/messages/{senderId}/{receiverId}", "/topic/messages/{receiverId}/{senderId}/"})
     public List<MessageResponseDTO> getMessages(@DestinationVariable("senderId") Long senderId, @DestinationVariable("receiverId") Long receiverId) {
         messageService.updateMessagesToReadState(senderId, receiverId);
-        return messageService.findBySenderAndReceiver(senderId, receiverId, new Pagination(1, 5));
+        return messageService.findBySenderAndReceiver(senderId, receiverId);
     }
 }
