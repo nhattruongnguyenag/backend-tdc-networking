@@ -1,14 +1,35 @@
 package com.chatapp.dto.response.user;
 
-import java.util.List;
-
 import com.chatapp.dto.response.post.PostSearchResponseDTO;
 
-import lombok.Data;
+import java.util.List;
 
-@Data
 public class UserDetailInGroupResponseDTO{
     UserInfoResponseDTO user;
     List<PostSearchResponseDTO> posts;
     Boolean isFollow;
+
+    public UserInfoResponseDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserInfoResponseDTO user) {
+        this.user = user;
+    }
+
+    public List<PostSearchResponseDTO> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<PostSearchResponseDTO> posts) {
+        this.posts = posts;
+    }
+
+    public Boolean getFollow() {
+        return isFollow;
+    }
+
+    public void setFollow(Boolean follow) {
+        isFollow = follow;
+    }
 }

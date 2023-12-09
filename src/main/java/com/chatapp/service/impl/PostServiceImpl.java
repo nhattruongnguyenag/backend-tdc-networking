@@ -872,10 +872,10 @@ public class PostServiceImpl implements PostService {
         // set isFollow
         UserEntity userLogin = userRepository.findOneById(userDetailInGroupRequestDTO.getUserLogin());
         UserEntity userInPage = userRepository.findOneById(userDetailInGroupRequestDTO.getUserId());
-        userDetailInGroupResponseDTO.setIsFollow(false);
+        userDetailInGroupResponseDTO.setFollow(false);
         for (FollowEntity entity : userLogin.getFollowUsers()) {
             if (entity.getUserFollow().getId() == userInPage.getId()) {
-                userDetailInGroupResponseDTO.setIsFollow(true);
+                userDetailInGroupResponseDTO.setFollow(true);
                 break;
             }
         }

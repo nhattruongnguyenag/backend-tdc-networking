@@ -59,20 +59,21 @@ public class CustomizedPostRepositoryImpl implements CustomizedPostRepository {
             whereQuery.append("\nAND ftu.code LIKE ").append("'%").append(dto.getFaculty()).append("%'");
         }
 
-        if (isValid(dto.getUserId()) && !isValid(dto.getOwnerFaculty())) {
+        if (dto.getUserId() != null && !isValid(dto.getOwnerFaculty())) {
             joinQuery.append("\nJOIN p.user as u");
         }
 
-        if (isValid(dto.getUserId())) {
+        if (dto.getUserId() != null) {
             whereQuery.append("\nAND u.id = ").append(dto.getUserId());
         }
 
         if (isValid(dto.getGroup())) {
-            joinQuery.append("\nJOIN p.group as g");
-            whereQuery.append("\nAND g.code LIKE ").append("'%").append(dto.getGroup()).append("%'");
-        }
-        else{
-            whereQuery.append("\nAND p.group = " + null);
+            if (dto.getGroup().equalsIgnoreCase("none")) {
+                whereQuery.append("\nAND p.group = " + null);
+            } else {
+                joinQuery.append("\nJOIN p.group as g");
+                whereQuery.append("\nAND g.code LIKE ").append("'%").append(dto.getGroup()).append("%'");
+            }
         }
 
         if(isValid(dto.getSearch())){
@@ -92,15 +93,15 @@ public class CustomizedPostRepositoryImpl implements CustomizedPostRepository {
     }
 
     private void buildWhereQuery(PostSearchRequestDTO dto, StringBuilder whereQuery) {
-        if (isValid(dto.getStatus())) {
+        if (dto.getStatus() != null) {
             whereQuery.append("\nAND p.status = ").append(dto.getStatus());
         }
 
-        if (isValid(dto.getActive())) {
+        if (dto.getActive() != null) {
             whereQuery.append("\nAND p.active = ").append(dto.getActive());
         }
 
-        if (isValid(dto.getPostId())) {
+        if (dto.getPostId() != null) {
             whereQuery.append("\nAND p.id = ").append(dto.getPostId());
         }
 
@@ -109,7 +110,7 @@ public class CustomizedPostRepositoryImpl implements CustomizedPostRepository {
         }
     }
 
-    private boolean isValid(Object str) {
-        return str != null;
+    private boolean isValid(String str) {
+        return str != null && !str.isBlank();
     }
 }
