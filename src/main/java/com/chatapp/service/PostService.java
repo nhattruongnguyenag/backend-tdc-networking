@@ -16,6 +16,7 @@ import com.chatapp.dto.request.post.survey.SurveySaveRequestDTO;
 import com.chatapp.dto.request.post.survey.SurveyUpdateRequestDTO;
 import com.chatapp.dto.request.user.UserDetailInGroupRequestDTO;
 import com.chatapp.dto.request.user.like.LikeRequestDTO;
+import com.chatapp.dto.request.user.post_save.UserSavePostFindRequestDTO;
 import com.chatapp.dto.request.user.post_save.UserSavePostRequestDTO;
 import com.chatapp.dto.response.post.PostSearchResponseDTO;
 import com.chatapp.dto.response.post.comment.CommentResponeseDTO;
@@ -95,6 +96,8 @@ public interface PostService {
     String userSavePost(UserSavePostRequestDTO userSavePostRequestDTO);
 
     List<PostSearchResponseDTO> getPostSaveByUserId(Long userId);
+
+    List<PostSearchResponseDTO> getPostSaveByUserIdAndSearch(UserSavePostFindRequestDTO userSavePostFindRequestDTO);
 
     UserDetailInGroupResponseDTO getUserPageInGroup(UserDetailInGroupRequestDTO userDetailInGroupRequestDTO);
 

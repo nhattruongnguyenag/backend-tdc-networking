@@ -40,6 +40,7 @@ import com.chatapp.dto.request.post.survey.SurveyAnswerRequestDTO;
 import com.chatapp.dto.request.post.survey.SurveySaveRequestDTO;
 import com.chatapp.dto.request.user.UserDetailInGroupRequestDTO;
 import com.chatapp.dto.request.user.like.LikeRequestDTO;
+import com.chatapp.dto.request.user.post_save.UserSavePostFindRequestDTO;
 import com.chatapp.dto.request.user.post_save.UserSavePostRequestDTO;
 import com.chatapp.dto.response.post.PostInfoResponseDTO;
 import com.chatapp.dto.response.post.PostSearchResponseDTO;
@@ -993,5 +994,37 @@ public class PostServiceImpl implements PostService {
     public SurveyDTO getSurveyByPostId(Long postId) {
         SurveyDTO surveyDTO = surveyConverter.toDTO(surveyPostRepository.findOneByPost_Id(postId));
         return surveyDTO;
+    }
+
+    @Override
+    public List<PostSearchResponseDTO> getPostSaveByUserIdAndSearch(
+            UserSavePostFindRequestDTO userSavePostFindRequestDTO) {
+        if (userRepository.findOneById(userSavePostFindRequestDTO.getUserId()) == null) {
+            throw new DuplicateUsernameException("user_does_not_exist");
+        }
+        String lower = userSavePostFindRequestDTO.getSearch().toLowerCase();
+        List<PostEntity> postEntities = userRepository.findOneById(userSavePostFindRequestDTO.getUserId())
+                .getPostSave();
+        List<PostEntity> result = new ArrayList<PostEntity>();
+        for (PostEntity postEntity : postEntities) {
+            postEntity.setUserLogin(userSavePostFindRequestDTO.getUserId());
+            if (postEntity.getNormalPost() != null) {
+                if (postEntity.getNormalPost().getContent().contains(lower)) {
+                    result.add(postEntity);
+                }
+            }
+            if(postEntity.getRecruitmentPost() != null){
+                if (postEntity.getRecruitmentPost().getTitle().contains(lower)) {
+                    result.add(postEntity);
+                }
+            }
+            if(postEntity.getSurveyPost() != null){
+                if (postEntity.getSurveyPost().getTitle().contains(lower)) {
+                    result.add(postEntity);
+                }
+            }
+        }
+        List<PostSearchResponseDTO> dtos = postSearchResponseConverter.toDTOGroup(result);
+        return dtos;
     }
 }

@@ -799,3 +799,12 @@ Content-Type: application/json
     "userId": 1,
     "value": "ja"
 }
+
+###
+POST http://localhost:8080/api/posts/user/save/search
+Content-Type: application/json
+
+{
+    "userId": 1,
+    "search": ""
+}

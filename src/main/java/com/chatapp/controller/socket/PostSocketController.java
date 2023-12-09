@@ -9,6 +9,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 
 import com.chatapp.dto.request.user.like.LikeRequestDTO;
+import com.chatapp.dto.request.user.post_save.UserSavePostFindRequestDTO;
 import com.chatapp.dto.request.user.post_save.UserSavePostRequestDTO;
 import com.chatapp.dto.response.post.PostSearchResponseDTO;
 import com.chatapp.service.PostService;
@@ -44,6 +45,26 @@ public class PostSocketController {
     public List<PostSearchResponseDTO> userLikePost(@RequestBody LikeRequestDTO likeRequestDTO) {
         postService.likePost(likeRequestDTO);
         return postService.getPostSaveByUserId(likeRequestDTO.getUserId());
+    }
+
+    @MessageMapping({ "/posts/save/user/search/{search}/unsave", "/posts/save/user/search/{search}/unsave/" })
+    @SendTo({ "/topic/posts/save/search", "/topic/posts/save/search" })
+    public List<PostSearchResponseDTO> userSavePostSearch(@RequestBody UserSavePostRequestDTO userSavePostRequestDTO , @DestinationVariable("search") String search) {
+        postService.userSavePost(userSavePostRequestDTO);
+        UserSavePostFindRequestDTO userSavePostFindRequestDTO = new UserSavePostFindRequestDTO();
+        userSavePostFindRequestDTO.setSearch(search);
+        userSavePostFindRequestDTO.setUserId(userSavePostRequestDTO.getUserId());
+        return postService.getPostSaveByUserIdAndSearch(userSavePostFindRequestDTO);
+    }
+
+    @MessageMapping({ "/posts/save/user/search/{search}/like", "/posts/save/user/search/{search}/like/" })
+    @SendTo({ "/topic/posts/save/search", "/topic/posts/save/search" })
+    public List<PostSearchResponseDTO> userLikePostSearch(@RequestBody LikeRequestDTO likeRequestDTO , @DestinationVariable("search") String search) {
+        postService.likePost(likeRequestDTO);
+        UserSavePostFindRequestDTO userSavePostFindRequestDTO = new UserSavePostFindRequestDTO();
+        userSavePostFindRequestDTO.setSearch(search);
+        userSavePostFindRequestDTO.setUserId(likeRequestDTO.getUserId());
+        return postService.getPostSaveByUserIdAndSearch(userSavePostFindRequestDTO);
     }
 
     @MessageMapping({ "/posts/group/{code}/unsave", "/posts/group/{code}/unsave/" })
