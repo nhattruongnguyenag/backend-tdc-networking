@@ -11,8 +11,8 @@ public class PostSearchRequestDTO {
     private String type;
     private Long userLogin;
     private String search;
-    private String limit;
-    private String offset;
+    private Integer limit;
+    private Integer offset;
 
     public String getGroup() {
         return group;
@@ -94,19 +94,19 @@ public class PostSearchRequestDTO {
         this.search = search;
     }
 
-    public String getLimit() {
+    public Integer getLimit() {
         return limit;
     }
 
-    public void setLimit(String limit) {
+    public void setLimit(Integer limit) {
         this.limit = limit;
     }
 
-    public String getOffset() {
+    public Integer getOffset() {
         return offset;
     }
 
-    public void setOffset(String offset) {
+    public void setOffset(Integer offset) {
         this.offset = offset;
     }
 }

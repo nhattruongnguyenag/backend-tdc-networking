@@ -1,16 +1,19 @@
 package com.chatapp.controller.api;
 
-import com.chatapp.dto.request.message.MessageRequestDTO;
+import com.chatapp.dto.Pagination;
+import com.chatapp.dto.request.message.MessageSaveRequestDTO;
+import com.chatapp.dto.request.post.PostSearchRequestDTO;
 import com.chatapp.dto.response.conversation.ConversationResponseDTO;
 import com.chatapp.dto.response.message.MessageResponseDTO;
 import com.chatapp.service.ConversationService;
 import com.chatapp.service.MessageService;
+import com.chatapp.util.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -24,8 +27,9 @@ public class MessageAPI {
     //Get
     //////////////////
     @GetMapping("/messages/{senderId}/{receiverId}")
-    List<MessageResponseDTO> findMessagesBySenderOrReceiver(@PathVariable("senderId") Long senderId, @PathVariable("receiverId") Long receiverId) {
-        return messageService.findBySenderAndReceiver(senderId, receiverId);
+    List<MessageResponseDTO> findMessagesBySenderOrReceiver(@PathVariable("senderId") Long senderId, @PathVariable("receiverId") Long receiverId, @RequestParam Map<String, Object> params) {
+        Pagination pagination = CommonUtils.mapToObject(params, Pagination.class);
+        return messageService.findBySenderAndReceiver(senderId, receiverId, pagination);
     }
 
     @GetMapping("/conversations/{userId}")
@@ -43,7 +47,7 @@ public class MessageAPI {
     //Post
     //////////////////
     @PostMapping("/messages")
-    MessageResponseDTO save(@RequestBody MessageRequestDTO messageRequestDTO) {
+    MessageResponseDTO save(@RequestBody MessageSaveRequestDTO messageRequestDTO) {
         return messageService.save(messageRequestDTO);
     }
     
