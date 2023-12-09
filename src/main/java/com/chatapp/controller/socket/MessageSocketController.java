@@ -5,14 +5,17 @@ import com.chatapp.dto.request.message.MessageSaveRequestDTO;
 import com.chatapp.dto.response.message.MessageResponseDTO;
 import com.chatapp.service.FirebaseMessagingService;
 import com.chatapp.service.MessageService;
+import com.chatapp.util.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class MessageSocketController {
@@ -27,13 +30,14 @@ public class MessageSocketController {
         messageService.save(messageRequestDTO);
         firebaseMessagingService.sendNotificationToUser(messageRequestDTO.getReceiverId(), messageRequestDTO.getContent());
         messageService.updateMessagesToReadState(messageRequestDTO.getSenderId(), messageRequestDTO.getReceiverId());
-        return messageService.findBySenderAndReceiver(messageRequestDTO.getSenderId(), messageRequestDTO.getReceiverId(), new Pagination(1, 0));
+        return messageService.findBySenderAndReceiver(messageRequestDTO.getSenderId(), messageRequestDTO.getReceiverId(), new Pagination(1));
     }
 
     @MessageMapping({"/messages/{senderId}/{receiverId}/listen", "/messages/{receiverId}/{senderId}/listen/"})
     @SendTo({"/topic/messages/{senderId}/{receiverId}", "/topic/messages/{receiverId}/{senderId}/"})
-    public List<MessageResponseDTO> getMessages(@DestinationVariable("senderId") Long senderId, @DestinationVariable("receiverId") Long receiverId) {
+    public List<MessageResponseDTO> getMessages(@DestinationVariable("senderId") Long senderId, @DestinationVariable("receiverId") Long receiverId, @RequestParam Map<String, Object> params) {
         messageService.updateMessagesToReadState(senderId, receiverId);
-        return messageService.findBySenderAndReceiver(senderId, receiverId);
+        Pagination pagination = CommonUtils.mapToObject(params, Pagination.class);
+        return messageService.findBySenderAndReceiver(senderId, receiverId, pagination);
     }
 }
