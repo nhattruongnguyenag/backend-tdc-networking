@@ -1,11 +1,11 @@
-package com.chatapp.dto.request.user;
+package com.chatapp.dto.request.user.post_save;
 
-public class UserFindRequestDTO {
+public class UserSavePostFindRequestDTO {
     private Long userId;
     private String search;
 
     public Long getUserId() {
-        return userId;
+        return this.userId;
     }
 
     public void setUserId(Long userId) {
@@ -13,7 +13,7 @@ public class UserFindRequestDTO {
     }
 
     public String getSearch() {
-        return search;
+        return this.search;
     }
 
     public void setSearch(String search) {

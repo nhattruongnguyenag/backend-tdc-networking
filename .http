@@ -215,11 +215,11 @@ Content-Type: application/json
 GET http://69.197.134.101:8080/api/notifications HTTP/1.1
 
 ###
-POST http://127.0.0.1:8080/api/notifications/user HTTP/1.1
+POST http://69.197.134.101:8080/api/notifications/user HTTP/1.1
 Content-Type: application/json
 
 {
-    "id": 3
+    "id": 12
 }
 
 
@@ -798,4 +798,13 @@ Content-Type: application/json
 {
     "userId": 1,
     "value": "ja"
+}
+
+###
+POST http://localhost:8080/api/posts/user/save/search
+Content-Type: application/json
+
+{
+    "userId": 1,
+    "search": ""
 }

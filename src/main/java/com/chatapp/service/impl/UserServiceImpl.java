@@ -559,13 +559,13 @@ public class UserServiceImpl implements UserService {
             if (entity.getFollowUsers().size() > 0) {
                 for (FollowEntity followEntity : entity.getFollowUsers()) {
                     if (followEntity.getUserFollow().getId() == userFindResponseDTO.getId()) {
-                        userFindResponseDTO.setIsFollow(true);
+                        userFindResponseDTO.setFollow(true);
                         break;
                     }
-                    userFindResponseDTO.setIsFollow(false);
+                    userFindResponseDTO.setFollow(false);
                 }
             } else {
-                userFindResponseDTO.setIsFollow(false);
+                userFindResponseDTO.setFollow(false);
             }
         }
         return userFindResponseDTOs;

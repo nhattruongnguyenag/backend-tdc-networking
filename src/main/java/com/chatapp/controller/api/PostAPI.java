@@ -17,6 +17,7 @@ import com.chatapp.dto.request.post.survey.SurveySaveRequestDTO;
 import com.chatapp.dto.request.post.survey.SurveyUpdateRequestDTO;
 import com.chatapp.dto.request.user.UserDetailInGroupRequestDTO;
 import com.chatapp.dto.request.user.like.LikeRequestDTO;
+import com.chatapp.dto.request.user.post_save.UserSavePostFindRequestDTO;
 import com.chatapp.dto.request.user.post_save.UserSavePostRequestDTO;
 import com.chatapp.dto.response.post.PostSearchResponseDTO;
 import com.chatapp.dto.response.post.comment.CommentResponeseDTO;
@@ -71,6 +72,13 @@ public class PostAPI {
     ResponseEntity<ResponseData<?>> userSavePost(@PathVariable Long userId) {
         ResponseData<?> responseData = new ResponseData<>(HttpStatus.OK, "success",
                 postService.getPostSaveByUserId(userId));
+        return ResponseEntity.ok(responseData);
+    }
+
+    @PostMapping({ "posts/user/save/search", "posts/user/save/search" })
+    ResponseEntity<ResponseData<?>> userSearchSavePost(@RequestBody UserSavePostFindRequestDTO userSavePostFindRequestDTO) {
+        ResponseData<?> responseData = new ResponseData<>(HttpStatus.OK, "success",
+                postService.getPostSaveByUserIdAndSearch(userSavePostFindRequestDTO));
         return ResponseEntity.ok(responseData);
     }
 

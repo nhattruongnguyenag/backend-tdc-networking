@@ -3,7 +3,8 @@ package com.chatapp.service.impl;
 import com.chatapp.constant.MessageStatus;
 import com.chatapp.converter.request.message.MessageRequestConverter;
 import com.chatapp.converter.response.message.MessageResponseConverter;
-import com.chatapp.dto.request.message.MessageRequestDTO;
+import com.chatapp.dto.Pagination;
+import com.chatapp.dto.request.message.MessageSaveRequestDTO;
 import com.chatapp.dto.response.message.MessageResponseDTO;
 import com.chatapp.entity.ConversationEntity;
 import com.chatapp.entity.MessageEntity;
@@ -45,6 +46,16 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    public List<MessageResponseDTO> findBySenderAndReceiver(Long senderId, Long receiverId, Pagination pagination) {
+        if (userRepository.findById(senderId).isPresent()
+                && userRepository.findById(receiverId).isPresent()) {
+            return messageResponseConverter.toDTOGroup(customizedMessageRepository.findBySenderOrReceiver(senderId, receiverId, pagination));
+        }
+
+        throw new RuntimeException("user_does_not_exists");
+    }
+
+    @Override
     public List<MessageResponseDTO> findByConversations_Id(Long conversationId) {
         Optional<ConversationEntity> conversationEntity = conversationRepository.findById(conversationId);
         if (conversationEntity.isPresent()) {
@@ -67,7 +78,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public MessageResponseDTO save(MessageRequestDTO messageRequestDTO) {
+    public MessageResponseDTO save(MessageSaveRequestDTO messageRequestDTO) {
         final Optional<UserEntity> sender = userRepository.findById(messageRequestDTO.getSenderId());
         final Optional<UserEntity> receiver = userRepository.findById(messageRequestDTO.getReceiverId());
 

@@ -1,12 +1,17 @@
 package com.chatapp.dto.response.post.survey;
 
-import java.util.List;
-
 import com.chatapp.dto.response.items.ChoiceItemResponseDTO;
 
-import lombok.Data;
+import java.util.List;
 
-@Data
 public class VoteResultResponseDTO extends SurveyResultResponseDTO{
     private List<ChoiceItemResponseDTO> choices;
+
+    public List<ChoiceItemResponseDTO> getChoices() {
+        return choices;
+    }
+
+    public void setChoices(List<ChoiceItemResponseDTO> choices) {
+        this.choices = choices;
+    }
 }
