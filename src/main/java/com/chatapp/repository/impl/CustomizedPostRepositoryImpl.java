@@ -31,11 +31,11 @@ public class CustomizedPostRepositoryImpl implements CustomizedPostRepository {
         finalQuery.append(whereQuery);
         finalQuery.append("\nORDER BY p.updatedAt DESC ");
 
-        if (isValid(dto.getLimit())) {
+        if (dto.getLimit() != null) {
             finalQuery.append("LIMIT ").append(dto.getLimit());
         }
 
-        if (isValid(dto.getOffset())) {
+        if (dto.getOffset() != null) {
             finalQuery.append("OFFSET ").append(dto.getOffset());
         }
 

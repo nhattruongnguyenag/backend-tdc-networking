@@ -2,7 +2,7 @@ package com.chatapp.dto.request.message;
 
 import com.chatapp.dto.BaseDTO;
 
-public class MessageRequestDTO extends BaseDTO {
+public class MessageSaveRequestDTO extends BaseDTO {
     private String content;
     private String type;
     private Long senderId;

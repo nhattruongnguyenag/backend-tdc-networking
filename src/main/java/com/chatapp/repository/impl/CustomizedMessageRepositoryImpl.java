@@ -1,5 +1,6 @@
 package com.chatapp.repository.impl;
 
+import com.chatapp.dto.Pagination;
 import com.chatapp.entity.MessageEntity;
 import com.chatapp.repository.CustomizedMessageRepository;
 import jakarta.persistence.EntityManager;
@@ -16,12 +17,7 @@ public class CustomizedMessageRepositoryImpl implements CustomizedMessageReposit
 
     @Override
     public List<MessageEntity> findBySenderOrReceiver(Long senderId, Long receiverId) {
-        String sql = new StringBuilder("SELECT m FROM MessageEntity m")
-                .append("\nJOIN m.conversations as c")
-                .append("\nJOIN c.sender as s")
-                .append("\nJOIN c.receiver as r")
-                .append("\nWHERE (s.id = ?1 AND r.id = ?2)")
-                .append("\nORDER BY m.createdAt DESC").toString();
+        String sql = buildBaseQuery(senderId, receiverId, null).toString();
 
         Query query = entityManager.createQuery(sql)
                 .setParameter(1, senderId)
@@ -30,42 +26,66 @@ public class CustomizedMessageRepositoryImpl implements CustomizedMessageReposit
         return query.getResultList();
     }
 
-    // @Override
-    // public List<MessageEntity> findBySenderOrReceiver(Long senderId, Long receiverId) {
-    //     StringBuilder sql = new StringBuilder("SELECT m FROM MessageEntity m");
+    @Override
+    public List<MessageEntity> findBySenderOrReceiver(Long senderId, Long receiverId, Pagination pagination) {
+        StringBuilder sql = buildBaseQuery(senderId, receiverId, pagination);
+
+        Query query = getQuery(senderId, receiverId, sql, pagination);
+
+        return query.getResultList();
+    }
+
+    private Query getQuery(Long senderId, Long receiverId, StringBuilder sql, Pagination pagination) {
+        Query query = entityManager.createQuery(sql.toString());
+
+        int curentIndex = 1;
+        if (senderId != null) {
+            query.setParameter(curentIndex, senderId);
+            curentIndex++;
+        }
+
+        if (receiverId != null) {
+            query.setParameter(curentIndex, receiverId);
+            curentIndex++;
+        }
+
+        if (pagination != null && pagination.getLimit() != null) {
+            query.setParameter(curentIndex, pagination.getLimit());
+            curentIndex++;
+        }
+
+        if (pagination != null && pagination.getOffset() != null) {
+            query.setParameter(curentIndex, pagination.getOffset());
+        }
+        return query;
+    }
+
+    private static StringBuilder buildBaseQuery(Long senderId, Long receiverId, Pagination pagination) {
+        int currentParamIndex = 1;
+
+        StringBuilder sql = new StringBuilder("SELECT m FROM MessageEntity m")
+                .append("\nJOIN m.conversations as c")
+                .append("\nJOIN c.sender as s")
+                .append("\nJOIN c.receiver as r")
+                .append("\nWHERE 1 = 1");
+
+        if (senderId != null && receiverId != null) {
+            sql.append("\nAND (s.id = ?1 AND r.id = ?2)");
+            currentParamIndex += 2;
+        }
+        
+        sql.append("\nORDER BY m.createdAt DESC");
 
 
-    //     buildJoinQuery(sql, senderId, receiverId);
-    //     sql.append("\nWHERE 1 = 1")
-    //     buildWhereQuery(sql, senderId, receiverId);
+        if (pagination != null && pagination.getLimit() != null) {
+            sql.append("\nLIMIT ?").append(currentParamIndex);
+            currentParamIndex++;
+        }
 
-    //     sql.append("\nORDER BY m.createdAt DESC").toString();
+        if (pagination != null && pagination.getOffset() != null) {
+            sql.append("\nOFFSET ?").append(currentParamIndex);
+        }
 
-    //     Query query = entityManager.createQuery(sql.toString())
-    //             .setParameter(1, senderId)
-    //             .setParameter(2, receiverId);
-
-    //     return query.getResultList();
-    // }
-
-    // private void buildJoinQuery(StringBuilder sql, Long senderId, Long receiverId) {
-    //     if (senderId != null) {
-    //         sql.append("\nJOIN m.conversations as c");
-    //     }
-
-    //     if (receiverId != null) {
-    //         sql.append("\nJOIN c.sender as s");
-    //     }
-    // }
-
-    // private void buildWhereQuery(StringBuilder sql, Long senderId, Long receiverId) {
-    //     if (senderId != null) {
-    //         sql.append("\nAND senderId = " + senderId.toString());
-    //     }
-
-    //     if (receiverId != null) {
-    //         sql.append("\nAND receiverId = " + receiverId.toString());
-    //     }
-    // }
-
+        return sql;
+    }
 }
