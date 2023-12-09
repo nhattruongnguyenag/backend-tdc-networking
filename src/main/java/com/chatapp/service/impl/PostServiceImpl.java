@@ -38,7 +38,6 @@ import com.chatapp.dto.request.post.recruitment.RecruitmentPostUpdateRequestDTO;
 import com.chatapp.dto.request.post.survey.AnswerRequestDTO;
 import com.chatapp.dto.request.post.survey.SurveyAnswerRequestDTO;
 import com.chatapp.dto.request.post.survey.SurveySaveRequestDTO;
-import com.chatapp.dto.request.post.survey.SurveyUpdateRequestDTO;
 import com.chatapp.dto.request.user.UserDetailInGroupRequestDTO;
 import com.chatapp.dto.request.user.like.LikeRequestDTO;
 import com.chatapp.dto.request.user.post_save.UserSavePostRequestDTO;
@@ -149,8 +148,6 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private SurveySaveRequestConverter surveySaveRequestConverter;
     @Autowired
-    private SurveyUpdateRequestConverter surveyUpdateRequestConverter;
-    @Autowired
     private LikeRequestConverter likeRequestConverter;
     @Autowired
     private CommentSaveRequestConverter commentSaveRequestConverter;
@@ -190,6 +187,10 @@ public class PostServiceImpl implements PostService {
         processDeleteRedundantQuestions(surveyPostEntity, questionUpdateDTOs);
 
         processAddNewQuestion(questionAddNewDTOs, surveyPostEntity);
+
+        notificationService.addNotification(Notification.UPDATE_POST.getValue(),
+                Notification.UPDATE_POST.getValue(), postEntity.getUser().getId(),
+                "id:" + postEntity.getId());
 
         try {
             return postRepository.save(postEntity) != null;
@@ -363,6 +364,9 @@ public class PostServiceImpl implements PostService {
     private PostEntity normalPostUpdate(NormalPostUpdateOrSaveRequestDTO normalPostUpdateOrSaveRequestDTO) {
         PostEntity postEntity;
         postEntity = normalPostUpdateOrSaveRequestConverter.toUpdatEntity(normalPostUpdateOrSaveRequestDTO);
+        notificationService.addNotification(Notification.UPDATE_POST.getValue(),
+                Notification.UPDATE_POST.getValue(), postEntity.getUser().getId(),
+                "id:" + postEntity.getId());
         return postEntity;
     }
 
@@ -374,6 +378,9 @@ public class PostServiceImpl implements PostService {
             postEntity.setActive((byte) 0);
         }
         postEntity.setStatus((byte) 0);
+        notificationService.addNotification(Notification.CREATE_NORMAL.getValue(),
+                Notification.CREATE_NORMAL.getValue(), postEntity.getUser().getId(),
+                "id:" + postEntity.getId());
         return postEntity;
     }
 
@@ -413,6 +420,9 @@ public class PostServiceImpl implements PostService {
             postEntity.setActive((byte) 0);
         }
         postEntity.setStatus((byte) 0);
+        notificationService.addNotification(Notification.CREATE_RECRUITMENT.getValue(),
+                Notification.CREATE_RECRUITMENT.getValue(), postEntity.getUser().getId(),
+                "id:" + postEntity.getId());
         return postEntity;
     }
 
@@ -462,6 +472,9 @@ public class PostServiceImpl implements PostService {
             postLikeRepository.delete(entity);
         } else {
             postLikeRepository.save(postLikeEntity);
+            notificationService.addNotification(Notification.USER_LIKE_POST.getValue(),
+                    Notification.USER_LIKE_POST.getValue(), postLikeEntity.getPost().getUser().getId(),
+                    "id:" + postLikeEntity.getPost().getId());
         }
         return "";
     }
@@ -479,6 +492,14 @@ public class PostServiceImpl implements PostService {
         }
         PostCommentEntity entity = commentSaveRequestConverter.toEntity(commentSaveRequestDTO);
         postCommentRepository.save(entity);
+        if (entity.getParentComment() != null) {
+            notificationService.addNotification(Notification.USER_REPLY_COMMENT_POST.getValue(),
+                    Notification.USER_REPLY_COMMENT_POST.getValue(), entity.getParentComment().getUser().getId(),
+                    "id:" + entity.getPost().getId());
+        }
+        notificationService.addNotification(Notification.USER_LIKE_POST.getValue(),
+                Notification.USER_LIKE_POST.getValue(), entity.getPost().getUser().getId(),
+                "id:" + entity.getPost().getId());
         return "";
     }
 
@@ -624,6 +645,9 @@ public class PostServiceImpl implements PostService {
                 userRepository.save(userEntity);
             }
         }
+        notificationService.addNotification(Notification.USER_CONDUCT_SURVEY.getValue(),
+                Notification.USER_CONDUCT_SURVEY.getValue(), surveyPostEntity.getPost().getUser().getId(),
+                "id:" + surveyPostEntity.getPost().getId());
         return "";
     }
 
@@ -758,6 +782,9 @@ public class PostServiceImpl implements PostService {
         }
         UserEntity userEntity = userSavePostRequestConverter.toEntity(userSavePostRequestDTO);
         userRepository.save(userEntity);
+        notificationService.addNotification(Notification.SAVE_POST.getValue(),
+                Notification.SAVE_POST.getValue(), userSavePostRequestDTO.getUserId(),
+                "id:" + userSavePostRequestDTO.getPostId());
         return "";
     }
 
@@ -894,6 +921,9 @@ public class PostServiceImpl implements PostService {
         }
         NormalPostEntity normalPostEntity = normalPostUpdateRequestConverter.toEntity(normalPostUpdateRequestDTO);
         normalPostRepository.save(normalPostEntity);
+        notificationService.addNotification(Notification.UPDATE_POST.getValue(),
+                Notification.UPDATE_POST.getValue(), normalPostEntity.getPost().getUser().getId(),
+                "id:" + normalPostEntity.getId());
         return "";
     }
 
@@ -907,6 +937,9 @@ public class PostServiceImpl implements PostService {
         }
         RecruitmentPostEntity entity = recruitmentPostUpdateRequestConverter.toEntity(recruitmentPostUpdateRequestDTO);
         recruitmentPostRepository.save(entity);
+        notificationService.addNotification(Notification.UPDATE_POST.getValue(),
+                Notification.UPDATE_POST.getValue(), entity.getPost().getUser().getId(),
+                "id:" + entity.getId());
         return "";
     }
 
@@ -917,6 +950,9 @@ public class PostServiceImpl implements PostService {
         }
         PostApprovalLogEntity entity = postLogAddRequestConverter.toEntity(postLogRequestDTO);
         postApprovalLogRepository.save(entity);
+        notificationService.addNotification(Notification.POST_LOG.getValue(),
+                Notification.POST_LOG.getValue(), entity.getPost().getUser().getId(),
+                "id:" + entity.getPost().getId());
         return "";
     }
 
@@ -938,13 +974,9 @@ public class PostServiceImpl implements PostService {
         PostEntity entity = postRepository.findOneById(postId);
         entity.setActive((byte) 1);
         postRepository.save(entity);
-        return "";
-    }
-
-    @Override
-    public String updateSurvey(SurveyUpdateRequestDTO surveyUpdateRequestDTO) {
-        PostEntity postEntity = surveyUpdateRequestConverter.toEntity(surveyUpdateRequestDTO);
-        postRepository.save(postEntity);
+        notificationService.addNotification(Notification.POST_LOG.getValue(),
+                Notification.POST_LOG.getValue(), entity.getUser().getId(),
+                "id:" + postId);
         return "";
     }
 
