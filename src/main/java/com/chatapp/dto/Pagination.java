@@ -4,6 +4,9 @@ public class Pagination {
     private Integer limit;
     private Integer offset;
 
+    public Pagination() {
+    }
+
     public Pagination(Integer limit) {
         this.limit = limit;
     }

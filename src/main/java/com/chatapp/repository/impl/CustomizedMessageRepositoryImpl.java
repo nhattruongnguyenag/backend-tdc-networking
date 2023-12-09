@@ -77,12 +77,12 @@ public class CustomizedMessageRepositoryImpl implements CustomizedMessageReposit
         sql.append("\nORDER BY m.createdAt DESC");
 
 
-        if (pagination.getLimit() != null) {
+        if (pagination != null && pagination.getLimit() != null) {
             sql.append("\nLIMIT ?").append(currentParamIndex);
             currentParamIndex++;
         }
 
-        if (pagination.getOffset() != null) {
+        if (pagination != null && pagination.getOffset() != null) {
             sql.append("\nOFFSET ?").append(currentParamIndex);
         }
 
