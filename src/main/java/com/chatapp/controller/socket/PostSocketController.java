@@ -49,41 +49,6 @@ public class PostSocketController {
         return postService.getPostSaveByUserId(likeRequestDTO.getUserId());
     }
 
-    @MessageMapping({ "/posts/save/user/search/{search}/unsave", "/posts/save/user/search/{search}/unsave/" })
-    @SendTo({ "/topic/posts/save/search", "/topic/posts/save/search" })
-    public List<PostSearchResponseDTO> userSavePostSearch(@RequestBody UserSavePostRequestDTO userSavePostRequestDTO,
-            @DestinationVariable("search") String search) {
-        if (userSavePostRequestDTO.getPostId() != null) {
-            postService.userSavePost(userSavePostRequestDTO);
-        }
-        UserSavePostFindRequestDTO userSavePostFindRequestDTO = new UserSavePostFindRequestDTO();
-        userSavePostFindRequestDTO.setSearch(search);
-        userSavePostFindRequestDTO.setUserId(userSavePostRequestDTO.getUserId());
-        return postService.getPostSaveByUserIdAndSearch(userSavePostFindRequestDTO);
-    }
-
-    @MessageMapping({ "/posts/save/{userId}/search/{search}/listen", "/posts/save/{userId}/search/{search}/listen/" })
-    @SendTo({ "/topic/posts/save/{userId}/search/{search}", "/topic/posts/save/{userId}/search/{search}" })
-    public List<PostSearchResponseDTO> userSavePostListen(@DestinationVariable("search") String search, @DestinationVariable("userId") String userId) {
-        UserSavePostFindRequestDTO userSavePostFindRequestDTO = new UserSavePostFindRequestDTO();
-        userSavePostFindRequestDTO.setSearch(search);
-        userSavePostFindRequestDTO.setUserId(Long.valueOf(userId));
-        return postService.getPostSaveByUserIdAndSearch(userSavePostFindRequestDTO);
-    }
-
-    @MessageMapping({ "/posts/save/user/search/{search}/like", "/posts/save/user/search/{search}/like/" })
-    @SendTo({ "/topic/posts/save/search", "/topic/posts/save/search" })
-    public List<PostSearchResponseDTO> userLikePostSearch(@RequestBody LikeRequestDTO likeRequestDTO,
-            @DestinationVariable("search") String search) {
-        if (likeRequestDTO.getPostId() != null) {
-            postService.likePost(likeRequestDTO);
-        }
-        UserSavePostFindRequestDTO userSavePostFindRequestDTO = new UserSavePostFindRequestDTO();
-        userSavePostFindRequestDTO.setSearch(search);
-        userSavePostFindRequestDTO.setUserId(likeRequestDTO.getUserId());
-        return postService.getPostSaveByUserIdAndSearch(userSavePostFindRequestDTO);
-    }
-
     @MessageMapping({ "/posts/group/{code}/unsave", "/posts/group/{code}/unsave/" })
     @SendTo({ "/topic/posts/group/{code}", "/topic/posts/group/{code}/" })
     public List<PostSearchResponseDTO> userSavePostInGroupScreen(
