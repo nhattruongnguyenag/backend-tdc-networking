@@ -573,6 +573,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String follow(UserFollowRequestDTO userFollowRequestDTO) {
+        UserEntity userEntity = userRepository.findOneById(userFollowRequestDTO.getUserId());
+        userEntity.setFollowUsers(null);
+        userRepository.save(userEntity);
         if (userRepository.findById(userFollowRequestDTO.getUserId()) == null) {
             throw new DuplicateUsernameException("user_not_exists");
         }
