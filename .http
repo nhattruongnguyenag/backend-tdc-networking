@@ -306,7 +306,7 @@ POST http://127.0.0.1:8080/api/find/user HTTP/1.1
 Content-Type: application/json
 
 {
-    "userId":1,
+    "userId":12,
     "type":"khoa",
     "name":"Cong"
 }
