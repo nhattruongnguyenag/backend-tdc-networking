@@ -41,7 +41,7 @@ public class SearchSocketController {
     }
 
     @MessageMapping({ "/find/post/{type}/{search}/unsave", "/find/post/{type}/{search}/unsave/" })
-    @SendTo({ "/topic/find/{type}/{search}/post", "/topic/find/{type}/{search}/post/" })
+    @SendTo({ "/topic/find/post", "/topic/find/post/" })
     public List<PostSearchResponseDTO> userSavePost(@RequestBody UserSavePostRequestDTO userSavePostRequestDTO,
             @DestinationVariable("type") String type, @DestinationVariable("search") String search) {
         if (userSavePostRequestDTO.getPostId() != null) {
@@ -55,7 +55,7 @@ public class SearchSocketController {
     }
 
     @MessageMapping({ "/find/post/{type}/{search}/like", "/find/post/{type}/{search}/like/" })
-    @SendTo({ "/topic/find/{type}/{search}/post", "/topic/find/{type}/{search}/post/" })
+    @SendTo({ "/topic/find/post", "/topic/find/post/" })
     public List<PostSearchResponseDTO> userLikePost(@RequestBody LikeRequestDTO likeRequestDTO,
             @DestinationVariable("type") String type, @DestinationVariable("search") String search) {
         if (likeRequestDTO.getPostId() != null) {
