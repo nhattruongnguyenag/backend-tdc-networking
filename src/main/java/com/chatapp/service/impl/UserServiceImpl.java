@@ -573,27 +573,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String follow(UserFollowRequestDTO userFollowRequestDTO) {
-        for (FollowEntity followEntity : followReposittory.findAllByUser_IdAndFollow_Id(userFollowRequestDTO.getUserId(), userFollowRequestDTO.getUserFollowId())) {
-            followReposittory.delete(followEntity);
+        if (userRepository.findById(userFollowRequestDTO.getUserId()) == null) {
+            throw new DuplicateUsernameException("user_not_exists");
         }
-        // if (userRepository.findById(userFollowRequestDTO.getUserId()) == null) {
-        //     throw new DuplicateUsernameException("user_not_exists");
-        // }
-        // if (userRepository.findById(userFollowRequestDTO.getUserFollowId()) == null) {
-        //     throw new DuplicateUsernameException("user_follow_not_exists");
-        // }
-        // if (followReposittory.findOneByUser_IdAndFollow_Id(userFollowRequestDTO.getUserId(),
-        //         userFollowRequestDTO.getUserFollowId()) != null) {
-        //     FollowEntity followEntity = followReposittory.findOneByUser_IdAndFollow_Id(
-        //             userFollowRequestDTO.getUserId(), userFollowRequestDTO.getUserFollowId());
-        //     followReposittory.delete(followEntity);
-        // } else {
-        //     FollowEntity followEntity = userFollowRequestConverter.toEntity(userFollowRequestDTO);
-        //     followReposittory.save(followEntity);
-        // }
-        // notificationService.addNotification(Notification.USER_FOLLOW.getValue(),
-        //         Notification.USER_FOLLOW.getValue(), userFollowRequestDTO.getUserFollowId(),
-        //         "");
+        if (userRepository.findById(userFollowRequestDTO.getUserFollowId()) == null) {
+            throw new DuplicateUsernameException("user_follow_not_exists");
+        }
+        if (followReposittory.findOneByUser_IdAndFollow_Id(userFollowRequestDTO.getUserId(),
+                userFollowRequestDTO.getUserFollowId()) != null) {
+            FollowEntity followEntity = followReposittory.findOneByUser_IdAndFollow_Id(
+                    userFollowRequestDTO.getUserId(), userFollowRequestDTO.getUserFollowId());
+            followReposittory.delete(followEntity);
+        } else {
+            FollowEntity followEntity = userFollowRequestConverter.toEntity(userFollowRequestDTO);
+            followReposittory.save(followEntity);
+        }
+        notificationService.addNotification(Notification.USER_FOLLOW.getValue(),
+                Notification.USER_FOLLOW.getValue(), userFollowRequestDTO.getUserFollowId(),
+                "");
         return "";
     }
 
