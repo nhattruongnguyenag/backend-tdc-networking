@@ -11,7 +11,10 @@ public class UserFindResponseConverter extends BaseConverter<UserEntity, UserFin
 
     @Override
     public UserFindResponseDTO toDTO(UserEntity entity) {
-        UserFindResponseDTO userInfoResponseDTO = super.toDTO(entity);
+        UserFindResponseDTO userInfoResponseDTO = new UserFindResponseDTO();
+        userInfoResponseDTO.setId(entity.getId());
+        userInfoResponseDTO.setImage(entity.getImage());
+        userInfoResponseDTO.setName(entity.getName());
         return userInfoResponseDTO;
     }
 }
