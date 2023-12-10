@@ -39,7 +39,13 @@ public class MessageServiceImpl implements MessageService {
     public List<MessageResponseDTO> findBySenderAndReceiver(Long senderId, Long receiverId) {
         if (userRepository.findById(senderId).isPresent()
                 && userRepository.findById(receiverId).isPresent()) {
-            return messageResponseConverter.toDTOGroup(customizedMessageRepository.findBySenderOrReceiver(senderId, receiverId));
+            List<MessageEntity> messageEntities = customizedMessageRepository.findBySenderOrReceiver(senderId, receiverId);
+            for (MessageEntity message : messageEntities) {
+                if (message.getSender().getId() == receiverId && message.getReceiver().getId() == senderId) {
+                    message.setStatus(MessageStatus.SEEN);
+                }
+            }
+            return messageResponseConverter.toDTOGroup(messageEntities);
         }
 
         throw new RuntimeException("user_does_not_exists");

@@ -29,15 +29,12 @@ public class MessageSocketController {
     public List<MessageResponseDTO> saveMessage(@RequestBody MessageSaveRequestDTO messageRequestDTO) {
         messageService.save(messageRequestDTO);
         firebaseMessagingService.sendNotificationToUser(messageRequestDTO.getReceiverId(), messageRequestDTO.getContent());
-        messageService.updateMessagesToReadState(messageRequestDTO.getSenderId(), messageRequestDTO.getReceiverId());
-        return messageService.findBySenderAndReceiver(messageRequestDTO.getSenderId(), messageRequestDTO.getReceiverId(), new Pagination(1));
+        return messageService.findBySenderAndReceiver(messageRequestDTO.getSenderId(), messageRequestDTO.getReceiverId());
     }
 
     @MessageMapping({"/messages/{senderId}/{receiverId}/listen", "/messages/{receiverId}/{senderId}/listen/"})
     @SendTo({"/topic/messages/{senderId}/{receiverId}", "/topic/messages/{receiverId}/{senderId}/"})
-    public List<MessageResponseDTO> getMessages(@DestinationVariable("senderId") Long senderId, @DestinationVariable("receiverId") Long receiverId, @RequestParam Map<String, Object> params) {
-        messageService.updateMessagesToReadState(senderId, receiverId);
-        Pagination pagination = CommonUtils.mapToObject(params, Pagination.class);
-        return messageService.findBySenderAndReceiver(senderId, receiverId, pagination);
+    public List<MessageResponseDTO> getMessages(@DestinationVariable("senderId") Long senderId, @DestinationVariable("receiverId") Long receiverId) {
+        return messageService.findBySenderAndReceiver(senderId, receiverId);
     }
 }

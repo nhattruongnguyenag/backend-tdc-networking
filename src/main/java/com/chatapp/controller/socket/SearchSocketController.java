@@ -40,22 +40,21 @@ public class SearchSocketController {
         return userService.findUserByName(userInfoFindRequestDTO);
     }
 
-    @MessageMapping({ "/find/post/{type}/{search}/unsave", "/find/post/{type}/{search}/unsave/" })
-    @SendTo({ "/topic/find/{type}/{search}/post", "/topic/find/{type}/{search}/post/" })
-    public List<PostSearchResponseDTO> userSavePost(@RequestBody UserSavePostRequestDTO userSavePostRequestDTO,
-            @DestinationVariable("type") String type, @DestinationVariable("search") String search) {
+    @MessageMapping({ "/find/post/unsave", "/find/post/unsave/" })
+    @SendTo({ "/topic/find/post", "/topic/find/post/" })
+    public List<PostSearchResponseDTO> userSavePost(@RequestBody UserSavePostRequestDTO userSavePostRequestDTO) {
         if (userSavePostRequestDTO.getPostId() != null) {
             postService.userSavePost(userSavePostRequestDTO);
         }
         PostFindRequestDTO postFindRequestDTO = new PostFindRequestDTO();
-        postFindRequestDTO.setName(search);
-        postFindRequestDTO.setType(type);
+        postFindRequestDTO.setName(userSavePostRequestDTO.getSearch());
+        postFindRequestDTO.setType(userSavePostRequestDTO.getType());
         postFindRequestDTO.setUserLogin(userSavePostRequestDTO.getUserId());
         return postService.findPostByName(postFindRequestDTO);
     }
 
     @MessageMapping({ "/find/post/{type}/{search}/like", "/find/post/{type}/{search}/like/" })
-    @SendTo({ "/topic/find/{type}/{search}/post", "/topic/find/{type}/{search}/post/" })
+    @SendTo({ "/topic/find/post", "/topic/find/post/" })
     public List<PostSearchResponseDTO> userLikePost(@RequestBody LikeRequestDTO likeRequestDTO,
             @DestinationVariable("type") String type, @DestinationVariable("search") String search) {
         if (likeRequestDTO.getPostId() != null) {

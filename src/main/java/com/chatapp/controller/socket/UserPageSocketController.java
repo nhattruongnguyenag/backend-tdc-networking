@@ -42,7 +42,6 @@ public class UserPageSocketController {
         return userService.getOtherPeopleFollowByUserId(userGetRequestDTO);
     }
 
-    
     @MessageMapping({"/user/detail/follow/following/search", "/user/detail/follow/following/search"})
     @SendTo({"/topic/user/detail/follow/following", "/topic/user/detail/follow/following/"})
     public List<UserFollowResponseDTO> searchInFollowingUserPage(@RequestBody UserFindRequestDTO userFindRequestDTO){
