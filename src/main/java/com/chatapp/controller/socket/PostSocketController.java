@@ -62,6 +62,15 @@ public class PostSocketController {
         return postService.getPostSaveByUserIdAndSearch(userSavePostFindRequestDTO);
     }
 
+    @MessageMapping({ "/posts/save/user/search/{search}/listen", "/posts/save/user/search/{search}/listen/" })
+    @SendTo({ "/topic/posts/save/{userId}/search", "/topic/posts/save/{userId}/search/" })
+    public List<PostSearchResponseDTO> userSavePostListen(@DestinationVariable("search") String search, @DestinationVariable("userId") String userId) {
+        UserSavePostFindRequestDTO userSavePostFindRequestDTO = new UserSavePostFindRequestDTO();
+        userSavePostFindRequestDTO.setSearch(search);
+        userSavePostFindRequestDTO.setUserId(Long.valueOf(userId));
+        return postService.getPostSaveByUserIdAndSearch(userSavePostFindRequestDTO);
+    }
+
     @MessageMapping({ "/posts/save/user/search/{search}/like", "/posts/save/user/search/{search}/like/" })
     @SendTo({ "/topic/posts/save/search", "/topic/posts/save/search" })
     public List<PostSearchResponseDTO> userLikePostSearch(@RequestBody LikeRequestDTO likeRequestDTO,
