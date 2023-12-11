@@ -552,7 +552,6 @@ public class UserServiceImpl implements UserService {
                 userInfoFindRequestDTO.getUserId(),
                 userInfoFindRequestDTO.getUserFollowId())) {
             followReposittory.delete(followEntity);
-
         }
         // List<UserFindResponseDTO> userFindResponseDTOs = userFindResponseConverter
         // .toDTOGroup(userRepository.findAllByNameContainsAndRoles_Code(userInfoFindRequestDTO.getName(),
