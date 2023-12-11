@@ -53,7 +53,7 @@ public class SearchSocketController {
         return postService.findPostByName(postFindRequestDTO);
     }
 
-    @MessageMapping({ "/find/post/{type}/{search}/like", "/find/post/{type}/{search}/like/" })
+    @MessageMapping({ "/find/post/like", "/find/post/like/" })
     @SendTo({ "/topic/find/post", "/topic/find/post/" })
     public List<PostSearchResponseDTO> userLikePost(@RequestBody LikeRequestDTO likeRequestDTO,
             @DestinationVariable("type") String type, @DestinationVariable("search") String search) {

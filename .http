@@ -312,12 +312,12 @@ Content-Type: application/json
 }
 
 ###
-POST http://127.0.0.1:8080/api/find/post HTTP/1.1
+POST http://69.197.134.101:8080/api/find/post HTTP/1.1
 Content-Type: application/json
 
 {
-    "userLogin":3,
-    "type":"khao-sat",
+    "userLogin":12,
+    "type":"thong-thuong",
     "name":""
 }
 
