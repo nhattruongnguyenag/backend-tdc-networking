@@ -326,7 +326,7 @@ POST http://69.197.134.101:8080/api/users/follow HTTP/1.1
 Content-Type: application/json
 
 {
-    "userFollowId":1,
+    "userFollowId":3,
     "userId":12
 }
 
