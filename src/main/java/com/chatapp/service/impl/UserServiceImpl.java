@@ -548,27 +548,34 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserFindResponseDTO> findUserByName(UserInfoFindRequestDTO userInfoFindRequestDTO) {
-        List<UserFindResponseDTO> userFindResponseDTOs = userFindResponseConverter
-                .toDTOGroup(userRepository.findAllByNameContainsAndRoles_Code(userInfoFindRequestDTO.getName(),
-                        userInfoFindRequestDTO.getType()));
-        userFindResponseDTOs.remove(
-                userFindResponseConverter.toDTO(userRepository.findOneById(userInfoFindRequestDTO.getUserId())));
-        for (UserFindResponseDTO userFindResponseDTO : userFindResponseDTOs) {
-            // set follow
-            UserEntity entity = userRepository.findOneById(userInfoFindRequestDTO.getUserId());
-            if (entity.getFollowUsers().size() > 0) {
-                for (FollowEntity followEntity : entity.getFollowUsers()) {
-                    if (followEntity.getUserFollow().getId() == userFindResponseDTO.getId()) {
-                        userFindResponseDTO.setFollow(true);
-                        break;
-                    }
-                    userFindResponseDTO.setFollow(false);
-                }
-            } else {
-                userFindResponseDTO.setFollow(false);
-            }
+        for (FollowEntity followEntity : followReposittory.findAllByUser_IdAndFollow_Id(
+                userInfoFindRequestDTO.getUserId(),
+                userInfoFindRequestDTO.getUserFollowId())) {
+            followReposittory.delete(followEntity);
+
         }
-        return userFindResponseDTOs;
+        // List<UserFindResponseDTO> userFindResponseDTOs = userFindResponseConverter
+        // .toDTOGroup(userRepository.findAllByNameContainsAndRoles_Code(userInfoFindRequestDTO.getName(),
+        // userInfoFindRequestDTO.getType()));
+        // userFindResponseDTOs.remove(
+        // userFindResponseConverter.toDTO(userRepository.findOneById(userInfoFindRequestDTO.getUserId())));
+        // for (UserFindResponseDTO userFindResponseDTO : userFindResponseDTOs) {
+        // // set follow
+        // UserEntity entity =
+        // userRepository.findOneById(userInfoFindRequestDTO.getUserId());
+        // if (entity.getFollowUsers().size() > 0) {
+        // for (FollowEntity followEntity : entity.getFollowUsers()) {
+        // if (followEntity.getUserFollow().getId() == userFindResponseDTO.getId()) {
+        // userFindResponseDTO.setFollow(true);
+        // break;
+        // }
+        // userFindResponseDTO.setFollow(false);
+        // }
+        // } else {
+        // userFindResponseDTO.setFollow(false);
+        // }
+        // }
+        return null;
     }
 
     @Override
@@ -826,8 +833,8 @@ public class UserServiceImpl implements UserService {
             entity.setBackground(userImageUpdateRequestDTO.getBackground());
         }
         notificationService.addNotification(Notification.USER_UPDATE_AVATAR.getValue(),
-                        Notification.USER_UPDATE_AVATAR.getValue(), entity.getId(),
-                        "");
+                Notification.USER_UPDATE_AVATAR.getValue(), entity.getId(),
+                "");
         userRepository.save(entity);
         return "";
     }
