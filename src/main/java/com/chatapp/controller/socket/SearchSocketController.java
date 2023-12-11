@@ -55,14 +55,13 @@ public class SearchSocketController {
 
     @MessageMapping({ "/find/post/like", "/find/post/like/" })
     @SendTo({ "/topic/find/post", "/topic/find/post/" })
-    public List<PostSearchResponseDTO> userLikePost(@RequestBody LikeRequestDTO likeRequestDTO,
-            @DestinationVariable("type") String type, @DestinationVariable("search") String search) {
+    public List<PostSearchResponseDTO> userLikePost(@RequestBody LikeRequestDTO likeRequestDTO) {
         if (likeRequestDTO.getPostId() != null) {
             postService.likePost(likeRequestDTO);
         }
         PostFindRequestDTO postFindRequestDTO = new PostFindRequestDTO();
-        postFindRequestDTO.setName(search);
-        postFindRequestDTO.setType(type);
+        postFindRequestDTO.setName(likeRequestDTO.getSearch());
+        postFindRequestDTO.setType(likeRequestDTO.getType());
         postFindRequestDTO.setUserLogin(likeRequestDTO.getUserId());
         return postService.findPostByName(postFindRequestDTO);
     }
