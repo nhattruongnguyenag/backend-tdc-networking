@@ -22,7 +22,7 @@ public class FollowResponseConverter extends BaseConverter<FollowEntity, UserFol
         userFollowResponseDTO.setImage(userEntity.getImage());
         userFollowResponseDTO.setName(userEntity.getName());
         if (entity.getUserFollow().getId() == userFollowResponseDTO.getId()) {
-            userFollowResponseDTO.setFollowing(true);
+            userFollowResponseDTO.setFollow(true);
         }
         return userFollowResponseDTO;
     }
