@@ -24,7 +24,7 @@ public class FollowResponseConverter extends BaseConverter<FollowEntity, UserFol
         // if (entity.getUserFollow().getId() == userFollowResponseDTO.getId()) {
         //     userFollowResponseDTO.setIsFollow(true);
         // }
-        for (FollowEntity followEntity : userEntity.getFollowUsers()) {
+        for (FollowEntity followEntity : userEntity.getFollowByUsers()) {
             if (followEntity.getUserFollow().getId() == userFollowResponseDTO.getId()) {
                 userFollowResponseDTO.setIsFollow(true);
                 break;
