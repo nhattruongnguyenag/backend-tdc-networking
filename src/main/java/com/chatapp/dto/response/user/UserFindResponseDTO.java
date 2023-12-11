@@ -30,11 +30,11 @@ public class UserFindResponseDTO {
         this.image = image;
     }
 
-    public Boolean getFollow() {
+    public Boolean getIsFollow() {
         return isFollow;
     }
 
-    public void setFollow(Boolean follow) {
+    public void setIsFollow(Boolean follow) {
         isFollow = follow;
     }
 }
