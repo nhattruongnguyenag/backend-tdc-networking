@@ -17,18 +17,18 @@ public class FollowResponseConverter extends BaseConverter<FollowEntity, UserFol
     @Override
     public UserFollowResponseDTO toDTO(FollowEntity entity) {
         UserFollowResponseDTO userFollowResponseDTO = super.toDTO(entity);
-        UserEntity userEntity = userRepository.findOneById(entity.getUser().getId());
+        UserEntity userEntity = userRepository.findOneById(entity.getUserFollow().getId());
         userFollowResponseDTO.setId(userEntity.getId());
         userFollowResponseDTO.setImage(userEntity.getImage());
         userFollowResponseDTO.setName(userEntity.getName());
 
-        // for (FollowEntity followEntity : userEntity.getFollowUsers()) {
-        //     if (followEntity.getUser().getId() == entity.getUser().getId()) {
-        //         userFollowResponseDTO.setIsFollow(true);
-        //         break;
-        //     }
-        //     userFollowResponseDTO.setIsFollow(false);
-        // }
+        for (FollowEntity followEntity : userEntity.getFollowUsers()) {
+            if (followEntity.getUserFollow().getId() == entity.getUser().getId()) {
+                userFollowResponseDTO.setIsFollow(true);
+                break;
+            }
+            userFollowResponseDTO.setIsFollow(false);
+        }
         return userFollowResponseDTO;
     }
 }
