@@ -548,55 +548,57 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserFindResponseDTO> findUserByName(UserInfoFindRequestDTO userInfoFindRequestDTO) {
-        for (FollowEntity followEntity : followReposittory.findAllByUser_IdAndFollow_Id(
-                userInfoFindRequestDTO.getUserId(),
-                userInfoFindRequestDTO.getUserFollowId())) {
-            followReposittory.delete(followEntity);
+        List<UserFindResponseDTO> userFindResponseDTOs = userFindResponseConverter
+                .toDTOGroup(userRepository.findAllByNameContainsAndRoles_Code(userInfoFindRequestDTO.getName(),
+                        userInfoFindRequestDTO.getType()));
+        userFindResponseDTOs.remove(
+                userFindResponseConverter.toDTO(userRepository.findOneById(userInfoFindRequestDTO.getUserId())));
+        for (UserFindResponseDTO userFindResponseDTO : userFindResponseDTOs) {
+            // set follow
+            UserEntity entity = userRepository.findOneById(userInfoFindRequestDTO.getUserId());
+            if (entity.getFollowUsers().size() > 0) {
+                for (FollowEntity followEntity : entity.getFollowUsers()) {
+                    if (followEntity.getUserFollow().getId() == userFindResponseDTO.getId()) {
+                        userFindResponseDTO.setFollow(true);
+                        break;
+                    }
+                    userFindResponseDTO.setFollow(false);
+                }
+            } else {
+                userFindResponseDTO.setFollow(false);
+            }
         }
-        // List<UserFindResponseDTO> userFindResponseDTOs = userFindResponseConverter
-        // .toDTOGroup(userRepository.findAllByNameContainsAndRoles_Code(userInfoFindRequestDTO.getName(),
-        // userInfoFindRequestDTO.getType()));
-        // userFindResponseDTOs.remove(
-        // userFindResponseConverter.toDTO(userRepository.findOneById(userInfoFindRequestDTO.getUserId())));
-        // for (UserFindResponseDTO userFindResponseDTO : userFindResponseDTOs) {
-        // // set follow
-        // UserEntity entity =
-        // userRepository.findOneById(userInfoFindRequestDTO.getUserId());
-        // if (entity.getFollowUsers().size() > 0) {
-        // for (FollowEntity followEntity : entity.getFollowUsers()) {
-        // if (followEntity.getUserFollow().getId() == userFindResponseDTO.getId()) {
-        // userFindResponseDTO.setFollow(true);
-        // break;
-        // }
-        // userFindResponseDTO.setFollow(false);
-        // }
-        // } else {
-        // userFindResponseDTO.setFollow(false);
-        // }
-        // }
-        return null;
+        return userFindResponseDTOs;
     }
 
     @Override
     public String follow(UserFollowRequestDTO userFollowRequestDTO) {
-        if (userRepository.findById(userFollowRequestDTO.getUserId()) == null) {
-            throw new DuplicateUsernameException("user_not_exists");
-        }
-        if (userRepository.findById(userFollowRequestDTO.getUserFollowId()) == null) {
-            throw new DuplicateUsernameException("user_follow_not_exists");
-        }
-        if (followReposittory.findOneByUser_IdAndFollow_Id(userFollowRequestDTO.getUserId(),
-                userFollowRequestDTO.getUserFollowId()) != null) {
-            FollowEntity followEntity = followReposittory.findOneByUser_IdAndFollow_Id(
-                    userFollowRequestDTO.getUserId(), userFollowRequestDTO.getUserFollowId());
+        for (FollowEntity followEntity : followReposittory.findAllByUser_IdAndFollow_Id(
+                userFollowRequestDTO.getUserId(),
+                userFollowRequestDTO.getUserFollowId())) {
             followReposittory.delete(followEntity);
-        } else {
-            FollowEntity followEntity = userFollowRequestConverter.toEntity(userFollowRequestDTO);
-            followReposittory.save(followEntity);
         }
-        notificationService.addNotification(Notification.USER_FOLLOW.getValue(),
-                Notification.USER_FOLLOW.getValue(), userFollowRequestDTO.getUserFollowId(),
-                "");
+        // if (userRepository.findById(userFollowRequestDTO.getUserId()) == null) {
+        // throw new DuplicateUsernameException("user_not_exists");
+        // }
+        // if (userRepository.findById(userFollowRequestDTO.getUserFollowId()) == null)
+        // {
+        // throw new DuplicateUsernameException("user_follow_not_exists");
+        // }
+        // if
+        // (followReposittory.findOneByUser_IdAndFollow_Id(userFollowRequestDTO.getUserId(),
+        // userFollowRequestDTO.getUserFollowId()) != null) {
+        // FollowEntity followEntity = followReposittory.findOneByUser_IdAndFollow_Id(
+        // userFollowRequestDTO.getUserId(), userFollowRequestDTO.getUserFollowId());
+        // followReposittory.delete(followEntity);
+        // } else {
+        // FollowEntity followEntity =
+        // userFollowRequestConverter.toEntity(userFollowRequestDTO);
+        // followReposittory.save(followEntity);
+        // }
+        // notificationService.addNotification(Notification.USER_FOLLOW.getValue(),
+        // Notification.USER_FOLLOW.getValue(), userFollowRequestDTO.getUserFollowId(),
+        // "");
         return "";
     }
 
