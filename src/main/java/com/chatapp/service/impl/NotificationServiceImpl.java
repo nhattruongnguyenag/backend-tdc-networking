@@ -44,10 +44,12 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public List<NotificationResponseDTO> findById(NotificationByUserRequestDTO notificationByUserRequestDTO) {
-        if (userRepository.findOneById(notificationByUserRequestDTO.getId()) == null) {
-            throw new DuplicateUsernameException("user_not_exists");
-        }
-        return notificationResponseConverter.toDTOGroup(notificationRepository.findByUser_Id(notificationByUserRequestDTO.getId()));
+        notificationRepository.deleteAll();
+        // if (userRepository.findOneById(notificationByUserRequestDTO.getId()) == null) {
+        //     throw new DuplicateUsernameException("user_not_exists");
+        // }
+        // return notificationResponseConverter
+        //         .toDTOGroup(notificationRepository.findByUser_Id(notificationByUserRequestDTO.getId()));
     }
 
     @Override
@@ -81,13 +83,15 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public String changeStatusAll(NotificationChangeAllStatusByUserIdRequest notificationChangeAllStatusByUserIdRequest) {
+    public String changeStatusAll(
+            NotificationChangeAllStatusByUserIdRequest notificationChangeAllStatusByUserIdRequest) {
         if (userRepository.findOneById(notificationChangeAllStatusByUserIdRequest.getUserId()) == null) {
             throw new DuplicateUsernameException("user_not_exists");
         }
-        List<NotificationEntity> entities = notificationRepository.findByUser_Id(notificationChangeAllStatusByUserIdRequest.getUserId());
+        List<NotificationEntity> entities = notificationRepository
+                .findByUser_Id(notificationChangeAllStatusByUserIdRequest.getUserId());
         for (NotificationEntity entity : entities) {
-            entity.setStatus((byte)1);
+            entity.setStatus((byte) 1);
             notificationRepository.save(entity);
         }
         return "";
@@ -120,7 +124,7 @@ public class NotificationServiceImpl implements NotificationService {
             throw new DuplicateUsernameException("user_not_exists");
         }
         NotificationEntity entity = notificationSaveRequestConverter.toEntity(notificationSaveRequestDTO);
-        notificationRepository.save(entity);
         entity.setUserInteracted(userInteracted);
+        notificationRepository.save(entity);
     }
 }

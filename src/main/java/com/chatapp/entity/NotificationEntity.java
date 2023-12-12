@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 @Table(name = "notifications")
 public class NotificationEntity extends BaseEntity {
 
-    @Transient
+    @Column(name = "userInteracted", nullable = true)
     private Long userInteracted;
 
     @Column(name = "content", nullable = false, columnDefinition = "TEXT")
