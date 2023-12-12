@@ -302,7 +302,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://127.0.0.1:8080/api/find/user HTTP/1.1
+POST http://69.197.134.101:8080/api/find/user HTTP/1.1
 Content-Type: application/json
 
 {
@@ -312,22 +312,22 @@ Content-Type: application/json
 }
 
 ###
-POST http://127.0.0.1:8080/api/find/post HTTP/1.1
+POST http://69.197.134.101:8080/api/find/post HTTP/1.1
 Content-Type: application/json
 
 {
-    "userLogin":3,
-    "type":"khao-sat",
+    "userLogin":12,
+    "type":"thong-thuong",
     "name":""
 }
 
 ###
-POST http://127.0.0.1:8080/api/users/follow HTTP/1.1
+POST http://69.197.134.101:8080/api/users/follow HTTP/1.1
 Content-Type: application/json
 
 {
-    "userFollowId":10,
-    "userId":3
+    "userFollowId":2,
+    "userId":12
 }
 
 ###
@@ -423,19 +423,19 @@ GET http://127.0.0.1:8080/api/business/14 HTTP/1.1
 GET http://127.0.0.1:8080/api/posts/group?code=group_connect_business&userLogin=3 HTTP/1.1
 
 ###
-POST http://127.0.0.1:8080/api/users/follow/me HTTP/1.1
+POST http://69.197.134.101:8080/api/users/follow/me HTTP/1.1
 Content-Type: application/json
 
 {
-    "id":3
+    "id":12
 }
 
 ###
-POST http://127.0.0.1:8080/api/users/follow/other HTTP/1.1
+POST http://69.197.134.101:8080/api/users/follow/other HTTP/1.1
 Content-Type: application/json
 
 {
-    "id":1
+    "id":12
 }
 
 ###
