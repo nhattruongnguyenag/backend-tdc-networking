@@ -50,6 +50,7 @@ public class NotificationServiceImpl implements NotificationService {
         // }
         // return notificationResponseConverter
         //         .toDTOGroup(notificationRepository.findByUser_Id(notificationByUserRequestDTO.getId()));
+        return null;
     }
 
     @Override
