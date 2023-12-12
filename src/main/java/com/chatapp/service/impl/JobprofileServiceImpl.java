@@ -75,7 +75,7 @@ public class JobprofileServiceImpl implements JobProfileService {
         }
         notificationService.addNotification(Notification.USER_APPLY_JOB.getValue(),
                 Notification.USER_APPLY_JOB.getValue(), jobApplyProfileRequestDTO.getUser_id(),
-                "jobId: " + jobProfileEntity.getId());
+                "jobId: " + jobProfileEntity.getId(),postEntity.getUser().getId());
         return "";
     }
 

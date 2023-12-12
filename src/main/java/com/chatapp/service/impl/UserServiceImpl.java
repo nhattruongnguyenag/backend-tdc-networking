@@ -338,7 +338,7 @@ public class UserServiceImpl implements UserService {
         sendEmailAuthenticationRegister(emailRequestDTO);
         notificationService.addNotification(Notification.REGISTER_SUCCESS.getValue(),
                 Notification.REGISTER_SUCCESS.getValue(), userEntity.getId(),
-                "");
+                "",null);
         return new AuthTokenDTO(token);
     }
 
@@ -352,7 +352,7 @@ public class UserServiceImpl implements UserService {
         userEntity = studentInfoUpdateOrSaveRequestConverter.toUpdateEntity(studentInfoUpdateOrSaveRequestDTO);
         notificationService.addNotification(Notification.USER_UPDATE.getValue(),
                 Notification.USER_UPDATE.getValue(), userEntity.getId(),
-                "");
+                "",null);
         return userEntity;
     }
 
@@ -432,7 +432,7 @@ public class UserServiceImpl implements UserService {
         userEntity = facultyInfoUpdateOrSaveRequestConverter.toUpdateEntity(facultyInfoUpdateOrSaveRequestDTO);
         notificationService.addNotification(Notification.USER_UPDATE.getValue(),
                 Notification.USER_UPDATE.getValue(), userEntity.getId(),
-                "");
+                "",null);
         return userEntity;
     }
 
@@ -503,7 +503,7 @@ public class UserServiceImpl implements UserService {
         sendEmailAuthenticationRegister(emailRequestDTO);
         notificationService.addNotification(Notification.REGISTER_SUCCESS.getValue(),
                 Notification.REGISTER_SUCCESS.getValue(), userEntity.getId(),
-                "");
+                "",null);
         return new AuthTokenDTO(token);
     }
 
@@ -512,7 +512,7 @@ public class UserServiceImpl implements UserService {
         userEntity = businessInfoUpdateOrSaveRequestConverter.toUpdateEntity(businessInfoUpdateOrSaveRequestDTO);
         notificationService.addNotification(Notification.USER_UPDATE.getValue(),
                 Notification.USER_UPDATE.getValue(), userEntity.getId(),
-                "");
+                "",null);
         return userEntity;
     }
 
@@ -590,7 +590,7 @@ public class UserServiceImpl implements UserService {
         }
         notificationService.addNotification(Notification.USER_FOLLOW.getValue(),
                 Notification.USER_FOLLOW.getValue(), userFollowRequestDTO.getUserFollowId(),
-                "");
+                "",userFollowRequestDTO.getUserId());
         return "";
     }
 
@@ -806,7 +806,7 @@ public class UserServiceImpl implements UserService {
                 tokenRepository.save(tokenResetPasswordEntity);
                 notificationService.addNotification(Notification.CHANGE_PASSWORD_SUCCESS.getValue(),
                         Notification.CHANGE_PASSWORD_SUCCESS.getValue(), userEntity.getId(),
-                        "");
+                        "", null);
                 return "";
             } else {
                 throw new DuplicateUsernameException("token_has_expired");
@@ -827,7 +827,7 @@ public class UserServiceImpl implements UserService {
         }
         notificationService.addNotification(Notification.USER_UPDATE_AVATAR.getValue(),
                         Notification.USER_UPDATE_AVATAR.getValue(), entity.getId(),
-                        "");
+                        "",null);
         userRepository.save(entity);
         return "";
     }

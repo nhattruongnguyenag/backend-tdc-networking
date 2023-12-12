@@ -31,7 +31,7 @@ public class OptionServiceImpl implements OptionService {
         optionUserRepository.save(optionUserEntity);
         notificationService.addNotification(Notification.USER_CHANGE_LANGUAGE.getValue(),
                 Notification.USER_CHANGE_LANGUAGE.getValue(), optionUserEntity.getUser().getId(),
-                "");
+                "",null);
         return "";
     }
 }

@@ -7,6 +7,9 @@ import jakarta.persistence.*;
 @Table(name = "notifications")
 public class NotificationEntity extends BaseEntity {
 
+    @Column(name = "userInteracted", nullable = true)
+    private Long userInteracted;
+
     @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     private String content;
 
@@ -65,5 +68,11 @@ public class NotificationEntity extends BaseEntity {
         this.data = data;
     }
 
+    public Long getUserInteracted() {
+        return this.userInteracted;
+    }
 
+    public void setUserInteracted(Long userInteracted) {
+        this.userInteracted = userInteracted;
+    }
 }

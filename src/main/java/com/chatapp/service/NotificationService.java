@@ -14,7 +14,7 @@ public interface NotificationService {
     List<NotificationResponseDTO> findById(NotificationByUserRequestDTO notificationByUserRequestDTO);
     List<NotificationResponseDTO> findByContent(String content);
     NotificationResponseDTO save(NotificationSaveRequestDTO notificationSaveRequestDTO);
-    void addNotification(String content, String type, Long userId, String data);
+    void addNotification(String content, String type, Long userId, String data, Long userInteracted);
     String delete(NotificationDeleteRequestDTO notificationDeleteRequestDTO);
     String changeStatusAll(NotificationChangeAllStatusByUserIdRequest notificationChangeAllStatusByUserIdRequest);
     NotificationResponseDTO changeStatus(NotificationChangeStatusRequestDTO notificationChangeStatusRequestDTO);
