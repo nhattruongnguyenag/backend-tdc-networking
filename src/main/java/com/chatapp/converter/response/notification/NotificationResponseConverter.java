@@ -28,13 +28,13 @@ public class NotificationResponseConverter extends BaseConverter<NotificationEnt
     public NotificationResponseDTO toDTO(NotificationEntity entity) {
         NotificationResponseDTO notificationResponseDTO = super.toDTO(entity);
         notificationResponseDTO.setUser(userInfoResponseConverter.toDTO(entity.getUser()));
-        if (entity.getData() != null && !entity.getData().equals("")) {
-            String id = entity.getData().split(":")[1];
-            PostEntity postEntity = postRepository.findOneById(Long.valueOf(id));
-            postEntity.setUserLogin(entity.getUser().getId());
-            PostSearchResponseDTO postSearchResponseDTO = postSearchResponseConverter.toDTO(postEntity);
-            notificationResponseDTO.setDataValue(postSearchResponseDTO);
-        }
+        // if (entity.getData() != null && !entity.getData().equals("")) {
+        //     String id = entity.getData().split(":")[1];
+        //     PostEntity postEntity = postRepository.findOneById(Long.valueOf(id));
+        //     postEntity.setUserLogin(entity.getUser().getId());
+        //     PostSearchResponseDTO postSearchResponseDTO = postSearchResponseConverter.toDTO(postEntity);
+        //     notificationResponseDTO.setDataValue(postSearchResponseDTO);
+        // }
         return notificationResponseDTO;
     }
 }
