@@ -1,13 +1,14 @@
 package com.chatapp.dto.response.notification;
 
 import com.chatapp.dto.BaseDTO;
+import com.chatapp.dto.response.post.PostSearchResponseDTO;
 import com.chatapp.dto.response.user.UserInfoResponseDTO;
 
 public class NotificationResponseDTO extends BaseDTO{
     private String content;
     private String status;
     private String type;
-    private String data;
+    private PostSearchResponseDTO dataValue;
     private UserInfoResponseDTO user;
 
     public String getContent() {
@@ -34,12 +35,12 @@ public class NotificationResponseDTO extends BaseDTO{
         this.type = type;
     }
 
-    public String getData() {
-        return data;
+    public PostSearchResponseDTO getDataValue() {
+        return this.dataValue;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setDataValue(PostSearchResponseDTO dataValue) {
+        this.dataValue = dataValue;
     }
 
     public UserInfoResponseDTO getUser() {
