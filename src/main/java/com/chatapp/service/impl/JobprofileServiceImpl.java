@@ -73,9 +73,12 @@ public class JobprofileServiceImpl implements JobProfileService {
             jobProfileRepository.save(jobProfileEntity);
 
         }
+        notificationService.addNotification(Notification.USER_CREATE_POST_WATCH_APPLY_JOB.getValue(),
+                Notification.USER_APPLY_JOB.getValue(), jobProfileEntity.getPost().getUser().getId(),
+                "jobId: " + jobProfileEntity.getId(),jobApplyProfileRequestDTO.getUser_id());
         notificationService.addNotification(Notification.USER_APPLY_JOB.getValue(),
                 Notification.USER_APPLY_JOB.getValue(), jobApplyProfileRequestDTO.getUser_id(),
-                "jobId: " + jobProfileEntity.getId(),postEntity.getUser().getId());
+                "jobId: " + jobProfileEntity.getId(),null);
         return "";
     }
 
