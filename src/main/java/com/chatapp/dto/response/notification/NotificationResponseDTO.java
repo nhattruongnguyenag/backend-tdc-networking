@@ -1,7 +1,6 @@
 package com.chatapp.dto.response.notification;
 
 import com.chatapp.dto.BaseDTO;
-import com.chatapp.dto.response.post.PostSearchResponseDTO;
 import com.chatapp.dto.response.user.UserInfoResponseDTO;
 
 public class NotificationResponseDTO extends BaseDTO{
@@ -9,7 +8,7 @@ public class NotificationResponseDTO extends BaseDTO{
     private String status;
     private String type;
     private Object dataValue;
-    private UserInfoResponseDTO user;
+    private UserInfoResponseDTO userInteracted;
 
     public String getContent() {
         return content;
@@ -43,11 +42,11 @@ public class NotificationResponseDTO extends BaseDTO{
         this.dataValue = dataValue;
     }
 
-    public UserInfoResponseDTO getUser() {
-        return user;
+    public UserInfoResponseDTO getUserInteracted() {
+        return this.userInteracted;
     }
 
-    public void setUser(UserInfoResponseDTO user) {
-        this.user = user;
+    public void setUserInteracted(UserInfoResponseDTO userInteracted) {
+        this.userInteracted = userInteracted;
     }
 }

@@ -110,7 +110,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public void addNotification(String content, String type, Long userId, String data) {
+    public void addNotification(String content, String type, Long userId, String data, Long userInteracted) {
         NotificationSaveRequestDTO notificationSaveRequestDTO = new NotificationSaveRequestDTO();
         notificationSaveRequestDTO.setContent(content);
         notificationSaveRequestDTO.setType(type);
@@ -121,5 +121,6 @@ public class NotificationServiceImpl implements NotificationService {
         }
         NotificationEntity entity = notificationSaveRequestConverter.toEntity(notificationSaveRequestDTO);
         notificationRepository.save(entity);
+        entity.setUserInteracted(userInteracted);
     }
 }

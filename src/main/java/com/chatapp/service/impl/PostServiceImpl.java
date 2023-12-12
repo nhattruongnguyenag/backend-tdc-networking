@@ -191,7 +191,7 @@ public class PostServiceImpl implements PostService {
 
         notificationService.addNotification(Notification.UPDATE_POST.getValue(),
                 Notification.UPDATE_POST.getValue(), postEntity.getUser().getId(),
-                "id:" + postEntity.getId());
+                "id:" + postEntity.getId(),null);
 
         try {
             return postRepository.save(postEntity) != null;
@@ -367,7 +367,7 @@ public class PostServiceImpl implements PostService {
         postEntity = normalPostUpdateOrSaveRequestConverter.toUpdatEntity(normalPostUpdateOrSaveRequestDTO);
         notificationService.addNotification(Notification.UPDATE_POST.getValue(),
                 Notification.UPDATE_POST.getValue(), postEntity.getUser().getId(),
-                "id:" + postEntity.getId());
+                "id:" + postEntity.getId(),null);
         return postEntity;
     }
 
@@ -379,9 +379,6 @@ public class PostServiceImpl implements PostService {
             postEntity.setActive((byte) 0);
         }
         postEntity.setStatus((byte) 0);
-        notificationService.addNotification(Notification.CREATE_NORMAL.getValue(),
-                Notification.CREATE_NORMAL.getValue(), postEntity.getUser().getId(),
-                "id:" + postEntity.getId());
         return postEntity;
     }
 
@@ -421,9 +418,6 @@ public class PostServiceImpl implements PostService {
             postEntity.setActive((byte) 0);
         }
         postEntity.setStatus((byte) 0);
-        notificationService.addNotification(Notification.CREATE_RECRUITMENT.getValue(),
-                Notification.CREATE_RECRUITMENT.getValue(), postEntity.getUser().getId(),
-                "id:" + postEntity.getId());
         return postEntity;
     }
 
@@ -454,7 +448,7 @@ public class PostServiceImpl implements PostService {
             for (StudentInfoEntity studentInfoEntity : studentInfoRepository.findAll()) {
                 notificationService.addNotification(Notification.CREATE_SURVEY.getValue(),
                         Notification.CREATE_SURVEY.getValue(), studentInfoEntity.getUser().getId(),
-                        "id:" + postEntity.getId());
+                        "id:" + postEntity.getId(),saveRequestDTO.getUserId());
             }
         }
         return "";
@@ -475,7 +469,7 @@ public class PostServiceImpl implements PostService {
             postLikeRepository.save(postLikeEntity);
             notificationService.addNotification(Notification.USER_LIKE_POST.getValue(),
                     Notification.USER_LIKE_POST.getValue(), postLikeEntity.getPost().getUser().getId(),
-                    "id:" + postLikeEntity.getPost().getId());
+                    "id:" + postLikeEntity.getPost().getId(),likeRequestDTO.getUserId());
         }
         return "";
     }
@@ -496,11 +490,11 @@ public class PostServiceImpl implements PostService {
         if (entity.getParentComment() != null) {
             notificationService.addNotification(Notification.USER_REPLY_COMMENT_POST.getValue(),
                     Notification.USER_REPLY_COMMENT_POST.getValue(), entity.getParentComment().getUser().getId(),
-                    "id:" + entity.getPost().getId());
+                    "id:" + entity.getPost().getId(),commentSaveRequestDTO.getUserId());
         }
         notificationService.addNotification(Notification.USER_LIKE_POST.getValue(),
                 Notification.USER_LIKE_POST.getValue(), entity.getPost().getUser().getId(),
-                "id:" + entity.getPost().getId());
+                "id:" + entity.getPost().getId(),commentSaveRequestDTO.getUserId());
         return "";
     }
 
@@ -648,7 +642,7 @@ public class PostServiceImpl implements PostService {
         }
         notificationService.addNotification(Notification.USER_CONDUCT_SURVEY.getValue(),
                 Notification.USER_CONDUCT_SURVEY.getValue(), surveyPostEntity.getPost().getUser().getId(),
-                "id:" + surveyPostEntity.getPost().getId());
+                "id:" + surveyPostEntity.getPost().getId(),surveyAnswerRequestDTO.getUser_id());
         return "";
     }
 
@@ -785,7 +779,7 @@ public class PostServiceImpl implements PostService {
         userRepository.save(userEntity);
         notificationService.addNotification(Notification.SAVE_POST.getValue(),
                 Notification.SAVE_POST.getValue(), userSavePostRequestDTO.getUserId(),
-                "id:" + userSavePostRequestDTO.getPostId());
+                "id:" + userSavePostRequestDTO.getPostId(),null);
         return "";
     }
 
@@ -924,7 +918,7 @@ public class PostServiceImpl implements PostService {
         normalPostRepository.save(normalPostEntity);
         notificationService.addNotification(Notification.UPDATE_POST.getValue(),
                 Notification.UPDATE_POST.getValue(), normalPostEntity.getPost().getUser().getId(),
-                "id:" + normalPostEntity.getId());
+                "id:" + normalPostEntity.getId(),null);
         return "";
     }
 
@@ -940,7 +934,7 @@ public class PostServiceImpl implements PostService {
         recruitmentPostRepository.save(entity);
         notificationService.addNotification(Notification.UPDATE_POST.getValue(),
                 Notification.UPDATE_POST.getValue(), entity.getPost().getUser().getId(),
-                "id:" + entity.getId());
+                "id:" + entity.getId(),null);
         return "";
     }
 
@@ -953,7 +947,7 @@ public class PostServiceImpl implements PostService {
         postApprovalLogRepository.save(entity);
         notificationService.addNotification(Notification.POST_LOG.getValue(),
                 Notification.POST_LOG.getValue(), entity.getPost().getUser().getId(),
-                "id:" + entity.getPost().getId());
+                "id:" + entity.getPost().getId(),null);
         return "";
     }
 
@@ -977,7 +971,7 @@ public class PostServiceImpl implements PostService {
         postRepository.save(entity);
         notificationService.addNotification(Notification.POST_LOG.getValue(),
                 Notification.POST_LOG.getValue(), entity.getUser().getId(),
-                "id:" + postId);
+                "id:" + postId,null);
         return "";
     }
 

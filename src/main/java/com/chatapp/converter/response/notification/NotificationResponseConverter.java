@@ -13,7 +13,9 @@ import com.chatapp.entity.NotificationEntity;
 import com.chatapp.entity.PostEntity;
 import com.chatapp.enums.Notification;
 import com.chatapp.repository.JobProfileRepository;
+import com.chatapp.repository.NotificationRepository;
 import com.chatapp.repository.PostRepository;
+import com.chatapp.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -34,26 +36,36 @@ public class NotificationResponseConverter extends BaseConverter<NotificationEnt
     private JobProfileRepository jobProfileRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private NotificationRepository notificationRepository;
+
+    @Autowired
     private PostSearchResponseConverter postSearchResponseConverter;
 
     @Override
     public NotificationResponseDTO toDTO(NotificationEntity entity) {
         NotificationResponseDTO notificationResponseDTO = super.toDTO(entity);
-        notificationResponseDTO.setUser(userInfoResponseConverter.toDTO(entity.getUser()));
-        if (entity.getData() != null && !entity.getData().equals("")) {
-            String id = entity.getData().split(":")[1];
-            if (!entity.getType().equals(Notification.USER_APPLY_JOB.getValue())) {
-                PostEntity postEntity = postRepository.findOneById(Long.valueOf(id));
-                postEntity.setUserLogin(entity.getUser().getId());
-                PostSearchResponseDTO postSearchResponseDTO = postSearchResponseConverter.toDTO(postEntity);
-                notificationResponseDTO.setDataValue(postSearchResponseDTO);
-            } else {
-                JobProfileEntity jobProfileEntity = jobProfileRepository.findOneById(Long.valueOf(id));
-                JobProfileManageResponseDTO jobProfileManageResponseDTO = jobProfilePendingResponseConverter
-                        .toDTO(jobProfileEntity);
-                notificationResponseDTO.setDataValue(jobProfileManageResponseDTO);
-            }
-        }
+        // if (entity != null) {
+        //     notificationResponseDTO.setUserInteracted(
+        //             userInfoResponseConverter.toDTO(userRepository.findOneById(entity.getUserInteracted())));
+        // }
+        // if (entity.getData() != null && !entity.getData().equals("")) {
+        //     String id = entity.getData().split(":")[1];
+        //     if (!entity.getType().equals(Notification.USER_APPLY_JOB.getValue())) {
+        //         PostEntity postEntity = postRepository.findOneById(Long.valueOf(id));
+        //         postEntity.setUserLogin(entity.getUser().getId());
+        //         PostSearchResponseDTO postSearchResponseDTO = postSearchResponseConverter.toDTO(postEntity);
+        //         notificationResponseDTO.setDataValue(postSearchResponseDTO);
+        //     } else {
+        //         JobProfileEntity jobProfileEntity = jobProfileRepository.findOneById(Long.valueOf(id));
+        //         JobProfileManageResponseDTO jobProfileManageResponseDTO = jobProfilePendingResponseConverter
+        //                 .toDTO(jobProfileEntity);
+        //         notificationResponseDTO.setDataValue(jobProfileManageResponseDTO);
+        //     }
+        // }
+        notificationRepository.deleteAll();
         return notificationResponseDTO;
     }
 }
