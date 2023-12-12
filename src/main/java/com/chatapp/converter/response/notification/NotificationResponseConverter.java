@@ -44,7 +44,7 @@ public class NotificationResponseConverter extends BaseConverter<NotificationEnt
     @Override
     public NotificationResponseDTO toDTO(NotificationEntity entity) {
         NotificationResponseDTO notificationResponseDTO = super.toDTO(entity);
-        if (entity != null) {
+        if (entity.getUserInteracted() != null) {
             notificationResponseDTO.setUserInteracted(
                     userInfoResponseConverter.toDTO(userRepository.findOneById(entity.getUserInteracted())));
         }
