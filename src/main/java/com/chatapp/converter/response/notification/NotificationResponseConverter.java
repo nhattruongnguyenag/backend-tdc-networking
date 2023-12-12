@@ -29,18 +29,19 @@ public class NotificationResponseConverter extends BaseConverter<NotificationEnt
     public NotificationResponseDTO toDTO(NotificationEntity entity) {
         NotificationResponseDTO notificationResponseDTO = super.toDTO(entity);
         notificationResponseDTO.setUser(userInfoResponseConverter.toDTO(entity.getUser()));
-        if (entity.getData() != null && entity.getData() != "") {
-            if (!entity.getType().equals(Notification.USER_APPLY_JOB.getValue())) {
-                String id = entity.getData().split(":")[1];
-                PostEntity postEntity = postRepository.findOneById(Long.valueOf(1));
-                postEntity.setUserLogin(entity.getUser().getId());
-                PostSearchResponseDTO postSearchResponseDTO = postSearchResponseConverter.toDTO(postEntity);
-                notificationResponseDTO.setDataValue(postSearchResponseDTO);
-            }
-            else{
-                notificationResponseDTO.setDataValue(null);
-            }
-        }
+        // if (entity.getData() != null && entity.getData() != "") {
+        //     if (!entity.getType().equals(Notification.USER_APPLY_JOB.getValue())) {
+        //         String id = entity.getData().split(":")[1];
+        //         PostEntity postEntity = postRepository.findOneById(Long.valueOf(1));
+        //         postEntity.setUserLogin(entity.getUser().getId());
+        //         PostSearchResponseDTO postSearchResponseDTO = postSearchResponseConverter.toDTO(postEntity);
+        //         notificationResponseDTO.setDataValue(postSearchResponseDTO);
+        //     }
+        //     else{
+        //         notificationResponseDTO.setDataValue(null);
+        //     }
+        // }
+        notificationResponseDTO.setDataValue(entity.getData());
         return notificationResponseDTO;
     }
 }

@@ -8,7 +8,7 @@ public class NotificationResponseDTO extends BaseDTO{
     private String content;
     private String status;
     private String type;
-    private PostSearchResponseDTO dataValue;
+    private String dataValue;
     private UserInfoResponseDTO user;
 
     public String getContent() {
@@ -35,11 +35,19 @@ public class NotificationResponseDTO extends BaseDTO{
         this.type = type;
     }
 
-    public PostSearchResponseDTO getDataValue() {
+    // public PostSearchResponseDTO getDataValue() {
+    //     return this.dataValue;
+    // }
+
+    // public void setDataValue(PostSearchResponseDTO dataValue) {
+    //     this.dataValue = dataValue;
+    // }
+
+    public String getDataValue() {
         return this.dataValue;
     }
 
-    public void setDataValue(PostSearchResponseDTO dataValue) {
+    public void setDataValue(String dataValue) {
         this.dataValue = dataValue;
     }
 
