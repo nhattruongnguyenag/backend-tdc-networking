@@ -40,20 +40,18 @@ public class NotificationResponseConverter extends BaseConverter<NotificationEnt
     public NotificationResponseDTO toDTO(NotificationEntity entity) {
         NotificationResponseDTO notificationResponseDTO = super.toDTO(entity);
         notificationResponseDTO.setUser(userInfoResponseConverter.toDTO(entity.getUser()));
-        if (entity.getData() != null && entity.getData() != "") {
-            if (entity.getData().split(":").length == 2) {
-                String id = entity.getData().split(":")[1];
-                if (!entity.getType().equals(Notification.USER_APPLY_JOB.getValue())) {
-                    PostEntity postEntity = postRepository.findOneById(Long.valueOf(id));
-                    postEntity.setUserLogin(entity.getUser().getId());
-                    PostSearchResponseDTO postSearchResponseDTO = postSearchResponseConverter.toDTO(postEntity);
-                    notificationResponseDTO.setDataValue(postSearchResponseDTO);
-                } else {
-                    JobProfileEntity jobProfileEntity = jobProfileRepository.findOneById(Long.valueOf(id));
-                    JobProfileManageResponseDTO jobProfileManageResponseDTO = jobProfilePendingResponseConverter
-                            .toDTO(jobProfileEntity);
-                    notificationResponseDTO.setDataValue(jobProfileManageResponseDTO);
-                }
+        if (entity.getData() != null && !entity.getData().equals("")) {
+            String id = entity.getData().split(":")[1];
+            if (!entity.getType().equals(Notification.USER_APPLY_JOB.getValue())) {
+                PostEntity postEntity = postRepository.findOneById(Long.valueOf(id));
+                postEntity.setUserLogin(entity.getUser().getId());
+                PostSearchResponseDTO postSearchResponseDTO = postSearchResponseConverter.toDTO(postEntity);
+                notificationResponseDTO.setDataValue(postSearchResponseDTO);
+            } else {
+                JobProfileEntity jobProfileEntity = jobProfileRepository.findOneById(Long.valueOf(id));
+                JobProfileManageResponseDTO jobProfileManageResponseDTO = jobProfilePendingResponseConverter
+                        .toDTO(jobProfileEntity);
+                notificationResponseDTO.setDataValue(jobProfileManageResponseDTO);
             }
         }
         return notificationResponseDTO;
