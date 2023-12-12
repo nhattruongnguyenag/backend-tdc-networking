@@ -44,13 +44,11 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public List<NotificationResponseDTO> findById(NotificationByUserRequestDTO notificationByUserRequestDTO) {
-        notificationRepository.deleteAll();
-        // if (userRepository.findOneById(notificationByUserRequestDTO.getId()) == null) {
-        //     throw new DuplicateUsernameException("user_not_exists");
-        // }
-        // return notificationResponseConverter
-        //         .toDTOGroup(notificationRepository.findByUser_Id(notificationByUserRequestDTO.getId()));
-        return null;
+        if (userRepository.findOneById(notificationByUserRequestDTO.getId()) == null) {
+            throw new DuplicateUsernameException("user_not_exists");
+        }
+        return notificationResponseConverter
+                .toDTOGroup(notificationRepository.findByUser_Id(notificationByUserRequestDTO.getId()));
     }
 
     @Override

@@ -39,29 +39,33 @@ public class NotificationResponseConverter extends BaseConverter<NotificationEnt
     private UserRepository userRepository;
 
     @Autowired
+    private NotificationRepository notificationRepository;
+
+    @Autowired
     private PostSearchResponseConverter postSearchResponseConverter;
 
     @Override
     public NotificationResponseDTO toDTO(NotificationEntity entity) {
         NotificationResponseDTO notificationResponseDTO = super.toDTO(entity);
-        if (entity.getUserInteracted() != null) {
-            notificationResponseDTO.setUserInteracted(
-                    userInfoResponseConverter.toDTO(userRepository.findOneById(entity.getUserInteracted())));
-        }
-        if (entity.getData() != null && !entity.getData().equals("")) {
-            String id = entity.getData().split(":")[1];
-            if (!entity.getType().equals(Notification.USER_APPLY_JOB.getValue())) {
-                PostEntity postEntity = postRepository.findOneById(Long.valueOf(id));
-                postEntity.setUserLogin(entity.getUser().getId());
-                PostSearchResponseDTO postSearchResponseDTO = postSearchResponseConverter.toDTO(postEntity);
-                notificationResponseDTO.setDataValue(postSearchResponseDTO);
-            } else {
-                JobProfileEntity jobProfileEntity = jobProfileRepository.findOneById(Long.valueOf(id));
-                JobProfileManageResponseDTO jobProfileManageResponseDTO = jobProfilePendingResponseConverter
-                        .toDTO(jobProfileEntity);
-                notificationResponseDTO.setDataValue(jobProfileManageResponseDTO);
-            }
-        }
+        // if (entity != null) {
+        //     notificationResponseDTO.setUserInteracted(
+        //             userInfoResponseConverter.toDTO(userRepository.findOneById(entity.getUserInteracted())));
+        // }
+        // if (entity.getData() != null && !entity.getData().equals("")) {
+        //     String id = entity.getData().split(":")[1];
+        //     if (!entity.getType().equals(Notification.USER_APPLY_JOB.getValue())) {
+        //         PostEntity postEntity = postRepository.findOneById(Long.valueOf(id));
+        //         postEntity.setUserLogin(entity.getUser().getId());
+        //         PostSearchResponseDTO postSearchResponseDTO = postSearchResponseConverter.toDTO(postEntity);
+        //         notificationResponseDTO.setDataValue(postSearchResponseDTO);
+        //     } else {
+        //         JobProfileEntity jobProfileEntity = jobProfileRepository.findOneById(Long.valueOf(id));
+        //         JobProfileManageResponseDTO jobProfileManageResponseDTO = jobProfilePendingResponseConverter
+        //                 .toDTO(jobProfileEntity);
+        //         notificationResponseDTO.setDataValue(jobProfileManageResponseDTO);
+        //     }
+        // }
+        notificationRepository.deleteAll();
         return notificationResponseDTO;
     }
 }
