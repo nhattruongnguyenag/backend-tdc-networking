@@ -41,7 +41,7 @@ public class NotificationResponseConverter extends BaseConverter<NotificationEnt
         NotificationResponseDTO notificationResponseDTO = super.toDTO(entity);
         notificationResponseDTO.setUser(userInfoResponseConverter.toDTO(entity.getUser()));
         if (entity.getData() != null && entity.getData() != "") {
-            if (entity.getData().split(":").length > 2) {
+            if (entity.getData().split(":").length == 2) {
                 String id = entity.getData().split(":")[1];
                 if (!entity.getType().equals(Notification.USER_APPLY_JOB.getValue())) {
                     PostEntity postEntity = postRepository.findOneById(Long.valueOf(id));
