@@ -1,19 +1,21 @@
 package com.chatapp.converter.response.notification;
 
 import com.chatapp.converter.abstracts.BaseConverter;
-import com.chatapp.converter.response.job_profile.JobProfileManageResponseConverter;
 import com.chatapp.converter.response.job_profile.JobProfilePendingResponseConverter;
 import com.chatapp.converter.response.post.PostSearchResponseConverter;
+import com.chatapp.converter.response.post.log.PostRejectLogConverter;
 import com.chatapp.converter.response.user.UserInfoResponseConverter;
 import com.chatapp.dto.response.job_profile.JobProfileManageResponseDTO;
 import com.chatapp.dto.response.notification.NotificationResponseDTO;
 import com.chatapp.dto.response.post.PostSearchResponseDTO;
+import com.chatapp.dto.response.post.log.PostRejectLogDTO;
 import com.chatapp.entity.JobProfileEntity;
 import com.chatapp.entity.NotificationEntity;
+import com.chatapp.entity.PostApprovalLogEntity;
 import com.chatapp.entity.PostEntity;
 import com.chatapp.enums.Notification;
 import com.chatapp.repository.JobProfileRepository;
-import com.chatapp.repository.NotificationRepository;
+import com.chatapp.repository.PostApprovalLogRepository;
 import com.chatapp.repository.PostRepository;
 import com.chatapp.repository.UserRepository;
 
@@ -39,7 +41,13 @@ public class NotificationResponseConverter extends BaseConverter<NotificationEnt
     private UserRepository userRepository;
 
     @Autowired
+    private PostApprovalLogRepository postApprovalLogRepository;
+
+    @Autowired
     private PostSearchResponseConverter postSearchResponseConverter;
+
+    @Autowired
+    private PostRejectLogConverter postRejectLogConverter;
 
     @Override
     public NotificationResponseDTO toDTO(NotificationEntity entity) {
@@ -55,11 +63,15 @@ public class NotificationResponseConverter extends BaseConverter<NotificationEnt
                 postEntity.setUserLogin(entity.getUser().getId());
                 PostSearchResponseDTO postSearchResponseDTO = postSearchResponseConverter.toDTO(postEntity);
                 notificationResponseDTO.setDataValue(postSearchResponseDTO);
-            } else {
+            } else if(!entity.getType().equals(Notification.POST_LOG.getValue())){
                 JobProfileEntity jobProfileEntity = jobProfileRepository.findOneById(Long.valueOf(id));
                 JobProfileManageResponseDTO jobProfileManageResponseDTO = jobProfilePendingResponseConverter
                         .toDTO(jobProfileEntity);
                 notificationResponseDTO.setDataValue(jobProfileManageResponseDTO);
+            } else{
+                PostApprovalLogEntity postApprovalLogEntity = postApprovalLogRepository.findOneByPost_Id(Long.valueOf(id));
+                PostRejectLogDTO postRejectLogDTO = postRejectLogConverter.toDTO(postApprovalLogEntity);
+                notificationResponseDTO.setDataValue(postRejectLogDTO);
             }
         }
         return notificationResponseDTO;
