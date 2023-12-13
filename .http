@@ -817,5 +817,6 @@ POST http://69.197.134.101:8080/api/option/get
 Content-Type: application/json
 
 {
-    "userId": 1
+    "userId": 1,
+    "optionKey": "language"
 }

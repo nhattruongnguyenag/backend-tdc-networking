@@ -33,7 +33,6 @@ public class OptionAPI {
     
     @PostMapping({"option/get", "option/get/"})
     public ResponseEntity<ResponseData<OptionResponseDTO>> getOptionByUserAndOptionKey(@RequestBody OptionRequestDTO optionRequestDTO) {
-        optionRequestDTO.setOptionKey(Option.LANGUAGE.getValue());
         ResponseData<OptionResponseDTO> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",optionService.getOptionByKeyAndUserId(optionRequestDTO));
         return ResponseEntity.ok(responseData);
     }
