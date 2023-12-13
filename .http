@@ -286,9 +286,9 @@ Content-Type: application/json
 
 {
     "postId":23,
-    "userId":2,
-    "content":"hay qua",
-    "parentCommentId": 0
+    "userId":1,
+    "content":"aloooooo",
+    "parentCommentId": 17
 }
 
 ###
