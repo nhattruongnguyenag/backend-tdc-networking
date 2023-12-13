@@ -486,7 +486,7 @@ public class PostServiceImpl implements PostService {
         }
         PostCommentEntity entity = commentSaveRequestConverter.toEntity(commentSaveRequestDTO);
         if (commentSaveRequestDTO.getUserId() != entity.getPost().getUser().getId()) {
-            if (commentSaveRequestDTO.getParentCommentId() == null) {
+            if (commentSaveRequestDTO.getParentCommentId() == 0) {
                 notificationService.addNotification(Notification.USER_COMMENT_POST.getValue(),
                         Notification.USER_COMMENT_POST.getValue(), entity.getPost().getUser().getId(),
                         "id:" + entity.getPost().getId(), commentSaveRequestDTO.getUserId());
