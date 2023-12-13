@@ -813,7 +813,7 @@ Content-Type: application/json
 GET http://69.197.134.101:8080/api/delete/no
 
 ###
-POST http://localhost:8080/api/option/get
+POST http://69.197.134.101:8080/api/option/get
 Content-Type: application/json
 
 {
