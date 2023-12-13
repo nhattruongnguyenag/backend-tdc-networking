@@ -495,8 +495,8 @@ public class PostServiceImpl implements PostService {
                     "id:" + entity.getPost().getId(), commentSaveRequestDTO.getParentCommentId());
         }
         if (commentSaveRequestDTO.getUserId() != entity.getPost().getUser().getId()) {
-            notificationService.addNotification(Notification.USER_LIKE_POST.getValue(),
-                    Notification.USER_LIKE_POST.getValue(), entity.getPost().getUser().getId(),
+            notificationService.addNotification(Notification.USER_COMMENT_POST.getValue(),
+                    Notification.USER_COMMENT_POST.getValue(), entity.getPost().getUser().getId(),
                     "id:" + entity.getPost().getId(), commentSaveRequestDTO.getUserId());
         }
         return "";
@@ -973,8 +973,8 @@ public class PostServiceImpl implements PostService {
         PostEntity entity = postRepository.findOneById(postId);
         entity.setActive((byte) 1);
         postRepository.save(entity);
-        notificationService.addNotification(Notification.POST_LOG.getValue(),
-                Notification.POST_LOG.getValue(), entity.getUser().getId(),
+        notificationService.addNotification(Notification.ACCEPT_POST.getValue(),
+                Notification.ACCEPT_POST.getValue(), entity.getUser().getId(),
                 "id:" + postId, null);
         return "";
     }
