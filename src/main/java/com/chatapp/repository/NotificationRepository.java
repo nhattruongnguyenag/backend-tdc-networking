@@ -9,7 +9,7 @@ import com.chatapp.entity.NotificationEntity;
 
 @Repository
 public interface NotificationRepository extends JpaRepository<NotificationEntity, Long> {
-    List<NotificationEntity> findByUser_Id(Long id);
+    List<NotificationEntity> findByUser_IdOrderByUpdatedAtDesc(Long id);
     List<NotificationEntity>findByContentContains(String content);
     NotificationEntity findByIdAndUser_Id(Long id, Long userId);
 }
