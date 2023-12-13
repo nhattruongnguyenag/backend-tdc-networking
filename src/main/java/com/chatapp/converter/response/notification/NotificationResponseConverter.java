@@ -56,26 +56,25 @@ public class NotificationResponseConverter extends BaseConverter<NotificationEnt
             notificationResponseDTO.setUserInteracted(
                     userInfoResponseConverter.toDTO(userRepository.findOneById(entity.getUserInteracted())));
         }
-        // if (entity.getData() != null && !entity.getData().equals("")) {
-        //     String id = entity.getData().split(":")[1];
-        //     if (entity.getType().equals(Notification.USER_APPLY_JOB.getValue())) {
-        //         JobProfileEntity jobProfileEntity = jobProfileRepository.findOneById(Long.valueOf(id));
-        //         JobProfileManageResponseDTO jobProfileManageResponseDTO = jobProfilePendingResponseConverter
-        //                 .toDTO(jobProfileEntity);
-        //         notificationResponseDTO.setDataValue(jobProfileManageResponseDTO);
-        //     } else if (entity.getType().equals(Notification.POST_LOG.getValue())) {
-        //         PostApprovalLogEntity postApprovalLogEntity = postApprovalLogRepository
-        //                 .findOneByPost_Id(Long.valueOf(id));
-        //         PostRejectLogDTO postRejectLogDTO = postRejectLogConverter.toDTO(postApprovalLogEntity);
-        //         notificationResponseDTO.setDataValue(postRejectLogDTO);
-        //     } else {
-        //         PostEntity postEntity = postRepository.findOneById(Long.valueOf(id));
-        //         postEntity.setUserLogin(entity.getUser().getId());
-        //         PostSearchResponseDTO postSearchResponseDTO = postSearchResponseConverter.toDTO(postEntity);
-        //         notificationResponseDTO.setDataValue(postSearchResponseDTO);
-        //     }
-        // }
-        notificationResponseDTO.setDataValue(entity.getData());
+        if (entity.getData() != null && !entity.getData().equals("")) {
+            String id = entity.getData().split(":")[1];
+            if (entity.getType().equals(Notification.USER_APPLY_JOB.getValue())) {
+                JobProfileEntity jobProfileEntity = jobProfileRepository.findOneById(Long.valueOf(id));
+                JobProfileManageResponseDTO jobProfileManageResponseDTO = jobProfilePendingResponseConverter
+                        .toDTO(jobProfileEntity);
+                notificationResponseDTO.setDataValue(jobProfileManageResponseDTO);
+            } else if (entity.getType().equals(Notification.POST_LOG.getValue())) {
+                PostApprovalLogEntity postApprovalLogEntity = postApprovalLogRepository
+                        .findOneByPost_Id(Long.valueOf(id));
+                PostRejectLogDTO postRejectLogDTO = postRejectLogConverter.toDTO(postApprovalLogEntity);
+                notificationResponseDTO.setDataValue(postRejectLogDTO);
+            } else {
+                PostEntity postEntity = postRepository.findOneById(Long.valueOf(id));
+                postEntity.setUserLogin(entity.getUser().getId());
+                PostSearchResponseDTO postSearchResponseDTO = postSearchResponseConverter.toDTO(postEntity);
+                notificationResponseDTO.setDataValue(postSearchResponseDTO);
+            }
+        }
         return notificationResponseDTO;
     }
 }

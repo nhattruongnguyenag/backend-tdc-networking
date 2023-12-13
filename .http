@@ -219,7 +219,7 @@ POST http://69.197.134.101:8080/api/notifications/user HTTP/1.1
 Content-Type: application/json
 
 {
-    "id": 13
+    "id": 12
 }
 
 
@@ -238,7 +238,7 @@ DELETE http://69.197.134.101:8080/api/notifications HTTP/1.1
 Content-Type: application/json
 
 {
-    "id":180,
+    "id":247,
     "userId":12
 }
 

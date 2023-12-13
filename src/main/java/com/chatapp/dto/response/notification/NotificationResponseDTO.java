@@ -7,7 +7,7 @@ public class NotificationResponseDTO extends BaseDTO{
     private String content;
     private String status;
     private String type;
-    private String dataValue;
+    private Object dataValue;
     private UserInfoResponseDTO userInteracted;
 
     public String getContent() {
@@ -34,23 +34,13 @@ public class NotificationResponseDTO extends BaseDTO{
         this.type = type;
     }
 
-    // public Object getDataValue() {
-    //     return this.dataValue;
-    // }
-
-    // public void setDataValue(Object dataValue) {
-    //     this.dataValue = dataValue;
-    // }
-    
-
-    public String getDataValue() {
+    public Object getDataValue() {
         return this.dataValue;
     }
 
-    public void setDataValue(String dataValue) {
+    public void setDataValue(Object dataValue) {
         this.dataValue = dataValue;
     }
-
 
     public UserInfoResponseDTO getUserInteracted() {
         return this.userInteracted;
