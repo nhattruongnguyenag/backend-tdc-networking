@@ -484,13 +484,9 @@ public class PostServiceImpl implements PostService {
         if (postRepository.findById(commentSaveRequestDTO.getPostId()) == null) {
             throw new DuplicateUsernameException("post_is_not_exist");
         }
-        if (postCommentRepository.findById(commentSaveRequestDTO.getParentCommentId()) == null) {
-            throw new DuplicateUsernameException("comment_is_not_exist");
-        }
         PostCommentEntity entity = commentSaveRequestConverter.toEntity(commentSaveRequestDTO);
-        postCommentRepository.save(entity);
         if (commentSaveRequestDTO.getUserId() != entity.getPost().getUser().getId()) {
-            if (commentSaveRequestDTO.getParentCommentId() == 0) {
+            if (commentSaveRequestDTO.getParentCommentId() == null) {
                 notificationService.addNotification(Notification.USER_COMMENT_POST.getValue(),
                         Notification.USER_COMMENT_POST.getValue(), entity.getPost().getUser().getId(),
                         "id:" + entity.getPost().getId(), commentSaveRequestDTO.getUserId());
@@ -501,6 +497,7 @@ public class PostServiceImpl implements PostService {
             }
 
         }
+        postCommentRepository.save(entity);
         return "";
     }
 
