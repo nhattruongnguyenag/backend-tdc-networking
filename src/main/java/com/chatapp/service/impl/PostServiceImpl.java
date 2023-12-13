@@ -493,11 +493,12 @@ public class PostServiceImpl implements PostService {
             notificationService.addNotification(Notification.USER_REPLY_COMMENT_POST.getValue(),
                     Notification.USER_REPLY_COMMENT_POST.getValue(), entity.getParentComment().getUser().getId(),
                     "id:" + entity.getPost().getId(), commentSaveRequestDTO.getParentCommentId());
-        }
-        if (commentSaveRequestDTO.getUserId() != entity.getPost().getUser().getId()) {
-            notificationService.addNotification(Notification.USER_COMMENT_POST.getValue(),
-                    Notification.USER_COMMENT_POST.getValue(), entity.getPost().getUser().getId(),
-                    "id:" + entity.getPost().getId(), commentSaveRequestDTO.getUserId());
+        } else {
+            if (commentSaveRequestDTO.getUserId() != entity.getPost().getUser().getId()) {
+                notificationService.addNotification(Notification.USER_COMMENT_POST.getValue(),
+                        Notification.USER_COMMENT_POST.getValue(), entity.getPost().getUser().getId(),
+                        "id:" + entity.getPost().getId(), commentSaveRequestDTO.getUserId());
+            }
         }
         return "";
     }
