@@ -58,20 +58,21 @@ public class NotificationResponseConverter extends BaseConverter<NotificationEnt
         }
         if (entity.getData() != null && !entity.getData().equals("")) {
             String id = entity.getData().split(":")[1];
-            if (!entity.getType().equals(Notification.USER_APPLY_JOB.getValue())) {
-                PostEntity postEntity = postRepository.findOneById(Long.valueOf(id));
-                postEntity.setUserLogin(entity.getUser().getId());
-                PostSearchResponseDTO postSearchResponseDTO = postSearchResponseConverter.toDTO(postEntity);
-                notificationResponseDTO.setDataValue(postSearchResponseDTO);
-            } else if(!entity.getType().equals(Notification.POST_LOG.getValue())){
+            if (entity.getType().equals(Notification.USER_APPLY_JOB.getValue())) {
                 JobProfileEntity jobProfileEntity = jobProfileRepository.findOneById(Long.valueOf(id));
                 JobProfileManageResponseDTO jobProfileManageResponseDTO = jobProfilePendingResponseConverter
                         .toDTO(jobProfileEntity);
                 notificationResponseDTO.setDataValue(jobProfileManageResponseDTO);
-            } else{
-                PostApprovalLogEntity postApprovalLogEntity = postApprovalLogRepository.findOneByPost_Id(Long.valueOf(id));
+            } else if (entity.getType().equals(Notification.POST_LOG.getValue())) {
+                PostApprovalLogEntity postApprovalLogEntity = postApprovalLogRepository
+                        .findOneByPost_Id(Long.valueOf(id));
                 PostRejectLogDTO postRejectLogDTO = postRejectLogConverter.toDTO(postApprovalLogEntity);
                 notificationResponseDTO.setDataValue(postRejectLogDTO);
+            } else {
+                PostEntity postEntity = postRepository.findOneById(Long.valueOf(id));
+                postEntity.setUserLogin(entity.getUser().getId());
+                PostSearchResponseDTO postSearchResponseDTO = postSearchResponseConverter.toDTO(postEntity);
+                notificationResponseDTO.setDataValue(postSearchResponseDTO);
             }
         }
         return notificationResponseDTO;

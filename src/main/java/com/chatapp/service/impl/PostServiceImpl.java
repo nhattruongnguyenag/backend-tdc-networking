@@ -495,7 +495,6 @@ public class PostServiceImpl implements PostService {
                         Notification.USER_REPLY_COMMENT_POST.getValue(), entity.getParentComment().getUser().getId(),
                         "id:" + entity.getPost().getId(), commentSaveRequestDTO.getUserId());
             }
-
         }
         postCommentRepository.save(entity);
         return "";

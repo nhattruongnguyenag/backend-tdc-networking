@@ -219,7 +219,7 @@ POST http://69.197.134.101:8080/api/notifications/user HTTP/1.1
 Content-Type: application/json
 
 {
-    "id": 12
+    "id": 13
 }
 
 
@@ -286,9 +286,9 @@ Content-Type: application/json
 
 {
     "postId":23,
-    "userId":1,
-    "content":"aloooooo",
-    "parentCommentId": 17
+    "userId":17,
+    "content":"anh la so 1",
+    "parentCommentId":0
 }
 
 ###
