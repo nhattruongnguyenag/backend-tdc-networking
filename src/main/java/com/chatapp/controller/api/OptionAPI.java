@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.chatapp.commond.ResponseData;
 import com.chatapp.dto.request.option.OptionRequestDTO;
+import com.chatapp.dto.response.option.OptionResponseDTO;
 import com.chatapp.enums.Option;
 import com.chatapp.service.OptionService;
 
@@ -28,5 +29,12 @@ public class OptionAPI {
         optionRequestDTO.setOptionKey(Option.LANGUAGE.getValue());
         ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",optionService.saveOrUpdateLanguage(optionRequestDTO));
         return ResponseEntity.created(null).body(responseData);
+    }
+    
+    @PostMapping({"option/get", "option/get/"})
+    public ResponseEntity<ResponseData<OptionResponseDTO>> getOptionByUserAndOptionKey(@RequestBody OptionRequestDTO optionRequestDTO) {
+        optionRequestDTO.setOptionKey(Option.LANGUAGE.getValue());
+        ResponseData<OptionResponseDTO> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",optionService.getOptionByKeyAndUserId(optionRequestDTO));
+        return ResponseEntity.ok(responseData);
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.chatapp.converter.request.option.OptionRequestConverter;
 import com.chatapp.dto.request.option.OptionRequestDTO;
+import com.chatapp.dto.response.option.OptionResponseDTO;
 import com.chatapp.entity.OptionUserEntity;
 import com.chatapp.enums.Notification;
 import com.chatapp.repository.OptionUserRepository;
@@ -33,5 +34,15 @@ public class OptionServiceImpl implements OptionService {
                 Notification.USER_CHANGE_LANGUAGE.getValue(), optionUserEntity.getUser().getId(),
                 "",null);
         return "";
+    }
+
+    @Override
+    public OptionResponseDTO getOptionByKeyAndUserId(OptionRequestDTO optionRequestDTO) {
+        OptionUserEntity optionUserEntity = optionUserRepository.findOneByUser_IdAndOptionKey(optionRequestDTO.getUserId(), optionRequestDTO.getOptionKey());
+        OptionResponseDTO optionResponseDTO = new OptionResponseDTO();
+        optionResponseDTO.setUserId(optionUserEntity.getUser().getId());
+        optionResponseDTO.setOptionKey(optionUserEntity.getOptionKey());
+        optionResponseDTO.setValue(optionUserEntity.getValue());
+        return optionResponseDTO;
     }
 }
