@@ -88,7 +88,7 @@ public class NotificationServiceImpl implements NotificationService {
             throw new DuplicateUsernameException("user_not_exists");
         }
         List<NotificationEntity> entities = notificationRepository
-                .findByUser_Id(notificationChangeAllStatusByUserIdRequest.getUserId());
+                .findByUser_IdOrderByUpdatedAtDesc(notificationChangeAllStatusByUserIdRequest.getUserId());
         for (NotificationEntity entity : entities) {
             entity.setStatus((byte) 1);
             notificationRepository.save(entity);
