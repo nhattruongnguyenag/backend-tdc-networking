@@ -43,7 +43,7 @@ POST http://69.197.134.101:8080/api/student/register HTTP/1.1
 Content-Type: application/json
 
 {
-    "email":"abchhgh@gmail.com",
+    "email":"sonthu3333@gmail.com",
     "name":"son",
     "password":"abc123",
     "image":"son.png",
@@ -497,7 +497,7 @@ GET  http://127.0.0.1:8080/api/posts/user/save/3 HTTP/1.1
 GET  http://127.0.0.1:8080/api/posts/survey/3/result HTTP/1.1
 
 ###
-GET  http://69.197.134.101:8080/api/users/3/group HTTP/1.1
+GET  http://69.197.134.101:8080/api/users/37/group HTTP/1.1
 
 ###
 POST http://69.197.134.101:8080/api/login HTTP/1.1

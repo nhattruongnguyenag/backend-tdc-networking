@@ -15,7 +15,6 @@ import com.chatapp.dto.response.group.GroupResponseDTO;
 import com.chatapp.dto.response.user.UserDTO;
 import com.chatapp.dto.response.user.UserInfoResponseDTO;
 import com.chatapp.dto.response.user.follow.UserFollowResponseDTO;
-import com.chatapp.entity.GroupEntity;
 import com.chatapp.service.UserService;
 import com.chatapp.util.TokenProvider;
 
@@ -59,8 +58,8 @@ public class UserAPI {
     }
 
     @GetMapping({ "users/{userId}/group", "users/{userId}/group/" })
-    public ResponseEntity<ResponseData<List<GroupEntity>>> getGroupByUserId(@PathVariable Long userId) {
-        ResponseData<List<GroupEntity>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",userService.getGroupByUserId(userId));
+    public ResponseEntity<ResponseData<List<GroupResponseDTO>>> getGroupByUserId(@PathVariable Long userId) {
+        ResponseData<List<GroupResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",userService.getGroupByUserId(userId));
         return ResponseEntity.ok(responseData);
     }
 
