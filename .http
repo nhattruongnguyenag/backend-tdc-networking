@@ -427,7 +427,7 @@ POST http://69.197.134.101:8080/api/users/follow/me HTTP/1.1
 Content-Type: application/json
 
 {
-    "id":12
+    "id":13
 }
 
 ###
@@ -435,7 +435,7 @@ POST http://69.197.134.101:8080/api/users/follow/other HTTP/1.1
 Content-Type: application/json
 
 {
-    "id":12
+    "id":13
 }
 
 ###
