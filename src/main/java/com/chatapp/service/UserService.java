@@ -25,6 +25,7 @@ import com.chatapp.dto.response.user.business.BusinessInfoResponseDTO;
 import com.chatapp.dto.response.user.faculty.FacultyInfoResponseDTO;
 import com.chatapp.dto.response.user.follow.UserFollowResponseDTO;
 import com.chatapp.dto.response.user.student.StudentInfoResponseDTO;
+import com.chatapp.entity.GroupEntity;
 
 import jakarta.mail.MessagingException;
 
@@ -84,7 +85,7 @@ public interface UserService {
     List<UserFollowResponseDTO> getOtherPeopleFollowByUserId(UserGetRequestDTO userGetRequestDTO);
 
     //group
-    List<GroupResponseDTO> getGroupByUserId(Long userId);
+    List<GroupEntity> getGroupByUserId(Long userId);
 
     //forgot password
     String sendEmailResetPassword(EmailRequestDTO emailRequestDTO) throws MessagingException, UnsupportedEncodingException;

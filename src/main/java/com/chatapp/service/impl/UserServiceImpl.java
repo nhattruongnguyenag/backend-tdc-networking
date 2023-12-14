@@ -723,13 +723,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<GroupResponseDTO> getGroupByUserId(Long userId) {
+    public List<GroupEntity> getGroupByUserId(Long userId) {
         if (userRepository.findOneById(userId) == null) {
             throw new DuplicateUsernameException("user_not_exists");
         }
         UserEntity userEntity = userRepository.findOneById(userId);
         List<GroupResponseDTO> groupResponseDTOs = groupResponseConverter.toDTOGroup(userEntity.getGroups());
-        return groupResponseDTOs;
+        return userEntity.getGroups();
     }
 
     @Override
