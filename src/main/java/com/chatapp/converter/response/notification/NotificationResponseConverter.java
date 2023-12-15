@@ -86,7 +86,6 @@ public class NotificationResponseConverter extends BaseConverter<NotificationEnt
                     notificationResponseDTO.setDataValue(postSearchResponseDTO);
                 } else {
                     notificationResponseDTO.setDataValue(null);
-                    notificationResponseDTO.setLog(id);
                 }
             }
         }

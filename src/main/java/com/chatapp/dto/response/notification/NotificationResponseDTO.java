@@ -9,7 +9,6 @@ public class NotificationResponseDTO extends BaseDTO{
     private String type;
     private Object dataValue;
     private UserInfoResponseDTO userInteracted;
-    private String log;
 
     public String getContent() {
         return content;
@@ -50,14 +49,4 @@ public class NotificationResponseDTO extends BaseDTO{
     public void setUserInteracted(UserInfoResponseDTO userInteracted) {
         this.userInteracted = userInteracted;
     }
-
-
-    public String getLog() {
-        return this.log;
-    }
-
-    public void setLog(String log) {
-        this.log = log;
-    }
-
 }
