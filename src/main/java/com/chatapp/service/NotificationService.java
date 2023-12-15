@@ -19,4 +19,5 @@ public interface NotificationService {
     String changeStatusAll(NotificationChangeAllStatusByUserIdRequest notificationChangeAllStatusByUserIdRequest);
     NotificationResponseDTO changeStatus(NotificationChangeStatusRequestDTO notificationChangeStatusRequestDTO);
     NotificationResponseDTO makeNotSeen(NotificationChangeStatusRequestDTO notificationChangeStatusRequestDTO);
+    Integer getCountNotification(NotificationByUserRequestDTO notificationByUserRequestDTO);
 }

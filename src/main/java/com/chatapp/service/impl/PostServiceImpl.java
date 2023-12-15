@@ -27,6 +27,7 @@ import com.chatapp.converter.response.user.student.StudentInfoResponseConverter;
 import com.chatapp.dto.BaseDTO;
 import com.chatapp.dto.request.post.AllPostByUserAndGroupResponseDTO;
 import com.chatapp.dto.request.post.PostFindRequestDTO;
+import com.chatapp.dto.request.post.PostGetRequestDTO;
 import com.chatapp.dto.request.post.PostSearchRequestDTO;
 import com.chatapp.dto.request.post.comment.CommentDeleteRequestDTO;
 import com.chatapp.dto.request.post.comment.CommentSaveRequestDTO;
@@ -1022,5 +1023,14 @@ public class PostServiceImpl implements PostService {
         }
         List<PostSearchResponseDTO> dtos = postSearchResponseConverter.toDTOGroup(result);
         return dtos;
+    }
+
+    @Override
+    public PostSearchResponseDTO findById(PostGetRequestDTO requestDTO) {
+        if (postRepository.findOneById(requestDTO.getPostId()) == null) {
+            throw new DuplicateUsernameException("this_post_is_not_exists");
+        }
+        PostEntity postEntity = postRepository.findOneById(requestDTO.getPostId());
+        return postSearchResponseConverter.toDTO(postEntity);
     }
 }

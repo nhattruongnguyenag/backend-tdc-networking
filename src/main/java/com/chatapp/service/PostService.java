@@ -3,6 +3,7 @@ package com.chatapp.service;
 import com.chatapp.dto.BaseDTO;
 import com.chatapp.dto.request.post.AllPostByUserAndGroupResponseDTO;
 import com.chatapp.dto.request.post.PostFindRequestDTO;
+import com.chatapp.dto.request.post.PostGetRequestDTO;
 import com.chatapp.dto.request.post.PostSearchRequestDTO;
 import com.chatapp.dto.request.post.comment.CommentDeleteRequestDTO;
 import com.chatapp.dto.request.post.comment.CommentSaveRequestDTO;
@@ -13,7 +14,6 @@ import com.chatapp.dto.request.post.recruitment.RecruitmentPostUpdateOrSageReque
 import com.chatapp.dto.request.post.recruitment.RecruitmentPostUpdateRequestDTO;
 import com.chatapp.dto.request.post.survey.SurveyAnswerRequestDTO;
 import com.chatapp.dto.request.post.survey.SurveySaveRequestDTO;
-import com.chatapp.dto.request.post.survey.SurveyUpdateRequestDTO;
 import com.chatapp.dto.request.user.UserDetailInGroupRequestDTO;
 import com.chatapp.dto.request.user.like.LikeRequestDTO;
 import com.chatapp.dto.request.user.post_save.UserSavePostFindRequestDTO;
@@ -35,6 +35,7 @@ public interface PostService {
     boolean updateSurvey(SurveyDTO surveyDTO);
     List<PostSearchResponseDTO> findPosts(PostSearchRequestDTO requestDTO);
     List<BaseDTO> findAll();
+    PostSearchResponseDTO findById(PostGetRequestDTO requestDTO);
 
     List<BaseDTO> findAllByUserId(Long id);
 

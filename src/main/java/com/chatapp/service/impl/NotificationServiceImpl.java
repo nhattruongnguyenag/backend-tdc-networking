@@ -48,7 +48,8 @@ public class NotificationServiceImpl implements NotificationService {
             throw new DuplicateUsernameException("user_not_exists");
         }
         return notificationResponseConverter
-                .toDTOGroup(notificationRepository.findByUser_IdOrderByUpdatedAtDesc(notificationByUserRequestDTO.getId()));
+                .toDTOGroup(
+                        notificationRepository.findByUser_IdOrderByUpdatedAtDesc(notificationByUserRequestDTO.getId()));
     }
 
     @Override
@@ -125,5 +126,13 @@ public class NotificationServiceImpl implements NotificationService {
         NotificationEntity entity = notificationSaveRequestConverter.toEntity(notificationSaveRequestDTO);
         entity.setUserInteracted(userInteracted);
         notificationRepository.save(entity);
+    }
+
+    @Override
+    public Integer getCountNotification(NotificationByUserRequestDTO notificationByUserRequestDTO) {
+        if (userRepository.findOneById(notificationByUserRequestDTO.getId()) == null) {
+            throw new DuplicateUsernameException("user_not_exists");
+        }
+        return notificationRepository.findByUser_IdOrderByUpdatedAtDesc(notificationByUserRequestDTO.getId()).size();
     }
 }

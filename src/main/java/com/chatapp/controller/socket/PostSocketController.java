@@ -8,6 +8,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 
+import com.chatapp.dto.request.post.PostGetRequestDTO;
 import com.chatapp.dto.request.user.like.LikeRequestDTO;
 import com.chatapp.dto.request.user.post_save.UserSavePostFindRequestDTO;
 import com.chatapp.dto.request.user.post_save.UserSavePostRequestDTO;
@@ -47,6 +48,24 @@ public class PostSocketController {
     public List<PostSearchResponseDTO> userLikePost(@RequestBody LikeRequestDTO likeRequestDTO) {
         postService.likePost(likeRequestDTO);
         return postService.getPostSaveByUserId(likeRequestDTO.getUserId());
+    }
+
+    @MessageMapping({ "/posts/detail/unsave", "/posts/detail/unsave" })
+    @SendTo({ "/topic/posts/{postId}/detail", "/topic/posts/{postId}/detail/" })
+    public PostSearchResponseDTO savePost(@RequestBody UserSavePostRequestDTO userSavePostRequestDTO, @DestinationVariable("postId") String postId) {
+        postService.userSavePost(userSavePostRequestDTO);
+        PostGetRequestDTO postGetRequestDTO = new PostGetRequestDTO();
+        postGetRequestDTO.setPostId(Long.valueOf(postId));
+        return postService.findById(postGetRequestDTO);
+    }
+
+    @MessageMapping({ "/posts/detail/like", "/posts/detail/like/" })
+    @SendTo({ "/topic/posts/{postId}/detail", "/topic/posts/{postId}/detail/" })
+    public PostSearchResponseDTO likePost(@RequestBody LikeRequestDTO likeRequestDTO, @DestinationVariable("postId") String postId) {
+        postService.likePost(likeRequestDTO);
+        PostGetRequestDTO postGetRequestDTO = new PostGetRequestDTO();
+        postGetRequestDTO.setPostId(Long.valueOf(postId));
+        return postService.findById(postGetRequestDTO);
     }
 
     @MessageMapping({ "/posts/group/{code}/unsave", "/posts/group/{code}/unsave/" })

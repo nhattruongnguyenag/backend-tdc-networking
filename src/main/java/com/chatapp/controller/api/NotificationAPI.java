@@ -14,12 +14,7 @@ import com.chatapp.dto.request.notification.NotificationChangeStatusRequestDTO;
 import com.chatapp.dto.request.notification.NotificationDeleteRequestDTO;
 import com.chatapp.dto.request.notification.NotificationSaveRequestDTO;
 import com.chatapp.dto.response.notification.NotificationResponseDTO;
-import com.chatapp.entity.OptionUserEntity;
-import com.chatapp.entity.UserEntity;
-import com.chatapp.enums.Option;
 import com.chatapp.repository.NotificationRepository;
-import com.chatapp.repository.OptionUserRepository;
-import com.chatapp.repository.UserRepository;
 import com.chatapp.service.NotificationService;
 
 @RestController
@@ -31,22 +26,9 @@ public class NotificationAPI {
         @Autowired
         private NotificationRepository notificationRepository;
 
-        @Autowired
-        private OptionUserRepository optionUserRepository;
-
-        @Autowired
-        private UserRepository userRepository;
-
         // test
         @GetMapping({ "delete/no" })
         public void testde() {
-                // for (UserEntity userEntity : userRepository.findAll()) {
-                //         OptionUserEntity optionUserEntity = new OptionUserEntity();
-                //         optionUserEntity.setUser(userEntity);
-                //         optionUserEntity.setOptionKey(Option.LANGUAGE.getValue());
-                //         optionUserEntity.setValue("vi");
-                //         optionUserRepository.save(optionUserEntity);
-                // }
                 notificationRepository.deleteAll();
         }
 
@@ -76,6 +58,14 @@ public class NotificationAPI {
                         @RequestBody NotificationByUserRequestDTO notificationByUserRequestDTO) {
                 ResponseData<List<NotificationResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",
                                 notificationService.findById(notificationByUserRequestDTO));
+                return ResponseEntity.ok(responseData);
+        }
+
+        @PostMapping({ "notifications/user/count", "notifications/user/count/" })
+        public ResponseEntity<ResponseData<Integer>> findCountByUserId(
+                        @RequestBody NotificationByUserRequestDTO notificationByUserRequestDTO) {
+                ResponseData<Integer> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",
+                                notificationService.getCountNotification(notificationByUserRequestDTO));
                 return ResponseEntity.ok(responseData);
         }
 
