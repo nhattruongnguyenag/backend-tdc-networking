@@ -49,7 +49,7 @@ public class NotificationServiceImpl implements NotificationService {
         }
         return notificationResponseConverter
                 .toDTOGroup(
-                        notificationRepository.findByUser_IdAndStatusOrderByUpdatedAtDesc(notificationByUserRequestDTO.getId(),Long.valueOf(0)));
+                        notificationRepository.findByUser_IdOrderByUpdatedAtDesc(notificationByUserRequestDTO.getId()));
     }
 
     @Override
@@ -133,6 +133,6 @@ public class NotificationServiceImpl implements NotificationService {
         if (userRepository.findOneById(notificationByUserRequestDTO.getId()) == null) {
             throw new DuplicateUsernameException("user_not_exists");
         }
-        return notificationRepository.findByUser_IdOrderByUpdatedAtDesc(notificationByUserRequestDTO.getId()).size();
+        return notificationRepository.findByUser_IdAndStatusOrderByUpdatedAtDesc(notificationByUserRequestDTO.getId(),Long.valueOf(0)).size();
     }
 }
