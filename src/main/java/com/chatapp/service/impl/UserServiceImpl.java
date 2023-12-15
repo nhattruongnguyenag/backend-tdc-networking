@@ -1,5 +1,6 @@
 package com.chatapp.service.impl;
 
+import com.chatapp.constant.EmailTextConstant;
 import com.chatapp.constant.SystemConstant;
 import com.chatapp.converter.request.user.UserRequestConverter;
 import com.chatapp.converter.request.user.business.BusinessInfoRegisterRequestConverter;
@@ -57,6 +58,7 @@ import com.chatapp.repository.BusinessInfoRepository;
 import com.chatapp.repository.FacultyInfoRepository;
 import com.chatapp.repository.FollowReposittory;
 import com.chatapp.repository.GroupRepository;
+import com.chatapp.repository.OptionUserRepository;
 import com.chatapp.repository.RoleRepository;
 import com.chatapp.repository.StudentInfoRepository;
 import com.chatapp.repository.TokenRepository;
@@ -110,6 +112,8 @@ public class UserServiceImpl implements UserService {
     private GroupRepository groupRepository;
     @Autowired
     private TokenRepository tokenRepository;
+    @Autowired
+    OptionUserRepository optionUserRepository;
 
     @Autowired
     private UserInfoResponseConverter userInfoResponseConverter;
@@ -767,10 +771,21 @@ public class UserServiceImpl implements UserService {
         tokenResetPasswordEntity.setToken(token);
         tokenResetPasswordEntity.setStatus(Long.valueOf(1));
         tokenRepository.save(tokenResetPasswordEntity);
-
         String urlResetPassword = SystemConstant.RESET_PASSWORD_URL + token;
-        emailService.sendEmail(emailRequestDTO.getTo(), emailRequestDTO.getSubject(),
-                SystemConstant.EMAIL_RESET_TEXT(urlResetPassword, emailRequestDTO.getTo()));
+
+        if (optionUserRepository.findOneByUser_IdAndOptionKey(userEntity.getId(), "language").getValue()
+                .equalsIgnoreCase("vn")) {
+            emailService.sendEmail(emailRequestDTO.getTo(), emailRequestDTO.getSubject(),
+                    EmailTextConstant.EMAIL_RESET_TEXT_VN(urlResetPassword, emailRequestDTO.getTo()));
+        } else if (optionUserRepository.findOneByUser_IdAndOptionKey(userEntity.getId(), "language").getValue()
+                .equalsIgnoreCase("en")) {
+            emailService.sendEmail(emailRequestDTO.getTo(), emailRequestDTO.getSubject(),
+                    EmailTextConstant.EMAIL_RESET_TEXT_EN(urlResetPassword, emailRequestDTO.getTo()));
+        }else if (optionUserRepository.findOneByUser_IdAndOptionKey(userEntity.getId(), "language").getValue()
+                .equalsIgnoreCase("ja")){
+            emailService.sendEmail(emailRequestDTO.getTo(), emailRequestDTO.getSubject(),
+                    EmailTextConstant.EMAIL_RESET_TEXT_JP(urlResetPassword, emailRequestDTO.getTo()));
+        }
         return "";
     }
 
@@ -863,7 +878,7 @@ public class UserServiceImpl implements UserService {
 
         String url = SystemConstant.AUTHEN_REGISTER__URL + token;
         emailService.sendEmail(emailRequestDTO.getTo(), emailRequestDTO.getSubject(),
-                SystemConstant.EMAIL_AUTHEN_REGISTER_TEXT(url, emailRequestDTO.getTo()));
+                EmailTextConstant.EMAIL_AUTHEN_REGISTER_TEXT(url, emailRequestDTO.getTo()));
         return "";
     }
 
