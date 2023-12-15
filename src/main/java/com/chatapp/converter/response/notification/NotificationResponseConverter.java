@@ -52,27 +52,41 @@ public class NotificationResponseConverter extends BaseConverter<NotificationEnt
     @Override
     public NotificationResponseDTO toDTO(NotificationEntity entity) {
         NotificationResponseDTO notificationResponseDTO = super.toDTO(entity);
-        // if (entity.getUserInteracted() != null) {
-        //     notificationResponseDTO.setUserInteracted(
-        //             userInfoResponseConverter.toDTO(userRepository.findOneById(entity.getUserInteracted())));
-        // }
+        if (entity.getUserInteracted() != null) {
+            notificationResponseDTO.setUserInteracted(
+                    userInfoResponseConverter.toDTO(userRepository.findOneById(entity.getUserInteracted())));
+        }
         if (entity.getData() != null && !entity.getData().equals("")) {
             String id = entity.getData().split(":")[1];
             if (entity.getType().equals(Notification.USER_APPLY_JOB.getValue())) {
-                JobProfileEntity jobProfileEntity = jobProfileRepository.findOneById(Long.valueOf(id));
-                JobProfileManageResponseDTO jobProfileManageResponseDTO = jobProfilePendingResponseConverter
-                        .toDTO(jobProfileEntity);
-                notificationResponseDTO.setDataValue(jobProfileManageResponseDTO);
+                if (jobProfileRepository.findOneById(Long.valueOf(id)) != null) {
+                    JobProfileEntity jobProfileEntity = jobProfileRepository.findOneById(Long.valueOf(id));
+                    JobProfileManageResponseDTO jobProfileManageResponseDTO = jobProfilePendingResponseConverter
+                            .toDTO(jobProfileEntity);
+                    notificationResponseDTO.setDataValue(jobProfileManageResponseDTO);
+                } else {
+                    notificationResponseDTO.setDataValue(null);
+                }
             } else if (entity.getType().equals(Notification.POST_LOG.getValue())) {
-                PostApprovalLogEntity postApprovalLogEntity = postApprovalLogRepository
-                        .findOneByPost_Id(Long.valueOf(id));
-                PostRejectLogDTO postRejectLogDTO = postRejectLogConverter.toDTO(postApprovalLogEntity);
-                notificationResponseDTO.setDataValue(postRejectLogDTO);
+                if (postApprovalLogRepository
+                        .findOneByPost_Id(Long.valueOf(id)) != null) {
+                    PostApprovalLogEntity postApprovalLogEntity = postApprovalLogRepository
+                            .findOneByPost_Id(Long.valueOf(id));
+                    PostRejectLogDTO postRejectLogDTO = postRejectLogConverter.toDTO(postApprovalLogEntity);
+                    notificationResponseDTO.setDataValue(postRejectLogDTO);
+                } else {
+                    notificationResponseDTO.setDataValue(null);
+                }
+
             } else {
-                PostEntity postEntity = postRepository.findOneById(Long.valueOf(id));
-                postEntity.setUserLogin(entity.getUser().getId());
-                PostSearchResponseDTO postSearchResponseDTO = postSearchResponseConverter.toDTO(postEntity);
-                notificationResponseDTO.setDataValue(postSearchResponseDTO);
+                if (postRepository.findOneById(Long.valueOf(id)) != null) {
+                    PostEntity postEntity = postRepository.findOneById(Long.valueOf(id));
+                    postEntity.setUserLogin(entity.getUser().getId());
+                    PostSearchResponseDTO postSearchResponseDTO = postSearchResponseConverter.toDTO(postEntity);
+                    notificationResponseDTO.setDataValue(postSearchResponseDTO);
+                } else {
+                    notificationResponseDTO.setDataValue(null);
+                }
             }
         }
         return notificationResponseDTO;
