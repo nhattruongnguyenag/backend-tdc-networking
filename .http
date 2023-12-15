@@ -219,7 +219,7 @@ POST http://69.197.134.101:8080/api/notifications/user HTTP/1.1
 Content-Type: application/json
 
 {
-    "id": 12
+    "id": 13
 }
 
 
@@ -306,7 +306,7 @@ POST http://69.197.134.101:8080/api/find/user HTTP/1.1
 Content-Type: application/json
 
 {
-    "userId":12,
+    "userId":13,
     "type":"khoa",
     "name":"Cong"
 }
@@ -327,7 +327,7 @@ Content-Type: application/json
 
 {
     "userFollowId":13,
-    "userId":2
+    "userId":10
 }
 
 ###
@@ -654,7 +654,7 @@ Content-Type: application/json
 
 
 ###
-GET http://localhost:8080/api/posts/search?ownerFaculty=khoa_cong_nghe_thong_tin&status=0&group=group_tdc&userLogin=2
+GET http://69.197.134.101:8080/api/posts/search?active=0&group=group_tdc&userLogin=2
 
 ###
 DELETE http://127.0.0.1:8080/api/approval/post/log/delete/3 HTTP/1.1
@@ -741,12 +741,13 @@ Content-Type: application/json
   ]
 }
 
-POST http://localhost:8080/api/approval/post/log
+###
+POST http://69.197.134.101:8080/api/approval/post/log
 Content-Type: application/json
 
 {
-    "postId": 1,
-    "content": "1111111111111"
+    "postId": 20,
+    "content": "bai viet 18+"
 }
 
 ###
