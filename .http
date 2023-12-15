@@ -246,7 +246,7 @@ DELETE http://69.197.134.101:8080/api/notifications HTTP/1.1
 Content-Type: application/json
 
 {
-    "id":303,
+    "id":311,
     "userId":13
 }
 
@@ -489,7 +489,7 @@ Content-Type: application/json
 
 {
     "userId": 13,
-    "postId": 21
+    "postId": 35
 }
 
 ###

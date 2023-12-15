@@ -1026,11 +1026,12 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostSearchResponseDTO findById(PostGetRequestDTO requestDTO) {
+    public PostSearchResponseDTO findById(PostGetRequestDTO requestDTO, Long userLogin) {
         if (postRepository.findOneById(requestDTO.getPostId()) == null) {
             throw new DuplicateUsernameException("this_post_is_not_exists");
         }
         PostEntity postEntity = postRepository.findOneById(requestDTO.getPostId());
+        postEntity.setUserLogin(userLogin);
         return postSearchResponseConverter.toDTO(postEntity);
     }
 }

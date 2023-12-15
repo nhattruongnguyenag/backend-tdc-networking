@@ -54,24 +54,24 @@ public class PostSocketController {
     @SendTo({ "/topic/posts/{postId}/detail", "/topic/posts/{postId}/detail/" })
     public PostSearchResponseDTO savePost(@DestinationVariable("postId") String postId,
             @RequestBody UserSavePostRequestDTO userSavePostRequestDTO) {
-        if (userSavePostRequestDTO.getPostId() != null && userSavePostRequestDTO.getUserId() != null) {
+        if (userSavePostRequestDTO.getPostId() != null) {
             postService.userSavePost(userSavePostRequestDTO);
         }
         PostGetRequestDTO postGetRequestDTO = new PostGetRequestDTO();
         postGetRequestDTO.setPostId(Long.valueOf(postId));
-        return postService.findById(postGetRequestDTO);
+        return postService.findById(postGetRequestDTO,userSavePostRequestDTO.getUserId());
     }
 
     @MessageMapping({ "/posts/{postId}/detail/like", "/posts/{postId}/detail/like/" })
     @SendTo({ "/topic/posts/{postId}/detail", "/topic/posts/{postId}/detail/" })
     public PostSearchResponseDTO likePost(@DestinationVariable("postId") String postId,
             @RequestBody LikeRequestDTO likeRequestDTO) {
-        if (likeRequestDTO.getPostId() != null && likeRequestDTO.getUserId() != null) {
+        if (likeRequestDTO.getPostId() != null) {
             postService.likePost(likeRequestDTO);
         }
         PostGetRequestDTO postGetRequestDTO = new PostGetRequestDTO();
         postGetRequestDTO.setPostId(Long.valueOf(postId));
-        return postService.findById(postGetRequestDTO);
+        return postService.findById(postGetRequestDTO,likeRequestDTO.getUserId());
     }
 
     @MessageMapping({ "/posts/group/{code}/unsave", "/posts/group/{code}/unsave/" })

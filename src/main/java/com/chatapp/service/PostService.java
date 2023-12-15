@@ -35,7 +35,7 @@ public interface PostService {
     boolean updateSurvey(SurveyDTO surveyDTO);
     List<PostSearchResponseDTO> findPosts(PostSearchRequestDTO requestDTO);
     List<BaseDTO> findAll();
-    PostSearchResponseDTO findById(PostGetRequestDTO requestDTO);
+    PostSearchResponseDTO findById(PostGetRequestDTO requestDTO, Long userLogin);
 
     List<BaseDTO> findAllByUserId(Long id);
 
