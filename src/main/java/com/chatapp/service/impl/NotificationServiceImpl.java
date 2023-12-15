@@ -47,7 +47,8 @@ public class NotificationServiceImpl implements NotificationService {
         if (userRepository.findOneById(notificationByUserRequestDTO.getId()) == null) {
             throw new DuplicateUsernameException("user_not_exists");
         }
-        return null;
+        return notificationResponseConverter
+                .toDTOGroup(notificationRepository.findByUser_IdOrderByUpdatedAtDesc(notificationByUserRequestDTO.getId()));
     }
 
     @Override

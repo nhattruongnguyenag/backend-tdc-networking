@@ -52,10 +52,10 @@ public class NotificationResponseConverter extends BaseConverter<NotificationEnt
     @Override
     public NotificationResponseDTO toDTO(NotificationEntity entity) {
         NotificationResponseDTO notificationResponseDTO = super.toDTO(entity);
-        if (entity.getUserInteracted() != null) {
-            notificationResponseDTO.setUserInteracted(
-                    userInfoResponseConverter.toDTO(userRepository.findOneById(entity.getUserInteracted())));
-        }
+        // if (entity.getUserInteracted() != null) {
+        //     notificationResponseDTO.setUserInteracted(
+        //             userInfoResponseConverter.toDTO(userRepository.findOneById(entity.getUserInteracted())));
+        // }
         if (entity.getData() != null && !entity.getData().equals("")) {
             String id = entity.getData().split(":")[1];
             if (entity.getType().equals(Notification.USER_APPLY_JOB.getValue())) {

@@ -40,14 +40,14 @@ public class NotificationAPI {
         // test
         @GetMapping({ "delete/no" })
         public void testde() {
-                for (UserEntity userEntity : userRepository.findAll()) {
-                        OptionUserEntity optionUserEntity = new OptionUserEntity();
-                        optionUserEntity.setUser(userEntity);
-                        optionUserEntity.setOptionKey(Option.LANGUAGE.getValue());
-                        optionUserEntity.setValue("vi");
-                        optionUserRepository.save(optionUserEntity);
-                }
-                // notificationRepository.deleteAll();
+                // for (UserEntity userEntity : userRepository.findAll()) {
+                //         OptionUserEntity optionUserEntity = new OptionUserEntity();
+                //         optionUserEntity.setUser(userEntity);
+                //         optionUserEntity.setOptionKey(Option.LANGUAGE.getValue());
+                //         optionUserEntity.setValue("vi");
+                //         optionUserRepository.save(optionUserEntity);
+                // }
+                notificationRepository.deleteAll();
         }
 
         //////////////////
