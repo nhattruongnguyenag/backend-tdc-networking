@@ -49,7 +49,7 @@ public class NotificationServiceImpl implements NotificationService {
         }
         return notificationResponseConverter
                 .toDTOGroup(
-                        notificationRepository.findByUser_IdOrderByUpdatedAtDesc(notificationByUserRequestDTO.getId()));
+                        notificationRepository.findByUser_IdAndStatusOrderByUpdatedAtDesc(notificationByUserRequestDTO.getId(),Long.valueOf(0)));
     }
 
     @Override
