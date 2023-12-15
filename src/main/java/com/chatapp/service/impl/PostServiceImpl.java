@@ -770,6 +770,9 @@ public class PostServiceImpl implements PostService {
         if (userRepository.findOneById(userSavePostRequestDTO.getUserId()) == null) {
             throw new DuplicateUsernameException("user_does_not_exist");
         }
+        if (postRepository.findOneById(userSavePostRequestDTO.getPostId()) == null) {
+            throw new DuplicateUsernameException("post_does_not_exist");
+        }
         UserEntity userEntity = userSavePostRequestConverter.toEntity(userSavePostRequestDTO);
         userRepository.save(userEntity);
         return "";
