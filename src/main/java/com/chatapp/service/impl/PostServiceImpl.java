@@ -772,9 +772,6 @@ public class PostServiceImpl implements PostService {
         }
         UserEntity userEntity = userSavePostRequestConverter.toEntity(userSavePostRequestDTO);
         userRepository.save(userEntity);
-        notificationService.addNotification(Notification.SAVE_POST.getValue(),
-                Notification.SAVE_POST.getValue(), userSavePostRequestDTO.getUserId(),
-                "id:" + userSavePostRequestDTO.getPostId(), null);
         return "";
     }
 
