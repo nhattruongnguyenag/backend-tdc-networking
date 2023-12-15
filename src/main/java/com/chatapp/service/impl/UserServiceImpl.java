@@ -571,8 +571,11 @@ public class UserServiceImpl implements UserService {
         List<UserFindResponseDTO> userFindResponseDTOs = userFindResponseConverter
                 .toDTOGroup(userRepository.findAllByNameContainsAndRoles_Code(userInfoFindRequestDTO.getName(),
                         userInfoFindRequestDTO.getType()));
-        userFindResponseDTOs.remove(
-                userFindResponseConverter.toDTO(userRepository.findOneById(userInfoFindRequestDTO.getUserId())));
+        for (UserFindResponseDTO userFindResponseDTO : userFindResponseDTOs) {
+            if (userFindResponseDTO.getId() == userInfoFindRequestDTO.getUserId()) {
+                userFindResponseDTOs.remove(userFindResponseDTO);
+            }
+        }
         for (UserFindResponseDTO userFindResponseDTO : userFindResponseDTOs) {
             // set follow
             UserEntity entity = userRepository.findOneById(userInfoFindRequestDTO.getUserId());
@@ -781,8 +784,8 @@ public class UserServiceImpl implements UserService {
                 .equalsIgnoreCase("en")) {
             emailService.sendEmail(emailRequestDTO.getTo(), emailRequestDTO.getSubject(),
                     EmailTextConstant.EMAIL_RESET_TEXT_EN(urlResetPassword, emailRequestDTO.getTo()));
-        }else if (optionUserRepository.findOneByUser_IdAndOptionKey(userEntity.getId(), "language").getValue()
-                .equalsIgnoreCase("ja")){
+        } else if (optionUserRepository.findOneByUser_IdAndOptionKey(userEntity.getId(), "language").getValue()
+                .equalsIgnoreCase("ja")) {
             emailService.sendEmail(emailRequestDTO.getTo(), emailRequestDTO.getSubject(),
                     EmailTextConstant.EMAIL_RESET_TEXT_JP(urlResetPassword, emailRequestDTO.getTo()));
         }

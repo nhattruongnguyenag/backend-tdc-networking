@@ -315,8 +315,8 @@ Content-Type: application/json
 
 {
     "userId":13,
-    "type":"khoa",
-    "name":"Cong"
+    "type":"sinh-vien",
+    "name":""
 }
 
 ###
