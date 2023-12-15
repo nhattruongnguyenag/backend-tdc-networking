@@ -574,6 +574,7 @@ public class UserServiceImpl implements UserService {
         for (UserFindResponseDTO userFindResponseDTO : userFindResponseDTOs) {
             if (userFindResponseDTO.getId() == userInfoFindRequestDTO.getUserId()) {
                 userFindResponseDTOs.remove(userFindResponseDTO);
+                break;
             }
         }
         for (UserFindResponseDTO userFindResponseDTO : userFindResponseDTOs) {
