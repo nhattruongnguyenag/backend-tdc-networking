@@ -21,6 +21,7 @@ import com.chatapp.converter.response.user.student.StudentInfoResponseConverter;
 import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.BaseDTO;
 import com.chatapp.dto.request.email.EmailRequestDTO;
+import com.chatapp.dto.request.email.PasswordChangeRequestDTO;
 import com.chatapp.dto.request.email.PasswordResetRequestDTO;
 import com.chatapp.dto.request.token.TokenRequestDTO;
 import com.chatapp.dto.request.user.UserFindRequestDTO;
@@ -906,5 +907,17 @@ public class UserServiceImpl implements UserService {
         } else {
             throw new DuplicateUsernameException("token_has_not_exist");
         }
+    }
+
+    @Override
+    public String changePassword(PasswordChangeRequestDTO passwordChangeRequestDTO) {
+        if (userRepository.findOneById(passwordChangeRequestDTO.getUserId()) == null) {
+            throw new DuplicateUsernameException("this_user_has_not_exist");
+        }
+        UserEntity userEntity = userRepository.findOneById(passwordChangeRequestDTO.getUserId());
+        String password = passwordEncoder.encode(passwordChangeRequestDTO.getPassword());
+        userEntity.setPassword(password);
+        userRepository.save(userEntity);
+        return "";
     }
 }

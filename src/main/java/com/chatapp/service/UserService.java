@@ -3,6 +3,7 @@ package com.chatapp.service;
 import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.BaseDTO;
 import com.chatapp.dto.request.email.EmailRequestDTO;
+import com.chatapp.dto.request.email.PasswordChangeRequestDTO;
 import com.chatapp.dto.request.email.PasswordResetRequestDTO;
 import com.chatapp.dto.request.token.TokenRequestDTO;
 import com.chatapp.dto.request.user.UserFindRequestDTO;
@@ -94,4 +95,5 @@ public interface UserService {
 
     String sendEmailAuthenticationRegister(EmailRequestDTO emailRequestDTO) throws MessagingException, UnsupportedEncodingException;
     String authenRegister(TokenRequestDTO tokenRequestDTO) throws Exception;
+    String changePassword(PasswordChangeRequestDTO passwordChangeRequestDTO);
 }

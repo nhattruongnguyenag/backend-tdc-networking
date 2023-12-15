@@ -5,6 +5,7 @@ import com.chatapp.commond.ResponseData;
 import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.BaseDTO;
 import com.chatapp.dto.request.email.EmailRequestDTO;
+import com.chatapp.dto.request.email.PasswordChangeRequestDTO;
 import com.chatapp.dto.request.email.PasswordResetRequestDTO;
 import com.chatapp.dto.request.token.TokenRequestDTO;
 import com.chatapp.dto.request.user.UserGetRequestDTO;
@@ -125,6 +126,12 @@ public class UserAPI {
     @PostMapping({ "users/reset/password", "users/reset/password/" })
     public ResponseEntity<ResponseData<String>> resetPassword(@RequestBody PasswordResetRequestDTO request) throws Exception{
         ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK,"success",userService.resetPassword(request));
+        return ResponseEntity.ok(responseData);
+    }
+
+    @PostMapping({ "users/change/password", "users/change/password/" })
+    public ResponseEntity<ResponseData<String>> changePassword(@RequestBody PasswordChangeRequestDTO request) throws Exception{
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK,"success",userService.changePassword(request));
         return ResponseEntity.ok(responseData);
     }
 
