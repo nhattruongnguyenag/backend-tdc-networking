@@ -44,11 +44,13 @@ import com.chatapp.dto.response.user.follow.UserFollowResponseDTO;
 import com.chatapp.dto.response.user.student.StudentInfoResponseDTO;
 import com.chatapp.entity.FollowEntity;
 import com.chatapp.entity.GroupEntity;
+import com.chatapp.entity.OptionUserEntity;
 import com.chatapp.entity.RoleEntity;
 import com.chatapp.entity.TokenResetPasswordEntity;
 import com.chatapp.entity.UserEntity;
 import com.chatapp.enums.GroupDefault;
 import com.chatapp.enums.Notification;
+import com.chatapp.enums.Option;
 import com.chatapp.enums.Role;
 import com.chatapp.exception.DuplicateUsernameException;
 import com.chatapp.repository.BusinessInfoRepository;
@@ -322,6 +324,13 @@ public class UserServiceImpl implements UserService {
         userEntity = studentInfoRegisterRequestConverter.toEntity(studentRegisterDTO);
         setGroupToStudent(userEntity);
         userEntity.setRoles(roles);
+        List<OptionUserEntity> options = new ArrayList<OptionUserEntity>();
+        OptionUserEntity optionUserEntity = new OptionUserEntity();
+        optionUserEntity.setUser(userEntity);
+        optionUserEntity.setOptionKey(Option.LANGUAGE.getValue());
+        optionUserEntity.setValue("vi");
+        options.add(optionUserEntity);
+        userEntity.setOptions(options);
         userRepository.save(userEntity);
 
         // final Authentication authentication = authenticationManager.authenticate(
@@ -338,7 +347,7 @@ public class UserServiceImpl implements UserService {
         sendEmailAuthenticationRegister(emailRequestDTO);
         notificationService.addNotification(Notification.REGISTER_SUCCESS.getValue(),
                 Notification.REGISTER_SUCCESS.getValue(), userEntity.getId(),
-                "",null);
+                "", null);
         return new AuthTokenDTO(token);
     }
 
@@ -352,7 +361,7 @@ public class UserServiceImpl implements UserService {
         userEntity = studentInfoUpdateOrSaveRequestConverter.toUpdateEntity(studentInfoUpdateOrSaveRequestDTO);
         notificationService.addNotification(Notification.USER_UPDATE.getValue(),
                 Notification.USER_UPDATE.getValue(), userEntity.getId(),
-                "",null);
+                "", null);
         return userEntity;
     }
 
@@ -432,7 +441,7 @@ public class UserServiceImpl implements UserService {
         userEntity = facultyInfoUpdateOrSaveRequestConverter.toUpdateEntity(facultyInfoUpdateOrSaveRequestDTO);
         notificationService.addNotification(Notification.USER_UPDATE.getValue(),
                 Notification.USER_UPDATE.getValue(), userEntity.getId(),
-                "",null);
+                "", null);
         return userEntity;
     }
 
@@ -493,6 +502,13 @@ public class UserServiceImpl implements UserService {
         userEntity.setRoles(roles);
         userEntity.setStatus((byte) 0);
         userEntity.setActive((byte) 0);
+        List<OptionUserEntity> options = new ArrayList<OptionUserEntity>();
+        OptionUserEntity optionUserEntity = new OptionUserEntity();
+        optionUserEntity.setUser(userEntity);
+        optionUserEntity.setOptionKey(Option.LANGUAGE.getValue());
+        optionUserEntity.setValue("vi");
+        options.add(optionUserEntity);
+        userEntity.setOptions(options);
         userRepository.save(userEntity);
 
         final String token = tokenProvider.generateToken(businessInfoRegisterRequestDTO.getEmail());
@@ -503,7 +519,7 @@ public class UserServiceImpl implements UserService {
         sendEmailAuthenticationRegister(emailRequestDTO);
         notificationService.addNotification(Notification.REGISTER_SUCCESS.getValue(),
                 Notification.REGISTER_SUCCESS.getValue(), userEntity.getId(),
-                "",null);
+                "", null);
         return new AuthTokenDTO(token);
     }
 
@@ -512,7 +528,7 @@ public class UserServiceImpl implements UserService {
         userEntity = businessInfoUpdateOrSaveRequestConverter.toUpdateEntity(businessInfoUpdateOrSaveRequestDTO);
         notificationService.addNotification(Notification.USER_UPDATE.getValue(),
                 Notification.USER_UPDATE.getValue(), userEntity.getId(),
-                "",null);
+                "", null);
         return userEntity;
     }
 
@@ -590,7 +606,7 @@ public class UserServiceImpl implements UserService {
         }
         notificationService.addNotification(Notification.USER_FOLLOW.getValue(),
                 Notification.USER_FOLLOW.getValue(), userFollowRequestDTO.getUserFollowId(),
-                "",userFollowRequestDTO.getUserId());
+                "", userFollowRequestDTO.getUserId());
         return "";
     }
 
@@ -826,8 +842,8 @@ public class UserServiceImpl implements UserService {
             entity.setBackground(userImageUpdateRequestDTO.getBackground());
         }
         notificationService.addNotification(Notification.USER_UPDATE_AVATAR.getValue(),
-                        Notification.USER_UPDATE_AVATAR.getValue(), entity.getId(),
-                        "",null);
+                Notification.USER_UPDATE_AVATAR.getValue(), entity.getId(),
+                "", null);
         userRepository.save(entity);
         return "";
     }

@@ -444,13 +444,6 @@ public class PostServiceImpl implements PostService {
         }
         postEntity.setStatus((byte) 0);
         postRepository.save(postEntity);
-        if (postEntity.getUser().getBusinessesInfos() != null) {
-            for (StudentInfoEntity studentInfoEntity : studentInfoRepository.findAll()) {
-                notificationService.addNotification(Notification.CREATE_SURVEY.getValue(),
-                        Notification.CREATE_SURVEY.getValue(), studentInfoEntity.getUser().getId(),
-                        "id:" + postEntity.getId(), saveRequestDTO.getUserId());
-            }
-        }
         return "";
     }
 
@@ -484,21 +477,19 @@ public class PostServiceImpl implements PostService {
         if (postRepository.findById(commentSaveRequestDTO.getPostId()) == null) {
             throw new DuplicateUsernameException("post_is_not_exist");
         }
-        if (postCommentRepository.findById(commentSaveRequestDTO.getParentCommentId()) == null) {
-            throw new DuplicateUsernameException("comment_is_not_exist");
-        }
         PostCommentEntity entity = commentSaveRequestConverter.toEntity(commentSaveRequestDTO);
-        postCommentRepository.save(entity);
-        if (entity.getParentComment() != null) {
-            notificationService.addNotification(Notification.USER_REPLY_COMMENT_POST.getValue(),
-                    Notification.USER_REPLY_COMMENT_POST.getValue(), entity.getParentComment().getUser().getId(),
-                    "id:" + entity.getPost().getId(), commentSaveRequestDTO.getParentCommentId());
-        }
         if (commentSaveRequestDTO.getUserId() != entity.getPost().getUser().getId()) {
-            notificationService.addNotification(Notification.USER_LIKE_POST.getValue(),
-                    Notification.USER_LIKE_POST.getValue(), entity.getPost().getUser().getId(),
-                    "id:" + entity.getPost().getId(), commentSaveRequestDTO.getUserId());
+            if (commentSaveRequestDTO.getParentCommentId() == 0) {
+                notificationService.addNotification(Notification.USER_COMMENT_POST.getValue(),
+                        Notification.USER_COMMENT_POST.getValue(), entity.getPost().getUser().getId(),
+                        "id:" + entity.getPost().getId(), commentSaveRequestDTO.getUserId());
+            } else {
+                notificationService.addNotification(Notification.USER_REPLY_COMMENT_POST.getValue(),
+                        Notification.USER_REPLY_COMMENT_POST.getValue(), entity.getParentComment().getUser().getId(),
+                        "id:" + entity.getPost().getId(), commentSaveRequestDTO.getUserId());
+            }
         }
+        postCommentRepository.save(entity);
         return "";
     }
 
@@ -779,11 +770,11 @@ public class PostServiceImpl implements PostService {
         if (userRepository.findOneById(userSavePostRequestDTO.getUserId()) == null) {
             throw new DuplicateUsernameException("user_does_not_exist");
         }
+        if (postRepository.findOneById(userSavePostRequestDTO.getPostId()) == null) {
+            throw new DuplicateUsernameException("post_does_not_exist");
+        }
         UserEntity userEntity = userSavePostRequestConverter.toEntity(userSavePostRequestDTO);
         userRepository.save(userEntity);
-        notificationService.addNotification(Notification.SAVE_POST.getValue(),
-                Notification.SAVE_POST.getValue(), userSavePostRequestDTO.getUserId(),
-                "id:" + userSavePostRequestDTO.getPostId(), null);
         return "";
     }
 
@@ -973,8 +964,15 @@ public class PostServiceImpl implements PostService {
         PostEntity entity = postRepository.findOneById(postId);
         entity.setActive((byte) 1);
         postRepository.save(entity);
-        notificationService.addNotification(Notification.POST_LOG.getValue(),
-                Notification.POST_LOG.getValue(), entity.getUser().getId(),
+        if (entity.getUser().getBusinessesInfos() != null && entity.getSurveyPost() != null) {
+            for (StudentInfoEntity studentInfoEntity : studentInfoRepository.findAll()) {
+                notificationService.addNotification(Notification.CREATE_SURVEY.getValue(),
+                        Notification.CREATE_SURVEY.getValue(), studentInfoEntity.getUser().getId(),
+                        "id:" + entity.getId(), entity.getUser().getId());
+            }
+        }
+        notificationService.addNotification(Notification.ACCEPT_POST.getValue(),
+                Notification.ACCEPT_POST.getValue(), entity.getUser().getId(),
                 "id:" + postId, null);
         return "";
     }

@@ -14,96 +14,114 @@ import com.chatapp.dto.request.notification.NotificationChangeStatusRequestDTO;
 import com.chatapp.dto.request.notification.NotificationDeleteRequestDTO;
 import com.chatapp.dto.request.notification.NotificationSaveRequestDTO;
 import com.chatapp.dto.response.notification.NotificationResponseDTO;
+import com.chatapp.entity.OptionUserEntity;
+import com.chatapp.entity.UserEntity;
+import com.chatapp.enums.Option;
 import com.chatapp.repository.NotificationRepository;
+import com.chatapp.repository.OptionUserRepository;
+import com.chatapp.repository.UserRepository;
 import com.chatapp.service.NotificationService;
 
 @RestController
 @RequestMapping("/api")
 public class NotificationAPI {
-    @Autowired
-    private NotificationService notificationService;
+        @Autowired
+        private NotificationService notificationService;
 
-    @Autowired
-    private NotificationRepository notificationRepository;
+        @Autowired
+        private NotificationRepository notificationRepository;
 
-    // test
-    @GetMapping({ "delete/no"})
-    public void testde() {
-        notificationRepository.deleteAll();
-    }
+        @Autowired
+        private OptionUserRepository optionUserRepository;
 
-    //////////////////
-    // Get
-    //////////////////
-    @GetMapping({ "notifications", "notifications/" })
-    public ResponseEntity<ResponseData<List<NotificationResponseDTO>>> findAll() {
-        ResponseData<List<NotificationResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",
-                notificationService.findAll());
-        return ResponseEntity.ok(responseData);
-    }
+        @Autowired
+        private UserRepository userRepository;
 
-    @GetMapping({ "notifications/find", "notifications/find/" })
-    public ResponseEntity<ResponseData<List<NotificationResponseDTO>>> findByContent(
-            @RequestParam(value = "content") String content) {
-        ResponseData<List<NotificationResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",
-                notificationService.findByContent(content));
-        return ResponseEntity.ok(responseData);
-    }
+        // test
+        @GetMapping({ "delete/no" })
+        public void testde() {
+                // for (UserEntity userEntity : userRepository.findAll()) {
+                //         OptionUserEntity optionUserEntity = new OptionUserEntity();
+                //         optionUserEntity.setUser(userEntity);
+                //         optionUserEntity.setOptionKey(Option.LANGUAGE.getValue());
+                //         optionUserEntity.setValue("vi");
+                //         optionUserRepository.save(optionUserEntity);
+                // }
+                notificationRepository.deleteAll();
+        }
 
-    //////////////////
-    // Post
-    //////////////////
-    @PostMapping({ "notifications/user", "notifications/user/" })
-    public ResponseEntity<ResponseData<List<NotificationResponseDTO>>> findByUserId(
-            @RequestBody NotificationByUserRequestDTO notificationByUserRequestDTO) {
-        ResponseData<List<NotificationResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",
-                notificationService.findById(notificationByUserRequestDTO));
-        return ResponseEntity.ok(responseData);
-    }
+        //////////////////
+        // Get
+        //////////////////
+        @GetMapping({ "notifications", "notifications/" })
+        public ResponseEntity<ResponseData<List<NotificationResponseDTO>>> findAll() {
+                ResponseData<List<NotificationResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",
+                                notificationService.findAll());
+                return ResponseEntity.ok(responseData);
+        }
 
-    @PostMapping({ "notifications", "notifications/" })
-    ResponseEntity<ResponseData<NotificationResponseDTO>> updateOrSave(
-            @RequestBody NotificationSaveRequestDTO notificationSaveRequestDTO) {
-        ResponseData<NotificationResponseDTO> responseData = new ResponseData<>(HttpStatus.CREATED, "success",
-                notificationService.save(notificationSaveRequestDTO));
-        return ResponseEntity.created(null).body(responseData);
-    }
+        @GetMapping({ "notifications/find", "notifications/find/" })
+        public ResponseEntity<ResponseData<List<NotificationResponseDTO>>> findByContent(
+                        @RequestParam(value = "content") String content) {
+                ResponseData<List<NotificationResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",
+                                notificationService.findByContent(content));
+                return ResponseEntity.ok(responseData);
+        }
 
-    //////////////////
-    // Delete
-    //////////////////
-    @DeleteMapping({ "notifications", "notifications/" })
-    ResponseEntity<ResponseData<String>> delete(
-            @RequestBody NotificationDeleteRequestDTO notificationDeleteRequestDTO) {
-        ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED, "success",
-                notificationService.delete(notificationDeleteRequestDTO));
-        return ResponseEntity.ok(responseData);
-    }
+        //////////////////
+        // Post
+        //////////////////
+        @PostMapping({ "notifications/user", "notifications/user/" })
+        public ResponseEntity<ResponseData<List<NotificationResponseDTO>>> findByUserId(
+                        @RequestBody NotificationByUserRequestDTO notificationByUserRequestDTO) {
+                ResponseData<List<NotificationResponseDTO>> responseData = new ResponseData<>(HttpStatus.OK, "sucesss",
+                                notificationService.findById(notificationByUserRequestDTO));
+                return ResponseEntity.ok(responseData);
+        }
 
-    //////////////////
-    // Put
-    //////////////////
-    @PutMapping({ "notifications/changeStatus", "notifications/changeStatus/" })
-    ResponseEntity<ResponseData<NotificationResponseDTO>> changeStatus(
-            @RequestBody NotificationChangeStatusRequestDTO notificationChangeStatusRequestDTO) {
-        ResponseData<NotificationResponseDTO> responseData = new ResponseData<>(HttpStatus.OK, "success",
-                notificationService.changeStatus(notificationChangeStatusRequestDTO));
-        return ResponseEntity.ok(responseData);
-    }
+        @PostMapping({ "notifications", "notifications/" })
+        ResponseEntity<ResponseData<NotificationResponseDTO>> updateOrSave(
+                        @RequestBody NotificationSaveRequestDTO notificationSaveRequestDTO) {
+                ResponseData<NotificationResponseDTO> responseData = new ResponseData<>(HttpStatus.CREATED, "success",
+                                notificationService.save(notificationSaveRequestDTO));
+                return ResponseEntity.created(null).body(responseData);
+        }
 
-    @PutMapping({ "notifications/changeStatus/makeNotSeen", "notifications/changeStatus/makeNotSeen/" })
-    ResponseEntity<ResponseData<NotificationResponseDTO>> makeNotSeen(
-            @RequestBody NotificationChangeStatusRequestDTO notificationChangeStatusRequestDTO) {
-        ResponseData<NotificationResponseDTO> responseData = new ResponseData<>(HttpStatus.OK, "success",
-                notificationService.makeNotSeen(notificationChangeStatusRequestDTO));
-        return ResponseEntity.ok(responseData);
-    }
+        //////////////////
+        // Delete
+        //////////////////
+        @DeleteMapping({ "notifications", "notifications/" })
+        ResponseEntity<ResponseData<String>> delete(
+                        @RequestBody NotificationDeleteRequestDTO notificationDeleteRequestDTO) {
+                ResponseData<String> responseData = new ResponseData<>(HttpStatus.CREATED, "success",
+                                notificationService.delete(notificationDeleteRequestDTO));
+                return ResponseEntity.ok(responseData);
+        }
 
-    @PutMapping({ "notifications/changeStatus/all", "notifications/changeStatus/all/" })
-    ResponseEntity<ResponseData<String>> changeStatusAll(
-            @RequestBody NotificationChangeAllStatusByUserIdRequest notificationChangeAllStatusByUserIdRequest) {
-        ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK, "success",
-                notificationService.changeStatusAll(notificationChangeAllStatusByUserIdRequest));
-        return ResponseEntity.ok(responseData);
-    }
+        //////////////////
+        // Put
+        //////////////////
+        @PutMapping({ "notifications/changeStatus", "notifications/changeStatus/" })
+        ResponseEntity<ResponseData<NotificationResponseDTO>> changeStatus(
+                        @RequestBody NotificationChangeStatusRequestDTO notificationChangeStatusRequestDTO) {
+                ResponseData<NotificationResponseDTO> responseData = new ResponseData<>(HttpStatus.OK, "success",
+                                notificationService.changeStatus(notificationChangeStatusRequestDTO));
+                return ResponseEntity.ok(responseData);
+        }
+
+        @PutMapping({ "notifications/changeStatus/makeNotSeen", "notifications/changeStatus/makeNotSeen/" })
+        ResponseEntity<ResponseData<NotificationResponseDTO>> makeNotSeen(
+                        @RequestBody NotificationChangeStatusRequestDTO notificationChangeStatusRequestDTO) {
+                ResponseData<NotificationResponseDTO> responseData = new ResponseData<>(HttpStatus.OK, "success",
+                                notificationService.makeNotSeen(notificationChangeStatusRequestDTO));
+                return ResponseEntity.ok(responseData);
+        }
+
+        @PutMapping({ "notifications/changeStatus/all", "notifications/changeStatus/all/" })
+        ResponseEntity<ResponseData<String>> changeStatusAll(
+                        @RequestBody NotificationChangeAllStatusByUserIdRequest notificationChangeAllStatusByUserIdRequest) {
+                ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK, "success",
+                                notificationService.changeStatusAll(notificationChangeAllStatusByUserIdRequest));
+                return ResponseEntity.ok(responseData);
+        }
 }

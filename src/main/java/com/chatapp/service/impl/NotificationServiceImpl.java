@@ -48,7 +48,7 @@ public class NotificationServiceImpl implements NotificationService {
             throw new DuplicateUsernameException("user_not_exists");
         }
         return notificationResponseConverter
-                .toDTOGroup(notificationRepository.findByUser_Id(notificationByUserRequestDTO.getId()));
+                .toDTOGroup(notificationRepository.findByUser_IdOrderByUpdatedAtDesc(notificationByUserRequestDTO.getId()));
     }
 
     @Override
@@ -88,7 +88,7 @@ public class NotificationServiceImpl implements NotificationService {
             throw new DuplicateUsernameException("user_not_exists");
         }
         List<NotificationEntity> entities = notificationRepository
-                .findByUser_Id(notificationChangeAllStatusByUserIdRequest.getUserId());
+                .findByUser_IdOrderByUpdatedAtDesc(notificationChangeAllStatusByUserIdRequest.getUserId());
         for (NotificationEntity entity : entities) {
             entity.setStatus((byte) 1);
             notificationRepository.save(entity);
