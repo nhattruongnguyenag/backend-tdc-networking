@@ -611,10 +611,10 @@ public class UserServiceImpl implements UserService {
         } else {
             FollowEntity followEntity = userFollowRequestConverter.toEntity(userFollowRequestDTO);
             followReposittory.save(followEntity);
+            notificationService.addNotification(Notification.USER_FOLLOW.getValue(),
+                    Notification.USER_FOLLOW.getValue(), userFollowRequestDTO.getUserFollowId(),
+                    "", userFollowRequestDTO.getUserId());
         }
-        notificationService.addNotification(Notification.USER_FOLLOW.getValue(),
-                Notification.USER_FOLLOW.getValue(), userFollowRequestDTO.getUserFollowId(),
-                "", userFollowRequestDTO.getUserId());
         return "";
     }
 
