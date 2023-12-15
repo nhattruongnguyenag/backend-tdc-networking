@@ -50,10 +50,10 @@ public class PostSocketController {
         return postService.getPostSaveByUserId(likeRequestDTO.getUserId());
     }
 
-    @MessageMapping({ "/posts/detail/unsave", "/posts/detail/unsave" })
+    @MessageMapping({ "/posts/{postId}/detail/unsave", "/posts/{postId}/detail/unsave" })
     @SendTo({ "/topic/posts/{postId}/detail", "/topic/posts/{postId}/detail/" })
-    public PostSearchResponseDTO savePost(@RequestBody UserSavePostRequestDTO userSavePostRequestDTO,
-            @DestinationVariable("postId") String postId) {
+    public PostSearchResponseDTO savePost(@DestinationVariable("postId") String postId,
+            @RequestBody UserSavePostRequestDTO userSavePostRequestDTO) {
         if (userSavePostRequestDTO.getPostId() != null && userSavePostRequestDTO.getUserId() != null) {
             postService.userSavePost(userSavePostRequestDTO);
         }
@@ -62,10 +62,10 @@ public class PostSocketController {
         return postService.findById(postGetRequestDTO);
     }
 
-    @MessageMapping({ "/posts/detail/like", "/posts/detail/like/" })
+    @MessageMapping({ "/posts/{postId}/detail/like", "/posts/{postId}/detail/like/" })
     @SendTo({ "/topic/posts/{postId}/detail", "/topic/posts/{postId}/detail/" })
-    public PostSearchResponseDTO likePost(@RequestBody LikeRequestDTO likeRequestDTO,
-            @DestinationVariable("postId") String postId) {
+    public PostSearchResponseDTO likePost(@DestinationVariable("postId") String postId,
+            @RequestBody LikeRequestDTO likeRequestDTO) {
         if (likeRequestDTO.getPostId() != null && likeRequestDTO.getUserId() != null) {
             postService.likePost(likeRequestDTO);
         }
