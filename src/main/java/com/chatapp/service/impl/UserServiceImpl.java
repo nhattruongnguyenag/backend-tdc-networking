@@ -778,19 +778,20 @@ public class UserServiceImpl implements UserService {
         tokenRepository.save(tokenResetPasswordEntity);
         String urlResetPassword = SystemConstant.RESET_PASSWORD_URL + token;
 
-        if (optionUserRepository.findOneByUser_IdAndOptionKey(userEntity.getId(), "language").getValue()
-                .equalsIgnoreCase("vn")) {
-            emailService.sendEmail(emailRequestDTO.getTo(), emailRequestDTO.getSubject(),
+        emailService.sendEmail(emailRequestDTO.getTo(), emailRequestDTO.getSubject(),
                     EmailTextConstant.EMAIL_RESET_TEXT_VN(urlResetPassword, emailRequestDTO.getTo()));
-        } else if (optionUserRepository.findOneByUser_IdAndOptionKey(userEntity.getId(), "language").getValue()
-                .equalsIgnoreCase("en")) {
-            emailService.sendEmail(emailRequestDTO.getTo(), emailRequestDTO.getSubject(),
-                    EmailTextConstant.EMAIL_RESET_TEXT_EN(urlResetPassword, emailRequestDTO.getTo()));
-        } else if (optionUserRepository.findOneByUser_IdAndOptionKey(userEntity.getId(), "language").getValue()
-                .equalsIgnoreCase("ja")) {
-            emailService.sendEmail(emailRequestDTO.getTo(), emailRequestDTO.getSubject(),
-                    EmailTextConstant.EMAIL_RESET_TEXT_JP(urlResetPassword, emailRequestDTO.getTo()));
-        }
+        // if (optionUserRepository.findOneByUser_IdAndOptionKey(userEntity.getId(), "language").getValue()
+        //         .equalsIgnoreCase("vn")) {
+            
+        // } else if (optionUserRepository.findOneByUser_IdAndOptionKey(userEntity.getId(), "language").getValue()
+        //         .equalsIgnoreCase("en")) {
+        //     emailService.sendEmail(emailRequestDTO.getTo(), emailRequestDTO.getSubject(),
+        //             EmailTextConstant.EMAIL_RESET_TEXT_EN(urlResetPassword, emailRequestDTO.getTo()));
+        // } else if (optionUserRepository.findOneByUser_IdAndOptionKey(userEntity.getId(), "language").getValue()
+        //         .equalsIgnoreCase("ja")) {
+        //     emailService.sendEmail(emailRequestDTO.getTo(), emailRequestDTO.getSubject(),
+        //             EmailTextConstant.EMAIL_RESET_TEXT_JP(urlResetPassword, emailRequestDTO.getTo()));
+        // }
         return "";
     }
 
