@@ -21,6 +21,7 @@ import com.chatapp.converter.response.user.student.StudentInfoResponseConverter;
 import com.chatapp.dto.AuthTokenDTO;
 import com.chatapp.dto.BaseDTO;
 import com.chatapp.dto.request.email.EmailRequestDTO;
+import com.chatapp.dto.request.email.PasswordChangeRequestDTO;
 import com.chatapp.dto.request.email.PasswordResetRequestDTO;
 import com.chatapp.dto.request.token.TokenRequestDTO;
 import com.chatapp.dto.request.user.UserFindRequestDTO;
@@ -571,8 +572,12 @@ public class UserServiceImpl implements UserService {
         List<UserFindResponseDTO> userFindResponseDTOs = userFindResponseConverter
                 .toDTOGroup(userRepository.findAllByNameContainsAndRoles_Code(userInfoFindRequestDTO.getName(),
                         userInfoFindRequestDTO.getType()));
-        userFindResponseDTOs.remove(
-                userFindResponseConverter.toDTO(userRepository.findOneById(userInfoFindRequestDTO.getUserId())));
+        for (UserFindResponseDTO userFindResponseDTO : userFindResponseDTOs) {
+            if (userFindResponseDTO.getId() == userInfoFindRequestDTO.getUserId()) {
+                userFindResponseDTOs.remove(userFindResponseDTO);
+                break;
+            }
+        }
         for (UserFindResponseDTO userFindResponseDTO : userFindResponseDTOs) {
             // set follow
             UserEntity entity = userRepository.findOneById(userInfoFindRequestDTO.getUserId());
@@ -607,10 +612,10 @@ public class UserServiceImpl implements UserService {
         } else {
             FollowEntity followEntity = userFollowRequestConverter.toEntity(userFollowRequestDTO);
             followReposittory.save(followEntity);
+            notificationService.addNotification(Notification.USER_FOLLOW.getValue(),
+                    Notification.USER_FOLLOW.getValue(), userFollowRequestDTO.getUserFollowId(),
+                    "", userFollowRequestDTO.getUserId());
         }
-        notificationService.addNotification(Notification.USER_FOLLOW.getValue(),
-                Notification.USER_FOLLOW.getValue(), userFollowRequestDTO.getUserFollowId(),
-                "", userFollowRequestDTO.getUserId());
         return "";
     }
 
@@ -773,19 +778,20 @@ public class UserServiceImpl implements UserService {
         tokenRepository.save(tokenResetPasswordEntity);
         String urlResetPassword = SystemConstant.RESET_PASSWORD_URL + token;
 
-        if (optionUserRepository.findOneByUser_IdAndOptionKey(userEntity.getId(), "language").getValue()
-                .equalsIgnoreCase("vn")) {
-            emailService.sendEmail(emailRequestDTO.getTo(), emailRequestDTO.getSubject(),
+        emailService.sendEmail(emailRequestDTO.getTo(), emailRequestDTO.getSubject(),
                     EmailTextConstant.EMAIL_RESET_TEXT_VN(urlResetPassword, emailRequestDTO.getTo()));
-        } else if (optionUserRepository.findOneByUser_IdAndOptionKey(userEntity.getId(), "language").getValue()
-                .equalsIgnoreCase("en")) {
-            emailService.sendEmail(emailRequestDTO.getTo(), emailRequestDTO.getSubject(),
-                    EmailTextConstant.EMAIL_RESET_TEXT_EN(urlResetPassword, emailRequestDTO.getTo()));
-        }else if (optionUserRepository.findOneByUser_IdAndOptionKey(userEntity.getId(), "language").getValue()
-                .equalsIgnoreCase("ja")){
-            emailService.sendEmail(emailRequestDTO.getTo(), emailRequestDTO.getSubject(),
-                    EmailTextConstant.EMAIL_RESET_TEXT_JP(urlResetPassword, emailRequestDTO.getTo()));
-        }
+        // if (optionUserRepository.findOneByUser_IdAndOptionKey(userEntity.getId(), "language").getValue()
+        //         .equalsIgnoreCase("vn")) {
+            
+        // } else if (optionUserRepository.findOneByUser_IdAndOptionKey(userEntity.getId(), "language").getValue()
+        //         .equalsIgnoreCase("en")) {
+        //     emailService.sendEmail(emailRequestDTO.getTo(), emailRequestDTO.getSubject(),
+        //             EmailTextConstant.EMAIL_RESET_TEXT_EN(urlResetPassword, emailRequestDTO.getTo()));
+        // } else if (optionUserRepository.findOneByUser_IdAndOptionKey(userEntity.getId(), "language").getValue()
+        //         .equalsIgnoreCase("ja")) {
+        //     emailService.sendEmail(emailRequestDTO.getTo(), emailRequestDTO.getSubject(),
+        //             EmailTextConstant.EMAIL_RESET_TEXT_JP(urlResetPassword, emailRequestDTO.getTo()));
+        // }
         return "";
     }
 
@@ -902,5 +908,20 @@ public class UserServiceImpl implements UserService {
         } else {
             throw new DuplicateUsernameException("token_has_not_exist");
         }
+    }
+
+    @Override
+    public String changePassword(PasswordChangeRequestDTO passwordChangeRequestDTO) {
+        if (userRepository.findOneById(passwordChangeRequestDTO.getUserId()) == null) {
+            throw new DuplicateUsernameException("this_user_has_not_exist");
+        }
+        UserEntity userEntity = userRepository.findOneById(passwordChangeRequestDTO.getUserId());
+        if (passwordEncoder.matches(passwordChangeRequestDTO.getOldPassword(), userEntity.getPassword())) {
+            throw new DuplicateUsernameException("old_password_not_correct");
+        }
+        String password = passwordEncoder.encode(passwordChangeRequestDTO.getPassword());
+        userEntity.setPassword(password);
+        userRepository.save(userEntity);
+        return "alo";
     }
 }
