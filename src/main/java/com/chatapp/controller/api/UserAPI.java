@@ -148,7 +148,7 @@ public class UserAPI {
     @PostMapping({ "users/change/password", "users/change/password/" })
     public ResponseEntity<ResponseData<String>> changePassword(@RequestBody PasswordChangeRequestDTO request)
             throws Exception {
-        ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK, "success",
+        ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK, "ok",
                 userService.changePassword(request));
         return ResponseEntity.ok(responseData);
     }
