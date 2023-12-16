@@ -915,7 +915,7 @@ public class UserServiceImpl implements UserService {
             throw new DuplicateUsernameException("this_user_has_not_exist");
         }
         UserEntity userEntity = userRepository.findOneById(passwordChangeRequestDTO.getUserId());
-        if (passwordEncoder.matches(passwordChangeRequestDTO.getPassword(), userEntity.getPassword())) {
+        if (passwordEncoder.matches(passwordChangeRequestDTO.getOldPassword(), userEntity.getPassword())) {
             throw new DuplicateUsernameException("new_password_not_same_old_password");
         }
         String password = passwordEncoder.encode(passwordChangeRequestDTO.getPassword());
