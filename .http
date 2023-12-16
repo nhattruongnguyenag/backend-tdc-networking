@@ -325,8 +325,8 @@ Content-Type: application/json
 
 {
     "userLogin":12,
-    "type":"thong-thuong",
-    "name":""
+    "type":"tuyen-dung",
+    "name":"a"
 }
 
 ###

@@ -190,10 +190,6 @@ public class PostServiceImpl implements PostService {
 
         processAddNewQuestion(questionAddNewDTOs, surveyPostEntity);
 
-        notificationService.addNotification(Notification.UPDATE_POST.getValue(),
-                Notification.UPDATE_POST.getValue(), postEntity.getUser().getId(),
-                "id:" + postEntity.getId(), null);
-
         try {
             return postRepository.save(postEntity) != null;
         } catch (Exception ex) {
@@ -366,9 +362,6 @@ public class PostServiceImpl implements PostService {
     private PostEntity normalPostUpdate(NormalPostUpdateOrSaveRequestDTO normalPostUpdateOrSaveRequestDTO) {
         PostEntity postEntity;
         postEntity = normalPostUpdateOrSaveRequestConverter.toUpdatEntity(normalPostUpdateOrSaveRequestDTO);
-        notificationService.addNotification(Notification.UPDATE_POST.getValue(),
-                Notification.UPDATE_POST.getValue(), postEntity.getUser().getId(),
-                "id:" + postEntity.getId(), null);
         return postEntity;
     }
 
@@ -912,9 +905,6 @@ public class PostServiceImpl implements PostService {
         }
         NormalPostEntity normalPostEntity = normalPostUpdateRequestConverter.toEntity(normalPostUpdateRequestDTO);
         normalPostRepository.save(normalPostEntity);
-        notificationService.addNotification(Notification.UPDATE_POST.getValue(),
-                Notification.UPDATE_POST.getValue(), normalPostEntity.getPost().getUser().getId(),
-                "id:" + normalPostEntity.getId(), null);
         return "";
     }
 
@@ -928,9 +918,6 @@ public class PostServiceImpl implements PostService {
         }
         RecruitmentPostEntity entity = recruitmentPostUpdateRequestConverter.toEntity(recruitmentPostUpdateRequestDTO);
         recruitmentPostRepository.save(entity);
-        notificationService.addNotification(Notification.UPDATE_POST.getValue(),
-                Notification.UPDATE_POST.getValue(), entity.getPost().getUser().getId(),
-                "id:" + entity.getId(), null);
         return "";
     }
 
