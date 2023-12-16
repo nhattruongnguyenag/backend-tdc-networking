@@ -829,3 +829,13 @@ Content-Type: application/json
     "userId": 13,
     "optionKey": "language"
 }
+
+###
+POST http://69.197.134.101:8080/api/users/change/password
+Content-Type: application/json
+
+{
+    "userId": 13,
+    "password": "123456",
+    "oldPassword": "1234567"
+}

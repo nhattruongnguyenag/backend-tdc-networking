@@ -918,9 +918,6 @@ public class UserServiceImpl implements UserService {
         if (passwordEncoder.matches(passwordChangeRequestDTO.getOldPassword(), userEntity.getPassword())) {
             throw new DuplicateUsernameException("old_password_not_correct");
         }
-        if (passwordEncoder.matches(passwordChangeRequestDTO.getPassword(), userEntity.getPassword())) {
-            throw new DuplicateUsernameException("new_password_not_same_old_password");
-        }
         String password = passwordEncoder.encode(passwordChangeRequestDTO.getPassword());
         userEntity.setPassword(password);
         userRepository.save(userEntity);
