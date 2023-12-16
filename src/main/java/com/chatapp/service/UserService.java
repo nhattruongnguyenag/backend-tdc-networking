@@ -96,4 +96,5 @@ public interface UserService {
     String sendEmailAuthenticationRegister(EmailRequestDTO emailRequestDTO) throws MessagingException, UnsupportedEncodingException;
     String authenRegister(TokenRequestDTO tokenRequestDTO) throws Exception;
     String changePassword(PasswordChangeRequestDTO passwordChangeRequestDTO);
+    Integer checkOldPass(String password, Long userLogin);
 }

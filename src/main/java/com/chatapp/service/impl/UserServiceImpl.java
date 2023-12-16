@@ -920,4 +920,16 @@ public class UserServiceImpl implements UserService {
         userRepository.save(userEntity);
         return "";
     }
+
+    @Override
+    public Integer checkOldPass(String password, Long userLogin) {
+        if (userRepository.findOneById(userLogin) == null) {
+            throw new DuplicateUsernameException("this_user_has_not_exist");
+        }
+        UserEntity userEntity = userRepository.findOneById(userLogin);
+        if (passwordEncoder.matches(password, userEntity.getPassword())) {
+            return 0;
+        }
+        return 1;
+    }
 }
