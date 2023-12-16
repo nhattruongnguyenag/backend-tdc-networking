@@ -153,14 +153,6 @@ public class UserAPI {
         return ResponseEntity.ok(responseData);
     }
 
-    @PostMapping({ "users/check/oldPassword", "users/check/oldPassword" })
-    public ResponseEntity<ResponseData<Integer>> checkOldPasswor(@RequestBody PasswordChangeRequestDTO request)
-            throws Exception {
-        ResponseData<Integer> responseData = new ResponseData<>(HttpStatus.OK, "success",
-                userService.checkOldPass(request.getPassword(), request.getUserId()));
-        return ResponseEntity.ok(responseData);
-    }
-
     @PostMapping({ "users/authen/register", "users/authen/register/" })
     public ResponseEntity<ResponseData<String>> authenRegister(@RequestBody TokenRequestDTO request) throws Exception {
         ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK, "success",
