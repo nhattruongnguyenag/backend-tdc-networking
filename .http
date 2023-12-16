@@ -582,7 +582,7 @@ POST http://69.197.134.101:8080/api/users/get/email/reset HTTP/1.1
 Content-Type: application/json
 
 {
-    "to":"lamlaigiabao2003@gmail.com",
+    "to":"sonthu3333@gmail.com",
     "subject":"Reset mat khau",
     "content":""
 }
