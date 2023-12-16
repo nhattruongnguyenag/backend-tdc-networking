@@ -921,6 +921,6 @@ public class UserServiceImpl implements UserService {
         String password = passwordEncoder.encode(passwordChangeRequestDTO.getPassword());
         userEntity.setPassword(password);
         userRepository.save(userEntity);
-        return "";
+        return "alo";
     }
 }
