@@ -578,7 +578,7 @@ Content-Type: application/json
 POST http://69.197.134.101:8080/api/users/check?email=khoaddt@tdc.edu.vn HTTP/1.1
 
 ###
-POST http://69.197.134.101:8080/api/users/get/email/reset HTTP/1.1
+POST http://127.0.0.1:8080/api/users/get/email/reset HTTP/1.1
 Content-Type: application/json
 
 {
@@ -831,11 +831,11 @@ Content-Type: application/json
 }
 
 ###
-POST http://69.197.134.101:8080/api/users/change/password
+POST http://127.0.0.1:8080/api/users/change/password
 Content-Type: application/json
 
 {
-    "userId": 13,
-    "password": "123456",
-    "oldPassword": "1234567"
+    "userId": 12,
+    "password": "abc1231",
+    "oldPassword": "abc1234"
 }

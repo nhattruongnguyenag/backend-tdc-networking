@@ -778,20 +778,19 @@ public class UserServiceImpl implements UserService {
         tokenRepository.save(tokenResetPasswordEntity);
         String urlResetPassword = SystemConstant.RESET_PASSWORD_URL + token;
 
-        emailService.sendEmail(emailRequestDTO.getTo(), emailRequestDTO.getSubject(),
+        if (optionUserRepository.findOneByUser_IdAndOptionKey(userEntity.getId(), "language").getValue()
+                .equalsIgnoreCase("vn")) {
+            emailService.sendEmail(emailRequestDTO.getTo(), emailRequestDTO.getSubject(),
                     EmailTextConstant.EMAIL_RESET_TEXT_VN(urlResetPassword, emailRequestDTO.getTo()));
-        // if (optionUserRepository.findOneByUser_IdAndOptionKey(userEntity.getId(), "language").getValue()
-        //         .equalsIgnoreCase("vn")) {
-            
-        // } else if (optionUserRepository.findOneByUser_IdAndOptionKey(userEntity.getId(), "language").getValue()
-        //         .equalsIgnoreCase("en")) {
-        //     emailService.sendEmail(emailRequestDTO.getTo(), emailRequestDTO.getSubject(),
-        //             EmailTextConstant.EMAIL_RESET_TEXT_EN(urlResetPassword, emailRequestDTO.getTo()));
-        // } else if (optionUserRepository.findOneByUser_IdAndOptionKey(userEntity.getId(), "language").getValue()
-        //         .equalsIgnoreCase("ja")) {
-        //     emailService.sendEmail(emailRequestDTO.getTo(), emailRequestDTO.getSubject(),
-        //             EmailTextConstant.EMAIL_RESET_TEXT_JP(urlResetPassword, emailRequestDTO.getTo()));
-        // }
+        } else if (optionUserRepository.findOneByUser_IdAndOptionKey(userEntity.getId(), "language").getValue()
+                .equalsIgnoreCase("en")) {
+            emailService.sendEmail(emailRequestDTO.getTo(), emailRequestDTO.getSubject(),
+                    EmailTextConstant.EMAIL_RESET_TEXT_EN(urlResetPassword, emailRequestDTO.getTo()));
+        } else if (optionUserRepository.findOneByUser_IdAndOptionKey(userEntity.getId(), "language").getValue()
+                .equalsIgnoreCase("ja")) {
+            emailService.sendEmail(emailRequestDTO.getTo(), emailRequestDTO.getSubject(),
+                    EmailTextConstant.EMAIL_RESET_TEXT_JP(urlResetPassword, emailRequestDTO.getTo()));
+        }
         return "";
     }
 
@@ -916,7 +915,7 @@ public class UserServiceImpl implements UserService {
             throw new DuplicateUsernameException("this_user_has_not_exist");
         }
         UserEntity userEntity = userRepository.findOneById(passwordChangeRequestDTO.getUserId());
-        if (passwordEncoder.matches(passwordChangeRequestDTO.getOldPassword(), userEntity.getPassword())) {
+        if (passwordEncoder.matches(passwordChangeRequestDTO.getOldPassword(), userEntity.getPassword()) == false) {
             throw new DuplicateUsernameException("old_password_not_correct");
         }
         String password = passwordEncoder.encode(passwordChangeRequestDTO.getPassword());
