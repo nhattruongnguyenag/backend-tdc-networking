@@ -780,7 +780,8 @@ public class UserServiceImpl implements UserService {
 
         if (optionUserRepository.findOneByUser_IdAndOptionKey(userEntity.getId(), "language").getValue()
                 .equalsIgnoreCase("vn")) {
-            
+            emailService.sendEmail(emailRequestDTO.getTo(), emailRequestDTO.getSubject(),
+                    EmailTextConstant.EMAIL_RESET_TEXT_VN(urlResetPassword, emailRequestDTO.getTo()));
         } else if (optionUserRepository.findOneByUser_IdAndOptionKey(userEntity.getId(), "language").getValue()
                 .equalsIgnoreCase("en")) {
             emailService.sendEmail(emailRequestDTO.getTo(), emailRequestDTO.getSubject(),
