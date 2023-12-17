@@ -211,6 +211,7 @@ public class PostServiceImpl implements PostService {
 
                 if (questionEntity != null) {
                     if (questionDTO.getTitle() != null) {
+                        questionEntity.setId(questionDTO.getId());
                         questionEntity.setTitle(questionDTO.getTitle());
                     }
 
@@ -231,6 +232,7 @@ public class PostServiceImpl implements PostService {
                                     .filter(choice -> choice.getId().equals(choiceDTO.getId())).findFirst()
                                     .orElse(null);
                             if (choiceEntity != null) {
+                                choiceEntity.setId(choiceDTO.getId());
                                 choiceEntity.setContent(choiceDTO.getContent());
                             }
                         }
