@@ -69,9 +69,9 @@ public class NotificationResponseConverter extends BaseConverter<NotificationEnt
                 }
             } else if (entity.getType().equals(Notification.POST_LOG.getValue())) {
                 if (postApprovalLogRepository
-                        .findOneByPost_Id(Long.valueOf(id)) != null) {
+                        .findOneById(Long.valueOf(id)) != null) {
                     PostApprovalLogEntity postApprovalLogEntity = postApprovalLogRepository
-                            .findOneByPost_Id(Long.valueOf(id));
+                            .findOneById(Long.valueOf(id));
                     PostRejectLogDTO postRejectLogDTO = postRejectLogConverter.toDTO(postApprovalLogEntity);
                     notificationResponseDTO.setDataValue(postRejectLogDTO);
                 } else {

@@ -884,9 +884,9 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<SurveyPreviewResponseDTO> reviewSurveyResultByPostIdAndUserId(Long postId, Long userId) {
-        // if(postRepository.findOneByIdAndUser_Id(postId , userId) == null){
-        // throw new RuntimeException("survey_at_this_post_id_not_exist");
-        // }
+        if(postRepository.findOneByIdAndUser_Id(postId , userId) == null){
+        throw new RuntimeException("survey_at_this_post_id_not_exist");
+        }
         PostEntity postEntity = postRepository.findOneById(postId);
         SurveyPostEntity surveyPostEntity = surveyPostRepository.findOneByPost_Id(postEntity.getId());
         if (postEntity.getType().equals(PostType.SURVEY.getName())) {
@@ -925,24 +925,23 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public String addPostLog(PostLogRequestDTO postLogRequestDTO) {
-        if (postApprovalLogRepository.findOneByPost_Id(postLogRequestDTO.getPostId()) != null) {
-            throw new DuplicateUsernameException("this_post_is");
-        }
         PostApprovalLogEntity entity = postLogAddRequestConverter.toEntity(postLogRequestDTO);
         postApprovalLogRepository.save(entity);
+        PostApprovalLogEntity entity1 = postApprovalLogRepository.findAll().get(postApprovalLogRepository.findAll().size() - 1);
         notificationService.addNotification(Notification.POST_LOG.getValue(),
                 Notification.POST_LOG.getValue(), entity.getPost().getUser().getId(),
-                "logId:" + postLogRequestDTO.getPostId(), null);
+                "logId:" + entity1.getId(), null);
         return "";
     }
 
     @Override
     public String deletePostLog(Long postId) {
-        if (postApprovalLogRepository.findOneByPost_Id(postId) == null) {
-            throw new DuplicateUsernameException("this_post_approval_log_is_not_exists");
+        if (postApprovalLogRepository.findAllByPost_Id(postId) == null) {
+            throw new DuplicateUsernameException("post_approvals_log_is_not_exists");
         }
-        PostApprovalLogEntity entity = postApprovalLogRepository.findOneByPost_Id(postId);
-        postApprovalLogRepository.delete(entity);
+        for (PostApprovalLogEntity postApprovalLogEntity : postApprovalLogRepository.findAllByPost_Id(postId)) {
+                    postApprovalLogRepository.delete(postApprovalLogEntity);
+        }
         return "";
     }
 
@@ -970,7 +969,8 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostRejectLogDTO findRejectLogByPostId(Long postId) {
         try {
-            return postRejectLogConverter.toDTO(postApprovalLogRepository.findOneByPost_Id(postId));
+            List<PostApprovalLogEntity> logEntities = postApprovalLogRepository.findAllByPost_Id(postId);
+            return postRejectLogConverter.toDTO(logEntities.get(logEntities.size() -1 ));
         } catch (Exception e) {
             return null;
         }
