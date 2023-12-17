@@ -502,7 +502,7 @@ GET http://127.0.0.1:8080/api/job/1 HTTP/1.1
 GET  http://127.0.0.1:8080/api/posts/user/save/3 HTTP/1.1
 
 ###
-GET  http://127.0.0.1:8080/api/posts/survey/1/result HTTP/1.1
+GET  http://127.0.0.1:8080/api/posts/survey/2/result HTTP/1.1
 
 ###
 GET  http://69.197.134.101:8080/api/users/17/group HTTP/1.1
