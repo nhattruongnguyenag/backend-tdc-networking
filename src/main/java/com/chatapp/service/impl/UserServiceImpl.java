@@ -226,6 +226,18 @@ public class UserServiceImpl implements UserService {
         return setTypingState(userId, false);
     }
 
+    @Override
+    public boolean setUserStatusInactive(Long userId) {
+        UserEntity userEntity = userRepository.findOneById(userId);
+
+        if (userEntity == null) {
+            throw new RuntimeException("user_does_not_exists");
+        }
+        userEntity.setStatus((byte) 0);
+
+        return userRepository.save(userEntity) != null;
+    }
+
     private boolean setMessengerConnectState(Long userId, boolean status) {
         UserEntity userEntity = userRepository.findOneById(userId);
 

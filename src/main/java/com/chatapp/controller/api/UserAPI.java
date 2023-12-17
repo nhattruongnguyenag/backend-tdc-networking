@@ -195,6 +195,18 @@ public class UserAPI {
                 HttpStatus.BAD_REQUEST);
     }
 
+    @PutMapping("users/status/inactive")
+    public ResponseEntity<MessageResponseData> updateUserToInactiveState(@RequestBody UserDTO userDTO) {
+        boolean isSuccess = userService.setUserStatusInactive(userDTO.getId());
+        if (isSuccess) {
+            return new ResponseEntity<>(
+                    new MessageResponseData(HttpStatus.CREATED, "changed_user_state_to_inactive"),
+                    HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(new MessageResponseData(HttpStatus.BAD_REQUEST, "change_user_status_faild"),
+                HttpStatus.BAD_REQUEST);
+    }
+
     //////////////////
     // Delete
     //////////////////

@@ -48,6 +48,8 @@ public interface UserService {
 
     boolean setIsTypingOff(Long userId);
 
+    boolean setUserStatusInactive(Long userId);
+
     UserInfoResponseDTO delete(Long userId);
     UserInfoResponseDTO changeStatus(Long userId, Byte status);
     AuthTokenDTO login(UserLoginRequestDTO userDTORequest);
