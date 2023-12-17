@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -40,11 +41,8 @@ public class MessageServiceImpl implements MessageService {
         if (userRepository.findById(senderId).isPresent()
                 && userRepository.findById(receiverId).isPresent()) {
             List<MessageEntity> messageEntities = customizedMessageRepository.findBySenderOrReceiver(senderId, receiverId);
-            for (MessageEntity message : messageEntities) {
-                if (message.getSender().getId() == receiverId && message.getReceiver().getId() == senderId) {
-                    message.setStatus(MessageStatus.SEEN);
-                }
-            }
+            List<MessageEntity> messagesUpdateToRead = messageEntities.stream().filter(messageEntity -> messageEntity.getSender().getId() == receiverId).toList();
+            updateMessageToReadState(messagesUpdateToRead);
             return messageResponseConverter.toDTOGroup(messageEntities);
         }
 
@@ -55,7 +53,10 @@ public class MessageServiceImpl implements MessageService {
     public List<MessageResponseDTO> findBySenderAndReceiver(Long senderId, Long receiverId, Pagination pagination) {
         if (userRepository.findById(senderId).isPresent()
                 && userRepository.findById(receiverId).isPresent()) {
-            return messageResponseConverter.toDTOGroup(customizedMessageRepository.findBySenderOrReceiver(senderId, receiverId, pagination));
+            List<MessageEntity> messageEntities = customizedMessageRepository.findBySenderOrReceiver(senderId, receiverId);
+            List<MessageEntity> messagesUpdateToRead = messageEntities.stream().filter(messageEntity -> messageEntity.getSender().getId() == receiverId).toList();
+            updateMessageToReadState(messagesUpdateToRead);
+            return messageResponseConverter.toDTOGroup(messageEntities);
         }
 
         throw new RuntimeException("user_does_not_exists");
@@ -65,9 +66,18 @@ public class MessageServiceImpl implements MessageService {
     public List<MessageResponseDTO> findByConversations_Id(Long conversationId) {
         Optional<ConversationEntity> conversationEntity = conversationRepository.findById(conversationId);
         if (conversationEntity.isPresent()) {
-            return messageResponseConverter.toDTOGroup(messageRepository.findByConversations_Id(conversationId));
+            List<MessageEntity> messageEntities = messageRepository.findByConversations_Id(conversationId);
+            return messageResponseConverter.toDTOGroup(messageEntities);
         }
         throw new RuntimeException("conversation_not_exists");
+    }
+
+    private List<MessageResponseDTO> updateMessageToReadState(List<MessageEntity> messageEntities) {
+        for (MessageEntity message : messageEntities) {
+                message.setStatus(MessageStatus.SEEN);
+        }
+
+        return messageResponseConverter.toDTOGroup(messageRepository.saveAll(messageEntities));
     }
 
     @Override

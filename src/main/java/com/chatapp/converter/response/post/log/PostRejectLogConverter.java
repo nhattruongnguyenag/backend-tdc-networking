@@ -13,18 +13,4 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PostRejectLogConverter extends BaseConverter<PostApprovalLogEntity, PostRejectLogDTO> {
-    @Autowired
-    GroupResponseConverter groupResponseConverter;
-
-    @Autowired
-    GroupRepository groupRepository;
-
-    @Override
-    public PostRejectLogDTO toDTO(PostApprovalLogEntity postApprovalLogEntity) {
-        PostRejectLogDTO dto = super.toDTO(postApprovalLogEntity);
-        dto.setCreatedAt(DateTimeUtil.convertToTimestamp(postApprovalLogEntity.getCreatedAt()));
-        GroupResponseDTO groupResponseDTO = groupResponseConverter.toDTO(groupRepository.findOneById(postApprovalLogEntity.getPost().getGroup().getId()));
-        dto.setGroup(groupResponseDTO);
-        return dto;
-    }
 }

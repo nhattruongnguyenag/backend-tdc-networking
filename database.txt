@@ -120,3 +120,19 @@ INSERT INTO `user_group`(`group_id`, `user_id`) VALUES
 (2,9),
 (2,10),
 (2,11);
+
+INSERT INTO `option_user`(`user_id`, `option_key`, `value`) VALUES 
+(1,'language','vi') ,
+(2,'language','vi') ,
+(3,'language','vi') ,
+(4,'language','vi') ,
+(5,'language','vi') ,
+(6,'language','vi') ,
+(7,'language','vi') ,
+(8,'language','vi') ,
+(9,'language','vi') ,
+(10,'language','vi') ,
+(11,'language','vi') ,
+(12,'language','vi') ,
+
+
