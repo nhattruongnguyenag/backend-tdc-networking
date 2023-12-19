@@ -330,12 +330,12 @@ Content-Type: application/json
 }
 
 ###
-POST http://69.197.134.101:8080/api/users/follow HTTP/1.1
+POST http://127.0.0.1:8080/api/users/follow HTTP/1.1
 Content-Type: application/json
 
 {
-    "userFollowId":13,
-    "userId":6
+    "userFollowId":2,
+    "userId":1
 }
 
 ###
@@ -578,7 +578,7 @@ POST http://127.0.0.1:8080/api/users/get/email/reset HTTP/1.1
 Content-Type: application/json
 
 {
-    "to":"sonthu3333@gmail.com",
+    "to":"21211tt0042@mail.tdc.edu.vn",
     "subject":"Reset mat khau",
     "content":""
 }
@@ -613,7 +613,7 @@ PUT http://127.0.0.1:8080/api/posts/normal HTTP/1.1
 Content-Type: application/json
 
 {
-    "postId": 5,
+    "postId": 10,
     "content": "hello",
     "images": [
         "abc.png"

@@ -779,7 +779,7 @@ public class UserServiceImpl implements UserService {
         String urlResetPassword = SystemConstant.RESET_PASSWORD_URL + token;
 
         if (optionUserRepository.findOneByUser_IdAndOptionKey(userEntity.getId(), "language").getValue()
-                .equalsIgnoreCase("vn")) {
+                .equalsIgnoreCase("vi")) {
             emailService.sendEmail(emailRequestDTO.getTo(), emailRequestDTO.getSubject(),
                     EmailTextConstant.EMAIL_RESET_TEXT_VN(urlResetPassword, emailRequestDTO.getTo()));
         } else if (optionUserRepository.findOneByUser_IdAndOptionKey(userEntity.getId(), "language").getValue()

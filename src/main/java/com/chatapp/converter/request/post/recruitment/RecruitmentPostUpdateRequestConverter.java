@@ -53,6 +53,8 @@ public class RecruitmentPostUpdateRequestConverter extends BaseConverter<Recruit
                 }
             }
         }
+        entity.getPost().setImages(postImageEntityList);
+        entity.getPost().setActive((byte)0);
         return entity;
     }
 }
