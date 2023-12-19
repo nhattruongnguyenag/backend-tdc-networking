@@ -7,7 +7,7 @@ on:
     - develop
 jobs:
   my_job:
-    name: deploy to staging
+    name: deploy to tdcnetwork application
     runs-on: ubuntu-latest
     steps:
     - name: deploy project to server
