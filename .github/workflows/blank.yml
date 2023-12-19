@@ -7,7 +7,7 @@ on:
     - develop
 jobs:
   my_job:
-    name: deploy application
+    name: deploy project to server
     runs-on: ubuntu-latest
     steps:
     - name: deploy project to server
