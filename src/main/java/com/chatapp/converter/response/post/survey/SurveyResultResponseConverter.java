@@ -47,7 +47,7 @@ public class SurveyResultResponseConverter extends BaseConverter<QuestionEntity,
             for (VoteAnswerEntity voteAnswerEntity : voteAnswerEntities) {
                 ChoiceItemResponseDTO choiceItemResponseDTO = new ChoiceItemResponseDTO();
                 choiceItemResponseDTO.setContent(voteAnswerEntity.getContent());
-                choiceItemResponseDTO.setVotes(voteAnswerEntity.getCountVote());
+                choiceItemResponseDTO.setVotes(voteAnswerEntity.getUsers().size());
                 choiceItemResponseDTOs.add(choiceItemResponseDTO);
             }
             voteResultResponseDTO.setChoices(choiceItemResponseDTOs);

@@ -3,12 +3,12 @@ package com.chatapp.converter.response.notification;
 import com.chatapp.converter.abstracts.BaseConverter;
 import com.chatapp.converter.response.job_profile.JobProfilePendingResponseConverter;
 import com.chatapp.converter.response.post.PostSearchResponseConverter;
-import com.chatapp.converter.response.post.log.PostRejectLogConverter;
+import com.chatapp.converter.response.post.log.PostRejectLogResponseConverter;
 import com.chatapp.converter.response.user.UserInfoResponseConverter;
 import com.chatapp.dto.response.job_profile.JobProfileManageResponseDTO;
 import com.chatapp.dto.response.notification.NotificationResponseDTO;
 import com.chatapp.dto.response.post.PostSearchResponseDTO;
-import com.chatapp.dto.response.post.log.PostRejectLogDTO;
+import com.chatapp.dto.response.post.log.PostRejectLogResponseDTO;
 import com.chatapp.entity.JobProfileEntity;
 import com.chatapp.entity.NotificationEntity;
 import com.chatapp.entity.PostApprovalLogEntity;
@@ -47,7 +47,7 @@ public class NotificationResponseConverter extends BaseConverter<NotificationEnt
     private PostSearchResponseConverter postSearchResponseConverter;
 
     @Autowired
-    private PostRejectLogConverter postRejectLogConverter;
+    private PostRejectLogResponseConverter postRejectLogResponseConverter;
 
     @Override
     public NotificationResponseDTO toDTO(NotificationEntity entity) {
@@ -69,11 +69,11 @@ public class NotificationResponseConverter extends BaseConverter<NotificationEnt
                 }
             } else if (entity.getType().equals(Notification.POST_LOG.getValue())) {
                 if (postApprovalLogRepository
-                        .findOneByPost_Id(Long.valueOf(id)) != null) {
+                        .findOneById(Long.valueOf(id)) != null) {
                     PostApprovalLogEntity postApprovalLogEntity = postApprovalLogRepository
-                            .findOneByPost_Id(Long.valueOf(id));
-                    PostRejectLogDTO postRejectLogDTO = postRejectLogConverter.toDTO(postApprovalLogEntity);
-                    notificationResponseDTO.setDataValue(postRejectLogDTO);
+                            .findOneById(Long.valueOf(id));
+                    PostRejectLogResponseDTO postRejectLogResponseDTO = postRejectLogResponseConverter.toDTO(postApprovalLogEntity);
+                    notificationResponseDTO.setDataValue(postRejectLogResponseDTO);
                 } else {
                     notificationResponseDTO.setDataValue(null);
                 }

@@ -25,11 +25,12 @@ public class UserDetailInGroupResponseDTO{
         this.posts = posts;
     }
 
-    public Boolean getFollow() {
-        return isFollow;
+    public Boolean getIsFollow() {
+        return this.isFollow;
     }
 
-    public void setFollow(Boolean follow) {
-        isFollow = follow;
+    public void setIsFollow(Boolean isFollow) {
+        this.isFollow = isFollow;
     }
+
 }

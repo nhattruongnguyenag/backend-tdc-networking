@@ -44,4 +44,13 @@ public class VoteAnswerEntity extends BaseEntity {
     public void setQuestion(QuestionEntity question) {
         this.question = question;
     }
+
+    public List<UserEntity> getUsers() {
+        return this.users;
+    }
+
+    public void setUsers(List<UserEntity> users) {
+        this.users = users;
+    }
+
 }

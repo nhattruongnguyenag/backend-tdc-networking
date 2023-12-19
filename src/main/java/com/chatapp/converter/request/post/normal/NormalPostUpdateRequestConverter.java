@@ -45,6 +45,7 @@ public class NormalPostUpdateRequestConverter extends BaseConverter<NormalPostEn
             }
         }
         normalPostEntity.getPost().setImages(postImageEntityList);
+        normalPostEntity.getPost().setActive((byte)0);
         return normalPostEntity;
     }
 }
