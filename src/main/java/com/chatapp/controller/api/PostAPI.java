@@ -6,6 +6,7 @@ import com.chatapp.dto.BaseDTO;
 import com.chatapp.dto.request.post.AllPostByUserAndGroupResponseDTO;
 import com.chatapp.dto.request.post.PostGetRequestDTO;
 import com.chatapp.dto.request.post.PostSearchRequestDTO;
+import com.chatapp.dto.request.post.PostUserGetRequestDTO;
 import com.chatapp.dto.request.post.comment.CommentDeleteRequestDTO;
 import com.chatapp.dto.request.post.comment.CommentSaveRequestDTO;
 import com.chatapp.dto.request.post.normal.NormalPostUpdateOrSaveRequestDTO;
@@ -50,6 +51,7 @@ public class PostAPI {
 
     @Autowired
     private ModelMapper modelMapper;
+
     //////////////////
     // Get
     //////////////////
@@ -76,7 +78,8 @@ public class PostAPI {
     }
 
     @PostMapping({ "posts/user/save/search", "posts/user/save/search" })
-    ResponseEntity<ResponseData<?>> userSearchSavePost(@RequestBody UserSavePostFindRequestDTO userSavePostFindRequestDTO) {
+    ResponseEntity<ResponseData<?>> userSearchSavePost(
+            @RequestBody UserSavePostFindRequestDTO userSavePostFindRequestDTO) {
         ResponseData<?> responseData = new ResponseData<>(HttpStatus.OK, "success",
                 postService.getPostSaveByUserIdAndSearch(userSavePostFindRequestDTO));
         return ResponseEntity.ok(responseData);
@@ -265,6 +268,16 @@ public class PostAPI {
         return ResponseEntity.created(null).body(responseData);
     }
 
+    @PostMapping({ "posts/get", "posts/get/" })
+    public ResponseEntity<ResponseData<PostSearchResponseDTO>> getById(
+            @RequestBody PostUserGetRequestDTO postUserGetRequestDTO) {
+        PostGetRequestDTO postGetRequestDTO = new PostGetRequestDTO();
+        postGetRequestDTO.setPostId(postUserGetRequestDTO.getPostId());
+        ResponseData<PostSearchResponseDTO> responseData = new ResponseData<>(HttpStatus.CREATED, "success",
+                postService.findById(postGetRequestDTO,postUserGetRequestDTO.getUserId()));
+        return ResponseEntity.created(null).body(responseData);
+    }
+
     //////////////////
     // Put
     //////////////////
@@ -297,7 +310,7 @@ public class PostAPI {
     }
 
     //////////////////
-    //Delete
+    // Delete
     //////////////////
     @DeleteMapping({ "posts/comment/delete", "posts/comment/delete/" })
     ResponseEntity<ResponseData<?>> deleteComment(@RequestBody CommentDeleteRequestDTO commentDeleteRequestDTO) {
@@ -311,5 +324,5 @@ public class PostAPI {
         postService.delete(postId);
         ResponseData<String> responseData = new ResponseData<>(HttpStatus.OK, "success", null);
         return ResponseEntity.ok(responseData);
-    } 
+    }
 }

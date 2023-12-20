@@ -2,9 +2,12 @@ on:
   pull_request:
     branches:
     - develop
+  push:
+    branches:
+    - develop
 jobs:
   my_job:
-    name: deploy to staging
+    name: deploy project to stagging
     runs-on: ubuntu-latest
     steps:
     - name: deploy project to server
@@ -12,6 +15,6 @@ jobs:
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USER }}
-        key: ${{ secrets.PRIVATE_KEY }}
+        password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         script: cd source && make update

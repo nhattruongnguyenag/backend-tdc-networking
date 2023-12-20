@@ -226,6 +226,18 @@ public class UserServiceImpl implements UserService {
         return setTypingState(userId, false);
     }
 
+    @Override
+    public boolean setUserStatusInactive(Long userId) {
+        UserEntity userEntity = userRepository.findOneById(userId);
+
+        if (userEntity == null) {
+            throw new RuntimeException("user_does_not_exists");
+        }
+        userEntity.setStatus((byte) 0);
+
+        return userRepository.save(userEntity) != null;
+    }
+
     private boolean setMessengerConnectState(Long userId, boolean status) {
         UserEntity userEntity = userRepository.findOneById(userId);
 
@@ -832,9 +844,6 @@ public class UserServiceImpl implements UserService {
                 }
                 String userId = tokenProvider.extractIdFromToken(passwordResetRequestDTO.getToken());
                 UserEntity userEntity = userRepository.findOneById(Long.valueOf(userId));
-                if (passwordEncoder.matches(passwordResetRequestDTO.getPassword(), userEntity.getPassword())) {
-                    throw new DuplicateUsernameException("new_password_not_same_old_password");
-                }
                 String password = passwordEncoder.encode(passwordResetRequestDTO.getPassword());
                 userEntity.setPassword(password);
                 userRepository.save(userEntity);
