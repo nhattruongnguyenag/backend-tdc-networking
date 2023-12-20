@@ -844,9 +844,6 @@ public class UserServiceImpl implements UserService {
                 }
                 String userId = tokenProvider.extractIdFromToken(passwordResetRequestDTO.getToken());
                 UserEntity userEntity = userRepository.findOneById(Long.valueOf(userId));
-                if (passwordEncoder.matches(passwordResetRequestDTO.getPassword(), userEntity.getPassword())) {
-                    throw new DuplicateUsernameException("new_password_not_same_old_password");
-                }
                 String password = passwordEncoder.encode(passwordResetRequestDTO.getPassword());
                 userEntity.setPassword(password);
                 userRepository.save(userEntity);
