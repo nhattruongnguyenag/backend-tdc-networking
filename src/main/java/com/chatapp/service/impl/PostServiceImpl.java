@@ -428,8 +428,8 @@ public class PostServiceImpl implements PostService {
             if (postEntity.getUser().getFalcutyInfo() != null && postEntity.getSurveyPost() != null) {
                 Long idFaculty = postEntity.getUser().getFalcutyInfo().getId();
                 for (StudentInfoEntity studentInfoEntity : studentInfoRepository.findALLByFaculty_Id(idFaculty)) {
-                    notificationService.addNotification(Notification.FACULTY_CREATE_SURVEY.getValue(),
-                            Notification.FACULTY_CREATE_SURVEY.getValue(), studentInfoEntity.getUser().getId(),
+                    notificationService.addNotification(Notification.FACULTY_CREATE_NORMAL.getValue(),
+                            Notification.FACULTY_CREATE_NORMAL.getValue(), studentInfoEntity.getUser().getId(),
                             "id:" + postEntity.getId(), postEntity.getUser().getId());
                 }
             }

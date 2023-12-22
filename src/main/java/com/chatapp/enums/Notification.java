@@ -7,6 +7,7 @@ public enum Notification {
     CREATE_NORMAL("create_normal"),
     CREATE_RECRUITMENT("create_recruitment"),
     FACULTY_CREATE_SURVEY("faculty_create_survey"),
+    FACULTY_CREATE_NORMAL("faculty_create_normal"),
     UPDATE_POST("update_post"),
     SAVE_POST("save_post"),
     USER_LIKE_POST("user_like_post"),
