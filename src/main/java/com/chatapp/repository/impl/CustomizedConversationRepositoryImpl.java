@@ -31,4 +31,19 @@ public class CustomizedConversationRepositoryImpl implements CustomizedConversat
 
         return query.getResultList();
     }
+
+    @Override
+    public long countDistinctBySender_IdAndMessages_Status(long senderId, long status) {
+        String sql = new StringBuilder("SELECT count(distinct c) FROM ConversationEntity c")
+                .append("\nJOIN c.sender as s")
+                .append("\nJOIN c.messages as m")
+                .append("\nJOIN m.receiver as mr")
+                .append("\nWHERE s.id = ").append(senderId)
+                .append("\nAND m.status = ").append(status)
+                .append("\nAND mr.id = ").append(senderId).toString();
+
+        Query query = entityManager.createQuery(sql, Long.class);
+
+        return (long) query.getSingleResult();
+    }
 }

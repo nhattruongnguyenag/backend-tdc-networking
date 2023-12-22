@@ -24,13 +24,6 @@ public class MessageAPI {
     @Autowired
     private ConversationService conversationService;
 
-    @GetMapping("/conversation/count/user/{senderId}")
-    CountUnreadConversationResponseDTO countBySender_IdAndMessages_Status(@PathVariable("senderId")long senderId) {
-        CountUnreadConversationResponseDTO countUnreadConversationResponseDTO = new CountUnreadConversationResponseDTO();
-        countUnreadConversationResponseDTO.setCount(conversationService.countBySender_IdAndMessages_Status(senderId, 0));
-        return countUnreadConversationResponseDTO;
-    }
-
     //////////////////
     //Get
     //////////////////
@@ -38,6 +31,13 @@ public class MessageAPI {
     List<MessageResponseDTO> findMessagesBySenderOrReceiver(@PathVariable("senderId") Long senderId, @PathVariable("receiverId") Long receiverId, @RequestParam Map<String, Object> params) {
         Pagination pagination = CommonUtils.mapToObject(params, Pagination.class);
         return messageService.findBySenderAndReceiver(senderId, receiverId, pagination);
+    }
+
+    @GetMapping("/conversation/count/user/{senderId}")
+    CountUnreadConversationResponseDTO countBySender_IdAndMessages_Status(@PathVariable("senderId")long senderId) {
+        CountUnreadConversationResponseDTO countUnreadConversationResponseDTO = new CountUnreadConversationResponseDTO();
+        countUnreadConversationResponseDTO.setCount(conversationService.countBySender_IdAndMessages_Status(senderId, 0));
+        return countUnreadConversationResponseDTO;
     }
 
     @GetMapping("/conversations/{userId}")

@@ -32,6 +32,6 @@ public class ConversationServiceImpl implements ConversationService {
 
     @Override
     public long countBySender_IdAndMessages_Status(long senderId, long status) {
-        return conversationRepository.countDistinctBySender_IdAndMessages_Status(senderId, status);
+        return customizedConversationRepository.countDistinctBySender_IdAndMessages_Status(senderId, status);
     }
 }
