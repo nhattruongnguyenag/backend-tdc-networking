@@ -425,6 +425,14 @@ public class PostServiceImpl implements PostService {
             postEntity = this.recruitmentPostUpdate(recruitmentPostUpdateOrSageRequestDTO);
         } else {
             postEntity = this.recruitmentPostSave(recruitmentPostUpdateOrSageRequestDTO);
+            if (postEntity.getUser().getFalcutyInfo() != null && postEntity.getSurveyPost() != null) {
+                Long idFaculty = postEntity.getUser().getFalcutyInfo().getId();
+                for (StudentInfoEntity studentInfoEntity : studentInfoRepository.findALLByFaculty_Id(idFaculty)) {
+                    notificationService.addNotification(Notification.FACULTY_CREATE_SURVEY.getValue(),
+                            Notification.FACULTY_CREATE_SURVEY.getValue(), studentInfoEntity.getUser().getId(),
+                            "id:" + postEntity.getId(), postEntity.getUser().getId());
+                }
+            }
         }
         postRepository.save(postEntity);
         return "";
