@@ -3,6 +3,7 @@ package com.chatapp.controller.api;
 import com.chatapp.dto.Pagination;
 import com.chatapp.dto.request.message.MessageSaveRequestDTO;
 import com.chatapp.dto.request.post.PostSearchRequestDTO;
+import com.chatapp.dto.response.CountUnreadConversationResponseDTO;
 import com.chatapp.dto.response.conversation.ConversationResponseDTO;
 import com.chatapp.dto.response.message.MessageResponseDTO;
 import com.chatapp.service.ConversationService;
@@ -30,6 +31,13 @@ public class MessageAPI {
     List<MessageResponseDTO> findMessagesBySenderOrReceiver(@PathVariable("senderId") Long senderId, @PathVariable("receiverId") Long receiverId, @RequestParam Map<String, Object> params) {
         Pagination pagination = CommonUtils.mapToObject(params, Pagination.class);
         return messageService.findBySenderAndReceiver(senderId, receiverId, pagination);
+    }
+
+    @GetMapping("/conversation/count/user/{senderId}")
+    CountUnreadConversationResponseDTO countBySender_IdAndMessages_Status(@PathVariable("senderId")long senderId) {
+        CountUnreadConversationResponseDTO countUnreadConversationResponseDTO = new CountUnreadConversationResponseDTO();
+        countUnreadConversationResponseDTO.setCount(conversationService.countBySender_IdAndMessages_Status(senderId, 0));
+        return countUnreadConversationResponseDTO;
     }
 
     @GetMapping("/conversations/{userId}")
