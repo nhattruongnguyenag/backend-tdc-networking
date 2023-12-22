@@ -159,7 +159,7 @@ Content-Type: application/json
    "title": "toi la nha phat trien",
    "description": "dhhdd",
    "groupId": 2,
-   "userId": 14,
+   "userId": 2,
    "questions": [
        {
            "type": "tra-loi-ngan",
