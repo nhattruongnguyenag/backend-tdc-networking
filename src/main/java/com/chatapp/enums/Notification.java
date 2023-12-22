@@ -6,6 +6,7 @@ public enum Notification {
     CREATE_SURVEY("create_survey"),
     CREATE_NORMAL("create_normal"),
     CREATE_RECRUITMENT("create_recruitment"),
+    FACULTY_CREATE_SURVEY("faculty_create_survey"),
     UPDATE_POST("update_post"),
     SAVE_POST("save_post"),
     USER_LIKE_POST("user_like_post"),

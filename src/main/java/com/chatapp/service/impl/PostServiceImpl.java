@@ -440,6 +440,14 @@ public class PostServiceImpl implements PostService {
         }
         postEntity.setStatus((byte) 0);
         postRepository.save(postEntity);
+        if (postEntity.getUser().getFalcutyInfo() != null && postEntity.getSurveyPost() != null) {
+            Long idFaculty = postEntity.getUser().getFalcutyInfo().getId();
+            for (StudentInfoEntity studentInfoEntity : studentInfoRepository.findALLByFaculty_Id(idFaculty)) {
+                notificationService.addNotification(Notification.FACULTY_CREATE_SURVEY.getValue(),
+                        Notification.FACULTY_CREATE_SURVEY.getValue(), studentInfoEntity.getUser().getId(),
+                        "id:" + postEntity.getId(), postEntity.getUser().getId());
+            }
+        }
         return "";
     }
 
@@ -960,6 +968,13 @@ public class PostServiceImpl implements PostService {
             for (StudentInfoEntity studentInfoEntity : studentInfoRepository.findAll()) {
                 notificationService.addNotification(Notification.CREATE_SURVEY.getValue(),
                         Notification.CREATE_SURVEY.getValue(), studentInfoEntity.getUser().getId(),
+                        "id:" + entity.getId(), entity.getUser().getId());
+            }
+        }
+        if (entity.getUser().getBusinessesInfos() != null && entity.getRecruitmentPost() != null) {
+            for (StudentInfoEntity studentInfoEntity : studentInfoRepository.findAll()) {
+                notificationService.addNotification(Notification.CREATE_RECRUITMENT.getValue(),
+                        Notification.CREATE_RECRUITMENT.getValue(), studentInfoEntity.getUser().getId(),
                         "id:" + entity.getId(), entity.getUser().getId());
             }
         }
