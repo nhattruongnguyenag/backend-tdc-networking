@@ -125,7 +125,7 @@ Content-Type: application/json
         "1aaed1f52741546bdb4affe2e3fcfbc1.png",
         "1aaed1f52741546bdb4affe2e3fcfbc1.png"
     ],
-    "userId": 11,
+    "userId": 2,
     "content":"hello"
 }
 
@@ -159,7 +159,7 @@ Content-Type: application/json
    "title": "toi la nha phat trien",
    "description": "dhhdd",
    "groupId": 2,
-   "userId": 2,
+   "userId": 14,
    "questions": [
        {
            "type": "tra-loi-ngan",
@@ -759,7 +759,7 @@ POST http://localhost:8080/api/posts/acceptance
 Content-Type: application/json
 
 {
-    "postId": 23
+    "postId": 26
 }
 
 ###

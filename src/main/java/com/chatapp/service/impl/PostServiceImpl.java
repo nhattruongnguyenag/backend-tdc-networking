@@ -384,9 +384,11 @@ public class PostServiceImpl implements PostService {
         PostEntity postEntity;
         if (normalPostUpdateOrSaveRequestDTO.getId() != null) {
             postEntity = this.normalPostUpdate(normalPostUpdateOrSaveRequestDTO);
+            postRepository.save(postEntity);
         } else {
             postEntity = this.normalPostSave(normalPostUpdateOrSaveRequestDTO);
-            if (postEntity.getUser().getFalcutyInfo() != null && postEntity.getSurveyPost() != null) {
+            postRepository.save(postEntity);
+            if (postEntity.getUser().getFalcutyInfo() != null && postEntity.getNormalPost() != null) {
                 Long idFaculty = postEntity.getUser().getFalcutyInfo().getId();
                 for (StudentInfoEntity studentInfoEntity : studentInfoRepository.findALLByFaculty_Id(idFaculty)) {
                     notificationService.addNotification(Notification.FACULTY_CREATE_NORMAL.getValue(),
@@ -395,7 +397,6 @@ public class PostServiceImpl implements PostService {
                 }
             }
         }
-        postRepository.save(postEntity);
         return "";
     }
 
