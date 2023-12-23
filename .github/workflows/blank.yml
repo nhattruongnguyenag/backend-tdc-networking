@@ -1,0 +1,20 @@
+on:
+  pull_request:
+    branches:
+    - develop
+  push:
+    branches:
+    - develop
+jobs:
+  my_job:
+    name: deploy project to stagging
+    runs-on: ubuntu-latest
+    steps:
+    - name: deploy project to server
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USER }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: cd source && make update

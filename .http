@@ -1,0 +1,837 @@
+POST http://127.0.0.1:8080/api/student HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":12,
+    "email":"abc@gmail.com",
+    "name":"son",
+    "image":"son.png",
+    "background":"SDGFD.png",
+    "phone":"56856863",
+    "studentCode":"2356656"
+}
+
+
+
+###
+GET http://69.197.134.101:8080/api/users HTTP/1.1
+
+###
+GET http://127.0.0.1:8080/api/student HTTP/1.1
+
+###
+GET http://127.0.0.1:8080/api/faculty HTTP/1.1
+
+###
+POST http://127.0.0.1:8080/api/faculty HTTP/1.1
+Content-Type: application/json
+
+{
+    "id": 11,
+    "email":"khoatienghanquoc@gmail.com",
+    "name":"tieng han",
+    "image":"tienhan.png",
+    "code":"123",
+    "facultyName":"TH"
+}
+
+###
+GET http://127.0.0.1:8080/api/business HTTP/1.1
+
+###
+POST http://69.197.134.101:8080/api/student/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "email":"sonthu3333@gmail.com",
+    "name":"son",
+    "password":"abc123",
+    "image":"son.png",
+    "background":"SDGFD.png",
+    "phone":"56856863",
+    "code":"s89",
+    "facultyId":2,
+    "majorId":1,
+    "studentCode":"2356656",
+    "subject": "Xac thuc tai khoan",
+    "content": ""
+}
+
+###
+POST http://127.0.0.1:8080/api/faculty/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "email":"cnttabd@gmail.com",
+    "name":"son",
+    "password":"abc123",
+    "image":"son.png",
+    "phone":"56856864",
+    "code":"khoa_cntt",
+    "facultyName":"cntt",
+    "subject": "Xac thuc tai khoan",
+    "content": ""
+}
+
+###
+POST http://127.0.0.1:8080/api/business/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "email":"ctyamthc7667dlkd7@gmail.com",
+    "name":"son",
+    "password":"abc123",
+    "image":"business.png",
+    "phone":"56856867",
+    "code":"ghhhh",
+    "representor":"gg",
+    "taxCode":"546657",
+    "address":"hai ba trung",
+    "activeTime":"8h",
+    "subject": "Xac thuc tai khoan",
+    "content": ""
+}
+
+###
+POST http://127.0.0.1:8080/api/business HTTP/1.1
+Content-Type: application/json
+
+{
+    "id": 19,
+    "email":"ctysonghuong@gmail.com",
+    "name":"song huong",
+    "image":"tienhan.png",
+    "code":"123",
+    "representor":"abc",
+    "taxCode":"546657",
+    "address":"thu duc",
+    "activeTime":"21h"
+}
+
+###
+GET http://127.0.0.1:8080/api/posts HTTP/1.1
+
+###
+GET http://127.0.0.1:8080/api/posts/normal HTTP/1.1
+
+###
+POST http://127.0.0.1:8080/api/posts/normal HTTP/1.1
+Content-Type: application/json
+
+{
+    "type":"thong-thuong",
+    "groupId": 1,
+    "images":[
+        "1aaed1f52741546bdb4affe2e3fcfbc1.png",
+        "1aaed1f52741546bdb4affe2e3fcfbc1.png"
+    ],
+    "userId": 2,
+    "content":"hello"
+}
+
+###
+GET http://69.197.134.101:8080/api/posts/recruitment HTTP/1.1
+
+###
+POST http://127.0.0.1:8080/api/posts/recruitment HTTP/1.1
+Content-Type: application/json
+
+{
+    "type":"tuyen-dung",
+    "groupId": 2,
+    "userId": 14,
+    "title":"hello",
+    "salary":26326,
+    "benefit":"an",
+    "description":"an nhiu",
+    "employmentType":"full time",
+    "expiration":"2023-09-30 12:39:18",
+    "location":"hcm",
+    "requirement":"cv"
+}
+
+###
+POST http://127.0.0.1:8080/api/posts/survey HTTP/1.1
+Content-Type: application/json
+
+{
+   "type": "khao-sat",
+   "title": "toi la nha phat trien",
+   "description": "dhhdd",
+   "groupId": 2,
+   "userId": 14,
+   "questions": [
+       {
+           "type": "tra-loi-ngan",
+           "title": "alo",
+           "required": 1
+       },
+       {
+           "type": "tra-loi-ngan",
+           "title": "age?",
+           "required": 0
+       },
+       {
+           "type": "chon-mot-dap-an",
+           "title": "aloo",
+           "required": 1,
+           "choices": [
+               {
+                "content":"no"
+               },
+               {
+                "content":"yes"
+               }
+           ]
+       },
+       {
+           "type": "chon-mot-dap-an",
+           "title": "sai",
+           "required": 1,
+           "choices": [
+               
+           ]
+       },
+       {
+           "type": "chon-nhieu-dap-an",
+           "title": "alooo",
+           "required": 0,
+           "choices": [
+               {
+                "content":"1"
+               },
+               {
+                "content":"h"
+               },
+               {
+                "content":"g"
+               }
+           ]
+       }
+   ]
+}
+
+###
+GET http://69.197.134.101:8080/api/notifications HTTP/1.1
+
+###
+POST http://127.0.0.1:8080/api/notifications/user HTTP/1.1
+Content-Type: application/json
+
+{
+    "id": 15
+}
+
+###
+POST http://69.197.134.101:8080/api/notifications/user/count HTTP/1.1
+Content-Type: application/json
+
+{
+    "id": 13
+}
+
+
+###
+POST http://127.0.0.1:8080/api/notifications HTTP/1.1
+Content-Type: application/json
+
+{
+    "userId": 3,
+    "content": "hello",
+    "type": "normal"
+}
+
+###
+DELETE http://69.197.134.101:8080/api/notifications HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":311,
+    "userId":13
+}
+
+###
+PUT http://127.0.0.1:8080/api/notifications/changeStatus HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":5,
+    "userId":1
+}
+
+###
+PUT http://127.0.0.1:8080/api/notifications/changeStatus/makeNotSeen HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":3,
+    "userId":1
+}
+
+###
+PUT http://127.0.0.1:8080/api/notifications/changeStatus/all HTTP/1.1
+Content-Type: application/json
+
+{
+    "userId":1
+}
+
+###
+POST http://69.197.134.101:8080/api/posts/like HTTP/1.1
+Content-Type: application/json
+
+{
+    "postId":23,
+    "userId":11
+}
+
+###
+GET http://127.0.0.1:8080/api/notifications/find?content=cu HTTP/1.1
+
+###
+POST http://69.197.134.101:8080/api/posts/comment HTTP/1.1
+Content-Type: application/json
+
+{
+    "postId":23,
+    "userId":17,
+    "content":"anh la so 1",
+    "parentCommentId":0
+}
+
+###
+DELETE http://127.0.0.1:8080/api/posts/comment/delete HTTP/1.1
+Content-Type: application/json
+
+{
+    "commentId":5,
+    "postId":1,
+    "userId":1
+}
+
+###
+POST http://69.197.134.101:8080/api/find/user HTTP/1.1
+Content-Type: application/json
+
+{
+    "userId":13,
+    "type":"sinh-vien",
+    "name":""
+}
+
+###
+POST http://69.197.134.101:8080/api/find/post HTTP/1.1
+Content-Type: application/json
+
+{
+    "userLogin":12,
+    "type":"tuyen-dung",
+    "name":"a"
+}
+
+###
+POST http://127.0.0.1:8080/api/users/follow HTTP/1.1
+Content-Type: application/json
+
+{
+    "userFollowId":2,
+    "userId":1
+}
+
+###
+GET http://127.0.0.1:8080/api/posts/1/comments HTTP/1.1
+
+
+
+# sprint 2
+
+###
+GET http://127.0.0.1:8080/api/posts/survey?postId=1&&userLogin=14 HTTP/1.1
+
+###
+GET http://127.0.0.1:8080/api/posts/survey/user/12 HTTP/1.1
+
+###
+GET http://127.0.0.1:8080/api/posts/normal/3 HTTP/1.1
+
+###
+GET http://127.0.0.1:8080/api/posts/normal/user/1 HTTP/1.1
+
+###
+GET http://127.0.0.1:8080/api/posts/recruitment?postId=2&&userLogin=3 HTTP/1.1
+
+###
+GET http://127.0.0.1:8080/api/posts/recruitment/user/1 HTTP/1.1
+
+###
+GET http://127.0.0.1:8080/api/posts/user/12 HTTP/1.1
+
+###
+POST http://127.0.0.1:8080/api/posts/survey/conduct HTTP/1.1
+Content-Type: application/json
+
+{
+    "user_id": 14,
+    "post_id": 3,
+    "answers": [
+        {
+            "question_id": 5,
+            "content": "khong nha",
+            "choices": []
+        },
+        {
+            "question_id": 7,
+            "content": "",
+            "choices_ids": [6]
+        },
+        {
+            "question_id": 8,
+            "content": "",
+            "choices_ids": [8]
+        }
+    ]
+}
+
+###
+POST http://127.0.0.1:8080/api/posts/survey/conduct HTTP/1.1
+Content-Type: application/json
+
+{
+    "user_id": 14,
+    "post_id": 6,
+    "answers": [
+        {
+            "question_id": 13,
+            "content": "khong nha",
+            "choices": []
+        },
+        {
+            "question_id": 15,
+            "content": "",
+            "choices_ids": [16]
+        },
+        {
+            "question_id": 16,
+            "content": "",
+            "choices_ids": [19,20]
+        }
+    ]
+}
+
+###
+GET http://127.0.0.1:8080/api/student/12 HTTP/1.1
+
+###
+GET http://127.0.0.1:8080/api/faculty/1 HTTP/1.1
+
+###
+GET http://127.0.0.1:8080/api/business/14 HTTP/1.1
+
+### 
+GET http://127.0.0.1:8080/api/posts/group?code=group_connect_business&userLogin=3 HTTP/1.1
+
+###
+POST http://69.197.134.101:8080/api/users/follow/me HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":13
+}
+
+###
+POST http://69.197.134.101:8080/api/users/follow/other HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":13
+}
+
+###
+POST http://127.0.0.1:8080/api/job/apply HTTP/1.1
+Content-Type: application/json
+
+{
+    "post_id":3,
+    "user_id":12,
+    "cv_url":"a.pdf"
+}
+
+###
+POST http://127.0.0.1:8080/api/job/update HTTP/1.1
+Content-Type: application/json
+
+{
+    "post_id":10,
+    "user_id":2,
+    "cv_url":"Via.pdf"
+}
+
+###
+POST http://127.0.0.1:8080/api/abc HTTP/1.1
+Content-Type: application/json
+
+{
+    "userId": 1,
+    "search": "Khoa Cong"
+}
+
+###
+POST http://127.0.0.1:8080/api/posts/group/user HTTP/1.1
+Content-Type: application/json
+
+{
+    "userId": 12
+}
+
+###
+POST http://69.197.134.101:8080/api/posts/user/save HTTP/1.1
+Content-Type: application/json
+
+{
+    "userId": 13,
+    "postId": 35
+}
+
+###
+GET http://127.0.0.1:8080/api/job/post/3 HTTP/1.1
+
+###
+GET http://127.0.0.1:8080/api/job/1 HTTP/1.1
+
+###
+GET  http://127.0.0.1:8080/api/posts/user/save/3 HTTP/1.1
+
+###
+GET  http://127.0.0.1:8080/api/posts/survey/2/result HTTP/1.1
+
+###
+GET  http://69.197.134.101:8080/api/users/17/group HTTP/1.1
+
+###
+POST http://69.197.134.101:8080/api/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email":"fit@tdc.edu.vn",
+    "password":"123456"
+}
+###
+POST http://69.197.134.101:8080/api/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email":"admin@tdc.edu.vn",
+    "password":"123456"
+}
+
+###
+GET http://69.197.134.101:8080/api/users/token/eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmaXRAdGRjLmVkdS52biIsImlhdCI6MTcwMjUyMzk0MCwiZXhwIjoxNzAyNTI3NTQwfQ.MTAFVHwbYYJF_6-7Bmu6xHkgvNlO2qmedhFvWG6UT64 HTTP/1.1
+
+###
+GET http://69.197.134.101:8080/api/users/token/eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZGMuZWR1LnZuIiwiaWF0IjoxNzAwODQ0NDE5LCJleHAiOjE3MDA4NDgwMTl9.cbjgebO-u2r6V2B5cwhpsj1AJUPQPj1dX4PAmHlsuR4 HTTP/1.1
+
+###
+###
+POST http://127.0.0.1:8080/api/posts/group/user/detail HTTP/1.1
+Content-Type: application/json
+
+{
+    "userId":1,
+    "groupCode":"group_connect_business",
+    "userLogin": 1
+}
+
+###
+GET  http://127.0.0.1:8080/api/posts/survey/prev-conduct?postId=1&userLogin=2 HTTP/1.1
+
+###
+POST http://127.0.0.1:8080/api/posts/survey/conduct HTTP/1.1
+Content-Type: application/json
+
+{
+   "user_id": 2,
+   "post_id": 1,
+   "answers": [
+       {
+           "question_id": 1,
+           "content": "1111111111",
+           "choices": []
+       },
+       {
+           "question_id": 3,
+           "content": "",
+           "choices_ids": [1]
+       },
+       {
+           "question_id": 4,
+           "content": "",
+           "choices_ids": [3,4]
+       }
+   ]
+}
+
+###
+POST http://69.197.134.101:8080/api/users/check?email=khoaddt@tdc.edu.vn HTTP/1.1
+
+###
+POST http://127.0.0.1:8080/api/users/get/email/reset HTTP/1.1
+Content-Type: application/json
+
+{
+    "to":"21211tt0042@mail.tdc.edu.vn",
+    "subject":"Reset mat khau",
+    "content":""
+}
+
+
+###
+DELETE http://69.197.134.101:8080/api/posts/1 HTTP/1.1
+
+###
+POST http://69.197.134.101:8080/api/users/check/token HTTP/1.1
+Content-Type: application/json
+
+{
+    "token":"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMTIxMXR0MDA0MkBtYWlsLnRkYy5lZHUudm4iLCJpYXQiOjE3MDA4Mzk2NzEsImV4cCI6MTcwMDg0MzI3MX0.683eykcF0ecUxKVYyVvk69LulowUR25A5A7aqeqkcbw"
+}
+
+###
+POST http://127.0.0.1:8080/api/users/reset/password HTTP/1.1
+Content-Type: application/json
+
+{
+    "repassword":"abc3",
+    "password":"abc3",
+    "token":"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMiIsImlhdCI6MTcwMDE5MDUxOSwiZXhwIjoxNzAwMTkxMTE5fQ.55re1hARw8JRwNtKjot7Webc7EsxMCzEyYqkTFDHl08"
+}
+
+###
+GET http://127.0.0.1:8080/api/job/user/12 HTTP/1.1
+
+###
+PUT http://127.0.0.1:8080/api/posts/normal HTTP/1.1
+Content-Type: application/json
+
+{
+    "postId": 10,
+    "content": "hello",
+    "images": [
+        "abc.png"
+    ]
+}
+
+###
+PUT http://127.0.0.1:8080/api/posts/recruitment HTTP/1.1
+Content-Type: application/json
+
+{
+    "id": 15,
+    "title":"updadated",
+    "salary":5458345789,
+    "benefit":"updadated updadated",
+    "description":"description updadated",
+    "employmentType":"employmentType updadated",
+    "expiration":"2023-11-25 12:39:18",
+    "location":"location updadated",
+    "requirement":"requirement updadated",
+    "images": [
+        "abc.png"
+    ]
+}
+
+###
+POST http://127.0.0.1:8080/api/users/get/email/authen/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "to":"21211tt2356@mail.tdc.edu.vn",
+    "subject":"Xác Thực Tài Khoản",
+    "content":""
+}
+
+###Fapi
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMTIxMXR0MjM1NkBtYWlsLnRkYy5lZHUudm4iLCJpYXQiOjE3MDEwMDA4NTEsImV4cCI6MTcwMTAwNDQ1MX0.-Oqd9JjWJJIYvfBmi0VMgj4BmGstkUUVb478VM1rlZk"
+}
+
+
+###
+GET http://69.197.134.101:8080/api/posts/search?active=0&group=group_tdc&userLogin=2
+
+###
+DELETE http://127.0.0.1:8080/api/approval/post/log/delete/3 HTTP/1.1
+
+//update profile
+###
+POST http://127.0.0.1:8080/api/student HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":12,
+    "email":"sonthu3333@gmail.com",
+    "name":"son",
+    "image":"son.png",
+    "background":"SDGFD.png",
+    "phone":"56856863",
+    "studentCode":"2356656"
+}
+
+###
+POST http://127.0.0.1:8080/api/faculty HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":1,
+    "email":"dtt@tdc.edu.vn",
+    "name":"Khoa Điện - Điện Tử",
+    "image":"khoa_dien_dien_tu.png", 
+    "background":"SDGFD.png", 
+    "phone":"435784385"
+}
+
+###
+POST http://127.0.0.1:8080/api/business HTTP/1.1
+Content-Type: application/json
+
+{
+    "id": 14,
+    "email":"ctysonghuong@gmail.com",
+    "name":"song huong",
+    "image":"tienhan.png",
+    "background":"tienhan.png",
+    "representor":"abc",
+    "taxCode":"546657",
+    "address":"thu duc",
+    "activeTime":"21h",
+    "phone": "843789345"
+}
+
+###
+PUT http://127.0.0.1:8080/api/posts/survey/update HTTP/1.1
+Content-Type: application/json
+
+{
+   "id": 6,
+  "title": "hdhdhd",
+  "description": "483574583",
+  "questions": [
+      {
+          "id": 13,
+          "title": "alo",
+          "required": 1
+      },
+      {
+          "id": 14,
+          "title": "age?",
+          "required": 0
+      },
+      {
+          "id": 16,
+          "title": "aloo",
+          "required": 1,
+          "choices": [
+              {
+                  "id": 1,
+                  "content": "yes"
+              },
+              {
+                  "id": 2,
+                  "content": "no"
+              }
+          ]
+      }
+  ]
+}
+
+###
+POST http://localhost:8080/api/approval/post/log
+Content-Type: application/json
+
+{
+    "postId": 9,
+    "content": "bai viet 19+"
+}
+
+###
+POST http://localhost:8080/api/posts/acceptance
+Content-Type: application/json
+
+{
+    "postId": 26
+}
+
+###
+GET http://127.0.0.1:8080/api/posts/search?faculty=cong_nghe_thong_tin&userLogin=2
+
+###
+GET http://localhost:8080/api/job/user/12
+
+###
+DELETE http://localhost:8080/api/job/profile/2
+
+###
+PUT http://localhost:8080/api/job/update
+Content-Type: application/json
+
+{
+    "profileId": 1,
+    "status": "in_progress"
+}
+
+
+###
+PUT http://localhost:8080/api/job/update
+Content-Type: application/json
+
+{
+    "profileId": 1,
+    "cvUrl": "abc.pdf"
+}
+
+###
+GET http://localhost:8080/api/posts/survey/1/update HTTP/1.1
+
+###
+GET http://69.197.134.101:8080/api/job/post/2
+
+###
+POST http://69.197.134.101:8080/api/option/language
+Content-Type: application/json
+
+{
+    "userId": 13,
+    "value": "ja"
+}
+
+###
+POST http://69.197.134.101:8080/api/posts/user/save/search
+Content-Type: application/json
+
+{
+    "userId": 1,
+    "search": ""
+}
+
+###
+GET http://69.197.134.101:8080/api/delete/no
+
+###
+POST http://69.197.134.101:8080/api/option/get
+Content-Type: application/json
+
+{
+    "userId": 13,
+    "optionKey": "language"
+}
+
+###
+POST http://127.0.0.1:8080/api/users/change/password
+Content-Type: application/json
+
+{
+    "userId": 12,
+    "password": "abc1231",
+    "oldPassword": "abc1234"
+}

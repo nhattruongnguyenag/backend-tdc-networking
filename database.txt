@@ -1,0 +1,138 @@
+INSERT INTO tdc_social_network_db.roles (id, createddate,modifieddate,code,name) VALUES
+	 (1, '2023-11-23 12:40:02','2023-11-23 12:40:02','doanh-nghiep','Doanh nghiệp'),
+	 (2, '2023-11-23 12:40:02','2023-11-23 12:40:02','khoa','Khoa'),
+	 (3, '2023-11-23 12:40:02','2023-11-23 12:40:02','sinh-vien','Sinh viên'),
+	 (4, '2023-11-23 12:40:02','2023-11-23 12:40:02','kiem-duyet','Người kiểm duyệt'),
+	 (5, '2023-11-23 12:40:02','2023-11-23 12:40:02','quan-tri-vien','Quản trị viên');
+
+INSERT INTO `users`(`id`, `is_message_connect`, `is_typing`,`active`,`background`, `status`, `code`, `email`, `image`, `name`, `password`) 
+VALUES 
+(1,0,0,1,'dien_dien_tu_background.png',0,'khoa_dien_dien_tu','khoaddt@tdc.edu.vn','khoa_dien_dien_tu.png','Khoa điện - Điện tử','$2a$10$d2KUExrXje28KKts7/AXyOD9AwJlVlIMWn1if1UEJ/yOixkiADPZW'),
+(2,0,0,1,'cong_nghe_thong_tin_background.png',0,'khoa_cong_nghe_thong_tin','fit@tdc.edu.vn','khoa_cong_nghe_thong_tin.png','Khoa Công Nghệ Thông Tin','$2a$10$d2KUExrXje28KKts7/AXyOD9AwJlVlIMWn1if1UEJ/yOixkiADPZW'),
+(3,0,0,1,'cong_nghe_tu_dong_background.png',0,'khoa_cong_nghe_tu_dong','cntd@tdc.edu.vn','khoa_cong_nghe_tu_dong.png','Khoa Công Nghệ Tự Động','$2a$10$d2KUExrXje28KKts7/AXyOD9AwJlVlIMWn1if1UEJ/yOixkiADPZW'),
+(4,0,0,1,'co_khi_che_tao_may_background.png',0,'khoa_co_khi_che_tao_may','fme@tdc.edu.vn','khoa_co_khi_che_tao_may.png','Khoa Cơ Khí Chế Tạo Máy','$2a$10$d2KUExrXje28KKts7/AXyOD9AwJlVlIMWn1if1UEJ/yOixkiADPZW'),
+(5,0,0,1,'co_khi_oto_background.png',0,'khoa_co_khi_o_to','khoacokhioto@tdc.edu.vn','khoa_co_khi_o_to.png','Khoa Cơ Khí Ô Tô','$2a$10$d2KUExrXje28KKts7/AXyOD9AwJlVlIMWn1if1UEJ/yOixkiADPZW'),
+(6,0,0,1,'tai_chinh_ke_toan_background.png',0,'khoa_tai_chinh_ke_toan','khoatckt@tdc.edu.vn','khoa_tai_chinh_ke_toan.png','Khoa Tài Chính - Kế Toán','$2a$10$d2KUExrXje28KKts7/AXyOD9AwJlVlIMWn1if1UEJ/yOixkiADPZW'),
+(7,0,0,1,'quan_tri_kinh_doanh_background.png',0,'khoa_quan_tri_kinh_doanh','khoaqtkd@tdc.edu.vn','khoa_quan_tri_kinh_doanh.png','Khoa Quản Trị Kinh Doanh','$2a$10$d2KUExrXje28KKts7/AXyOD9AwJlVlIMWn1if1UEJ/yOixkiADPZW'),
+(8,0,0,1,'du_lich_background.png',0,'khoa_du_lich','khoadulich@tdc.edu.vn','khoa_du_lich.png','Khoa Du Lịch','$2a$10$d2KUExrXje28KKts7/AXyOD9AwJlVlIMWn1if1UEJ/yOixkiADPZW'),
+(9,0,0,1,'tieng_anh_background.png',0,'khoa_tieng_anh','khoatienganh@tdc.edu.vn','khoa_tieng_anh.png','Khoa Tiếng Anh','$2a$10$d2KUExrXje28KKts7/AXyOD9AwJlVlIMWn1if1UEJ/yOixkiADPZW'),
+(10,0,0,1,'tieng_han_background.png',0,'khoa_tieng_han','khoatienghan@tdc.edu.vn','khoa_tieng_han.png','Khoa Tiếng Hàn','$2a$10$d2KUExrXje28KKts7/AXyOD9AwJlVlIMWn1if1UEJ/yOixkiADPZW'),
+(11,0,0,1,'bo_mon_tieng_nhat_background.png',0,'khoa_bo_mon_tieng_nhat','bomontiengnhat@tdc.edu.vn','khoa_bo_mon_tieng_nhat.png','Khoa Bộ Môn Tiếng Nhật','$2a$10$d2KUExrXje28KKts7/AXyOD9AwJlVlIMWn1if1UEJ/yOixkiADPZW'),
+(12,0,0,1,null,0,'quan_tri_vien','admin@tdc.edu.vn',null,'Quản trị viên','$2a$10$d2KUExrXje28KKts7/AXyOD9AwJlVlIMWn1if1UEJ/yOixkiADPZW');
+
+
+INSERT INTO `user_role`(`role_id`, `user_id`) 
+VALUES 
+(2,1),
+(2,2),
+(2,3),
+(2,4),
+(2,5),
+(2,6),
+(2,7),
+(2,8),
+(2,9),
+(2,10),
+(2,11),
+(5,12);
+
+
+INSERT INTO `falcuty_infos`(`id`,`user_id`) VALUES
+(1,1),
+(2,2),
+(3,3),
+(4,4),
+(5,5),
+(6,6),
+(7,7),
+(8,8),
+(9,9),
+(10,10),
+(11,11);
+
+
+INSERT INTO `majors`(`id`,`faculty_id`,`name`,`code`) VALUES 
+(1,1,'Điện Công Nghiệp','DN'),
+(2,1,'Công Nghệ Kỹ Thuật Điện, Điện tử','DD'),
+(3,1,'CNKT Điện Tử Truyền Thông','DT'),
+(4,1,'Điện Tử Công Nghiệp','DC'),
+(5,1,'Kỹ Thuật Lắp Đặt Điện Và Điều Khiển Trong Công Nghiệp','LD'),
+(6,1,'Kỹ Thuật Máy Lạnh Và Điều Hòa Không Khí','MD'),
+(7,2,'Công Nghệ Thông Tin','TT'),
+(8,2,'Công Nghệ Thông Tin Nhật Bản','TFT'),
+(9,2,'Truyền Thông Và Mạng Máy Tính','TM'),
+(10,2,'Thiết Kế Đồ Họa','DH'),
+(11,3,'Công nghệ kỹ thuật Cơ – Điện tử','CD'),
+(12,3,'Công nghệ Kỹ thuật Điều khiển & Tự động hóa','DK'),
+(13,3,'Tự động hóa công nghiệp','TD'),
+(14,4,'Công nghệ kỹ thuật cơ khí','CK'),
+(15,4,'Chế tạo thiết bị cơ khí','CT'),
+(16,5,'Công nghệ kỹ thuật ô tô','OT'),
+(17,5,'Bảo trì & sửa chữa ô tô','BS'),
+(18,6,'Kế toán','KT'),
+(19,6,'Tài chính - Ngân hàng','TC'),
+(20,7,'Logistic','LG'),
+(21,7,'Kinh doanh thương mại','KD'),
+(22,7,'Quản trị kinh doanh','QT'),
+(23,7,'Quản lý & Bán hàng siêu thị','QB'),
+(24,8,'Dịch vụ & Du lịch lữ hành','LH'),
+(25,8,'Nhà hàng','NH'),
+(26,8,'Khách sạn','KS'),
+(27,9,'Tiếng anh','TA'),
+(28,10,'Tiếng hàn','TH'),
+(29,11,'Tiếng nhật','TN');
+
+INSERT INTO `_groups`(`id`,`active`, `background`, `code`, `name`) VALUES 
+(1,1,'group_tdc_background.png','group_tdc','Group by TDC - Trường Cao Đẳng Công Nghệ Thủ Đức'),
+(2,1,'group_connect_business_background.png','group_connect_business','Cộng Đồng Kết Nối Doanh Nghiệp'),
+(3,1,'dien_dien_tu_background.png','group_dien_dien_tu','Điện - Điện Tử Group'),
+(4,1,'cong_nghe_thong_tin_background.png','group_cong_nghe_thong_tin','Công Nghệ Thông Tin Group'),
+(5,1,'cong_nghe_tu_dong_background.png','group_cong_nghe_tu_dong','Công Nghệ Tự Động Group'),
+(6,1,'co_khi_che_tao_may_background.png','group_co_khi_che_tao_may','Cơ Khí Chế Tạo Máy Group'),
+(7,1,'co_khi_oto_background.png','group_co_khi_oto','Cơ Khí Ô Tô Group'),
+(8,1,'tai_chinh_ke_toan_background.png','group_tai_chinh_ke_toan','Tài Chính - Kế Toán Group'),
+(9,1,'quan_tri_kinh_doanh_background.png','group_quan_tri_kinh_doanh','Quản Trị Kinh Doanh Group'),
+(10,1,'du_lich_background.png','group_du_lich','Du Lịch Group'),
+(11,1,'tieng_anh_background.png','group_tieng_anh','Tiếng Anh Group'),
+(12,1,'tieng_han_background.png','group_tieng_han','Tiếng Hàn Group'),
+(13,1,'bo_mon_tieng_nhat_background.png','group_bo_mon_tieng_nhat','Bộ Môn Tiếng Nhật Group');
+
+INSERT INTO `user_group`(`group_id`, `user_id`) VALUES 
+(3,1),
+(4,2),
+(5,3),
+(6,4),
+(7,5),
+(8,6),
+(9,7),
+(10,8),
+(11,9),
+(12,10),
+(13,11),
+(2,1),
+(2,2),
+(2,3),
+(2,4),
+(2,5),
+(2,6),
+(2,7),
+(2,8),
+(2,9),
+(2,10),
+(2,11);
+
+INSERT INTO `option_user`(`user_id`, `option_key`, `value`) VALUES 
+(1,'language','vi') ,
+(2,'language','vi') ,
+(3,'language','vi') ,
+(4,'language','vi') ,
+(5,'language','vi') ,
+(6,'language','vi') ,
+(7,'language','vi') ,
+(8,'language','vi') ,
+(9,'language','vi') ,
+(10,'language','vi') ,
+(11,'language','vi') ,
+(12,'language','vi') ,
+
+
