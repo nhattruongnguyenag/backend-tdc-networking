@@ -29,4 +29,9 @@ public class ConversationServiceImpl implements ConversationService {
     public List<ConversationResponseDTO> findBySender(long senderId) {
         return conversationResponseConverter.toDTOGroup(conversationRepository.findBySender_Id(senderId));
     }
+
+    @Override
+    public long countBySender_IdAndMessages_Status(long senderId, long status) {
+        return customizedConversationRepository.countDistinctBySender_IdAndMessages_Status(senderId, status);
+    }
 }
